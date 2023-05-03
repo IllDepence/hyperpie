@@ -1,7 +1,5 @@
 # Annotation Guidelines
 
-## Annotation Scheme
-
 ### Entity Types
 
 * A **research artifact** is a procedure or piece of data used by researchers.
@@ -11,7 +9,7 @@
     * *set* (e.g. “(0.01, 0.001)”)
     * *range* (e.g. “[1..10]”)
     * *other*: (e.g. “0.01 × i”)
-4. a **context** is a specific context in which the value applies.
+* a **context** is a specific context in which the value applies.
 
 **Example 1**: “During fine-tuning, we use the Adam optimizer with a learning rate of α=10^−4.” (based on text in arXiv.org:1905.0245)
 
