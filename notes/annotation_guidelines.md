@@ -1,5 +1,12 @@
 # Annotation Guidelines
 
+### General
+
+* Data selection
+    * We annotate whole papers, while the “unit” of annotation (across which entity identifiers must be consistent, and which is used as model input later) is *one paragraph*.
+    * Due to preprocessing errors papers can include way too long/short text as “paragraphs”, these are skipped.
+    * Properly preprocessed paragraphs with nothing to annotate must still be “opened” once in the annotation view and saved. (This in combination with above skipping rule make the annotation UI work as a quality selection tool as well)
+
 ### Entity Types
 
 * A **research artifact** is a procedure or piece of data used by researchers.
@@ -69,11 +76,13 @@ There are some special considerations for research artifacts.
     * out of scope examples:
         * “we approach the task using an end-to-end architecture”
         * “we use transformer-based language models”
-* **no tasks**
-    * a task is not a research artifact
+* **no tasks or metrics**
+    * task and metrics are not considered research artifacts
     * out of scope examples:
         * “entity recognition”
         * “relation extraction”
+        * “we consider the h-index of”
+        * “we calculate the F1 score for”
 
 #### Values
 
@@ -95,6 +104,10 @@ There are some special considerations for values.
 * **LaTeX math mode**
     * if possible, don’t annotate the markers of the beginning and end of LaTeX math mode, i.e. `\(`, `\)`, `$`, etc.
     * example: “we set \(\beta\_1\) to 0.9” → annotate only “\beta\_1”
+* **“final” values**
+    * numbers within calculations (e.g. “1” in “we set x=k-1”) are not annotated
+* **no years**
+    * while technically representing the amount of years passed since AD, years are not annotated
 
 #### Additional Notes
 
