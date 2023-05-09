@@ -4,7 +4,9 @@
 
 * Data selection
     * We annotate whole papers, while the “unit” of annotation (across which entity identifiers must be consistent, and which is used as model input later) is *one paragraph*.
-    * Due to preprocessing errors papers can include way too long/short text as “paragraphs”, these are skipped.
+    * Due to preprocessing errors papers can include way too long/short text as “paragraphs”, these are skipped. More concretely paragraphs are considered 
+        * too long, if they obviously are the result from a preprocessing error and contain the content of many parahraphs
+        * too short, if they contain less than a full sentence.
     * Properly preprocessed paragraphs with nothing to annotate must still be “opened” once in the annotation view and saved. (This in combination with above skipping rule make the annotation UI work as a quality selection tool as well)
 
 ### Entity Types
@@ -50,10 +52,12 @@ Naturally, we annotate surface forms in the text and not entities. Entities are 
     * a surface form should have no more than one annotation
         * example: “As pooling strategies we use either mean and max pooling.”
         * annotation:  “mean” as a first artifact, and “max pooling” as a second (in the example, “mean” is the surface form refering to the method mean pooling)
-* **noun phrases**
+* **noun phrases** (and similar constructs)
     * we lean towards how authors refer to something in their paper, rather than its canonical name
     * example: “we use the MNIST data set” → annotate the whole noun phrase “MNIST data set” rather than just “MNIST”; do not annotate the article “the”
-    * extreme example: “we re-train the Flair tagger on the capitalized NER benchmark CoNLL-2003 [22] dataset” → whole noun phrase is “capitalized NER benchmark CoNLL-2003 [22] dataset”
+    * extreme example 1: “we re-train the Flair tagger on the capitalized NER benchmark CoNLL-2003 [22] dataset” → whole noun phrase is “capitalized NER benchmark CoNLL-2003 [22] dataset”
+    * extreme example 2: “propose the Robust Automated Production of Information Extraction Rules” (RAPIER) algorithm. RAPIER is a form-filling algorithm that ...” → the whole ““Robust Automated Production of Information Extraction Rules” (RAPIER) algorithm” is one surface form, while “RAPIER” in the second sentence is a separate second surface form of the same entity
+    -> "RAPIER"
 * **no “sub-entities”**
     * if authors re-use (a) some model’s architecture and (b) some model’s weights, these are not considered to be separate artifacts
     * example: “we use a Baidu's DeepSpeech2 neural architecture” → annotate only “DeepSpeech2”
