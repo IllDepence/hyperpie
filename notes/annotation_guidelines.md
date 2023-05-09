@@ -4,7 +4,8 @@
 
 * Data selection
     * We annotate whole papers, while the “unit” of annotation (across which entity identifiers must be consistent, and which is used as model input later) is *one paragraph*.
-    * Due to preprocessing errors papers can include way too long/short text as “paragraphs”, these are skipped. More concretely paragraphs are considered 
+    * Only choose to annotate a paper (=all of its paragraphs) if a reasonable portion of its content is (1) contained in the annotation UI and (2) usable (not corrupted/broken)
+    * Due to preprocessing errors papers can include way too long/short text as “paragraphs”, these are skipped. More concretely, paragraphs are considered:
         * too long, if they obviously are the result from a preprocessing error and contain the content of many parahraphs
         * too short, if they contain less than a full sentence.
     * Properly preprocessed paragraphs with nothing to annotate must still be “opened” once in the annotation view and saved. (This in combination with above skipping rule make the annotation UI work as a quality selection tool as well)
@@ -80,6 +81,16 @@ There are some special considerations for research artifacts.
     * out of scope examples:
         * “we approach the task using an end-to-end architecture”
         * “we use transformer-based language models”
+* **software**
+    * the boundary between software and models/methods is somewhat blurry
+    * software is only in scope, when it is single purpose, i.e. could be described as model and potentially has parameters to be set when executed
+    * in scope examples:
+        * LaTeXML (converts LaTeX into XML)
+        * GROBID (converts PDF into XML)
+    * out of scope examples:
+        * Pandas
+        * spaCy
+        * Excel
 * **no tasks or metrics**
     * task and metrics are not considered research artifacts
     * out of scope examples:
@@ -115,12 +126,21 @@ There are some special considerations for values.
 
 #### Additional Notes
 
-In case of doubt, leave if out (e.g. if not sure if some abbreviation refers to an artifact or not, or if a certain parameter is related to an artifact or not). Reason: a missing annotation is less harmful than a wrong one.
+In case of doubt
+
+* if text in the annotation view might be “wrong”/not representative of the original paper content → look at the original paper PDF (linked in the annotation UI)
+* if a certain part of the text/abbreviation actually refers to a model/method/dataset → look online. paperswithcode.com is a good resource for this
+
+If still in doubt
+
+* leave if out (e.g. if still not sure if some abbreviation refers to an artifact or not, or if a certain parameter is related to an artifact or not). Reason: a missing annotation is less harmful than a wrong one.
 
 ### Relation Types
 
-We only define one generic relation type “used-for”, which relates above entity types as follows.
+We only annotate one generic relation type “used-for”, which relates above entity types as follows.
 
 * context –used–for→ value
 * value –used–for→ parameter
 * parameter –used–for→ research artifact
+
+Co-reference relations are later generated from matching labels such as `a1`, `a1`.
