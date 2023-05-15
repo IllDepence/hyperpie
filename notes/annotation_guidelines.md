@@ -67,8 +67,12 @@ Naturally, we annotate surface forms in the text and not entities. Entities are 
 * **surface forms as part of phrases**
     * if an entities surface form is used as part of a phrase, the surface form is annotated on its own
     * example: “Our LSTM predictions are better than ...” → annotate only “LSTM”
-    * *however*, if the whole phrase represents the entity, annotate it whole (see bullet point “noun phrases” above)
-    * example: “We train the LSTM network to ...” → annotate “LSTM netowrk”
+    * *caveat 1*
+        * if the whole phrase represents the entity, annotate it whole (see bullet point “noun phrases” above)
+        * example: “We train the LSTM network to ...” → annotate “LSTM netowrk”
+    * *caveat 2*
+        * if the surface form is used to represent something *semantically different*, it is not annotated
+        * example: “The computation is shown as follows: \(w_{context_{l}} = CosSim(SciBERT(s),SciBERT(t_l))\) where \(SciBERT\) denotes the method of generating embedding using SciBERT [3].” → only annotate the “SciBERT” at the very end before “[3]”
 * **no “sub-entities”**
     * if authors re-use (a) some model’s architecture and (b) some model’s weights, these are not considered to be separate artifacts
     * example: “we use a Baidu's DeepSpeech2 model weights” → annotate only “DeepSpeech2”
