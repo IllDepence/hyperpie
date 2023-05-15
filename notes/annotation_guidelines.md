@@ -96,7 +96,7 @@ This can be illustrated by the following sentences from arXiv paper 2210.10073 (
     * Witten-Bell smoothing  → a method
 * out of scope entities
     * ATRP (Atom transfer radical polymerization, a chemical process)
-    * Bradford's law → an observation
+    * Bradford's law → an observation / empirical law
     * Turing test → a general concept
 
 There are some special considerations for research artifacts.
@@ -179,8 +179,11 @@ There are some special considerations for values.
         * “we use GPT 3.5”
         * “arXiv.org:1905.0245”
 * **Units**
-    * We do not annotate units.
-    * “%” is not considered a unit.
+    * we do not annotate units (e.g. “seconds”, “pixels”, etc.)
+    * “factors” appended to digits which are necessary to attain the quantity expressed are annotated though; examples are
+        * K (for thousand)
+        * M (for million)
+        * % (for hudredth)
 * **“final” values**
     * numbers within calculations (e.g. “1” in “we set x=k-1”) are not annotated
 * **no years**
