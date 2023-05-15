@@ -60,8 +60,7 @@ Naturally, we annotate surface forms in the text and not entities. Entities are 
     * we lean towards how authors refer to something in their paper, rather than its canonical name
     * example: “we use the MNIST data set” → annotate the whole noun phrase “MNIST data set” rather than just “MNIST”; do not annotate the article “the”
     * extreme example 1: “we re-train the Flair tagger on the capitalized NER benchmark CoNLL-2003 [22] dataset” → whole noun phrase is “capitalized NER benchmark CoNLL-2003 [22] dataset”
-    * extreme example 2: “propose the Robust Automated Production of Information Extraction Rules” (RAPIER) algorithm. RAPIER is a form-filling algorithm that ...” → the whole ““Robust Automated Production of Information Extraction Rules” (RAPIER) algorithm” is one surface form, while “RAPIER” in the second sentence is a separate second surface form of the same entity
-    -> "RAPIER"
+    * extreme example 2: “propose the Robust Automated Production of Information Extraction Rules (RAPIER) algorithm. RAPIER is a form-filling algorithm that ...” → the whole “Robust Automated Production of Information Extraction Rules (RAPIER) algorithm” is one surface form, while “RAPIER” in the second sentence is a separate second surface form of the same entity
 * **full name (abbrev.)**
     * if an entity is named, followed by an abbreviation or other form of co-reference in brackets, the whole construct is given a single label, not two separate ones
     * example: “We train a Long Short Term Memory (LSTM) using ...” → annotate “Long Short Term Memory (LSTM)” as one unit
@@ -72,7 +71,7 @@ Naturally, we annotate surface forms in the text and not entities. Entities are 
     * example: “We train the LSTM network to ...” → annotate “LSTM netowrk”
 * **no “sub-entities”**
     * if authors re-use (a) some model’s architecture and (b) some model’s weights, these are not considered to be separate artifacts
-    * example: “we use a Baidu's DeepSpeech2 neural architecture” → annotate only “DeepSpeech2”
+    * example: “we use a Baidu's DeepSpeech2 model weights” → annotate only “DeepSpeech2”
 * **splitting**
     * if unavoidable, an single surface form can be annotated as multiple parts of the text
     * annotations are then enumerated, e.g. `a1-1` and `a1-2` for the two parts of a surface form of artifact `a1`
@@ -122,8 +121,9 @@ There are some special considerations for research artifacts.
         * “relation extraction”
 * **metrics**
     * are only annotated if the authors clearly refer to the *method* of calculation, rather than the score
+    * a good indicator for this is a citation marker after the surface form
     * in scope example:
-        * “We can use BLEU [45] and SciBERT [3] in comparison as a distinct case in point. BLEU is a method for automatic evaluation of machine translation proposed in 2002. This method soon becomes and still is the most widely used metric.”
+        * “We can use BLEU [45] and SciBERT [3] in comparison as a distinct case in point. BLEU is a method for automatic evaluation of machine translation proposed in 2002. This method soon becomes and still is the most widely used metric.” → annotate “BLEU”
     * out of scope examples:
         * “we consider the h-index of”
         * “we calculate the F1 score for”
@@ -139,6 +139,9 @@ There are some special considerations for research artifacts.
     * examples:
         * “we use a FFNN with dropout set to 0.2” → dropout is described as a parameter of the FFNN, with a value of 0.2
         * “we use the R1-regularizer with γ = 10” → R1 regularization described as an artifact with parameter gamma set to 10
+* **LaTeX math mode**
+    * if possible, don’t annotate the markers of the beginning and end of LaTeX math mode, i.e. `\(`, `\)`, `$`, etc.
+    * example: “we set \(\beta\_1\) to 0.9” → annotate only “\beta\_1”
 
 #### Parameters
 
@@ -149,21 +152,20 @@ Parameters are values *chosen* by the authors. This means, for example, that the
 There are some special considerations for values.
 
 * **Annotation scope**
-    * to facilitate evaluations of relation extraction only models (i.e., not joint NER+RE), we consider any part of the text that expresses a *numerical value* to be a value, not just those that are linked to research artifact parameters. However, we do not consider *identifiers* to be values.
+    * to facilitate evaluations of relation extraction only models (i.e., not joint NER+RE), we consider any part of the text that expresses a *numerical value* / *quantity* to be a value, not just those that are linked to research artifact parameters. However, we do not consider *identifiers* to be values.
     * in scope examples:
         * “we use learning rage of 0.001”
         * “we achieve an F1 score of 0.93”
         * “annotated by three domain experts”
+        * “one special case to consider is”
     * out of scope examples:
         * “see Figure 1”
+        * “Foo et al. [2]”
         * “we use GPT 3.5”
         * “arXiv.org:1905.0245”
 * **Units**
     * We do not annotate units.
     * “%” is not considered a unit.
-* **LaTeX math mode**
-    * if possible, don’t annotate the markers of the beginning and end of LaTeX math mode, i.e. `\(`, `\)`, `$`, etc.
-    * example: “we set \(\beta\_1\) to 0.9” → annotate only “\beta\_1”
 * **“final” values**
     * numbers within calculations (e.g. “1” in “we set x=k-1”) are not annotated
 * **no years**
