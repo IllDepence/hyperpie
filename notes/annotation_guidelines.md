@@ -164,7 +164,21 @@ There are some special considerations for research artifacts.
 
 #### Parameters
 
-Parameters are values *chosen* by the authors. This means, for example, that the number of documents/images/... in a data set is *not* a parameter, because it is given and can not be set.
+There are some special considerations for parameters.
+
+* **variable aspects**
+    * parameters are *variable* aspects *chosen* by the authors
+    * in scope are therefore
+        * things that have to be set anyway (such as the learning rate for SGD)
+        * things that the authors *change* about an artifact (such as sample size taken from a data est)
+    * out of scope are mere properties of artifacts, such as the number of documents/images/... in a data set
+* **artifact related**
+    * parameters are in scope when they are a parameter of a research artifact that is in scope (the artifact in question does not have to be present in the text, however).
+    * in scope examples:
+        * “we use Adam with β1 = 0.999” → annotate β1
+        * “when training neural networks, the choice of learning rate is important” → annotate “learning rate” even though SGD is not explicitly mentioned
+    * out of scope examples:
+        * “... can be calculated as: \(x = \lambda w_{count_{l}}+1\) where the hyperparameter \(\lambda \) is used to ...” → do not annotate “\lambda” because the simple formula is not an artifact
 
 #### Values
 
