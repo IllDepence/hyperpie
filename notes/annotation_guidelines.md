@@ -115,13 +115,34 @@ There are some special considerations for research artifacts.
         * Pandas
         * spaCy
         * Excel
-* **no tasks or metrics**
-    * task and metrics are not considered research artifacts
+* **no tasks**
+    * task are not considered research artifacts
     * out of scope examples:
         * “entity recognition”
         * “relation extraction”
+* **metrics**
+    * are only annotated if the authors clearly refer to the *method* of calculation, rather than the score
+    * in scope example:
+        * “We can use BLEU [45] and SciBERT [3] in comparison as a distinct case in point. BLEU is a method for automatic evaluation of machine translation proposed in 2002. This method soon becomes and still is the most widely used metric.”
+    * out of scope examples:
         * “we consider the h-index of”
         * “we calculate the F1 score for”
+* **loss functions**
+    * are in scope when authors talk about *the method*, but out of scope when referring to the resulting number
+    * in scope examples:
+        * “Foo et al. introduce triplet loss [1]”
+        * “we use contrastive loss to ...”
+    * out of scope examples:
+        * “such that the loss is not calculated just for a single triplet but ...”
+* **regularization techniques**
+    * are considered in-scope, **but** they can be tricky in terms of deciding whether to see them as artifacts or parameters. We go with how the authors describe it
+    * examples:
+        * “we use a FFNN with dropout set to 0.2” → dropout is described as a parameter of the FFNN, with a value of 0.2
+        * “we use the R1-regularizer with γ = 10” → R1 regularization described as an artifact with parameter gamma set to 10
+
+#### Parameters
+
+Parameters are values *chosen* by the authors. This means, for example, that the number of documents/images/... in a data set is *not* a parameter, because it is given and can not be set.
 
 #### Values
 
