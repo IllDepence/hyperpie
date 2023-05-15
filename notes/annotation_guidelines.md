@@ -85,6 +85,20 @@ Put simply, the following types of research artifacts are in scope in our scheme
 * models (BERT, GPT, ...)
 * some software\* (see bullet point below)
 
+This can be illustrated by the following sentences from arXiv paper 2210.10073 ([published version](https://doi.org/10.1007/s11192-022-04334-5)).
+
+* “The first type is named by the original author, such as the neighbor-joining method [50], ATRP [61], ImageNet [14] and AlphaGo [52]. The second type is named later by other researchers, usually named after the original author. Examples include Schrödinger equation [51], Bradford's law [4], Turing test [55] and Witten-Bell smoothing [62]. Published scientific entity is also referred to as published entity in this paper.”
+* in scope entities
+    * neighbor-joining method → a clustering technique from the area of bioinformatics
+    * ImageNet → a dataset
+    * AlphaGo → a model
+    * Schrödinger equation → a method
+    * Witten-Bell smoothing  → a method
+* out of scope entities
+    * ATRP (Atom transfer radical polymerization, a chemical process)
+    * Bradford's law → an observation
+    * Turing test → a general concept
+
 There are some special considerations for research artifacts.
 
 * **(named) entities**
@@ -98,8 +112,9 @@ There are some special considerations for research artifacts.
         * “we use Adam [1]”
         * “we use a feed forward neural network”
         * “our model performs well on ...”
-        * “we use two existing data sets, [4] and [5] to train ...”
-        * “we train the model proposed by Foo et al. to ...”
+    * edge cases:
+        * “we use two existing data sets, [4] and [5] to train ...” → “[4]” and “[5]” clearly are data sets, so in scope even though they have no name
+        * “we train the model proposed by Foo et al. to ...” → “model proposed by Foo et al.” clearly a model, so in scope even though they have no name
     * out of scope examples:
         * “we approach the task using an end-to-end architecture”
         * “we use transformer-based language models”
