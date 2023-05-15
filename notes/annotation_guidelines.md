@@ -58,9 +58,10 @@ Naturally, we annotate surface forms in the text and not entities. Entities are 
         * annotation:  “mean” as a first artifact, and “max pooling” as a second (in the example, “mean” is the surface form refering to the method mean pooling)
 * **noun phrases** (and similar constructs)
     * we lean towards how authors refer to something in their paper, rather than its canonical name
-    * example: “we use the MNIST data set” → annotate the whole noun phrase “MNIST data set” rather than just “MNIST”; do not annotate the article “the”
-    * extreme example 1: “we re-train the Flair tagger on the capitalized NER benchmark CoNLL-2003 [22] dataset” → whole noun phrase is “capitalized NER benchmark CoNLL-2003 [22] dataset”
-    * extreme example 2: “propose the Robust Automated Production of Information Extraction Rules (RAPIER) algorithm. RAPIER is a form-filling algorithm that ...” → the whole “Robust Automated Production of Information Extraction Rules (RAPIER) algorithm” is one surface form, while “RAPIER” in the second sentence is a separate second surface form of the same entity
+    * examples:
+        * “we use the MNIST data set” → annotate the whole noun phrase “MNIST data set” rather than just “MNIST”; do not annotate the article “the”
+        * “we re-train the Flair tagger on the capitalized NER benchmark CoNLL-2003 [22] dataset” → annotate “CoNLL-2003 [22] dataset”
+        * “propose the Robust Automated Production of Information Extraction Rules (RAPIER) algorithm. RAPIER is a form-filling algorithm that ...” → annotate “Robust Automated Production of Information Extraction Rules (RAPIER) algorithm” and “RAPIER” in the second sentence
 * **“full name (abbrev.)”**
     * if an entity is named, followed by an abbreviation or other form of co-reference in brackets, the whole construct is given a single label, not two separate ones
     * example: “We train a Long Short Term Memory (LSTM) using ...” → annotate “Long Short Term Memory (LSTM)” as one unit
