@@ -1,6 +1,6 @@
 # Annotation Guidelines
 
-### General
+## General
 
 * Data selection
     * We annotate whole papers, while the “unit” of annotation (across which entity identifiers must be consistent, and which is used as model input later) is *one paragraph*.
@@ -11,7 +11,7 @@
         * too short, if they contain less than a full sentence.
     * Properly preprocessed paragraphs with nothing to annotate must still be “opened” once in the annotation view and saved. (This in combination with above skipping rule make the annotation UI work as a quality selection tool as well)
 
-### Entity Types
+## Entity Types
 
 The following is a short description of the entity types. Further down are more detailed descriptions.
 
@@ -44,7 +44,7 @@ To facilitate quick annotation, we use the following short forms.
     * other: `vo`
 * context: `c`
 
-#### Surface forms
+### Surface forms
 
 Naturally, we annotate surface forms in the text and not entities. Entities are only referred to in the text. This has the following consequences.
 
@@ -61,7 +61,7 @@ Naturally, we annotate surface forms in the text and not entities. Entities are 
     * example: “we use the MNIST data set” → annotate the whole noun phrase “MNIST data set” rather than just “MNIST”; do not annotate the article “the”
     * extreme example 1: “we re-train the Flair tagger on the capitalized NER benchmark CoNLL-2003 [22] dataset” → whole noun phrase is “capitalized NER benchmark CoNLL-2003 [22] dataset”
     * extreme example 2: “propose the Robust Automated Production of Information Extraction Rules (RAPIER) algorithm. RAPIER is a form-filling algorithm that ...” → the whole “Robust Automated Production of Information Extraction Rules (RAPIER) algorithm” is one surface form, while “RAPIER” in the second sentence is a separate second surface form of the same entity
-* **full name (abbrev.)**
+* **“full name (abbrev.)”**
     * if an entity is named, followed by an abbreviation or other form of co-reference in brackets, the whole construct is given a single label, not two separate ones
     * example: “We train a Long Short Term Memory (LSTM) using ...” → annotate “Long Short Term Memory (LSTM)” as one unit
 * **surface forms as part of phrases**
@@ -80,7 +80,7 @@ Naturally, we annotate surface forms in the text and not entities. Entities are 
     * if unavoidable, an single surface form can be annotated as multiple parts of the text
     * annotations are then enumerated, e.g. `a1-1` and `a1-2` for the two parts of a surface form of artifact `a1`
 
-#### Research Artifacts
+### Research Artifacts
 
 Put simply, the following types of research artifacts are in scope in our scheme
 
@@ -162,7 +162,7 @@ There are some special considerations for research artifacts.
     * if possible, don’t annotate the markers of the beginning and end of LaTeX math mode, i.e. `\(`, `\)`, `$`, etc.
     * example: “we set \(\beta\_1\) to 0.9” → annotate only “\beta\_1”
 
-#### Parameters
+### Parameters
 
 There are some special considerations for parameters.
 
@@ -180,11 +180,11 @@ There are some special considerations for parameters.
     * out of scope examples:
         * “... can be calculated as: \(x = \lambda w_{count_{l}}+1\) where the hyperparameter \(\lambda \) is used to ...” → do not annotate “\lambda” because the simple formula is not an artifact
 
-#### Values
+### Values
 
 There are some special considerations for values.
 
-* **Annotation scope**
+* **annotation scope**
     * to facilitate evaluations of relation extraction only models (i.e., not joint NER+RE), we consider any part of the text that expresses a *numerical value* / *quantity* to be a value, not just those that are linked to research artifact parameters. However, we do not consider *identifiers* to be values.
     * in scope examples:
         * “we use learning rage of 0.001”
@@ -196,7 +196,7 @@ There are some special considerations for values.
         * “Foo et al. [2]”
         * “we use GPT 3.5”
         * “arXiv.org:1905.0245”
-* **Units**
+* **units**
     * we do not annotate units (e.g. “seconds”, “pixels”, etc.)
     * “factors” appended to digits which are necessary to attain the quantity expressed are annotated though; examples are
         * K (for thousand)
@@ -207,7 +207,7 @@ There are some special considerations for values.
 * **no years**
     * while technically representing the amount of years passed since AD, years are not annotated
 
-#### Additional Notes
+### Additional Notes
 
 In case of doubt
 
@@ -218,7 +218,7 @@ If still in doubt
 
 * leave if out (e.g. if still not sure if some abbreviation refers to an artifact or not, or if a certain parameter is related to an artifact or not). Reason: a missing annotation is less harmful than a wrong one.
 
-### Relation Types
+## Relation Types
 
 We only annotate one generic relation type “used-for”, which relates above entity types as follows.
 
