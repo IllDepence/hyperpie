@@ -199,6 +199,12 @@ There are some special considerations for values.
         * “Foo et al. [2]”
         * “we use GPT 3.5”
         * “arXiv.org:1905.0245”
+* **written out numbers**
+    * numbers written as “zero”, “one”, etc. are annotated
+    * *note*, however, that these words can appear in contexts where they don’t represent a quantity and should therefore not be annotated
+    * out of scope examples
+        * “as one would expect”
+        * “one can easily deduce that”
 * **units**
     * we do not annotate units (e.g. “seconds”, “pixels”, etc.)
     * “factors” appended to digits which are necessary to attain the quantity expressed are annotated though; examples are
