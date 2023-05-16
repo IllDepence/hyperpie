@@ -48,10 +48,14 @@ To facilitate quick annotation, we use the following short forms.
 
 Naturally, we annotate surface forms in the text and not entities. Entities are only referred to in the text. This has the following consequences.
 
+Overall, we follow the [ACL RD-TEC guidelines](https://github.com/languagerecipes/acl-rd-tec-2.0/blob/master/distribution/documents/acl-rd-tec-guidelines-ver2.pdf) (see “3.3 Formal criteria”) for defining the boundaries of surface forms. Below are more specific notes.
+
 * **co-references**
     * if an entity has multiple surface forms throughout the document, this is reflected in the annotation by labeling each surface form of one entity using the same `<id>`
     * example 1: “We set the learning rate to α=0.01” → annotate both “learning rate” and “α” with e.g. `p1`
     * example 2: “We train a RNN and an LSTM. For the former, we set ...” → annotate both “RNN” and “the former” as `a1`
+* **no articles and pronouns**
+    * words like “a”, “the”, “this”‚ “our”, etc. preceding an artifact’s surface form are not annotated
 * **no overlaying annotations**
     * a surface form should have no more than one annotation
         * example: “As pooling strategies we use either mean and max pooling.”
@@ -77,9 +81,6 @@ Naturally, we annotate surface forms in the text and not entities. Entities are 
 * **no “sub-entities”**
     * if authors re-use (a) some model’s architecture and (b) some model’s weights, these are not considered to be separate artifacts
     * example: “we use a Baidu's DeepSpeech2 model weights” → annotate only “DeepSpeech2”
-* **splitting**
-    * if unavoidable, an single surface form can be annotated as multiple parts of the text
-    * annotations are then enumerated, e.g. `a1-1` and `a1-2` for the two parts of a surface form of artifact `a1`
 
 ### Research Artifacts
 
@@ -111,7 +112,8 @@ There are some special considerations for research artifacts.
     * good indicators are, for example,
         * others (re-)using an artifact would refer to it the same way the paper in question does
         * there is a citation marker after the artifact surface form
-    * the single defined “exception” to this is authors using phrases like “our model”, “our dataset”, etc. These are annotated even if the model/dataset/... is never given a name within the paper
+    * the single defined “exception” to this is authors talking about their model/approach/system/framework/dataset/...
+        * *note* that we don’t annotate pronouns, so annotate “model” or “dataset” and *not* “our model” or “our dataset”
     * reference to previous work without an “artifact name” should only be annotated, if from the context it is clear that an artifact (method, model, dataset, ...) is being referred to, rather than a paper as a whole
     * in scope examples:
         * “we use Adam [1]”
