@@ -136,6 +136,8 @@ There are some special considerations for research artifacts.
         * Pandas
         * spaCy
         * Excel
+* **APIs**
+    * APIs and websites are not considered datasets
 * **no tasks**
     * task are not considered research artifacts
     * out of scope examples:
