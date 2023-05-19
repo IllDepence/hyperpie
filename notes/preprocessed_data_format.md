@@ -22,6 +22,8 @@ Each element of the JSON file is a dictionary with the following keys.
   - `target` (String): The entity ID of the target entity of the relation.
   - `evidences` (List): A list of dictionaries, each representing an evidence of the relation with the following keys:
     - `id` (String): The unique ID of the evidence.
+    - `source_surface_form` (String): The ID of the source surface form of the relation.
+    - `target_surface_form` (String): The ID of the target surface form of the relation.
     - `evidence_sentence` (String): The actual text of the evidence sentence.
     - `start` (Integer): The start offset of the evidence within the paragraph.
     - `end` (Integer): The end offset of the evidence within the paragraph.
@@ -101,7 +103,9 @@ A dictionary describing a piece of text evidence for a specific relationship.
 
 ```
 {
-  "id": "fcd7d3c1-ff1c-4656-8ae7-798395693598",
+  "id": "d3c1fcd7-8ae7-4656-ff1c-697983953598",
+  "source_surface_form": "fcd7d3c1-ff1c-4656-8ae7-798395693598",
+  "target_surface_form": "a7d3fcc1-b656-ff1c-8ae7-693597983958",
   "evidence_sentence": "Example sentence that proves the relation...",
   "start": 10,
   "end": 55

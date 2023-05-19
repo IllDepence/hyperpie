@@ -225,7 +225,7 @@ def untangle_single_para_annotations(para):
         # convert sentences that form relation evidence
         evidence_start = para_sentence_offsets[sent_idx_from][0]
         evidence_end = para_sentence_offsets[sent_idx_to][1]
-        evidence = para['text'][evidence_start:evidence_end]
+        evidence_text = para['text'][evidence_start:evidence_end]
         # save relation
         if rel_id not in relations:
             relations[rel_id] = OrderedDict({
@@ -236,7 +236,9 @@ def untangle_single_para_annotations(para):
             })
         relations[rel_id]['evidences'].append({
             'id': surf_rel_id,
-            'evidence_sentence': evidence,
+            'source_surface_form': surf_from,
+            'target_surface_form': surf_to,
+            'evidence_sentence': evidence_text,
             'start': evidence_start,
             'end': evidence_end,
         })
