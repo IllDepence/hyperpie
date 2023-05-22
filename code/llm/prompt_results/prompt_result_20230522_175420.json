@@ -1,0 +1,43 @@
+{
+    "timestamp": "20230522_175420",
+    "prompt": "In the context of machine learning and related fields, does the following Entity (a model/method/dataset) have parameters for which a value can be chosen?\n\nEntity: SciBERT-base\n\nOutput only either \"yes\" or \"no\".\n\nOutput:\n",
+    "params": {
+        "model": "text-davinci-003",
+        "max_tokens": 512,
+        "temperature": 0.0,
+        "top_p": 1,
+        "n": 1,
+        "logprobs": 0,
+        "echo": false
+    },
+    "completion": {
+        "id": "cmpl-7J29Ui8WzLFyoTVwyUaecJ9DJuQ6k",
+        "object": "text_completion",
+        "created": 1684770860,
+        "model": "text-davinci-003",
+        "choices": [
+            {
+                "text": "Yes",
+                "index": 0,
+                "logprobs": {
+                    "tokens": [
+                        "Yes"
+                    ],
+                    "token_logprobs": [
+                        -0.010204366
+                    ],
+                    "top_logprobs": null,
+                    "text_offset": [
+                        221
+                    ]
+                },
+                "finish_reason": "stop"
+            }
+        ],
+        "usage": {
+            "prompt_tokens": 60,
+            "completion_tokens": 1,
+            "total_tokens": 61
+        }
+    }
+}

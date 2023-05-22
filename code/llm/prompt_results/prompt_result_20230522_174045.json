@@ -1,0 +1,97 @@
+{
+    "timestamp": "20230522_174045",
+    "prompt": "In the context of machine learning and related fields, what are the entities (dataset/model/method/loss function/regularization technique) mentioned in the Input Text below?\n\n[Input Text start]\nWe divide our 438 annotated documents into training (70%), validation (30%) and test set (30%). The base document representation of our model is formed by SciBERT-base [4] and BiLSTM with 128-d hidden state. We use a dropout of 0.2 after BiLSTM embeddings. All feedforward networks are composed of two hidden layers, each of dimension 128 with gelu activation and with a dropout of 0.2 between layers. For additive attention layer in span representation, we collapse the token embeddings to scalars by passing through the feedforward layer with 128-d hidden state and performing a softmax. We train our model for 30 epochs using Adam optimizer with 1e-3 as learning rate for all non BERT weights and 2e-5 for BERT weights. We use early stopping with a patience value of 7 on the validation set using relation extraction F1 score. All our models were trained using 48Gb Quadro RTX 8000 GPUs. The multitask model takes approximately 3\n[Input Text end]\n\nAnswer in the following YAML format.\n\nFormat:\n---\n- entity\n- entity\n- etc.\n...\n\nOnly produce output in the YAML format specified above. Output no additional text.\n\nOutput:\n",
+    "params": {
+        "model": "text-davinci-003",
+        "max_tokens": 512,
+        "temperature": 0.0,
+        "top_p": 1,
+        "n": 1,
+        "logprobs": 0,
+        "echo": false
+    },
+    "completion": {
+        "id": "cmpl-7J1wLMW5DpFdDUu5C91amKkJZj8HJ",
+        "object": "text_completion",
+        "created": 1684770045,
+        "model": "text-davinci-003",
+        "choices": [
+            {
+                "text": "---\n- dataset\n- model\n- method\n- loss function\n- regularization technique",
+                "index": 0,
+                "logprobs": {
+                    "tokens": [
+                        "---",
+                        "\n",
+                        "-",
+                        " dataset",
+                        "\n",
+                        "-",
+                        " model",
+                        "\n",
+                        "-",
+                        " method",
+                        "\n",
+                        "-",
+                        " loss",
+                        " function",
+                        "\n",
+                        "-",
+                        " regular",
+                        "ization",
+                        " technique"
+                    ],
+                    "token_logprobs": [
+                        -0.009211475,
+                        -0.012917532,
+                        -0.000429733,
+                        -0.6405469,
+                        -0.07117874,
+                        -0.0001687683,
+                        -0.027613185,
+                        -0.019483095,
+                        -1.5214344e-05,
+                        -0.04232353,
+                        -0.01539864,
+                        -5.3162735e-06,
+                        -0.020650703,
+                        -0.0007387856,
+                        -0.008247098,
+                        -4.361666e-06,
+                        -0.00037159576,
+                        -6.373136e-05,
+                        -8.912656e-05
+                    ],
+                    "top_logprobs": null,
+                    "text_offset": [
+                        1317,
+                        1320,
+                        1321,
+                        1322,
+                        1330,
+                        1331,
+                        1332,
+                        1338,
+                        1339,
+                        1340,
+                        1347,
+                        1348,
+                        1349,
+                        1354,
+                        1363,
+                        1364,
+                        1365,
+                        1373,
+                        1380
+                    ]
+                },
+                "finish_reason": "stop"
+            }
+        ],
+        "usage": {
+            "prompt_tokens": 320,
+            "completion_tokens": 19,
+            "total_tokens": 339
+        }
+    }
+}

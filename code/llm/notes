@@ -1,0 +1,9 @@
+* requiring completion to contain entity name and type
+  (instead of just the entity) prevented output of only a list
+  of all entity types present in text
+* in YAML output, requiring a “has_x” before a list of the
+  x’s prevents “forced output”
+* end to end also promising
+    * worked well on positive case
+    * worked well on entities but no params/vals case
+    * on nothing cases was mixed -> TODO: re-try with prompt chain
