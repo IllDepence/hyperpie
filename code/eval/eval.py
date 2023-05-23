@@ -8,6 +8,17 @@ from sklearn.metrics import precision_recall_fscore_support, \
         classification_report
 
 
+def _spans_match(a_start, a_end, b_start, b_end):
+    return a_start == b_start and a_end == b_end
+
+
+def _spans_overlap(a_start, a_end, b_start, b_end):
+    return (
+        a_start < b_start < a_end or
+        a_start < b_end < a_end
+    )
+
+
 def _typed_entity_surface_forms(para):
     """ Get entity typed surface forms from annitations
         of a single paragraph
@@ -29,6 +40,7 @@ def _entity_recognition_single(
 ):
     """ For a single paragraph, determine
         TP, FP, FN for entity recognition
+        and optionally entity type classification
     """
 
     # get surface forms from entity annotations
@@ -59,7 +71,7 @@ def _entity_recognition_single(
             ):
                 correct_type = False
             # check if start and end positions match
-            if start_true == start_pred and end_true == end_pred:
+            if _snans_match(start_true, end_true, start_pred, end_pred):
                 if not correct_type:
                     # exact match but wrong type
                     if verbose:
@@ -71,9 +83,9 @@ def _entity_recognition_single(
                 tp += 1
                 break
             # check if there is a partial overlap
-            elif partial_overlap and \
-                    (start_true <= start_pred <= end_true or
-                     start_true <= end_pred <= end_true):
+            elif partial_overlap and _spans_overlap(
+                start_true, end_true, start_pred, end_pred
+            ):
                 if not correct_type:
                     # partial overlap but wrong type
                     if verbose:
@@ -100,11 +112,11 @@ def _entity_recognition_single(
         for surface_form_true in surface_forms_true:
             start_true = surface_form_true['start']
             end_true = surface_form_true['end']
-            if start_true == start_pred and end_true == end_pred:
+            if _spans_match(start_true, end_true, start_pred, end_pred):
                 break
-            elif partial_overlap and \
-                    (start_true <= start_pred <= end_true or
-                     start_true <= end_pred <= end_true):
+            elif partial_overlap and _spans_overlap(
+                start_true, end_true, start_pred, end_pred
+            ):
                 break
         else:
             # see else clause above
@@ -144,6 +156,114 @@ def entity_recognition(
             y_pred[i],
             partial_overlap,
             check_type,
+            verbose
+        )
+        tp += tp_i
+        fp += fp_i
+        fn += fn_i
+
+    if verbose:
+        print(f'TP: {tp}, FP: {fp}, FN: {fn}')
+
+    precision = tp / (tp + fp)
+    recall = tp / (tp + fn)
+    f1_score = 2 * precision * recall / (precision + recall)
+
+    if verbose:
+        print(f'P: {precision}, R: {recall}, F1: {f1_score}')
+
+    return precision, recall, f1_score
+
+
+def _surface_form_coref(
+    surf_tup_needle, surf_tup_haystack, partial_overlap=False
+):
+    """ For a two surface form tuples, a needle and a haystack,
+        determine whether the needle is a coreference of the haystack
+
+        Visualisation:
+        needle:   (start_n1, end_n1) ---coref--- (start_n2, end_n2)
+        haystack: (start_h1, end_h1) ---coref--- (start_h2, end_h2)
+    """
+
+    # order both tuples by start position
+    surf_tup_needle = sorted(surf_tup_needle, key=lambda x: x['start'])
+    surf_tup_haystack = sorted(surf_tup_haystack, key=lambda x: x['start'])
+
+    # check if the needle coreference is a coreference in the haystack
+    from_match = _spans_match(
+        surf_tup_needle[0]['start'],
+        surf_tup_needle[0]['end'],
+        surf_tup_haystack[0]['start'],
+        surf_tup_haystack[0]['end']
+    )
+    if partial_overlap:
+        from_match = _spans_overlap(
+            surf_tup_needle[0]['start'],
+            surf_tup_needle[0]['end'],
+            surf_tup_haystack[0]['start'],
+            surf_tup_haystack[0]['end']
+        )
+    to_match = _spans_match(
+        surf_tup_needle[1]['start'],
+        surf_tup_needle[1]['end'],
+        surf_tup_haystack[1]['start'],
+        surf_tup_haystack[1]['end']
+    )
+    if partial_overlap:
+        to_match = _spans_overlap(
+            surf_tup_needle[1]['start'],
+            surf_tup_needle[1]['end'],
+            surf_tup_haystack[1]['start'],
+            surf_tup_haystack[1]['end']
+        )
+
+    return from_match and to_match
+
+
+def _co_reference_resolution_single(
+    y_true, y_pred, partial_overlap=False, verbose=False
+):
+    """ For a single paragraph, determine
+        TP, FP, FN for co-reference resolution
+        between pairs of surface forms
+    """
+
+    # TODO:
+    # - for all co-refs in y_true, check if they are in y_pred
+    # - for all co-refs in y_pred, check if they are in y_true
+    pass
+
+
+def co_reference_resolution(
+    y_true, y_pred, partial_overlap=False, verbose=False
+):
+    """ Calculate precision, recall and f1-score for the
+        prediction of co-references
+
+        NOTE: not modeled as a typical binary classification problem
+
+        Parameters
+        ----------
+        y_true: list of paragraphs with true annotations
+        y_pred: list of paragraphs with predicted annotations
+        partial_overlap: bool, whether to consider partial overlap
+
+        Returns
+        -------
+        precision: float
+        recall: float
+        f1_score: float
+    """
+
+    tp = 0
+    fp = 0
+    fn = 0
+    for i in range(len(y_true)):
+        tp_i, fp_i, fn_i = _co_reference_resolution_single(
+            y_true[i],
+            y_pred[i],
+            partial_overlap,
             verbose
         )
         tp += tp_i
