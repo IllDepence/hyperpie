@@ -8,7 +8,7 @@ from sklearn.metrics import precision_recall_fscore_support, \
         classification_report
 
 
-def _entity_recognition_single(y_true, y_pred, partial_overlap, verbose=True):
+def _entity_recognition_single(y_true, y_pred, partial_overlap, verbose):
     """ For a single paragraph, determine
         TP, FP, FN for entity recognition
     """
@@ -76,7 +76,7 @@ def _entity_recognition_single(y_true, y_pred, partial_overlap, verbose=True):
     return tp, fp, fn
 
 
-def entity_recognition(y_true, y_pred, partial_overlap=False):
+def entity_recognition(y_true, y_pred, partial_overlap=False, verbose=False):
     """ Calculate precision, recall and f1-score for detection of
         entities in text (entity classes are not considered)
 
@@ -100,25 +100,43 @@ def entity_recognition(y_true, y_pred, partial_overlap=False):
         tp_i, fp_i, fn_i = _entity_recognition_single(
             y_true[i],
             y_pred[i],
-            partial_overlap
+            partial_overlap,
+            verbose
         )
         tp += tp_i
         fp += fp_i
         fn += fn_i
 
-    print(f'TP: {tp}, FP: {fp}, FN: {fn}')
+    if verbose:
+        print(f'TP: {tp}, FP: {fp}, FN: {fn}')
 
     precision = tp / (tp + fp)
     recall = tp / (tp + fn)
     f1_score = 2 * precision * recall / (precision + recall)
 
-    print(f'Precision: {precision}, Recall: {recall}, F1-score: {f1_score}')
+    if verbose:
+        print(f'P: {precision}, R: {recall}, F1: {f1_score}')
 
     return precision, recall, f1_score
 
 
 def full(y_true, y_pred):
-    pass
+    """ Calculate all the metrics
+    """
+
+    # entity recognition (no partial overlap)
+    p, r, f1 = entity_recognition(
+        y_true, y_pred, partial_overlap=False, verbose=False
+    )
+    print(f'\nEntity recognition (no partial overlap):')
+    print(f'P: {p}, R: {r}, F1: {f1}')
+
+    # entity recognition (partial overlap)
+    p, r, f1 = entity_recognition(
+        y_true, y_pred, partial_overlap=True, verbose=False
+    )
+    print(f'\nEntity recognition (partial overlap):')
+    print(f'P: {p}, R: {r}, F1: {f1}')
 
 
 if __name__ == '__main__':
@@ -129,4 +147,4 @@ if __name__ == '__main__':
     y_true = json.load(open(sys.argv[1]))
     y_pred = json.load(open(sys.argv[2]))
 
-    entity_recognition(y_true, y_pred, partial_overlap=True)
+    full(y_true, y_pred)

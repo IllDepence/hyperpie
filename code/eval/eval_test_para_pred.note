@@ -7,6 +7,12 @@ modifications
     - partial match surface form
         - mark only “dropout” instead of “variational dropout”
          (#201b4465-4ade-44c4-8674-a95e1131cb29)
+    - wrong entity type
+        - make “relation extraction” type artifact (a) instead of context (c)
+          (#20d8a801-e382-49dd-b965-45aceb1d2020)
+    - wrong sub-tybe
+        - change subtype of “1” from number to other
+          (#ee6b8954-71ff-42df-bc49-4eadfd4adc97)
     - missing surface from / missing co-reference relation
         - remove second mention of “FFNs” (#601bfd1b-6e9c-4f38-af1b-582839e3b664)
     - missing relation
@@ -15,6 +21,3 @@ modifications
     - wrong relation
         - in “All the FFNNs have 2 hidden layers of 150 dimensions each.”
         - relate 150 to hidden leayers instead of 2
-    - wrong sub-tybe
-        - change subtype of “1” from number to other
-          (#ee6b8954-71ff-42df-bc49-4eadfd4adc97)
