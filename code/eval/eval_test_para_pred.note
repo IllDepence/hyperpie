@@ -1,0 +1,20 @@
+modifications
+    - missing entity
+        - remove “knowledge graph” annotation
+          (#c2269994-4d32-4745-96df-b57873bfa784)
+    - incorrect entity
+        - add bogus entity “potato” (a99)
+    - partial match surface form
+        - mark only “dropout” instead of “variational dropout”
+         (#201b4465-4ade-44c4-8674-a95e1131cb29)
+    - missing surface from / missing co-reference relation
+        - remove second mention of “FFNs” (#601bfd1b-6e9c-4f38-af1b-582839e3b664)
+    - missing relation
+        - in “We use 0.4 variational dropout”
+        - remove relation r6 between 0.4 and variational dropout
+    - wrong relation
+        - in “All the FFNNs have 2 hidden layers of 150 dimensions each.”
+        - relate 150 to hidden leayers instead of 2
+    - wrong sub-tybe
+        - change subtype of “1” from number to other
+          (#ee6b8954-71ff-42df-bc49-4eadfd4adc97)
