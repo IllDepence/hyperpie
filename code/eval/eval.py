@@ -8,18 +8,32 @@ from sklearn.metrics import precision_recall_fscore_support, \
         classification_report
 
 
-def _entity_recognition_single(y_true, y_pred, partial_overlap, verbose):
+def _typed_entity_surface_forms(para):
+    """ Get entity typed surface forms from annitations
+        of a single paragraph
+    """
+
+    surface_forms = []
+    for entity in para['annotation']['entities'].values():
+        e_type = entity['type']
+        for surf in entity['surface_forms']:
+            typed_surf = surf.copy()
+            typed_surf['type'] = e_type
+            surface_forms.append(typed_surf)
+
+    return surface_forms
+
+
+def _entity_recognition_single(
+    y_true, y_pred, partial_overlap, check_type, verbose
+):
     """ For a single paragraph, determine
         TP, FP, FN for entity recognition
     """
 
     # get surface forms from entity annotations
-    surface_forms_true = []
-    surface_forms_pred = []
-    for entity in y_true['annotation']['entities'].values():
-        surface_forms_true.extend(entity['surface_forms'])
-    for entity in y_pred['annotation']['entities'].values():
-        surface_forms_pred.extend(entity['surface_forms'])
+    surface_forms_true = _typed_entity_surface_forms(y_true)
+    surface_forms_pred = _typed_entity_surface_forms(y_pred)
 
     if verbose:
         print(f'Annotator: {y_true["annotator_id"]}')
@@ -37,12 +51,37 @@ def _entity_recognition_single(y_true, y_pred, partial_overlap, verbose):
         for surface_form_pred in surface_forms_pred:
             start_pred = surface_form_pred['start']
             end_pred = surface_form_pred['end']
+            # check entity type if requested
+            correct_type = True
+            if (
+                check_type and
+                surface_form_true['type'] != surface_form_pred['type']
+            ):
+                correct_type = False
+            # check if start and end positions match
             if start_true == start_pred and end_true == end_pred:
+                if not correct_type:
+                    # exact match but wrong type
+                    if verbose:
+                        print(
+                            f'FN: {surface_form_pred} has wrong type'
+                        )
+                    fn += 1
+                    break
                 tp += 1
                 break
+            # check if there is a partial overlap
             elif partial_overlap and \
                     (start_true <= start_pred <= end_true or
                      start_true <= end_pred <= end_true):
+                if not correct_type:
+                    # partial overlap but wrong type
+                    if verbose:
+                        print(
+                            f'FN: {surface_form_pred} has wrong type'
+                        )
+                    fn += 1
+                    break
                 tp += 1
                 break
         else:
@@ -76,7 +115,9 @@ def _entity_recognition_single(y_true, y_pred, partial_overlap, verbose):
     return tp, fp, fn
 
 
-def entity_recognition(y_true, y_pred, partial_overlap=False, verbose=False):
+def entity_recognition(
+        y_true, y_pred, partial_overlap=False, check_type=False, verbose=False
+):
     """ Calculate precision, recall and f1-score for detection of
         entities in text (entity classes are not considered)
 
@@ -85,6 +126,7 @@ def entity_recognition(y_true, y_pred, partial_overlap=False, verbose=False):
         y_true: list of paragraphs with true annotations
         y_pred: list of paragraphs with predicted annotations
         partial_overlap: bool, whether to consider partial overlap
+        check_type: bool, whether to check entity type
 
         Returns
         -------
@@ -101,6 +143,7 @@ def entity_recognition(y_true, y_pred, partial_overlap=False, verbose=False):
             y_true[i],
             y_pred[i],
             partial_overlap,
+            check_type,
             verbose
         )
         tp += tp_i
@@ -126,16 +169,30 @@ def full(y_true, y_pred):
 
     # entity recognition (no partial overlap)
     p, r, f1 = entity_recognition(
-        y_true, y_pred, partial_overlap=False, verbose=False
+        y_true, y_pred
     )
     print(f'\nEntity recognition (no partial overlap):')
     print(f'P: {p}, R: {r}, F1: {f1}')
 
     # entity recognition (partial overlap)
     p, r, f1 = entity_recognition(
-        y_true, y_pred, partial_overlap=True, verbose=False
+        y_true, y_pred, partial_overlap=True
     )
     print(f'\nEntity recognition (partial overlap):')
+    print(f'P: {p}, R: {r}, F1: {f1}')
+
+    # entity recognition + classification (no partial overlap)
+    p, r, f1 = entity_recognition(
+        y_true, y_pred, check_type=True
+    )
+    print(f'\nEntity recognition + classification (no partial overlap):')
+    print(f'P: {p}, R: {r}, F1: {f1}')
+
+    # entity recognition + classification (partial overlap)
+    p, r, f1 = entity_recognition(
+        y_true, y_pred, partial_overlap=True, check_type=True
+    )
+    print(f'\nEntity recognition + classification (partial overlap):')
     print(f'P: {p}, R: {r}, F1: {f1}')
 
 
