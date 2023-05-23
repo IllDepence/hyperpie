@@ -157,18 +157,18 @@ Only produce output in the YAML format specified above. Output no additional tex
 
 {instruction_output}"""  # noqa: E501
 
-text_e2e = f"""{instruction_context} what (if any) are the entities (dataset/model/method/loss function/regularization technique) mentioned in the Input Text below? What (if any) are their parameters and values?
+text_e2e = f"""{instruction_context} what (if any) are the entities (datasets, models, methods, loss functions, regularization techniques) mentioned in the LaTeX Input Text below? What (if any) are their parameters and values?
 
-[Input Text start]
+[LaTeX Input Text start]
 {{text}}
-[Input Text end]
+[LaTeX Input Text end]
 
 Answer in the following YAML format.
 
 Format:
 ---
 - text_contains_entities: true/false
-- entities:
+- entities (datasets, models, methods, loss functions, regularization techniques):
     - entity<N>:
         name: <entity name>
         type: <entity type>
@@ -196,7 +196,7 @@ params = {
 
 demo_text_positive_1 = """We divide our 438 annotated documents into training (70%), validation (30%) and test set (30%). The base document representation of our model is formed by SciBERT-base [4] and BiLSTM with 128-d hidden state. We use a dropout of 0.2 after BiLSTM embeddings. All feedforward networks are composed of two hidden layers, each of dimension 128 with gelu activation and with a dropout of 0.2 between layers. For additive attention layer in span representation, we collapse the token embeddings to scalars by passing through the feedforward layer with 128-d hidden state and performing a softmax. We train our model for 30 epochs using Adam optimizer with 1e-3 as learning rate for all non BERT weights and 2e-5 for BERT weights. We use early stopping with a patience value of 7 on the validation set using relation extraction F1 score. All our models were trained using 48Gb Quadro RTX 8000 GPUs. The multitask model takes approximately 3"""  # noqa: E501
 
-demo_text_positive_2 = """Our system extends the implementation and hyper-parameters from Lee2017EndtoendNC with the following adjustments. We use a 1 layer BiLSTM with 200-dimensional hidden layers. All the FFNNs have 2 hidden layers of 150 dimensions each. We use 0.4 variational dropout [15] for the LSTMs, 0.4 dropout for the FFNNs, and 0.5 dropout for the input embeddings. We model spans up to 8 words. For beam pruning, we use \(\lambda _{\text{C}}=0.3\) for coreference resolution and \(\lambda _{\text{R}}=0.4\) for relation extraction. For constructing the knowledge graph"""  # noqa: E501
+demo_text_positive_2 = """Our system extends the implementation and hyper-parameters from Lee2017EndtoendNC with the following adjustments. We use a 1 layer BiLSTM with 200-dimensional hidden layers. All the FFNNs have 2 hidden layers of 150 dimensions each. We use 0.4 variational dropout [15] for the LSTMs, 0.4 dropout for the FFNNs, and 0.5 dropout for the input embeddings. We model spans up to 8 words. For beam pruning, we use \(\lambda _{\\text{C}}=0.3\) for coreference resolution and \(\lambda _{\\text{R}}=0.4\) for relation extraction. For constructing the knowledge graph"""  # noqa: E501
 
 demo_text_norel = """Results in Table REF show that we perform generally better than DyGIE++. The performance on end-to-end binary relations shows the utility of incorporating a document level model for cross-section relations, rather than predicting on individual sections. Specifically, We observe a large difference in recall, which agrees with the fact that 55% of binary relation occur across sentence level. DyGIE++ (All sections) were not able to identify any binary relations because 80% of training examples have no sentence level binary relations, pushing the model towards predicting very few relations. In contrast, training on SciERC (and evaluating on SciREX) gives better results because it is still able to find the few sentence-level relations."""  # noqa: E501
 

@@ -14,8 +14,13 @@
     * worked well on entities but no params/vals case
     * on nothing cases was mixed -> TODO: re-try with prompt chain
 * surface forms
-    * LaTeX can get parsed (in input text: “\(\lambda _{ext{C}}=0.3\)” but in
-      output “name: λ_ext{C}, value: 0.3”)
+    * LaTeX can get parsed (in input text: “\(\lambda _{\text{C}}=0.3\)” but in
+      output “name: λC, value: 0.3”)
+    * chaning output “<parameter name>” to “<verbatim parameter name>” does
+      not prevent “\lambda _{\text{C}}” be output as “λC”
+* misc
+    * saying “LaTeX Input Text” instead of just “Input Text” made context
+      be detcted correctly in the case of “\lambda _{\text{C}}”
 
 
 TODOs:
