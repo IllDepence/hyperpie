@@ -477,6 +477,8 @@ def _relation_extraction_single(
             to_true_entity, y_pred['annotation']['entities'],
             partial_overlap, verbose
         )
+        # FIXME: need to check for overlap of
+        #        the ground truth target entity with the predicted one
         if check_eid1 is None:
             # relation to wrong target entity
             if verbose:
