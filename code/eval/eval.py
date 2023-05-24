@@ -21,6 +21,17 @@ def _spans_overlap(a_start, a_end, b_start, b_end):
     )
 
 
+def _calc_prec_rec_f1(tp, fp, fn):
+    """ Calculate precision, recall and f1-score
+    """
+
+    p = tp / (tp + fp) if tp + fp > 0 else 0
+    r = tp / (tp + fn) if tp + fn > 0 else 0
+    f1 = 2 * p * r / (p + r) if p + r > 0 else 0
+
+    return p, r, f1
+
+
 def _typed_entity_surface_forms(para):
     """ Get entity typed surface forms from annitations
         of a single paragraph
@@ -116,6 +127,8 @@ def _entity_recognition_single(
                 print(f'FP: {surface_form_pred} predicted but not true')
             fp += 1
 
+    # TN: could be determined on a character level but needed for P/R/F1
+
     return tp, fp, fn
 
 
@@ -142,6 +155,7 @@ def entity_recognition(
     tp = 0
     fp = 0
     fn = 0
+    # tn: could be determined on a character level but needed for P/R/F1
     for i in range(len(y_true)):
         tp_i, fp_i, fn_i = _entity_recognition_single(
             y_true[i],
@@ -157,14 +171,12 @@ def entity_recognition(
     if verbose:
         print(f'TP: {tp}, FP: {fp}, FN: {fn}')
 
-    precision = tp / (tp + fp)
-    recall = tp / (tp + fn)
-    f1_score = 2 * precision * recall / (precision + recall)
+    p, r, f1 = _calc_prec_rec_f1(tp, fp, fn)
 
     if verbose:
-        print(f'P: {precision}, R: {recall}, F1: {f1_score}')
+        print(f'P: {p}, R: {r}, F1: {f1}')
 
-    return precision, recall, f1_score
+    return p, r, f1
 
 
 def _surface_form_relation_match(
@@ -305,6 +317,9 @@ def _co_reference_resolution_single(
                         print(f'FN: {surf_a} and {surf_b} predicted but wrong')
                     fp += 1
 
+    # TN: could be determined efficiently with number of all surface form
+    #     combinations (x(x-1))/2, but needed for P/R/F1
+
     return tp, fp, fn
 
 
@@ -332,6 +347,7 @@ def co_reference_resolution(
     tp = 0
     fp = 0
     fn = 0
+    # tn: could be determined on a character level but needed for P/R/F1
     for i in range(len(y_true)):
         tp_i, fp_i, fn_i = _co_reference_resolution_single(
             y_true[i],
@@ -346,14 +362,229 @@ def co_reference_resolution(
     if verbose:
         print(f'TP: {tp}, FP: {fp}, FN: {fn}')
 
-    precision = tp / (tp + fp)
-    recall = tp / (tp + fn)
-    f1_score = 2 * precision * recall / (precision + recall)
+    p, r, f1 = _calc_prec_rec_f1(tp, fp, fn)
 
     if verbose:
-        print(f'P: {precision}, R: {recall}, F1: {f1_score}')
+        print(f'P: {p}, R: {r}, F1: {f1}')
 
-    return precision, recall, f1_score
+    return p, r, f1
+
+
+def _get_entity_id_by_entity_surf_forms(
+    needle_entity, haystack_entity_dict,
+    partial_overlap=False, verbose=False
+):
+    """ For an entity to search (needle) for a set of annotations A
+        and a dictionary of entities to search in (haystack) for as set B.
+        Return the ID of the entity in the haystack that matches the needle.
+    """
+
+    found_eid = None
+    for surf_form in needle_entity['surface_forms']:
+        found_eid = _get_entity_id_by_surf_form_offset(
+            surf_form['start'], surf_form['end'],
+            haystack_entity_dict,
+            partial_overlap,
+            verbose
+        )
+        if found_eid is not None:
+            break
+
+    return found_eid
+
+
+def _get_entity_id_by_surf_form_offset(
+    surf_start, surf_end, entity_dict,
+    partial_overlap=False, verbose=False
+):
+    """ For a dictionary of entities (e_id, e), figure out if
+        a surface form is part of an entity and return its ID
+    """
+
+    for e_id, e in entity_dict.items():
+        # check each surface form of the predicted entity
+        for surf in e['surface_forms']:
+            if _spans_match(
+                surf_start, surf_end,
+                surf['start'], surf['end'],
+                partial_overlap
+            ):
+                return e_id
+
+    return None
+
+
+def _get_realtion_target(
+    source_e_id, relation_dict, verbose=False
+):
+    """ For a dictionary of relations (r_id, r), figure out if
+        a source entity is part of a relation and return its target entity ID
+    """
+
+    for r_id, r in relation_dict.items():
+        if r['source'] == source_e_id:
+            return r['target']
+
+    return None
+
+
+def _relation_extraction_single(
+    y_true, y_pred, partial_overlap=False, verbose=False
+):
+    """ For a single paragraph, determine TP, FP, FN for relation extraction
+    """
+
+    tp = 0
+    fp = 0
+    fn = 0
+
+    # determine TP and FN
+    for rel_id, rel_true in y_true['annotation']['relations'].items():
+        # source entity in groud truth relation
+        from_true_entity = y_true['annotation']['entities'][rel_true['source']]
+        # target entity in groud truth relation
+        to_true_entity = y_true['annotation']['entities'][rel_true['target']]
+        # identify matching entity in predicted entities
+        from_pred_entity_id = _get_entity_id_by_entity_surf_forms(
+            from_true_entity, y_pred['annotation']['entities'],
+            partial_overlap, verbose
+        )
+        if from_pred_entity_id is None:
+            # source entity not found
+            if verbose:
+                print(
+                    f'FN: true source entity {from_true_entity["id"]} '
+                    f'not found'
+                )
+            fn += 1
+            continue
+        to_pred_entity_id = _get_realtion_target(
+            from_pred_entity_id, y_pred['annotation']['relations'],
+            verbose
+        )
+        if to_pred_entity_id is None:
+            # source entity found but not in a relation
+            if verbose:
+                print((
+                    f'FN: true source entity {from_true_entity["id"]} '
+                    f'found but not in a relation'
+                ))
+            fn += 1
+            continue
+        # source entity found in a relation
+        # check if it matches the ground truth target entity
+        check_eid1 = _get_entity_id_by_entity_surf_forms(
+            to_true_entity, y_pred['annotation']['entities'],
+            partial_overlap, verbose
+        )
+        if check_eid1 is None:
+            # relation to wrong target entity
+            if verbose:
+                print((
+                    f'FN: predicted relation {from_pred_entity_id} -> '
+                    f'{to_pred_entity_id} does not match ground truth '
+                ))
+            fn += 1
+        else:
+            # relation to correct target entity
+            if verbose:
+                print((
+                    f'TP: {rel_true["source"]} -> {rel_true["target"]} '
+                    f'found in prediction as {from_pred_entity_id} -> '
+                    f'{to_pred_entity_id}'
+                ))
+            tp += 1
+
+    # determine FP
+    for rel_id, rel_pred in y_pred['annotation']['relations'].items():
+        # source entity in predicted relation
+        from_pred_entity = y_pred['annotation']['entities'][rel_pred['source']]
+        # target entity in predicted relation
+        to_pred_entity = y_pred['annotation']['entities'][rel_pred['target']]
+        # identify entity in ground truth matching predicted
+        from_true_entity_id = _get_entity_id_by_entity_surf_forms(
+            from_pred_entity, y_true['annotation']['entities'],
+            partial_overlap, verbose
+        )
+        if rel_id == 'r20':
+            print('>>>>> this <<<<<<')
+        if from_true_entity_id is None:
+            # source entity not found
+            if verbose:
+                print(
+                    f'FP: predicted source entity {from_pred_entity["id"]} '
+                    f'not found'
+                )
+            fp += 1
+            continue
+        # source entity found
+        # get its corresponding target entity
+        to_true_entity_id = _get_realtion_target(
+            from_true_entity_id, y_true['annotation']['relations'],
+            verbose
+        )
+        if to_true_entity_id is None:
+            # source entity found but not in a relation
+            if verbose:
+                print(
+                    f'FP: predicted source entity {from_pred_entity["id"]} '
+                    f'found but not in a relation'
+                )
+            fp += 1
+            continue
+        # check if it matches the predicted target entity
+        check_eid2 = _get_entity_id_by_entity_surf_forms(
+            to_pred_entity, y_true['annotation']['entities'],
+            partial_overlap, verbose
+        )
+        if check_eid2 is None:
+            # relation to wrong target entity
+            if verbose:
+                print(
+                    f'FP: predicted relation {from_pred_entity_id} -> '
+                    f'{to_pred_entity_id} does not match ground truth '
+                )
+            fp += 1
+        else:
+            # relation to correct target entity
+            # already counted as TP
+            if rel_id == 'r20':
+                print('all good')
+                # pred relation
+                print(f'pred: {from_pred_entity["surface_forms"][0]["surface_form"]} -> {to_pred_entity["surface_forms"][0]["surface_form"]}')
+                # print with entity ids
+                print(f'pred: {from_pred_entity["id"]} -> {to_pred_entity["id"]}')
+                # true relation
+                print(f'true: {y_true["annotation"]["entities"][from_true_entity_id]["surface_forms"][0]["surface_form"]} -> {y_true["annotation"]["entities"][to_true_entity_id]["surface_forms"][0]["surface_form"]}')
+                # print with entity ids
+                print(f'true: {from_true_entity_id} -> {to_true_entity_id}')
+                # check entity
+                print(f'check: {check_eid2}')
+            pass
+
+    return tp, fp, fn
+
+
+def relation_extraction(y_true, y_pred, partial_overlap=False, verbose=False):
+    """ Calculate precision, recall and f1-score for the prediction of
+        relations between entities (not surface forms)
+    """
+
+    tp = 0
+    fp = 0
+    fn = 0
+    # tn: could be determined on a character level but needed for P/R/F1
+    for i in range(len(y_true)):
+        tp_i, fp_i, fn_i = _relation_extraction_single(
+            y_true[i], y_pred[i], partial_overlap, verbose
+        )
+        tp += tp_i
+        fp += fp_i
+        fn += fn_i
+
+    p, r, f1 = _calc_prec_rec_f1(tp, fp, fn)
+
+    return p, r, f1
 
 
 def full(y_true, y_pred):
@@ -382,6 +613,13 @@ def full(y_true, y_pred):
             y_true, y_pred, partial_overlap=partial_overlap
         )
         print('Co-ref resol.')
+        print(f'P: {p:.3f}, R: {r:.3f}, F1: {f1:.3f}')
+
+        # relation extraction
+        p, r, f1 = relation_extraction(
+            y_true, y_pred, partial_overlap=partial_overlap, verbose=True
+        )
+        print('Rel. extr.')
         print(f'P: {p:.3f}, R: {r:.3f}, F1: {f1:.3f}')
 
 
