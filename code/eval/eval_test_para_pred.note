@@ -15,6 +15,9 @@ modifications
           (#ee6b8954-71ff-42df-bc49-4eadfd4adc97)
     - missing surface from / missing co-reference relation
         - remove second mention of “FFNs” (#601bfd1b-6e9c-4f38-af1b-582839e3b664)
+    - wrong surface form / co-reference
+        - add bogus surface form “mystem” to a1 “system”
+          (#b2d4d4a5-5f8d-40e2-bd67-6f3afc608a6c)
     - missing relation
         - in “We use 0.4 variational dropout”
         - remove relation r6 between 0.4 and variational dropout
