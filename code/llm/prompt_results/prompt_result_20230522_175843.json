@@ -1,0 +1,43 @@
+{
+    "timestamp": "20230522_175843",
+    "prompt": "In the context of machine learning and related fields, does the Input Text below menion any numerical quantities?\n\n[Input Text start]\nWe divide our 438 annotated documents into training (70%), validation (30%) and test set (30%). The base document representation of our model is formed by SciBERT-base [4] and BiLSTM with 128-d hidden state. We use a dropout of 0.2 after BiLSTM embeddings. All feedforward networks are composed of two hidden layers, each of dimension 128 with gelu activation and with a dropout of 0.2 between layers. For additive attention layer in span representation, we collapse the token embeddings to scalars by passing through the feedforward layer with 128-d hidden state and performing a softmax. We train our model for 30 epochs using Adam optimizer with 1e-3 as learning rate for all non BERT weights and 2e-5 for BERT weights. We use early stopping with a patience value of 7 on the validation set using relation extraction F1 score. All our models were trained using 48Gb Quadro RTX 8000 GPUs. The multitask model takes approximately 3\n[Input Text end]\n\nOutput only either \"yes\" or \"no\".\n\nOutput:\n",
+    "params": {
+        "model": "text-davinci-003",
+        "max_tokens": 512,
+        "temperature": 0.0,
+        "top_p": 1,
+        "n": 1,
+        "logprobs": 0,
+        "echo": false
+    },
+    "completion": {
+        "id": "cmpl-7J2DjvPAQ03o2c2udZw33AwjJ3XTZ",
+        "object": "text_completion",
+        "created": 1684771123,
+        "model": "text-davinci-003",
+        "choices": [
+            {
+                "text": "Yes",
+                "index": 0,
+                "logprobs": {
+                    "tokens": [
+                        "Yes"
+                    ],
+                    "token_logprobs": [
+                        -0.015106994
+                    ],
+                    "top_logprobs": null,
+                    "text_offset": [
+                        1128
+                    ]
+                },
+                "finish_reason": "stop"
+            }
+        ],
+        "usage": {
+            "prompt_tokens": 268,
+            "completion_tokens": 1,
+            "total_tokens": 269
+        }
+    }
+}

@@ -1,0 +1,29 @@
+* entity scope
+    * requiring completion to contain entity name and type
+      (instead of just the entity) prevented output of only a list
+      of all entity types present in text
+    * in end2end (non-chain) setting, putting entity types in brackets
+      in YAML *and* requiring output of entity type did non prevent
+      “input embeddings” being predicted as an entity (type model)
+* in YAML output
+    * requiring a “has_x” before a list of the x’s prevents “forced output”
+    * adding “/null” to value and context for parameters prevents “forced output”
+      of contexts
+* end to end also promising
+    * worked well on positive case
+    * worked well on entities but no params/vals case
+    * on nothing cases was mixed -> TODO: re-try with prompt chain
+* surface forms
+    * LaTeX can get parsed (in input text: “\(\lambda _{\text{C}}=0.3\)” but in
+      output “name: λC, value: 0.3”)
+    * chaning output “<parameter name>” to “<verbatim parameter name>” does
+      not prevent “\lambda _{\text{C}}” be output as “λC”
+* misc
+    * saying “LaTeX Input Text” instead of just “Input Text” made context
+      be detcted correctly in the case of “\lambda _{\text{C}}”
+
+
+TODOs:
+    - script for annotated paragraph to YAML output (LLM prompt example)
+    - script for parsing LLM YAML output
+    - script for evaluation
