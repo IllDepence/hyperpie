@@ -388,6 +388,10 @@ def _get_entity_id_by_entity_surf_forms(
             verbose
         )
         if found_eid is not None:
+            # NOTE: we assume there is just one matching entity, but
+            #       theoretically there can be multiple. I.e. needle
+            #       having two surface forms which, in haystack, are
+            #       associated with two different entities.
             break
 
     return found_eid
@@ -414,18 +418,21 @@ def _get_entity_id_by_surf_form_offset(
     return None
 
 
-def _get_realtion_target(
+def _get_realtion_targets(
     source_e_id, relation_dict, verbose=False
 ):
     """ For a dictionary of relations (r_id, r), figure out if
-        a source entity is part of a relation and return its target entity ID
+        a source entity is part of one or more relation and return
+        the list of target entity IDs
     """
+
+    targets = []
 
     for r_id, r in relation_dict.items():
         if r['source'] == source_e_id:
-            return r['target']
+            targets.append(r['target'])
 
-    return None
+    return targets
 
 
 def _relation_extraction_single(
@@ -458,11 +465,11 @@ def _relation_extraction_single(
                 )
             fn += 1
             continue
-        to_pred_entity_id = _get_realtion_target(
+        to_pred_entity_ids = _get_realtion_targets(
             from_pred_entity_id, y_pred['annotation']['relations'],
             verbose
         )
-        if to_pred_entity_id is None:
+        if len(to_pred_entity_ids) == 0:
             # source entity found but not in a relation
             if verbose:
                 print((
@@ -471,15 +478,21 @@ def _relation_extraction_single(
                 ))
             fn += 1
             continue
-        # source entity found in a relation
-        # check if it matches the ground truth target entity
-        check_eid1 = _get_entity_id_by_entity_surf_forms(
-            to_true_entity, y_pred['annotation']['entities'],
-            partial_overlap, verbose
-        )
-        # FIXME: need to check for overlap of
-        #        the ground truth target entity with the predicted one
-        if check_eid1 is None:
+        # source entity found in at least one relation
+        # check one matches the ground truth target entity
+        found_matching_true_source = False
+        for to_pred_entity_id in to_pred_entity_ids:
+            to_pred_entity = y_pred['annotation']['entities'][
+                to_pred_entity_id
+            ]
+            check_eid = _get_entity_id_by_entity_surf_forms(
+                to_pred_entity, y_true['annotation']['entities'],
+                partial_overlap, verbose
+            )
+            if check_eid == to_true_entity['id']:
+                found_matching_true_source = True
+                break
+        if not found_matching_true_source:
             # relation to wrong target entity
             if verbose:
                 print((
@@ -492,7 +505,7 @@ def _relation_extraction_single(
             if verbose:
                 print((
                     f'TP: {rel_true["source"]} -> {rel_true["target"]} '
-                    f'found in prediction as {from_pred_entity_id} -> '
+                    f'found in prediction as\n    {from_pred_entity_id} -> '
                     f'{to_pred_entity_id}'
                 ))
             tp += 1
@@ -508,8 +521,6 @@ def _relation_extraction_single(
             from_pred_entity, y_true['annotation']['entities'],
             partial_overlap, verbose
         )
-        if rel_id == 'r20':
-            print('>>>>> this <<<<<<')
         if from_true_entity_id is None:
             # source entity not found
             if verbose:
@@ -521,11 +532,11 @@ def _relation_extraction_single(
             continue
         # source entity found
         # get its corresponding target entity
-        to_true_entity_id = _get_realtion_target(
+        to_true_entity_ids = _get_realtion_targets(
             from_true_entity_id, y_true['annotation']['relations'],
             verbose
         )
-        if to_true_entity_id is None:
+        if len(to_true_entity_ids) == 0:
             # source entity found but not in a relation
             if verbose:
                 print(
@@ -534,12 +545,21 @@ def _relation_extraction_single(
                 )
             fp += 1
             continue
-        # check if it matches the predicted target entity
-        check_eid2 = _get_entity_id_by_entity_surf_forms(
-            to_pred_entity, y_true['annotation']['entities'],
-            partial_overlap, verbose
-        )
-        if check_eid2 is None:
+        # source entity found in at least one relation
+        # check if one matches the predicted target entity
+        found_matching_pred_source = False
+        for to_true_entity_id in to_true_entity_ids:
+            to_true_entity = y_true['annotation']['entities'][
+                to_true_entity_id
+            ]
+            check_eid = _get_entity_id_by_entity_surf_forms(
+                to_true_entity, y_pred['annotation']['entities'],
+                partial_overlap, verbose
+            )
+            if check_eid == to_pred_entity['id']:
+                found_matching_pred_source = True
+                break
+        if not found_matching_pred_source:
             # relation to wrong target entity
             if verbose:
                 print(
@@ -550,18 +570,6 @@ def _relation_extraction_single(
         else:
             # relation to correct target entity
             # already counted as TP
-            if rel_id == 'r20':
-                print('all good')
-                # pred relation
-                print(f'pred: {from_pred_entity["surface_forms"][0]["surface_form"]} -> {to_pred_entity["surface_forms"][0]["surface_form"]}')
-                # print with entity ids
-                print(f'pred: {from_pred_entity["id"]} -> {to_pred_entity["id"]}')
-                # true relation
-                print(f'true: {y_true["annotation"]["entities"][from_true_entity_id]["surface_forms"][0]["surface_form"]} -> {y_true["annotation"]["entities"][to_true_entity_id]["surface_forms"][0]["surface_form"]}')
-                # print with entity ids
-                print(f'true: {from_true_entity_id} -> {to_true_entity_id}')
-                # check entity
-                print(f'check: {check_eid2}')
             pass
 
     return tp, fp, fn
@@ -619,7 +627,7 @@ def full(y_true, y_pred):
 
         # relation extraction
         p, r, f1 = relation_extraction(
-            y_true, y_pred, partial_overlap=partial_overlap, verbose=True
+            y_true, y_pred, partial_overlap=partial_overlap
         )
         print('Rel. extr.')
         print(f'P: {p:.3f}, R: {r:.3f}, F1: {f1:.3f}')
@@ -632,5 +640,13 @@ if __name__ == '__main__':
 
     y_true = json.load(open(sys.argv[1]))
     y_pred = json.load(open(sys.argv[2]))
+
+    # make sure ground truth and prediction have the same length
+    if len(y_true) != len(y_pred):
+        print((
+            f'Error: ground truth and prediction have different lengths: '
+            f'{len(y_true)} != {len(y_pred)}'
+        ))
+        sys.exit(1)
 
     full(y_true, y_pred)
