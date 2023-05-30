@@ -1,9 +1,12 @@
 """ Deal with LLM output and make it compatible with the evaluation script.
 """
 
+import re
 import sys
 import json
+import uuid
 import yaml
+from collections import OrderedDict
 
 
 # LLM prompt output format (YAML)
@@ -55,42 +58,64 @@ def surface_form_dict(s_id, surf_form, start, end):
     """ Create a surface form dict.
     """
 
-    surface_form = {
+    surface_form = OrderedDict({
       "id": s_id,
       "surface_form": surf_form,
       "start": start,
       "end": end
-    }
+    })
 
     return surface_form
 
 
-def annotation_dict(e_id, surf_id):
-    """ Create an annotation dict.
+def entity_dict(e_id, e_type):
+    """ Create an entity dict.
     """
 
-    annot = {
+    annot = OrderedDict({
       "id": e_id,
-      "type": "",
+      "type": e_type,
       "subtype": None,
       "surface_forms":
       [
       ]
-    }
+    })
 
     return annot
 
 
-def relation_dict(r_id, source_id, target_id):
+def relation_evidence_dict(src_srf, trg_srf):
+    """ Create a relation evidence dict.
+    """
+
+    relation_evidence = OrderedDict({
+        "id": str(uuid.uuid4()),
+        "source_surface_form": src_srf["id"],
+        "target_surface_form": trg_srf["id"],
+        "evidence_sentence": None,
+        "start": None,
+        "end": None
+    })
+
+    return relation_evidence
+
+
+def relation_dict(src_a_id, trg_a_id, src_srfs, trg_srfs):
     """ Create a relation dict.
     """
 
-    relation = {
-        "id": r_id,
-        "source": source_id,
-        "target": target_id,
+    relation = OrderedDict({
+        "id": str(uuid.uuid4()),
+        "source": src_a_id,
+        "target": trg_a_id,
         "evidences": []
-    }
+    })
+
+    for src_srf_id in src_srfs:
+        for trg_srf_id in trg_srfs:
+            relation["evidences"].append(
+                relation_evidence_dict(src_srf_id, trg_srf_id)
+            )
 
     return relation
 
@@ -99,7 +124,7 @@ def empty_para_annotation():
     """ Create an empty annotation dict.
     """
 
-    empty_para_annot = {
+    empty_para_annot = OrderedDict({
       "annotator_id": "",
       "document_id": "",
       "paragraph_index": -1,
@@ -110,12 +135,43 @@ def empty_para_annotation():
         "relations": {}
       },
       "annotation_raw": []
-    }
+    })
 
     return empty_para_annot
 
 
-def convert(llm_output_yaml):
+def find_surface_forms_in_para(para, e_name):
+    """ Find all surface forms of an entity in a paragraph.
+
+    Args:
+        para (str): Paragraph text.
+        e_name (str): Entity name.
+
+    Returns:
+        list: List of dicts with surface form information.
+    """
+
+    # use regex to identify the start and end offset of
+    # all occurrences of entity name in paragraph
+
+    surfs = []
+    for m in re.finditer(e_name, para):
+        start = m.start()
+        end = m.end()
+        surf_id = f'{start}-{end}'
+        surfs.append(
+            surface_form_dict(
+                surf_id,
+                e_name,
+                start,
+                end
+            )
+         )
+
+    return surfs
+
+
+def convert(para, llm_output_yaml):
     """ Convert LLM output to evaluation script input format.
 
     Args:
@@ -223,14 +279,83 @@ def convert(llm_output_yaml):
     # coarse structure checking done
     # from hereon parse entity/relation dicts and build output
     # compatible with eval script
+    print('coarse structure looks good :)')
 
-    for artf in llm_artifact_list:
+    for artf_wrapper in llm_artifact_list:
         # build entity and relation dicts
         # - probably need to find surface foms in text to assign
         #   offsets
         # - might become tricky to deal with “overlapping” parameter
         #   entities mentioned for multiple artifacts
-        pass
+
+        # unwrap weird YAML->JSON conversion structure
+        artf = artf_wrapper[list(artf_wrapper.keys())[0]]
+
+        # create the artifact entity
+        artif_name = artf.get('name', None)
+        if artif_name is None:
+            print(f'No name for artifact: {artf}')
+            continue
+        assert artif_name not in out['annotation']['entities'].keys()
+        # find surface forms
+        artif_annot = entity_dict(artif_name, 'a')
+        artif_surfs = find_surface_forms_in_para(
+            para,
+            artif_name
+        )
+        artif_annot['surface_forms'] = artif_surfs
+        out['annotation']['entities'][artif_name] = artif_annot
+
+        # check for parameters
+        if not artf.get('has_parameters', False):
+            # no parameters, just add artifact entity
+            out['annotation']['entities'][artif_name] = artif_annot
+            continue
+        # create parameter entities
+        for prm_wrapper in artf['parameters']:
+            # unwrap weird YAML->JSON conversion structure
+            prm = prm_wrapper[list(prm_wrapper.keys())[0]]
+            prm_name = prm.get('name', None)
+            if prm_name is None:
+                print(f'No name for parameter: {prm}')
+                continue
+            prm_annot = entity_dict(prm_name, 'p')
+            prm_surfs = find_surface_forms_in_para(
+                para,
+                prm_name
+            )
+            prm_annot['surface_forms'] = prm_surfs
+            # add parameter entity
+            out['annotation']['entities'][prm_name] = prm_annot
+            # add relation between parameter and artifact
+            rel_annot = relation_dict(
+                artif_name,
+                prm_name,
+                artif_surfs,
+                prm_surfs
+            )
+            out['annotation']['relations'][rel_annot["id"]] = rel_annot
+            import pprint
+            pprint.pprint(out)
+            sys.exit(0)
+        # for param in artf['parameters']:
+        #     param_name = param.get('name', None)
+        #     if param_name is None:
+        #         print(f'No name for parameter: {param}')
+        #         continue
+        #     assert param_name not in out['annotation']['entities'].keys()
+        #     param_annot = entity_dict(param_name, 'p')
+        #     param_surfs = find_surface_forms_in_para(
+        #         para,
+        #         param_name
+        #     )
+        #     param_annot['surface_forms'] = param_surfs
+
+
+
+        # TODO continue here
+        # 2. create entities for all parameters
+        # 3. create entities for all values
 
     # example
     # [{'entity1': {'name': 'SciBERT-base',
@@ -255,4 +380,4 @@ if __name__ == '__main__':
 
     llm_output = llm_output_dict['completion']['choices'][0]['text']
 
-    convert(llm_output)
+    convert(llm_output_dict['paragraph'], llm_output)
