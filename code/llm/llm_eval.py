@@ -9,51 +9,6 @@ import yaml
 from collections import OrderedDict
 
 
-# LLM prompt output format (YAML)
-#
-# ---
-# - text_contains_entities: true/false
-# - entities (datasets, models, methods, loss functions, regularization techniques):  # noqa: E501
-#     - entity<N>:
-#         name: <entity name>
-#         type: <entity type>
-#         has_parameters: true/false
-#         parameters:
-#             - parameter<N>:
-#                 name: <parameter name>
-#                 value: <parameter value>/null
-#                 context: <value context>/null
-# ...
-
-# Evaluation script input format (JSON)
-#
-# list of dicts w/
-# "annotation": {
-#     "entities": {
-#         "aN": {
-#             "id": <entity ID>,
-#             "surface_forms": [
-#                 {
-#                     "id": <surface form ID>,
-#                     "surface_form": <entity name>,
-#                     "start": <offset start>,
-#                     "end": <offset end>
-#                 },
-#                 ...
-#             ]
-#         },
-#         ...
-#     }
-#     "relations": {
-#         "rN": {
-#             "source": <source entity ID>,
-#             "target": <target entity ID>,
-#          },
-#          ...
-#     }
-# }
-
-
 def surface_form_dict(s_id, surf_form, start, end):
     """ Create a surface form dict.
     """
@@ -171,7 +126,7 @@ def find_surface_forms_in_para(para, e_name):
     return surfs
 
 
-def convert(para, llm_output_yaml):
+def convert(para, llm_output_yaml, verbose=False):
     """ Convert LLM output to evaluation script input format.
 
     Args:
@@ -279,7 +234,8 @@ def convert(para, llm_output_yaml):
     # coarse structure checking done
     # from hereon parse entity/relation dicts and build output
     # compatible with eval script
-    print('coarse structure looks good :)')
+    if verbose:
+        print('coarse structure looks good :)')
 
     for artf_wrapper in llm_artifact_list:
         # build entity and relation dicts
@@ -329,45 +285,58 @@ def convert(para, llm_output_yaml):
             out['annotation']['entities'][prm_name] = prm_annot
             # add relation between parameter and artifact
             rel_annot = relation_dict(
-                artif_name,
                 prm_name,
-                artif_surfs,
+                artif_name,
+                prm_surfs,
+                artif_surfs
+            )
+            out['annotation']['relations'][rel_annot["id"]] = rel_annot
+            # check for a value
+            if prm.get('value', None) is None or prm['value'] == '':
+                continue
+            # add value entity
+            val_name = str(prm['value'])
+            val_annot = entity_dict(val_name, 'v')
+            val_surfs = find_surface_forms_in_para(
+                para,
+                val_name
+            )
+            val_annot['surface_forms'] = val_surfs
+            out['annotation']['entities'][val_name] = val_annot
+            # add relation between parameter and value
+            rel_annot = relation_dict(
+                val_name,
+                prm_name,
+                val_surfs,
                 prm_surfs
             )
             out['annotation']['relations'][rel_annot["id"]] = rel_annot
-            import pprint
-            pprint.pprint(out)
-            sys.exit(0)
-        # for param in artf['parameters']:
-        #     param_name = param.get('name', None)
-        #     if param_name is None:
-        #         print(f'No name for parameter: {param}')
-        #         continue
-        #     assert param_name not in out['annotation']['entities'].keys()
-        #     param_annot = entity_dict(param_name, 'p')
-        #     param_surfs = find_surface_forms_in_para(
-        #         para,
-        #         param_name
-        #     )
-        #     param_annot['surface_forms'] = param_surfs
+            # check for a context
+            if prm.get('context', None) is None or prm['context'] == '':
+                continue
+            # add context entity
+            ctx_name = prm['context']
+            ctx_annot = entity_dict(ctx_name, 'c')
+            ctx_surfs = find_surface_forms_in_para(
+                para,
+                ctx_name
+            )
+            ctx_annot['surface_forms'] = ctx_surfs
+            out['annotation']['entities'][ctx_name] = ctx_annot
+            # add relation between value and context
+            rel_annot = relation_dict(
+                ctx_name,
+                val_name,
+                ctx_surfs,
+                val_surfs
+            )
+            out['annotation']['relations'][rel_annot["id"]] = rel_annot
 
+    if verbose:
+        print(f'Found {len(out["annotation"]["entities"])} entities')
+        print(f'Found {len(out["annotation"]["relations"])} relations')
 
-
-        # TODO continue here
-        # 2. create entities for all parameters
-        # 3. create entities for all values
-
-    # example
-    # [{'entity1': {'name': 'SciBERT-base',
-    #    'type': 'model',
-    #    'has_parameters': False,
-    #    'parameters': None}},
-    #  {'entity2': {'name': 'BiLSTM',
-    #    'type': 'model',
-    #    'has_parameters': True,
-    #    'parameters': [{'parameter1': {'name': 'hidden state',
-    #       'value': '128-d',
-    #       'context': None}}]}},
+    return out
 
 
 if __name__ == '__main__':
@@ -375,9 +344,19 @@ if __name__ == '__main__':
         print('Usage: python llm_eval.py <llm_output>')
         sys.exit(1)
 
+    fn_in = sys.argv[1]
+
     with open(sys.argv[1], 'r') as f:
         llm_output_dict = json.load(f)
 
     llm_output = llm_output_dict['completion']['choices'][0]['text']
 
-    convert(llm_output_dict['paragraph'], llm_output)
+    llm_out_conv = convert(
+        llm_output_dict['paragraph'], llm_output, verbose=True
+    )
+
+    fn_out = fn_in.replace('.json', '_conv.json')
+
+    print(f'Writing converted output to {fn_out}')
+    with open(fn_out, 'w') as f:
+        json.dump(llm_out_conv, f, indent=2)
