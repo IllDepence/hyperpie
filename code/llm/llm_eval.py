@@ -52,6 +52,8 @@ import yaml
 
 
 def surface_form_dict(s_id, surf_form, start, end):
+    """ Create a surface form dict.
+    """
 
     surface_form = {
       "id": s_id,
@@ -64,6 +66,8 @@ def surface_form_dict(s_id, surf_form, start, end):
 
 
 def annotation_dict(e_id, surf_id):
+    """ Create an annotation dict.
+    """
 
     annot = {
       "id": e_id,
@@ -78,6 +82,8 @@ def annotation_dict(e_id, surf_id):
 
 
 def relation_dict(r_id, source_id, target_id):
+    """ Create a relation dict.
+    """
 
     relation = {
         "id": r_id,
@@ -90,10 +96,7 @@ def relation_dict(r_id, source_id, target_id):
 
 
 def empty_para_annotation():
-    """ Return empty annotation dict.
-
-    Returns:
-        dict: Empty annotation dict.
+    """ Create an empty annotation dict.
     """
 
     empty_para_annot = {
@@ -122,6 +125,7 @@ def convert(llm_output_yaml):
         str: Evaluation script input in JSON format.
     """
 
+    # Check if LLM output is valid YAML
     try:
         llm_output = yaml.load(llm_output_yaml, Loader=yaml.Loader)
     except yaml.YAMLError as e:
@@ -129,6 +133,7 @@ def convert(llm_output_yaml):
         print(e)
         return None
 
+    # Check if LLM output adheres to expected format
     has_entities_key = 'text_contains_entities'
     if type(llm_output) != list:
         # unexpected format
@@ -138,8 +143,10 @@ def convert(llm_output_yaml):
         )
         sys.exit(1)
     elif len(llm_output) == 1:
-        # probably expected format
+        # probably expected format (the info that nothing
+        # needs to be annotated in the paragraph)
         try:
+            # check for expected format
             assert (
                 has_entities_key in llm_output[0].keys() and
                 type(llm_output[0][has_entities_key]) == bool
@@ -151,7 +158,8 @@ def convert(llm_output_yaml):
             )
             sys.exit(1)
     elif len(llm_output) != 2:
-        # unexpected format
+        # unexpected format (if it’s not of length 1 or 2, we’re not
+        # sure how to deal with it)
         print(
             f'Expected list of length 1 or 2 as top-level YAML element, '
             f'got {llm_output}'
@@ -176,6 +184,7 @@ def convert(llm_output_yaml):
 
     llm_edict = llm_output[1]
 
+    llm_artifact_list = None
     if type(llm_edict) != dict:
         print(
             f'Expected dict as second element of LLM output, '
@@ -183,9 +192,14 @@ def convert(llm_output_yaml):
         )
         if type(llm_edict) == list:
             print('It is a list. Assuming it is a list of dicts.')
-            # TODO: continue here
             #      - check that it is a list of dicts
-            #      - treat it as the list of entity dicts
+            if not all([type(e) == dict for e in llm_edict]):
+                print(
+                    f'Not all elements of list are dicts: {llm_edict}'
+                )
+                sys.exit(1)
+            print('assuming it is a list of entity dicts')
+            llm_artifact_list = llm_edict
     if len(llm_edict.keys()) == 0:
         print(
             f'No entities even though {has_entities_key} is true. '
@@ -193,14 +207,30 @@ def convert(llm_output_yaml):
         return out
     if len(llm_edict.keys()) > 1:
         print(
-            f'More than one entity key in LLM output: {llm_edict.keys()}.'
+            f'More than one entity key in LLM output: {llm_edict.keys()}. '
         )
+        if entity_key in llm_edict.keys():
+            print(f'Using key "{entity_key}" and ignoring rest')
     if entity_key not in llm_edict.keys():
         print(
             f'Expected key "{entity_key}" in LLM output, '
             f'got {llm_output}. Using first key.'
         )
-        llm_edict = llm_edict[list(llm_edict.keys())[0]]
+        llm_artifact_list = llm_edict[list(llm_edict.keys())[0]]
+    else:
+        llm_artifact_list = llm_edict[entity_key]
+
+    # coarse structure checking done
+    # from hereon parse entity/relation dicts and build output
+    # compatible with eval script
+
+    for artf in llm_artifact_list:
+        # build entity and relation dicts
+        # - probably need to find surface foms in text to assign
+        #   offsets
+        # - might become tricky to deal with “overlapping” parameter
+        #   entities mentioned for multiple artifacts
+        pass
 
     # example
     # [{'entity1': {'name': 'SciBERT-base',
