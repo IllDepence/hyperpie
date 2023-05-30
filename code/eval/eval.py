@@ -3,9 +3,6 @@
 
 import json
 import sys
-import numpy as np
-from sklearn.metrics import precision_recall_fscore_support, \
-        classification_report
 
 
 def _spans_match(a_start, a_end, b_start, b_end, overlap=False):

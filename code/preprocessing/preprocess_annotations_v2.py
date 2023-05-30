@@ -23,7 +23,6 @@
 
 import json
 import os
-import re
 import sys
 from collections import OrderedDict
 from nltk.tokenize import sent_tokenize
