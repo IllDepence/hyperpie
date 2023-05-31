@@ -1,0 +1,707 @@
+[{
+  "annotator_id": "",
+  "document_id": "",
+  "paragraph_index": -1,
+  "text": "",
+  "annotation": {
+    "entities": {
+      "BiLSTM": {
+        "id": "BiLSTM",
+        "type": "a",
+        "subtype": null,
+        "surface_forms": [
+          {
+            "id": "131-137",
+            "surface_form": "BiLSTM",
+            "start": 131,
+            "end": 137
+          }
+        ]
+      },
+      "hidden layers": {
+        "id": "hidden layers",
+        "type": "p",
+        "subtype": null,
+        "surface_forms": [
+          {
+            "id": "159-172",
+            "surface_form": "hidden layers",
+            "start": 159,
+            "end": 172
+          },
+          {
+            "id": "195-208",
+            "surface_form": "hidden layers",
+            "start": 195,
+            "end": 208
+          }
+        ]
+      },
+      "200": {
+        "id": "200",
+        "type": "v",
+        "subtype": null,
+        "surface_forms": [
+          {
+            "id": "143-146",
+            "surface_form": "200",
+            "start": 143,
+            "end": 146
+          }
+        ]
+      },
+      "dimensional": {
+        "id": "dimensional",
+        "type": "c",
+        "subtype": null,
+        "surface_forms": [
+          {
+            "id": "147-158",
+            "surface_form": "dimensional",
+            "start": 147,
+            "end": 158
+          }
+        ]
+      },
+      "variational dropout": {
+        "id": "variational dropout",
+        "type": "p",
+        "subtype": null,
+        "surface_forms": [
+          {
+            "id": "244-263",
+            "surface_form": "variational dropout",
+            "start": 244,
+            "end": 263
+          }
+        ]
+      },
+      "0.4": {
+        "id": "0.4",
+        "type": "v",
+        "subtype": null,
+        "surface_forms": [
+          {
+            "id": "240-243",
+            "surface_form": "0.4",
+            "start": 240,
+            "end": 243
+          },
+          {
+            "id": "284-287",
+            "surface_form": "0.4",
+            "start": 284,
+            "end": 287
+          },
+          {
+            "id": "489-492",
+            "surface_form": "0.4",
+            "start": 489,
+            "end": 492
+          }
+        ]
+      },
+      "FFNNs": {
+        "id": "FFNNs",
+        "type": "a",
+        "subtype": null,
+        "surface_forms": [
+          {
+            "id": "182-187",
+            "surface_form": "FFNNs",
+            "start": 182,
+            "end": 187
+          },
+          {
+            "id": "304-309",
+            "surface_form": "FFNNs",
+            "start": 304,
+            "end": 309
+          }
+        ]
+      },
+      "150": {
+        "id": "150",
+        "type": "v",
+        "subtype": null,
+        "surface_forms": [
+          {
+            "id": "212-215",
+            "surface_form": "150",
+            "start": 212,
+            "end": 215
+          }
+        ]
+      },
+      "dropout": {
+        "id": "dropout",
+        "type": "p",
+        "subtype": null,
+        "surface_forms": [
+          {
+            "id": "256-263",
+            "surface_form": "dropout",
+            "start": 256,
+            "end": 263
+          },
+          {
+            "id": "288-295",
+            "surface_form": "dropout",
+            "start": 288,
+            "end": 295
+          },
+          {
+            "id": "319-326",
+            "surface_form": "dropout",
+            "start": 319,
+            "end": 326
+          }
+        ]
+      },
+      "input embeddings": {
+        "id": "input embeddings",
+        "type": "a",
+        "subtype": null,
+        "surface_forms": [
+          {
+            "id": "335-351",
+            "surface_form": "input embeddings",
+            "start": 335,
+            "end": 351
+          }
+        ]
+      },
+      "0.5": {
+        "id": "0.5",
+        "type": "v",
+        "subtype": null,
+        "surface_forms": [
+          {
+            "id": "315-318",
+            "surface_form": "0.5",
+            "start": 315,
+            "end": 318
+          }
+        ]
+      },
+      "beam pruning": {
+        "id": "beam pruning",
+        "type": "a",
+        "subtype": null,
+        "surface_forms": [
+          {
+            "id": "387-399",
+            "surface_form": "beam pruning",
+            "start": 387,
+            "end": 399
+          }
+        ]
+      },
+      "\u03bbC": {
+        "id": "\u03bbC",
+        "type": "p",
+        "subtype": null,
+        "surface_forms": []
+      },
+      "0.3": {
+        "id": "0.3",
+        "type": "v",
+        "subtype": null,
+        "surface_forms": [
+          {
+            "id": "430-433",
+            "surface_form": "0.3",
+            "start": 430,
+            "end": 433
+          }
+        ]
+      },
+      "coreference resolution": {
+        "id": "coreference resolution",
+        "type": "c",
+        "subtype": null,
+        "surface_forms": [
+          {
+            "id": "440-462",
+            "surface_form": "coreference resolution",
+            "start": 440,
+            "end": 462
+          }
+        ]
+      },
+      "\u03bbR": {
+        "id": "\u03bbR",
+        "type": "p",
+        "subtype": null,
+        "surface_forms": []
+      },
+      "relation extraction": {
+        "id": "relation extraction",
+        "type": "c",
+        "subtype": null,
+        "surface_forms": [
+          {
+            "id": "499-518",
+            "surface_form": "relation extraction",
+            "start": 499,
+            "end": 518
+          }
+        ]
+      }
+    },
+    "relations": {
+      "8b5e5f53-80bf-4c9f-92d4-ee93bd5732cb": {
+        "id": "8b5e5f53-80bf-4c9f-92d4-ee93bd5732cb",
+        "source": "hidden layers",
+        "target": "BiLSTM",
+        "evidences": [
+          {
+            "id": "1b93b055-9f10-4737-96d5-12d7b4805a70",
+            "source_surface_form": "159-172",
+            "target_surface_form": "131-137",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          },
+          {
+            "id": "6690a620-f8f0-415d-a35c-366387933c10",
+            "source_surface_form": "195-208",
+            "target_surface_form": "131-137",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          }
+        ]
+      },
+      "5c645d8b-9fdc-43fb-a0f3-92efe1844bd6": {
+        "id": "5c645d8b-9fdc-43fb-a0f3-92efe1844bd6",
+        "source": "200",
+        "target": "hidden layers",
+        "evidences": [
+          {
+            "id": "4a417894-9258-479d-91ca-4a85efc41721",
+            "source_surface_form": "143-146",
+            "target_surface_form": "159-172",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          },
+          {
+            "id": "2a2e0ea0-83ce-4bad-8334-0602d97d330b",
+            "source_surface_form": "143-146",
+            "target_surface_form": "195-208",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          }
+        ]
+      },
+      "b5991836-6f8a-400d-9d73-d66b63cdc897": {
+        "id": "b5991836-6f8a-400d-9d73-d66b63cdc897",
+        "source": "dimensional",
+        "target": "200",
+        "evidences": [
+          {
+            "id": "cc8f503b-72e8-4e5f-9dc2-a3cbf08798fc",
+            "source_surface_form": "147-158",
+            "target_surface_form": "143-146",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          }
+        ]
+      },
+      "d9c966e0-9243-4a3b-910e-3d0cb699f6a3": {
+        "id": "d9c966e0-9243-4a3b-910e-3d0cb699f6a3",
+        "source": "variational dropout",
+        "target": "BiLSTM",
+        "evidences": [
+          {
+            "id": "8a798d6d-a800-47df-909f-8114545e3574",
+            "source_surface_form": "244-263",
+            "target_surface_form": "131-137",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          }
+        ]
+      },
+      "a3594222-f465-4632-ad01-a52055f5d55a": {
+        "id": "a3594222-f465-4632-ad01-a52055f5d55a",
+        "source": "0.4",
+        "target": "variational dropout",
+        "evidences": [
+          {
+            "id": "af81be34-0fbc-441f-a67e-c0b6fdc83ec1",
+            "source_surface_form": "240-243",
+            "target_surface_form": "244-263",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          },
+          {
+            "id": "dc4d38f6-39f3-4155-9e59-df81c2e42bf1",
+            "source_surface_form": "284-287",
+            "target_surface_form": "244-263",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          },
+          {
+            "id": "11b1ff05-d0f4-40bc-8a2b-cd00ac0e89af",
+            "source_surface_form": "489-492",
+            "target_surface_form": "244-263",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          }
+        ]
+      },
+      "ffe2ec2e-3905-49f9-b6a3-a29343fdf512": {
+        "id": "ffe2ec2e-3905-49f9-b6a3-a29343fdf512",
+        "source": "hidden layers",
+        "target": "FFNNs",
+        "evidences": [
+          {
+            "id": "91f5b205-06cf-4617-9e4e-257ee72c7dc5",
+            "source_surface_form": "159-172",
+            "target_surface_form": "182-187",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          },
+          {
+            "id": "00e0210b-f322-4b8e-9f2f-da4d10471932",
+            "source_surface_form": "159-172",
+            "target_surface_form": "304-309",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          },
+          {
+            "id": "e3041787-6915-42d1-9eac-3e613c5197f3",
+            "source_surface_form": "195-208",
+            "target_surface_form": "182-187",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          },
+          {
+            "id": "052ba374-5f06-467a-b086-93a8a00bddd4",
+            "source_surface_form": "195-208",
+            "target_surface_form": "304-309",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          }
+        ]
+      },
+      "47de3403-dff6-48c5-822b-8f68b7a7c2ca": {
+        "id": "47de3403-dff6-48c5-822b-8f68b7a7c2ca",
+        "source": "150",
+        "target": "hidden layers",
+        "evidences": [
+          {
+            "id": "12637297-85fc-46de-af9a-2c4e9ae7e093",
+            "source_surface_form": "212-215",
+            "target_surface_form": "159-172",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          },
+          {
+            "id": "b1cb9b28-719d-4165-8616-76507111985d",
+            "source_surface_form": "212-215",
+            "target_surface_form": "195-208",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          }
+        ]
+      },
+      "5a1d3ecb-bed4-4225-8a29-39c7e1aacc49": {
+        "id": "5a1d3ecb-bed4-4225-8a29-39c7e1aacc49",
+        "source": "dimensional",
+        "target": "150",
+        "evidences": [
+          {
+            "id": "72ee64ae-ea2a-47a7-8cbb-f2cf8a5e6dee",
+            "source_surface_form": "147-158",
+            "target_surface_form": "212-215",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          }
+        ]
+      },
+      "8e65e2dd-5a7b-4730-bd4d-1dcfb344b412": {
+        "id": "8e65e2dd-5a7b-4730-bd4d-1dcfb344b412",
+        "source": "dropout",
+        "target": "FFNNs",
+        "evidences": [
+          {
+            "id": "7e0ffa95-c283-4f2a-b2b3-6cd628f1778b",
+            "source_surface_form": "256-263",
+            "target_surface_form": "182-187",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          },
+          {
+            "id": "194423ae-3aaf-4b0a-a1cc-2e9fbac73810",
+            "source_surface_form": "256-263",
+            "target_surface_form": "304-309",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          },
+          {
+            "id": "dad60a39-2e53-4188-a266-326a466e0c5a",
+            "source_surface_form": "288-295",
+            "target_surface_form": "182-187",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          },
+          {
+            "id": "81f80e3a-87f6-4de2-953b-89e3464b3ea4",
+            "source_surface_form": "288-295",
+            "target_surface_form": "304-309",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          },
+          {
+            "id": "b7afd314-f1a2-4717-98eb-7cb54272be3e",
+            "source_surface_form": "319-326",
+            "target_surface_form": "182-187",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          },
+          {
+            "id": "8ae787c7-6939-4d67-9cbe-5ec278eaf1c6",
+            "source_surface_form": "319-326",
+            "target_surface_form": "304-309",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          }
+        ]
+      },
+      "9fc4ccb5-65f2-48ec-b53e-682945c515b2": {
+        "id": "9fc4ccb5-65f2-48ec-b53e-682945c515b2",
+        "source": "0.4",
+        "target": "dropout",
+        "evidences": [
+          {
+            "id": "c2e4699f-3ad4-49e1-8ff2-0a51ac3f9dcc",
+            "source_surface_form": "240-243",
+            "target_surface_form": "256-263",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          },
+          {
+            "id": "d4f739c2-75aa-45bb-ae2a-ff91ebf040f7",
+            "source_surface_form": "240-243",
+            "target_surface_form": "288-295",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          },
+          {
+            "id": "55fb2d5d-7622-461f-a5bb-311e7de6ad29",
+            "source_surface_form": "240-243",
+            "target_surface_form": "319-326",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          },
+          {
+            "id": "bb92f86f-8c9d-4fff-9b25-92af64201e78",
+            "source_surface_form": "284-287",
+            "target_surface_form": "256-263",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          },
+          {
+            "id": "0c8625d7-baa8-4f8b-abf4-8e2febdd3a86",
+            "source_surface_form": "284-287",
+            "target_surface_form": "288-295",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          },
+          {
+            "id": "71c87180-435f-407f-930a-89df4e627237",
+            "source_surface_form": "284-287",
+            "target_surface_form": "319-326",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          },
+          {
+            "id": "69451fb4-69bc-4648-9bc7-839dd8e9d5d9",
+            "source_surface_form": "489-492",
+            "target_surface_form": "256-263",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          },
+          {
+            "id": "05f5b0c2-7a25-4048-ba4a-12b597644323",
+            "source_surface_form": "489-492",
+            "target_surface_form": "288-295",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          },
+          {
+            "id": "276151e6-7885-4073-bb26-f1ea052f7c47",
+            "source_surface_form": "489-492",
+            "target_surface_form": "319-326",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          }
+        ]
+      },
+      "014c644b-4837-4da1-b0bc-155c467060e9": {
+        "id": "014c644b-4837-4da1-b0bc-155c467060e9",
+        "source": "dropout",
+        "target": "input embeddings",
+        "evidences": [
+          {
+            "id": "0ecd8e0c-e492-4e1a-8b39-aae2ab456294",
+            "source_surface_form": "256-263",
+            "target_surface_form": "335-351",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          },
+          {
+            "id": "47278468-6ae4-40b4-a8e6-641c161c4a73",
+            "source_surface_form": "288-295",
+            "target_surface_form": "335-351",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          },
+          {
+            "id": "5b609095-ddc2-4ff6-9db2-ef5eb825447c",
+            "source_surface_form": "319-326",
+            "target_surface_form": "335-351",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          }
+        ]
+      },
+      "f231dd32-688d-4b33-a338-d61f12e4a173": {
+        "id": "f231dd32-688d-4b33-a338-d61f12e4a173",
+        "source": "0.5",
+        "target": "dropout",
+        "evidences": [
+          {
+            "id": "a07872b2-0fe6-49db-bd52-be7fecfa7f3a",
+            "source_surface_form": "315-318",
+            "target_surface_form": "256-263",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          },
+          {
+            "id": "0fd94548-f6d4-4edb-b624-d153d593426e",
+            "source_surface_form": "315-318",
+            "target_surface_form": "288-295",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          },
+          {
+            "id": "daca78ec-5086-4483-80b0-6da51633b096",
+            "source_surface_form": "315-318",
+            "target_surface_form": "319-326",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          }
+        ]
+      },
+      "c8f97ec9-c9b0-4681-a046-f8d594c89b37": {
+        "id": "c8f97ec9-c9b0-4681-a046-f8d594c89b37",
+        "source": "\u03bbC",
+        "target": "beam pruning",
+        "evidences": []
+      },
+      "6508fe90-1ddc-41fc-8515-2ca5c5c2a3cf": {
+        "id": "6508fe90-1ddc-41fc-8515-2ca5c5c2a3cf",
+        "source": "0.3",
+        "target": "\u03bbC",
+        "evidences": []
+      },
+      "31d0a083-6cf6-4e0f-b40e-bfea709b7b1b": {
+        "id": "31d0a083-6cf6-4e0f-b40e-bfea709b7b1b",
+        "source": "coreference resolution",
+        "target": "0.3",
+        "evidences": [
+          {
+            "id": "431d98c9-4d56-4c53-a746-13e467a8772f",
+            "source_surface_form": "440-462",
+            "target_surface_form": "430-433",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          }
+        ]
+      },
+      "48d7dc47-364a-46bd-b504-e077eee7c22b": {
+        "id": "48d7dc47-364a-46bd-b504-e077eee7c22b",
+        "source": "\u03bbR",
+        "target": "beam pruning",
+        "evidences": []
+      },
+      "72af095c-93e1-4de3-803d-0d1fd1d8db0c": {
+        "id": "72af095c-93e1-4de3-803d-0d1fd1d8db0c",
+        "source": "0.4",
+        "target": "\u03bbR",
+        "evidences": []
+      },
+      "93a8d334-4265-4ec7-8407-46ddb989d28d": {
+        "id": "93a8d334-4265-4ec7-8407-46ddb989d28d",
+        "source": "relation extraction",
+        "target": "0.4",
+        "evidences": [
+          {
+            "id": "4c3167a8-eb9b-4f78-95f4-e79cbb3d779a",
+            "source_surface_form": "499-518",
+            "target_surface_form": "240-243",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          },
+          {
+            "id": "ad74a49a-b4ec-4c64-95b6-462070488c40",
+            "source_surface_form": "499-518",
+            "target_surface_form": "284-287",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          },
+          {
+            "id": "499dead7-61e4-4802-9a3a-5eb61c80be64",
+            "source_surface_form": "499-518",
+            "target_surface_form": "489-492",
+            "evidence_sentence": null,
+            "start": null,
+            "end": null
+          }
+        ]
+      }
+    }
+  },
+  "annotation_raw": []
+}
+]
