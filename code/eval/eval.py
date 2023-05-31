@@ -22,8 +22,12 @@ def _calc_prec_rec_f1(tp, fp, fn):
     """ Calculate precision, recall and f1-score
     """
 
-    p = tp / (tp + fp) if tp + fp > 0 else 0
-    r = tp / (tp + fn) if tp + fn > 0 else 0
+    # NOTE: treat cases with no true positives and
+    #       a correct prediction as perfect
+    #       (alternatively, a class of “no entity”
+    #        could be introduced)
+    p = tp / (tp + fp) if tp + fp > 0 else 1
+    r = tp / (tp + fn) if tp + fn > 0 else 1
     f1 = 2 * p * r / (p + r) if p + r > 0 else 0
 
     return p, r, f1
