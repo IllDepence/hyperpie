@@ -1,4 +1,19 @@
-""" Script for caculating evaluation metrics
+""" Caculate evaluation metrics
+
+    Use
+
+        eval.full(y_true, y_pred)
+
+    to calculate and print all metrics, or use any of
+
+        eval.entity_recognition(...)
+        eval.entity_type_classification(...)
+        eval.coreference_resolution(...)
+        eval.relation_extraction(...)
+
+        with parameters y_true, y_pred and partial_overlap
+
+    to calculate and return a single metric.
 """
 
 import json

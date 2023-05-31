@@ -1,4 +1,10 @@
 """ Deal with LLM output and make it compatible with the evaluation script.
+
+    Use
+
+        convert(input_paragraph, llm_output_yaml)
+
+    to convert LLM output to the format expected by the evaluation function.
 """
 
 import re

@@ -1,9 +1,12 @@
+""" Utility functions
+"""
+
 import sys
 import json
 
 
 def print_completion(saved_completion):
-    """ Print a completion saved by playground.py:prompt_and_save()
+    """ Print a completion saved by prompt_and_save()
     """
 
     print('- - - Timestamp - - -')

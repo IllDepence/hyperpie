@@ -1,5 +1,6 @@
 *.swp
+.ipynb_checkpoints
+__pycache__
 venv
 api_key
 api_organization
-.ipynb_checkpoints
