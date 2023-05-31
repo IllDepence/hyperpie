@@ -19,6 +19,10 @@ def filter_full_annots(para, verbose=False):
             (artifact ← parameter ← value ← context)
 
         All other annotations are removed.
+
+
+        Returns a tuple of the filtered paragraph and the
+        number of full triples found.
     """
 
     filtered_para = {}
@@ -39,6 +43,7 @@ def filter_full_annots(para, verbose=False):
     keppers_entities = []
     keppers_relations = []
 
+    num_full_triples = 0
     ents = para['annotation']['entities']
     rels = para['annotation']['relations']
     for rel_ap_id, rel_ap in rels.items():
@@ -66,6 +71,7 @@ def filter_full_annots(para, verbose=False):
                     rel_pv_id   # parameter <- value
                 ]
             )
+            num_full_triples += 1
             for rel_vc_id, rel_vc in rels.items():
                 # look for optional matching value <- context
                 if rel_pv['source'] != rel_vc['target']:
@@ -105,7 +111,7 @@ def filter_full_annots(para, verbose=False):
         print(f'  {len(filtered_para["annotation"]["relations"])} relations')
         print()
 
-    return filtered_para
+    return filtered_para, num_full_triples
 
 
 if __name__ == '__main__':
@@ -118,8 +124,17 @@ if __name__ == '__main__':
         paras = json.load(f)
 
     filtered_paras = []
+    num_full_triples = 0
+    num_paras_with_full_triples = 0
     for para in paras:
-        filtered_paras.append(filter_full_annots(para, verbose=True))
+        filtered_para, num_full_triples_para = filter_full_annots(para)
+        num_full_triples += num_full_triples_para
+        if num_full_triples_para > 0:
+            num_paras_with_full_triples += 1
+        filtered_paras.append(filtered_para)
+
+    print(f'Found {num_full_triples} full triples in total.')
+    print(f'Found {num_paras_with_full_triples} paragraphs with full triples.')
 
     output_file = input_file.replace('.json', '_onlyfull.json')
     with open(output_file, 'w') as f:
