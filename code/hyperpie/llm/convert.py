@@ -116,7 +116,7 @@ def find_surface_forms_in_para(para_text, e_name):
     # all occurrences of entity name in paragraph
 
     surfs = []
-    for m in re.finditer(e_name, para_text):
+    for m in re.finditer(re.escape(e_name), para_text):
         start = m.start()
         end = m.end()
         surf_id = f'{start}-{end}'
@@ -290,7 +290,10 @@ def yaml2json(llm_output_dict, verbose=False):
         out['annotation']['entities'][artif_name] = artif_annot
 
         # check for parameters
-        if not artf.get('has_parameters', False):
+        if (
+            (not artf.get('has_parameters', False)) or
+            artf['parameters'] is None
+        ):
             # no parameters, just add artifact entity
             out['annotation']['entities'][artif_name] = artif_annot
             continue
