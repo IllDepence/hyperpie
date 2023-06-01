@@ -157,14 +157,21 @@ def yaml2json(llm_output_dict, verbose=False):
 
     # Check if LLM output adheres to expected format
     has_entities_key = 'text_contains_entities'
-    if type(llm_output) != list:
+    if type(llm_output) not in [list, dict]:
         # unexpected format
         print(
-            f'Expected list as top-level YAML element, '
+            f'Expected list/dict as top-level YAML element, '
             f'got {type(llm_output)}'
         )
+        print(f'LLM output: {llm_output}')
         sys.exit(1)
-    elif len(llm_output) == 1:
+    if type(llm_output) == dict:
+        # reconstruct list from dict
+        llm_output_fixed = []
+        for k, v in llm_output.items():
+            llm_output_fixed.append({k: v})
+        llm_output = llm_output_fixed
+    if len(llm_output) == 1:
         # probably expected format (the info that nothing
         # needs to be annotated in the paragraph)
         try:
@@ -267,9 +274,14 @@ def yaml2json(llm_output_dict, verbose=False):
         if artif_name is None:
             print(f'No name for artifact: {artf}')
             continue
-        assert artif_name not in out['annotation']['entities'].keys()
+        # check if (identically named) artifact entity already exists
+        if artif_name in out['annotation']['entities']:
+            # not sure if this is sensible
+            print('Duplicate artifact entity name, reusing existing entity')
+            artif_annot = out['annotation']['entities'][artif_name]
+        else:
+            artif_annot = entity_dict(artif_name, 'a')
         # find surface forms
-        artif_annot = entity_dict(artif_name, 'a')
         artif_surfs = find_surface_forms_in_para(
             para['text'],
             artif_name

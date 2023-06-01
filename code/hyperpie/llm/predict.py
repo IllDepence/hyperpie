@@ -1,8 +1,14 @@
 import datetime
 import openai
 from collections import OrderedDict
+from tenacity import retry, stop_after_attempt, wait_random_exponential
 from hyperpie import settings
 from hyperpie.data import llm_cache
+
+
+@retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(9))
+def completion_with_backoff(**kwargs):
+    return openai.Completion.create(**kwargs)
 
 
 def openai_api(para, prompt, params=None, verbose=False):
@@ -10,6 +16,9 @@ def openai_api(para, prompt, params=None, verbose=False):
 
         If the prompt has been used before, the completion will be
         loaded from cache.
+
+        Returns:
+        <completion_dict>, <from_cache>
     """
 
     if params is None:
@@ -22,13 +31,13 @@ def openai_api(para, prompt, params=None, verbose=False):
     if cached_completion is not None:
         if verbose:
             print('loading completion from cache')
-        return cached_completion
+        return cached_completion, True
     if verbose:
         print('completion not in cache')
 
     # not in cache, get from API
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    completion = openai.Completion.create(prompt=prompt, **params)
+    completion = completion_with_backoff(prompt=prompt, **params)
 
     completion_dict = OrderedDict({
         "timestamp": timestamp,
@@ -45,7 +54,7 @@ def openai_api(para, prompt, params=None, verbose=False):
     if verbose:
         print('saving completion to cache')
 
-    return completion_dict
+    return completion_dict, False
 
 
 def get_completion_text(completion):

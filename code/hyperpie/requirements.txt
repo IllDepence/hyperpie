@@ -2,4 +2,5 @@ openai
 ipython
 jupyter
 nltk
+tenacity
 pynvim
