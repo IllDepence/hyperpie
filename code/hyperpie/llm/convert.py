@@ -81,14 +81,14 @@ def relation_dict(src_a_id, trg_a_id, src_srfs, trg_srfs):
     return relation
 
 
-def empty_para_annotation():
+def empty_para_annotation(annotator_id, document_id, paragraph_index):
     """ Create an empty annotation dict.
     """
 
     empty_para_annot = OrderedDict({
-      "annotator_id": "",
-      "document_id": "",
-      "paragraph_index": -1,
+      "annotator_id": annotator_id,
+      "document_id": document_id,
+      "paragraph_index": paragraph_index,
       "text": "",
       "annotation":
       {
@@ -101,11 +101,11 @@ def empty_para_annotation():
     return empty_para_annot
 
 
-def find_surface_forms_in_para(para, e_name):
+def find_surface_forms_in_para(para_text, e_name):
     """ Find all surface forms of an entity in a paragraph.
 
     Args:
-        para (str): Paragraph text.
+        para_text (str): Paragraph text.
         e_name (str): Entity name.
 
     Returns:
@@ -116,7 +116,7 @@ def find_surface_forms_in_para(para, e_name):
     # all occurrences of entity name in paragraph
 
     surfs = []
-    for m in re.finditer(e_name, para):
+    for m in re.finditer(e_name, para_text):
         start = m.start()
         end = m.end()
         surf_id = f'{start}-{end}'
@@ -132,7 +132,7 @@ def find_surface_forms_in_para(para, e_name):
     return surfs
 
 
-def convert(para, llm_output_yaml, verbose=False):
+def yaml2json(llm_output_dict, verbose=False):
     """ Convert LLM output to evaluation script input format.
 
     Args:
@@ -141,6 +141,11 @@ def convert(para, llm_output_yaml, verbose=False):
     Returns:
         str: Evaluation script input in JSON format.
     """
+
+    # predicted annotations in YAML
+    llm_output_yaml = llm_output_dict['completion']['choices'][0]['text']
+    # input paragraph (used to determine text offsets)
+    para = llm_output_dict['paragraph']
 
     # Check if LLM output is valid YAML
     try:
@@ -188,7 +193,11 @@ def convert(para, llm_output_yaml, verbose=False):
         # expected format, good to proceed
         pass
 
-    out = empty_para_annotation()
+    out = empty_para_annotation(
+        para['annotator_id'],
+        para['document_id'],
+        para['paragraph_index']
+    )
 
     if not llm_output[0][has_entities_key]:
         # If there are no entities, return the annotation dict empty
@@ -262,7 +271,7 @@ def convert(para, llm_output_yaml, verbose=False):
         # find surface forms
         artif_annot = entity_dict(artif_name, 'a')
         artif_surfs = find_surface_forms_in_para(
-            para,
+            para['text'],
             artif_name
         )
         artif_annot['surface_forms'] = artif_surfs
@@ -283,7 +292,7 @@ def convert(para, llm_output_yaml, verbose=False):
                 continue
             prm_annot = entity_dict(prm_name, 'p')
             prm_surfs = find_surface_forms_in_para(
-                para,
+                para['text'],
                 prm_name
             )
             prm_annot['surface_forms'] = prm_surfs
@@ -304,7 +313,7 @@ def convert(para, llm_output_yaml, verbose=False):
             val_name = str(prm['value'])
             val_annot = entity_dict(val_name, 'v')
             val_surfs = find_surface_forms_in_para(
-                para,
+                para['text'],
                 val_name
             )
             val_annot['surface_forms'] = val_surfs
@@ -324,7 +333,7 @@ def convert(para, llm_output_yaml, verbose=False):
             ctx_name = prm['context']
             ctx_annot = entity_dict(ctx_name, 'c')
             ctx_surfs = find_surface_forms_in_para(
-                para,
+                para['text'],
                 ctx_name
             )
             ctx_annot['surface_forms'] = ctx_surfs
@@ -355,11 +364,7 @@ if __name__ == '__main__':
     with open(sys.argv[1], 'r') as f:
         llm_output_dict = json.load(f)
 
-    llm_output = llm_output_dict['completion']['choices'][0]['text']
-
-    llm_out_conv = convert(
-        llm_output_dict['paragraph'], llm_output, verbose=True
-    )
+    llm_out_conv = yaml2json(llm_output_dict, verbose=True)
 
     fn_out = fn_in.replace('.json', '_conv.json')
 

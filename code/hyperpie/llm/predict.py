@@ -46,3 +46,10 @@ def openai_api(para, prompt, params=None, verbose=False):
         print('saving completion to cache')
 
     return completion_dict
+
+
+def get_completion_text(completion):
+    """ Get completion text from completion dict.
+    """
+
+    return completion['completion']['choices'][0]['text']

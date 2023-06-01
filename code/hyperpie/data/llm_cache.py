@@ -32,7 +32,20 @@ def _param_str(param_dict):
     """ Return a string representation of a dictionary of parameters.
     """
 
-    return '|'.join([f'{k}={v}' for k, v in param_dict.items()])
+    # create list of <key>=<value> strings
+    # (ensures consistent ordering)
+    sorted_param_strs = sorted(
+        [
+            f'{k}={v}'
+            for k, v in
+            param_dict.items()
+        ]
+    )
+
+    # join to a single string
+    joint_param_str = '|'.join(sorted_param_strs)
+
+    return joint_param_str
 
 
 def llm_completion_cache_save(
@@ -82,7 +95,6 @@ def llm_completion_cache_load(
 
     # get existing cache if exists
     if os.path.exists(settings.llm_cache_fp):
-        print('loading cache')
         with open(settings.llm_cache_fp) as f:
             cache = json.load(f)
 
