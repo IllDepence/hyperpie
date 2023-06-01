@@ -1,41 +1,48 @@
 import datetime
-import json
 import openai
+from collections import OrderedDict
+from hyperpie import settings
+from hyperpie.data import llm_cache
 
 
-def prompt_and_save(para, prompt, params=None, verbose=False):
-    """ Convenience method that
-        - gets completion from OpenAI API
-        - saves result to a JSON file
-        - echoes the prompt
-        - echoes the completion
-        - returns the completion
+def openai_api(para, prompt, params=None, verbose=False):
+    """ Get LLM completion for `prompt` using OpenAI API.
+
+        If the prompt has been used before, the completion will be
+        loaded from cache.
     """
 
     if params is None:
-        hyperpie.llm.default_params
+        params = settings.gpt_default_params
 
-    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    out_fn = f"prompt_result_{timestamp}.json"
-
-    completion = openai.Completion.create(prompt=prompt, **params)
-    out_dict = {
-        "paragraph": para,
-        "timestamp": timestamp,
-        "prompt": prompt,
-        "params": params,
-        "completion": completion
-    }
-
-    with open(out_fn, "w") as f:
-        json.dump(out_dict, f, indent=4)
-
+    # check cache
+    cached_completion = llm_cache.llm_completion_cache_load(
+        params, prompt
+    )
+    if cached_completion is not None:
+        if verbose:
+            print('loading completion from cache')
+        return cached_completion
     if verbose:
-        print('- - - Prompt - - -')
-        print(prompt)
-        print('- - - Completion - - -')
-        print(out_dict["completion"]["choices"][0]["text"])
-        print('- - - Saved to - - -')
-        print(out_fn)
+        print('completion not in cache')
 
-    return out_dict
+    # not in cache, get from API
+    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    completion = openai.Completion.create(prompt=prompt, **params)
+
+    completion_dict = OrderedDict({
+        "timestamp": timestamp,
+        "params": params,
+        "paragraph": para,
+        "prompt": prompt,
+        "completion": completion
+    })
+
+    # save to cache
+    llm_cache.llm_completion_cache_save(
+        params, prompt, completion_dict
+    )
+    if verbose:
+        print('saving completion to cache')
+
+    return completion_dict
