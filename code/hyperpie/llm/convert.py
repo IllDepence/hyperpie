@@ -116,7 +116,8 @@ def find_surface_forms_in_para(para_text, e_name):
     # all occurrences of entity name in paragraph
 
     surfs = []
-    for m in re.finditer(re.escape(e_name), para_text):
+    e_name_patt = r'\b' + re.escape(e_name) + r'\b'
+    for m in re.finditer(e_name_patt, para_text):
         start = m.start()
         end = m.end()
         surf_id = f'{start}-{end}'
@@ -151,9 +152,35 @@ def yaml2json(llm_output_dict, verbose=False):
     try:
         llm_output = yaml.load(llm_output_yaml, Loader=yaml.Loader)
     except yaml.YAMLError as e:
-        print('Error parsing LLM output YAML:')
-        print(e)
-        return None
+        parse_fail = True
+        # try to fix YAML
+        # 1. assume output is cut off, remove last line
+        last_line_cut = '\n'.join(llm_output_yaml.split('\n')[:-1])
+        try:
+            llm_output = yaml.load(last_line_cut, Loader=yaml.Loader)
+            parse_fail = False
+        except yaml.YAMLError as e:
+            pass  # try next fix
+        # 2. assume special characters in dict values. add quotes
+        try:
+            new_yaml_lines = []
+            for line in llm_output_yaml.split('\n'):
+                if re.match(r'^(\s+[a-z]+: )(.+)$', line):
+                    line = re.sub(r'^(\s+[a-z]+: )(.+)$', r'\1"\2"', line)
+                new_yaml_lines.append(line)
+            new_yaml = '\n'.join(new_yaml_lines)
+            llm_output = yaml.load(new_yaml, Loader=yaml.Loader)
+            parse_fail = False
+        except yaml.YAMLError as e:
+            pass  # handle further down
+
+        # if parsing still fails, print error and return None
+        if parse_fail:
+            print('Error parsing LLM output YAML:')
+            if verbose:
+                print(e)
+                print(f'LLM output:\n{llm_output_yaml}')
+            return None
 
     # Check if LLM output adheres to expected format
     has_entities_key = 'text_contains_entities'
@@ -274,6 +301,11 @@ def yaml2json(llm_output_dict, verbose=False):
         if artif_name is None:
             print(f'No name for artifact: {artf}')
             continue
+        elif type(artif_name) == list:
+            # YAML output “blunder” when a citation marker like "[27]" is
+            # identified as an artifact name and parsed as a list b/c of
+            # the missing quotes
+            artif_name = f'[{artif_name[0]}]'
         # check if (identically named) artifact entity already exists
         if artif_name in out['annotation']['entities']:
             # not sure if this is sensible

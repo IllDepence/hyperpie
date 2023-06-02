@@ -184,15 +184,9 @@ def entity_recognition(
         fp += fp_i
         fn += fn_i
 
-    if verbose:
-        print(f'TP: {tp}, FP: {fp}, FN: {fn}')
-
     p, r, f1 = _calc_prec_rec_f1(tp, fp, fn)
 
-    if verbose:
-        print(f'P: {p}, R: {r}, F1: {f1}')
-
-    return p, r, f1
+    return tp, fp, fn, p, r, f1
 
 
 def _surface_form_relation_match(
@@ -375,15 +369,9 @@ def co_reference_resolution(
         fp += fp_i
         fn += fn_i
 
-    if verbose:
-        print(f'TP: {tp}, FP: {fp}, FN: {fn}')
-
     p, r, f1 = _calc_prec_rec_f1(tp, fp, fn)
 
-    if verbose:
-        print(f'P: {p}, R: {r}, F1: {f1}')
-
-    return p, r, f1
+    return tp, fp, fn, p, r, f1
 
 
 def _get_entity_id_by_entity_surf_forms(
@@ -610,7 +598,7 @@ def relation_extraction(y_true, y_pred, partial_overlap=False, verbose=False):
 
     p, r, f1 = _calc_prec_rec_f1(tp, fp, fn)
 
-    return p, r, f1
+    return tp, fp, fn, p, r, f1
 
 
 def full(y_true, y_pred):
@@ -621,31 +609,35 @@ def full(y_true, y_pred):
         print(f'\n- - - Partial overlap: {partial_overlap} - - -')
 
         # entity recognition
-        p, r, f1 = entity_recognition(
+        tp, fp, fn, p, r, f1 = entity_recognition(
             y_true, y_pred, check_type=False, partial_overlap=partial_overlap
         )
         print('\nER')
+        print(f'TP: {tp}, FP: {fp}, FN: {fn}')
         print(f'P: {p:.3f}, R: {r:.3f}, F1: {f1:.3f}')
 
         # entity recognition + classification
-        p, r, f1 = entity_recognition(
+        tp, fp, fn, p, r, f1 = entity_recognition(
             y_true, y_pred, check_type=True, partial_overlap=partial_overlap
         )
         print('ER + Clf')
+        print(f'TP: {tp}, FP: {fp}, FN: {fn}')
         print(f'P: {p:.3f}, R: {r:.3f}, F1: {f1:.3f}')
 
         # co-reference resolution
-        p, r, f1 = co_reference_resolution(
+        tp, fp, fn, p, r, f1 = co_reference_resolution(
             y_true, y_pred, partial_overlap=partial_overlap
         )
         print('Co-ref resol.')
+        print(f'TP: {tp}, FP: {fp}, FN: {fn}')
         print(f'P: {p:.3f}, R: {r:.3f}, F1: {f1:.3f}')
 
         # relation extraction
-        p, r, f1 = relation_extraction(
+        tp, fp, fn, p, r, f1 = relation_extraction(
             y_true, y_pred, partial_overlap=partial_overlap
         )
         print('Rel. extr.')
+        print(f'TP: {tp}, FP: {fp}, FN: {fn}')
         print(f'P: {p:.3f}, R: {r:.3f}, F1: {f1:.3f}')
 
 

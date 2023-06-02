@@ -18,7 +18,9 @@ for i, para in enumerate(paras_true):
         para, prompt, params=hp.settings.gpt_default_params
     )
     para_pred = hp.llm.convert.yaml2json(completion_dict)
-    paras_pred.append(para_pred)
+    filtered_para, num_full_triples_para = \
+        hp.data.filter_full.filter_full_annots(para_pred)
+    paras_pred.append(filtered_para)
 
 # evaluate
 hp.evaluation.full(paras_true, paras_pred)
