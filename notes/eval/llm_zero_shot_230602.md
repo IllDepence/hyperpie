@@ -1,6 +1,6 @@
 # First shot at LLM zero shot evaluation
 
-(raw data in `completion_cache.json.xz`)
+(raw data in `completion_cache_llm_zero_shot_230602.json.xz`)
 
 ## Setting
 
