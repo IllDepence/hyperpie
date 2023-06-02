@@ -140,3 +140,31 @@ Format:
 Only produce output in the YAML format specified above. Output no additional text.
 
 {instruction_output}"""  # noqa: E501
+
+text_e2e_rev230602 = f"""{instruction_context} what (if any) are the entities (datasets, models, methods, loss functions, regularization techniques) mentioned in the LaTeX Input Text below? What (if any) are their parameters and values?
+
+[LaTeX Input Text start]
+{{text}}
+[LaTeX Input Text end]
+
+Answer in the following YAML format.
+
+Format:
+---
+- text_contains_entities: true/false
+- entities (datasets, models, methods, loss functions, regularization techniques):
+    - entity<N>:
+        name: "<entity name>"
+        type: "<entity type>"
+        has_parameters: true/false
+        parameters:
+            - parameter<N>:
+                name: "<parameter name>"
+                value: "<parameter value>"/null
+                context: "<value context>"/null
+...
+
+Only include entities that are of type dataset, model, method, loss function, or regularization technique.
+Only produce output in the YAML format specified above. Output no additional text.
+
+{instruction_output}"""  # noqa: E501
