@@ -111,7 +111,7 @@ def _entity_recognition_single(
                         print(
                             f'FN: {surface_form_pred} has wrong type'
                         )
-                    fn += 1
+                    fn += 1  # TODO: note type for entity class specific eval
                     break
                 tp += 1
                 break
@@ -601,44 +601,49 @@ def relation_extraction(y_true, y_pred, partial_overlap=False, verbose=False):
     return tp, fp, fn, p, r, f1
 
 
+def markdown_table_line(task, tp, fp, fn, p, r, f1, header=False):
+    if header:
+        head = "| Method      | TP | FP | FN | Precision (P) | " \
+               "Recall (R) | F1 Score |\n"
+        head += "|-------------|----|----|----|---------------|" \
+                "------------|----------|\n"
+    else:
+        head = ""
+
+    return (head + f"| {task:<12}| {tp:<2}| {fp:<3}| {fn:<3}| "
+            f"{p:<13.3f}| {r:<10.3f}| {f1:<8.3f}|")
+
+
 def full(y_true, y_pred):
     """ Calculate all the metrics
     """
 
     for partial_overlap in [False, True]:
-        print(f'\n- - - Partial overlap: {partial_overlap} - - -')
+        print(f'\n**Partial overlap: {partial_overlap}**')
 
         # entity recognition
         tp, fp, fn, p, r, f1 = entity_recognition(
             y_true, y_pred, check_type=False, partial_overlap=partial_overlap
         )
-        print('\nER')
-        print(f'TP: {tp}, FP: {fp}, FN: {fn}')
-        print(f'P: {p:.3f}, R: {r:.3f}, F1: {f1:.3f}')
+        print(markdown_table_line('ER', tp, fp, fn, p, r, f1, header=True))
 
         # entity recognition + classification
         tp, fp, fn, p, r, f1 = entity_recognition(
             y_true, y_pred, check_type=True, partial_overlap=partial_overlap
         )
-        print('ER + Clf')
-        print(f'TP: {tp}, FP: {fp}, FN: {fn}')
-        print(f'P: {p:.3f}, R: {r:.3f}, F1: {f1:.3f}')
+        print(markdown_table_line('ER + Clf', tp, fp, fn, p, r, f1))
 
         # co-reference resolution
         tp, fp, fn, p, r, f1 = co_reference_resolution(
             y_true, y_pred, partial_overlap=partial_overlap
         )
-        print('Co-ref resol.')
-        print(f'TP: {tp}, FP: {fp}, FN: {fn}')
-        print(f'P: {p:.3f}, R: {r:.3f}, F1: {f1:.3f}')
+        print(markdown_table_line('Co-ref resol.', tp, fp, fn, p, r, f1))
 
         # relation extraction
         tp, fp, fn, p, r, f1 = relation_extraction(
             y_true, y_pred, partial_overlap=partial_overlap
         )
-        print('Rel. extr.')
-        print(f'TP: {tp}, FP: {fp}, FN: {fn}')
-        print(f'P: {p:.3f}, R: {r:.3f}, F1: {f1:.3f}')
+        print(markdown_table_line('Rel. extr.', tp, fp, fn, p, r, f1))
 
 
 if __name__ == '__main__':
