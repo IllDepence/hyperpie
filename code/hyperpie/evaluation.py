@@ -85,7 +85,9 @@ def _entity_recognition_single(
 
     # determine TP and FN
     tp = 0
+    tp_types = []  # (true, pred) pairs
     fn = 0
+    fn_types = []
     for surface_form_true in surface_forms_true:
         start_true = surface_form_true['start']
         end_true = surface_form_true['end']
@@ -111,9 +113,17 @@ def _entity_recognition_single(
                         print(
                             f'FN: {surface_form_pred} has wrong type'
                         )
-                    fn += 1  # TODO: note type for entity class specific eval
+                    fn += 1
+                    fn_types.append((
+                        surface_form_true['type'],
+                        surface_form_pred['type']
+                    ))
                     break
                 tp += 1
+                tp_types.append((
+                    surface_form_true['type'],
+                    surface_form_pred['type']
+                ))
                 break
         else:
             # else clause of for loop is executed
@@ -121,10 +131,15 @@ def _entity_recognition_single(
             # i.e. no match for the predicted surface
             # form was found in the true surface forms
             fn += 1
+            fn_types.append((
+                surface_form_true['type'],
+                ''
+            ))
             if verbose:
                 print(f'FN: true {surface_form_true} not found in prediction')
     # determine FP
     fp = 0
+    fp_types = []
     for surface_form_pred in surface_forms_pred:
         start_pred = surface_form_pred['start']
         end_pred = surface_form_pred['end']
@@ -142,10 +157,19 @@ def _entity_recognition_single(
             if verbose:
                 print(f'FP: {surface_form_pred} predicted but not true')
             fp += 1
+            fp_types.append((
+                '',
+                surface_form_pred['type']
+            ))
 
     # TN: could be determined on a character level but needed for P/R/F1
 
-    return tp, fp, fn
+    ret = [
+        [tp, fp, fn],
+        [tp_types, fp_types, fn_types]
+    ]
+
+    return ret
 
 
 def entity_recognition(
@@ -169,24 +193,38 @@ def entity_recognition(
     """
 
     tp = 0
+    tp_types = []
     fp = 0
+    fp_types = []
     fn = 0
+    fn_types = []
     # tn: could be determined on a character level but needed for P/R/F1
     for i in range(len(y_true)):
-        tp_i, fp_i, fn_i = _entity_recognition_single(
+        ret = _entity_recognition_single(
             y_true[i],
             y_pred[i],
             partial_overlap,
             check_type,
             verbose
         )
+        tp_i, fp_i, fn_i, = ret[0]
+        tp_typ_i, fp_typ_i, fn_typ_i = ret[1]
         tp += tp_i
         fp += fp_i
         fn += fn_i
+        tp_types.extend(tp_typ_i)
+        fp_types.extend(fp_typ_i)
+        fn_types.extend(fn_typ_i)
 
     p, r, f1 = _calc_prec_rec_f1(tp, fp, fn)
 
-    return tp, fp, fn, p, r, f1
+    ret = [
+        [tp, fp, fn],
+        [tp_types, fp_types, fn_types],
+        [p, r, f1]
+    ]
+
+    return ret
 
 
 def _surface_form_relation_match(
@@ -603,47 +641,103 @@ def relation_extraction(y_true, y_pred, partial_overlap=False, verbose=False):
 
 def markdown_table_line(task, tp, fp, fn, p, r, f1, header=False):
     if header:
-        head = "| Method      | TP | FP | FN | Precision (P) | " \
+        head = "| Method       | TP | FP | FN | Precision (P) | " \
                "Recall (R) | F1 Score |\n"
-        head += "|-------------|----|----|----|---------------|" \
+        head += "|--------------|----|----|----|---------------|" \
                 "------------|----------|\n"
     else:
         head = ""
 
-    return (head + f"| {task:<12}| {tp:<2}| {fp:<3}| {fn:<3}| "
-            f"{p:<13.3f}| {r:<10.3f}| {f1:<8.3f}|")
+    return (head + f"| {task:<13}| {tp:<3}| {fp:<3}| {fn:<3}| "
+            f"{p:<14.3f}| {r:<11.3f}| {f1:<9.3f}|")
 
 
 def full(y_true, y_pred):
     """ Calculate all the metrics
     """
 
+    report_tbl_lines = []
+    fp_types_exact = []
+    fp_types_partial = []
+    fn_types_exact = []
+    fn_types_partial = []
+
     for partial_overlap in [False, True]:
-        print(f'\n**Partial overlap: {partial_overlap}**')
+        report_tbl_lines.append(
+            f'\n**Partial overlap: {partial_overlap}**\n'
+        )
 
         # entity recognition
-        tp, fp, fn, p, r, f1 = entity_recognition(
+        ret = entity_recognition(
             y_true, y_pred, check_type=False, partial_overlap=partial_overlap
         )
-        print(markdown_table_line('ER', tp, fp, fn, p, r, f1, header=True))
+        tp, fp, fn = ret[0]
+        tp_types, fp_types, fn_types = ret[1]
+        p, r, f1 = ret[2]
+        report_tbl_lines.append(
+            markdown_table_line('ER', tp, fp, fn, p, r, f1, header=True)
+        )
+        if partial_overlap:
+            fp_types_partial = [
+                t[1] for t in fp_types
+            ]
+            fn_types_partial = [
+                t[0] for t in fn_types
+            ]
+        else:
+            fp_types_exact = [
+                t[1] for t in fp_types
+            ]
+            fn_types_exact = [
+                t[0] for t in fn_types
+            ]
 
         # entity recognition + classification
-        tp, fp, fn, p, r, f1 = entity_recognition(
+        ret = entity_recognition(
             y_true, y_pred, check_type=True, partial_overlap=partial_overlap
         )
-        print(markdown_table_line('ER + Clf', tp, fp, fn, p, r, f1))
+        tp, fp, fn = ret[0]
+        tp_types, fp_types, fn_types = ret[1]
+        p, r, f1 = ret[2]
+        report_tbl_lines.append(
+            markdown_table_line('ER + Clf', tp, fp, fn, p, r, f1)
+        )
 
         # co-reference resolution
         tp, fp, fn, p, r, f1 = co_reference_resolution(
             y_true, y_pred, partial_overlap=partial_overlap
         )
-        print(markdown_table_line('Co-ref resol.', tp, fp, fn, p, r, f1))
+        report_tbl_lines.append(
+            markdown_table_line('Co-ref resol.', tp, fp, fn, p, r, f1)
+        )
 
         # relation extraction
         tp, fp, fn, p, r, f1 = relation_extraction(
             y_true, y_pred, partial_overlap=partial_overlap
         )
-        print(markdown_table_line('Rel. extr.', tp, fp, fn, p, r, f1))
+        report_tbl_lines.append(
+            markdown_table_line('Rel. extr.', tp, fp, fn, p, r, f1)
+        )
+
+    print('\n'.join(report_tbl_lines))
+    print()
+
+    # for tp_types exact and partial, print the number of occurreces
+    # of each class in two lists
+    print('\n**False positives (exact match)**\n')
+    for t in sorted(set(fp_types_exact)):
+        print(f'* {t}: {fp_types_exact.count(t)}')
+    print('\n**False positives (partial overlap)**\n')
+    for t in sorted(set(fp_types_partial)):
+        print(f'* {t}: {fp_types_partial.count(t)}')
+
+    # and the same for false negatives
+    print('\n**False negatives (exact match)**\n')
+    for t in sorted(set(fn_types_exact)):
+        print(f'* {t}: {fn_types_exact.count(t)}')
+    print('\n**False negatives (partial overlap)**\n')
+    for t in sorted(set(fn_types_partial)):
+        print(f'* {t}: {fn_types_partial.count(t)}')
 
 
 if __name__ == '__main__':

@@ -51,7 +51,7 @@ with `{text}` replaced by the paragraph text.
 | Co-ref resol.| 4  | 494| 34 | 0.008         | 0.105      | 0.015    |
 | Rel. extr.   | 12 | 397| 104| 0.029         | 0.103      | 0.046    |
 
-**Partial overlap: Truee**
+**Partial overlap: True**
 
 | Method       | TP | FP | FN | Precision (P) | Recall (R) | F1 Score |
 |--------------|----|----|----|---------------|------------|----------|
@@ -60,6 +60,35 @@ with `{text}` replaced by the paragraph text.
 | Co-ref resol.| 16 | 482| 22 | 0.032         | 0.421      | 0.060    |
 | Rel. extr.   | 39 | 372| 77 | 0.095         | 0.336      | 0.148    |
 
+
 ## Eval (class specific)
 
-TODO
+### ER / ER + Clf
+
+**False positives (exact match)**
+
+* a: 94
+* c: 48
+* p: 142
+* v: 124
+
+**False positives (partial overlap)**
+
+* a: 79
+* c: 44
+* p: 123
+* v: 99
+
+**False negatives (exact match)**
+
+* a: 29
+* c: 12
+* p: 37
+* v: 33
+
+**False negatives (partial overlap)**
+
+* a: 10
+* c: 10
+* p: 20
+* v: 16
