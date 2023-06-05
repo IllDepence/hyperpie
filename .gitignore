@@ -4,3 +4,9 @@ __pycache__
 venv
 api_key
 api_organization
+*.ipynb
+/data
+/code/BERE
+/code/joint_model/my_venv
+/code/joint_model/data
+/code/joint_model/output
