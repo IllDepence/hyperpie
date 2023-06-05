@@ -1,5 +1,5 @@
-""" Filter annotations to only contain those which are part of
-    at least a “set” (artifact ← parameter ← value).
+""" Filter annotations to only contain those which fullfil given
+    requirements.
 
     All other annotations are removed.
 """
@@ -8,7 +8,21 @@ import sys
 import json
 
 
-def filter_full_annots(para, verbose=False):
+def require_apv(paras, verbose=False):
+    """ See `require_apv_single` for details.
+    """
+
+    filtered_paras = []
+    num_full_triples = 0
+    for para in paras:
+        filtered_para, num_full_triples_para = require_apv_single(para)
+        num_full_triples += num_full_triples_para
+        filtered_paras.append(filtered_para)
+
+    return filtered_paras, num_full_triples
+
+
+def require_apv_single(para, verbose=False):
     """ Filter annotations of a single paragraph to only
         contain those which are part of at least a “set”
 
@@ -20,9 +34,57 @@ def filter_full_annots(para, verbose=False):
 
         All other annotations are removed.
 
+        Returns a tuple of the filtered paragraph and the
+        number of full triples found.
+    """
+
+    return _require_rel_sets(para, cascade=False, verbose=verbose)
+
+
+def require_parent(paras, verbose=False):
+    """ See `require_parent_single` for details.
+    """
+
+    filtered_paras = []
+    num_full_triples = 0
+    for para in paras:
+        filtered_para, num_full_triples_para = require_parent_single(para)
+        num_full_triples += num_full_triples_para
+        filtered_paras.append(filtered_para)
+
+    return filtered_paras, num_full_triples
+
+
+def require_parent_single(para, verbose=False):
+    """ Filter annotations of a single paragraph to only
+        contain those in which
+
+            - parameters are related to artifacts
+            - values are related to parameters
+            - contexts are related to values
+
+        All other annotations are removed.
+        Artifacts are always kept.
 
         Returns a tuple of the filtered paragraph and the
         number of full triples found.
+    """
+
+    return _require_rel_sets(para, cascade=True, verbose=verbose)
+
+
+def _require_rel_sets(para, cascade, verbose=False):
+    """ Require a certain cet of relations.
+
+        If cascade == False, require full
+            (artifact ← parameter ← value)
+        with context being optional.
+
+        If cascade == True,
+            - keep all artifacts
+            - require artifacts for parameters
+            - require parameters for values
+            - require values for contexts
     """
 
     filtered_para = {}
@@ -43,14 +105,25 @@ def filter_full_annots(para, verbose=False):
     keppers_entities = []
     keppers_relations = []
 
+    # if cascade, keep all artifacts
+    if cascade:
+        ents = para['annotation']['entities']
+        for ent_id, ent in ents.items():
+            if ent['type'] == 'a':
+                keppers_entities.append(ent_id)
+
     num_full_triples = 0
     ents = para['annotation']['entities']
     rels = para['annotation']['relations']
     for rel_ap_id, rel_ap in rels.items():
-        # look for artif <-param
+        # look for artif <- param
         if ents[rel_ap['target']]['type'] != 'a':
             # need artifact, skip
             continue
+        if cascade:
+            # found a parameter with artifact, keep
+            keppers_entities.append(rel_ap['source'])  # parameter
+            keppers_relations.append(rel_ap_id)  # artifact <- parameter
         for rel_pv_id, rel_pv in rels.items():
             # look for matching param <- value
             if rel_ap['source'] != rel_pv['target']:
@@ -127,7 +200,7 @@ if __name__ == '__main__':
     num_full_triples = 0
     num_paras_with_full_triples = 0
     for para in paras:
-        filtered_para, num_full_triples_para = filter_full_annots(para)
+        filtered_para, num_full_triples_para = require_apv(para)
         num_full_triples += num_full_triples_para
         if num_full_triples_para > 0:
             num_paras_with_full_triples += 1

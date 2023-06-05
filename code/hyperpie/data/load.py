@@ -14,15 +14,15 @@ def load_annotated_raw():
         return json.load(f)
 
 
-def load_annotated(filtered=True):
+def load_annotated(only_full=False):
     """ Load (preprocessed) annotated data paragraphs.
 
         If `filtered` is True, load data filtered to only include
         “full” annotations (a<-p<-v[<-c]).
     """
 
-    if filtered:
-        fp = settings.annot_filtered_fp
+    if only_full:
+        fp = settings.annot_onlyfull_fp
     else:
         fp = settings.annot_prep_fp
 

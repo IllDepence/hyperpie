@@ -2,10 +2,6 @@
 
 (raw data in `completion_cache_llm_zero_shot_230602.json.xz`)
 
-## Setting
-
-Both ground truth and predictions ran through `hyperpie.data.filter_full.filter_full_annots`, i.e. only “full info sets” (`a<p<v[<c]`) are considered
-
 ## Prompt
 
 ```
@@ -40,7 +36,10 @@ Output:
 
 with `{text}` replaced by the paragraph text.
 
-## Eval
+## Eval (“full info sets”)
+
+**Filter:**  
+Both ground truth and predictions ran through `hyperpie.data.filter_annots.require_apv`, i.e. only “full info sets” (`a<p<v[<c]`) are considered.
 
 **Partial overlap: False**
 
@@ -91,4 +90,56 @@ with `{text}` replaced by the paragraph text.
 * a: 10
 * c: 10
 * p: 20
+* v: 16
+
+## Eval (“reqire parent entity”)
+
+**Filter:**  
+Both ground truth and predictions ran through `hyperpie.data.filter_annots.require_parents`, i.e. only parameters with artifacts, values with parameters, contexts with values.
+
+**Partial overlap: False**
+
+| Method       | TP | FP  | FN | Precision (P) | Recall (R) | F1 Score |
+|--------------|----|-----|----|---------------|------------|----------|
+| ER           | 374| 1214| 888| 0.236         | 0.296      | 0.262    |
+| ER + Clf     | 363| 1214| 899| 0.230         | 0.288      | 0.256    |
+| Co-ref resol.| 242| 1316| 954| 0.155         | 0.202      | 0.176    |
+| Rel. extr.   |  12|  586| 119| 0.020         | 0.092      | 0.033    |
+
+**Partial overlap: True**
+
+| Method       | TP | FP  | FN | Precision (P) | Recall (R) | F1 Score |
+|--------------|----|-----|----|---------------|------------|----------|
+| ER           | 625|  962| 637| 0.394         | 0.495      | 0.439    |
+| ER + Clf     | 595|  962| 667| 0.382         | 0.471      | 0.422    |
+| Co-ref resol.| 338| 1214| 858| 0.218         | 0.283      | 0.246    |
+| Rel. extr.   |  39|  561| 92 | 0.065         | 0.298      | 0.107    |
+
+
+**False positives (exact match)**
+
+* a: 714
+* c: 48
+* p: 330
+* v: 122
+
+**False positives (partial overlap)**
+
+* a: 525
+* c: 41
+* p: 301
+* v: 95
+
+**False negatives (exact match)**
+
+* a: 785
+* c: 12
+* p: 58
+* v: 33
+
+**False negatives (partial overlap)**
+
+* a: 574
+* c: 10
+* p: 37
 * v: 16
