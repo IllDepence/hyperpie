@@ -114,6 +114,9 @@ Only produce output in the YAML format specified above. Output no additional tex
 
 {instruction_output}"""  # noqa: E501
 
+# first end-to-end prompt after some initial tweaking
+# - re-state entity types in YAML
+# - prefix “Input Text” with “LaTeX”
 text_e2e = f"""{instruction_context} what (if any) are the entities (datasets, models, methods, loss functions, regularization techniques) mentioned in the LaTeX Input Text below? What (if any) are their parameters and values?
 
 [LaTeX Input Text start]
@@ -141,6 +144,14 @@ Only produce output in the YAML format specified above. Output no additional tex
 
 {instruction_output}"""  # noqa: E501
 
+# TODO:
+# - test revision of e2e zero shot prompt (test single examples, see if reduces FPs)
+# - test prompot which results in [a1]foo[/a1] types inserts in input text
+# - test few shot scenarios
+
+# first revision of end-to-end prompt with
+# - quotation marks around YAML dict values
+# - additionaly text to prevent inclusion of entities with out-of-scope type
 text_e2e_rev230602 = f"""{instruction_context} what (if any) are the entities (datasets, models, methods, loss functions, regularization techniques) mentioned in the LaTeX Input Text below? What (if any) are their parameters and values?
 
 [LaTeX Input Text start]
