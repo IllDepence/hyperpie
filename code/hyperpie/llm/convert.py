@@ -81,7 +81,9 @@ def relation_dict(src_a_id, trg_a_id, src_srfs, trg_srfs):
     return relation
 
 
-def empty_para_annotation(annotator_id, document_id, paragraph_index):
+def empty_para_annotation(
+    annotator_id, document_id, paragraph_index, para_text
+):
     """ Create an empty annotation dict.
     """
 
@@ -89,7 +91,7 @@ def empty_para_annotation(annotator_id, document_id, paragraph_index):
       "annotator_id": annotator_id,
       "document_id": document_id,
       "paragraph_index": paragraph_index,
-      "text": "",
+      "text": para_text,
       "annotation":
       {
         "entities": {},
@@ -252,7 +254,8 @@ def yaml2json(llm_output_dict, verbose=False):
     out = empty_para_annotation(
         para['annotator_id'],
         para['document_id'],
-        para['paragraph_index']
+        para['paragraph_index'],
+        para['text']
     )
 
     if not llm_output[0][has_entities_key]:

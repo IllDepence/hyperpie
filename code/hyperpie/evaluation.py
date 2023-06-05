@@ -18,6 +18,7 @@
 
 import json
 import sys
+from collections import defaultdict
 
 
 def _spans_match(a_start, a_end, b_start, b_end, overlap=False):
@@ -414,29 +415,87 @@ def co_reference_resolution(
 
 def _get_entity_id_by_entity_surf_forms(
     needle_entity, haystack_entity_dict,
-    partial_overlap=False, verbose=False
+    partial_overlap=False, verbose=False,
+    assume_non_everlapping_entities=True
 ):
-    """ For an entity to search (needle) for a set of annotations A
-        and a dictionary of entities to search in (haystack) for as set B.
+    """ For an entity to search (needle) from a set of annotations A,
+        and a dictionary of entities to search in (haystack) from a set B.
         Return the ID of the entity in the haystack that matches the needle.
     """
 
-    found_eid = None
+    # collect matching entity IDs in haystack
+    found_eids = []
     for surf_form in needle_entity['surface_forms']:
-        found_eid = _get_entity_id_by_surf_form_offset(
+        found = _get_entity_id_by_surf_form_offset(
+            # ↓ search an entity with this offset
             surf_form['start'], surf_form['end'],
+            # ↓ in here
             haystack_entity_dict,
             partial_overlap,
             verbose
         )
-        if found_eid is not None:
-            # NOTE: we assume there is just one matching entity, but
-            #       theoretically there can be multiple. I.e. needle
-            #       having two surface forms which, in haystack, are
-            #       associated with two different entities.
-            break
+        if len(found) > 0:
+            if assume_non_everlapping_entities:
+                return found[0]
+            found_eids.extend(found)
 
-    return found_eid
+    # return None or the found entity ID if there is exactly one
+    if len(found_eids) == 0:
+        # no match found
+        return None
+    elif len(found_eids) == 1:
+        # one match found
+        return found_eids[0]
+
+    # identify the best fit if there are multiple
+    # (do so my comparing the surface forms of needle and those found
+    #  in haystack)
+
+    needle_surf = _get_entity_representative_surf_form(needle_entity)
+    for eid in found_eids:
+        haystack_surf = _get_entity_representative_surf_form(
+            haystack_entity_dict[eid]
+        )
+        if needle_surf == haystack_surf:
+            # found a match, return it
+            return eid
+
+    # if no match was found, return the first one
+    return found_eids[0]
+
+
+def _get_entity_representative_surf_form(e_dict):
+    """ For a given entity, determine and return a “representative”
+        surface form as either
+            (a) the most frequent one, or
+            (b) the longest one
+        In case of a tie (multiple surface forms with same frequency
+        and length), return the first one, as co-references commonly
+        appear after the first mention.
+    """
+
+    surf_freqs = defaultdict(int)
+    for s in e_dict['surface_forms']:
+        surf_freqs[s['surface_form']] += 1
+
+    # if there is a clearly most frequent surface form, return it
+    max_freq = max(surf_freqs.values())
+    max_freq_surf_forms = [
+        s for s, freq in surf_freqs.items() if freq == max_freq
+    ]
+    if len(max_freq_surf_forms) == 1:
+        return max_freq_surf_forms[0]
+
+    # if there are muliple, check for the longest one
+    max_len = max([len(s) for s in max_freq_surf_forms])
+    max_len_surf_forms = [
+        s for s in max_freq_surf_forms if len(s) == max_len
+    ]
+    if len(max_len_surf_forms) == 1:
+        return max_len_surf_forms[0]
+
+    # if there are still multiple, return the first one
+    return max_len_surf_forms[0]
 
 
 def _get_entity_id_by_surf_form_offset(
@@ -447,6 +506,8 @@ def _get_entity_id_by_surf_form_offset(
         a surface form is part of an entity and return its ID
     """
 
+    e_ids = []
+
     for e_id, e in entity_dict.items():
         # check each surface form of the predicted entity
         for surf in e['surface_forms']:
@@ -455,9 +516,9 @@ def _get_entity_id_by_surf_form_offset(
                 surf['start'], surf['end'],
                 partial_overlap
             ):
-                return e_id
+                e_ids.append(e_id)
 
-    return None
+    return e_ids
 
 
 def _get_realtion_targets(
@@ -605,8 +666,8 @@ def _relation_extraction_single(
             # relation to wrong target entity
             if verbose:
                 print(
-                    f'FP: predicted relation {from_pred_entity_id} -> '
-                    f'{to_pred_entity_id} does not match ground truth '
+                    f'FP: predicted relation {from_pred_entity["id"]} -> '
+                    f'{to_pred_entity["id"]} does not match ground truth'
                 )
             fp += 1
         else:
@@ -661,6 +722,8 @@ def full(y_true, y_pred):
     fp_types_partial = []
     fn_types_exact = []
     fn_types_partial = []
+
+    relext_f1 = 0
 
     for partial_overlap in [False, True]:
         report_tbl_lines.append(
@@ -718,6 +781,8 @@ def full(y_true, y_pred):
         report_tbl_lines.append(
             markdown_table_line('Rel. extr.', tp, fp, fn, p, r, f1)
         )
+        if not partial_overlap:
+            relext_f1 = f1
 
     print('\n'.join(report_tbl_lines))
     print()
@@ -739,6 +804,10 @@ def full(y_true, y_pred):
     for t in sorted(set(fn_types_partial)):
         print(f'* {t}: {fn_types_partial.count(t)}')
 
+    # return f1 score of rel. extr w/o partial overlap as an indicator of
+    # whether or not the results have errors or not
+    return relext_f1
+
 
 if __name__ == '__main__':
     if len(sys.argv) < 3:
@@ -756,4 +825,8 @@ if __name__ == '__main__':
         ))
         sys.exit(1)
 
-    full(y_true, y_pred)
+    # full(y_true, y_pred)
+    tp, fp, fn, p, r, f1 = relation_extraction(
+        y_true, y_pred, partial_overlap=True, verbose=True
+    )
+    print(f'tp: {tp}, fp: {fp}, fn: {fn}, p: {p}, r: {r}, f1: {f1}')
