@@ -9,4 +9,5 @@ api_organization
 /code/BERE
 /code/joint_model/my_venv
 /code/joint_model/data
-/code/joint_model/output
+/code/joint_model/models
+/code/joint_model/outputs
