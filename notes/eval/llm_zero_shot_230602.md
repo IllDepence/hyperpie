@@ -36,6 +36,20 @@ Output:
 
 with `{text}` replaced by the paragraph text.
 
+## Parameters
+
+```
+gpt_default_params = {
+    "model": "text-davinci-003",
+    "max_tokens": 512,
+    "temperature": 0.0,
+    "top_p": 1,
+    "n": 1,
+    "logprobs": 0,
+    "echo": False,
+} 
+```
+
 ## Eval (“full info sets”)
 
 **Filter:**  
@@ -143,3 +157,71 @@ Both ground truth and predictions ran through `hyperpie.data.filter_annots.requi
 * c: 10
 * p: 37
 * v: 16
+
+# Changed Parameters
+
+* same prompt
+* parameter `max_tokens` set from 512 to 2048
+
+## Parameters
+
+```
+gpt_default_params = {
+    "model": "text-davinci-003",
+    "max_tokens": 2048,
+    "temperature": 0.0,
+    "top_p": 1,
+    "n": 1,
+    "logprobs": 0,
+    "echo": False,
+} 
+```
+
+## Eval (“reqire parent entity”)
+
+**Partial overlap: False**
+
+| Method       | TP | FP  | FN  | Precision (P) | Recall (R) | F1 Score |
+|--------------|----|-----|-----|---------------|------------|----------|
+| ER           | 420| 1210| 1551| 0.258         | 0.213      | 0.233    |
+| ER + Clf     | 407| 1210| 1564| 0.252         | 0.206      | 0.227    |
+| Co-ref resol.| 244| 1320| 1032| 0.156         | 0.191      | 0.172    |
+| Rel. extr.   |  17|  693|  195| 0.024         | 0.080      | 0.037    |
+
+**Partial overlap: True**
+
+| Method       | TP | FP  | FN  | Precision (P) | Recall (R) | F1 Score |
+|--------------|----|-----|-----|---------------|------------|----------|
+| ER           | 731|  885| 1240| 0.452         | 0.371      | 0.408    |
+| ER + Clf     | 681|  885| 1290| 0.435         | 0.346      | 0.385    |
+| Co-ref resol.| 340| 1216|  936| 0.219         | 0.266      | 0.240    |
+| Rel. extr.   |  53|  665|  159| 0.074         | 0.250      | 0.114    |
+
+
+**False positives (exact match)**
+
+* a: 699
+* c: 76
+* p: 314
+* v: 121
+
+**False positives (partial overlap)**
+
+* a: 496
+* c: 47
+* p: 277
+* v: 65
+
+**False negatives (exact match)**
+
+* a: 773
+* c: 42
+* p: 109
+* v: 627
+
+**False negatives (partial overlap)**
+
+* a: 562
+* c: 23
+* p: 83
+* v: 572

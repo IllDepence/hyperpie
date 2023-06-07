@@ -14,7 +14,7 @@ openai_org_fp = 'hyperpie/llm/api_organization'
 openai_key_fp = 'hyperpie/llm/api_key'
 gpt_default_params = {
     "model": "text-davinci-003",  # "default" for other models
-    "max_tokens": 512,
+    "max_tokens": 2048,
     "temperature": 0.0,           # 0 - 2
     "top_p": 1,                   # default 1, change only w/ detault temp
     "n": 1,                       # num completions to generate

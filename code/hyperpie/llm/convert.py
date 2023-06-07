@@ -118,7 +118,7 @@ def find_surface_forms_in_para(para_text, e_name):
     # all occurrences of entity name in paragraph
 
     surfs = []
-    e_name_patt = r'\b' + re.escape(e_name) + r'\b'
+    e_name_patt = r'\b' + re.escape(str(e_name)) + r'\b'
     for m in re.finditer(e_name_patt, para_text):
         start = m.start()
         end = m.end()
@@ -135,7 +135,11 @@ def find_surface_forms_in_para(para_text, e_name):
     return surfs
 
 
-def yaml2json(llm_output_dict, verbose=False):
+def parse_annotated_text(text):
+    re.compile(r'\[([a-z])([0-9\.]+)\|([^]]+)]')
+
+
+def llm_output2eval_input(llm_output_dict, verbose=False):
     """ Convert LLM output to evaluation script input format.
 
     Args:
@@ -145,66 +149,12 @@ def yaml2json(llm_output_dict, verbose=False):
         str: Evaluation script input in JSON format.
     """
 
-    # predicted annotations in YAML
-    llm_output_yaml = llm_output_dict['completion']['choices'][0]['text']
+    llm_output = yaml2json(llm_output_dict, verbose=verbose)
+    if llm_output is None:
+        return None
+
     # input paragraph (used to determine text offsets)
     para = llm_output_dict['paragraph']
-
-    # Check if LLM output is valid YAML
-    yaml_errors = {}
-    try:
-        llm_output = yaml.load(llm_output_yaml, Loader=yaml.Loader)
-    except yaml.YAMLError as e_general:
-        yaml_errors['general'] = e_general
-        parse_fail = True
-        # try to fix YAML
-        # 1. assume output is cut off, remove last line
-        last_line_cut = '\n'.join(llm_output_yaml.split('\n')[:-1])
-        try:
-            llm_output = yaml.load(last_line_cut, Loader=yaml.Loader)
-            parse_fail = False
-        except yaml.YAMLError as e_last_line_cut:
-            yaml_errors['last_line_cut'] = e_last_line_cut
-            pass  # try next fix
-        # 2. assume special characters in dict values. add quotes
-        try:
-            new_yaml_lines = []
-            for line in llm_output_yaml.split('\n'):
-                if re.match(r'^(\s+[a-z]+: )(.+)$', line):
-                    line = re.sub(r'^(\s+[a-z]+: )(.+)$', r'\1"\2"', line)
-                new_yaml_lines.append(line)
-            new_yaml = '\n'.join(new_yaml_lines)
-            llm_output = yaml.load(new_yaml, Loader=yaml.Loader)
-            parse_fail = False
-        except yaml.YAMLError as e_quotes:
-            yaml_errors['quotes'] = e_quotes
-            # 2.1. assume backslashes causing “unknown escape character” error
-            try:
-                esc_yaml_lines = []
-                for line in new_yaml.split('\n'):
-                    m = re.match(r'^(\s+[a-z]+: )"(.+)"$', line)
-                    if m:
-                        key_part = m.group(1)
-                        val_part = m.group(2)
-                        # escape backsplashes in value part
-                        val_part = re.sub(r'\\', r'\\\\', val_part)
-                        line = f'{key_part}"{val_part}"'
-                    esc_yaml_lines.append(line)
-                esc_yaml = '\n'.join(esc_yaml_lines)
-                llm_output = yaml.load(esc_yaml, Loader=yaml.Loader)
-                parse_fail = False
-            except yaml.YAMLError as e_quotes:
-                yaml_errors['quotes+esc'] = e_quotes
-                pass  # handle further down
-
-        # if parsing still fails, print error and return None
-        if parse_fail:
-            print('Error parsing LLM output YAML:')
-            print(f'YAML errors:')
-            for k, v in yaml_errors.items():
-                print(f'  {k}: {v}')
-            print(f'LLM output:\n{llm_output_yaml}')
-            return None
 
     # Check if LLM output adheres to expected format
     has_entities_key = 'text_contains_entities'
@@ -426,6 +376,79 @@ def yaml2json(llm_output_dict, verbose=False):
     return out
 
 
+def yaml2json(llm_output_dict, verbose=False):
+    """ Try to parse LLM output YAML and convert it to JSON.
+    """
+
+    # predicted annotations in YAML
+    llm_output_yaml = llm_output_dict['completion']['choices'][0]['text']
+
+    # try to parse
+    yaml_errors = {}
+    try:
+        llm_output = yaml.load(llm_output_yaml, Loader=yaml.Loader)
+    except yaml.YAMLError as e_general:
+        yaml_errors['general'] = e_general
+        parse_fail = True
+        # try to fix YAML
+        # 1. assume output is cut off, remove last line
+        last_line_cut = '\n'.join(llm_output_yaml.split('\n')[:-1])
+        try:
+            llm_output = yaml.load(last_line_cut, Loader=yaml.Loader)
+            parse_fail = False
+        except yaml.YAMLError as e_last_line_cut:
+            yaml_errors['last_line_cut'] = e_last_line_cut
+            pass  # try next fix
+        # 2. assume special characters in dict values. add quotes
+        #    to dict values that don't have quotes
+        try:
+            new_yaml_lines = []
+            for line in llm_output_yaml.split('\n'):
+                if line.endswith(': null'):
+                    # don't add quotes to null values, keep line as is
+                    new_yaml_lines.append(line)
+                    continue
+                patt = r'^(\s+[a-z]+: )([^\"\n\r]+)$'
+                if re.match(patt, line):
+                    line = re.sub(patt, r'\1"\2"', line)
+                new_yaml_lines.append(line)
+            new_yaml = '\n'.join(new_yaml_lines)
+            llm_output = yaml.load(new_yaml, Loader=yaml.Loader)
+            parse_fail = False
+        except yaml.YAMLError as e_quotes:
+            yaml_errors['quotes'] = e_quotes
+            # 2.1. assume backslashes causing “unknown escape character” error
+            try:
+                esc_yaml_lines = []
+                for line in new_yaml.split('\n'):
+                    m = re.match(r'^(\s+[a-z]+: )"(.+)"$', line)
+                    if m:
+                        key_part = m.group(1)
+                        val_part = m.group(2)
+                        # escape backsplashes in value part
+                        val_part = re.sub(r'\\', r'\\\\', val_part)
+                        line = f'{key_part}"{val_part}"'
+                    esc_yaml_lines.append(line)
+                esc_yaml = '\n'.join(esc_yaml_lines)
+                llm_output = yaml.load(esc_yaml, Loader=yaml.Loader)
+                parse_fail = False
+            except yaml.YAMLError as e_quotes:
+                yaml_errors['quotes+esc'] = e_quotes
+                pass  # handle further down
+
+        # if parsing still fails, print error and return None
+        if parse_fail:
+            print('Error parsing LLM output YAML:')
+            print(f'YAML errors:')
+            for k, v in yaml_errors.items():
+                print(f'  {k}: {v}')
+            print(f'LLM output:\n{llm_output_yaml}')
+            return None
+
+    # if we reach this point, parsing was successful
+    return llm_output
+
+
 if __name__ == '__main__':
     if len(sys.argv) != 2:
         print('Usage: python llm_eval.py <llm_output>')
@@ -436,7 +459,7 @@ if __name__ == '__main__':
     with open(sys.argv[1], 'r') as f:
         llm_output_dict = json.load(f)
 
-    llm_out_conv = yaml2json(llm_output_dict, verbose=True)
+    llm_out_conv = llm_output2eval_input(llm_output_dict, verbose=True)
 
     fn_out = fn_in.replace('.json', '_conv.json')
 
