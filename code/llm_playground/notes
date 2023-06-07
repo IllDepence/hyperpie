@@ -27,3 +27,20 @@ TODOs:
     - script for annotated paragraph to YAML output (LLM prompt example)
     - script for parsing LLM YAML output
     - script for evaluation
+
+- - - - - - - - prompt version with [a1|annotations] - - - - - - - -
+
+* example of correct distinction of semantically different values with identical surface form:
+    * part of text: “[...]. We consider two mention spans to be a match if their [p1|Jaccard similarity] is greater than [v1|0.5], that is \frac{|\mathcal{P} \cap \mathcal{G}|}{|\mathcal{P}|} > [v2|0.5]. The [v2|0.5] threshold [...]”
+    * with
+        * parameter1:
+            * id: p1
+            * name: "Jaccard similarity"
+            * value: "0.5"
+            * vid: v1
+        * parameter2:
+            * id: p2
+            * name: "threshold"
+            * value: "0.5"
+            * vid: v2
+    * note: “threshold” though not marked in text

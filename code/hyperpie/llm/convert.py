@@ -139,6 +139,84 @@ def parse_annotated_text(text):
     re.compile(r'\[([a-z])([0-9\.]+)\|([^]]+)]')
 
 
+def get_coarse_structure_entries(llm_output):
+    """ Get the coarse structure entries from LLM output.
+
+        Expected entries:
+        - text_contains_entities
+        - entities (short or long dict key version)
+
+        Optional entries:
+        - annotated_text
+    """
+
+    annotation_info = {
+        'text_contains_entities': None,
+        'entities': None,
+    }
+
+    has_entities_key = 'text_contains_entities'
+    entities_keys = [
+        'entities',
+        'entities (datasets, models, methods, loss functions, '
+        'regularization techniques)'
+    ]
+
+    # check if LLM output is a list or a dict
+    if type(llm_output) not in [list, dict]:
+        # unexpected format
+        print(
+            f'Expected list/dict as top-level YAML element, '
+            f'got {type(llm_output)}'
+        )
+        print(f'LLM output: {llm_output}')
+        sys.exit(1)
+
+    # if it’s a list, convert it to a dict
+    if type(llm_output) == list:
+        # convernsion works if every element is a dict with a single key
+        llm_output_fixed = {}
+        for elem in llm_output:
+            if type(elem) != dict:
+                print(
+                    f'Expected list of dicts as top-level YAML element, '
+                    f'got {llm_output}'
+                )
+                sys.exit(1)
+            llm_output_fixed.update(elem)
+        llm_output = llm_output_fixed
+
+    # not a list, so it’s a dict
+    has_expected_keys = (
+        has_entities_key in llm_output.keys() and
+        (
+            llm_output[has_entities_key] is False or
+            (
+                entities_keys[0] in llm_output.keys() or
+                entities_keys[1] in llm_output.keys()
+            )
+        )
+    )
+    if not has_expected_keys:
+        # unexpected format
+        print(
+            f'Expected dict with keys {has_entities_key} and '
+            f'{entities_keys}, got {llm_output.keys()}'
+        )
+        print(f'LLM output: {llm_output}')
+        sys.exit(1)
+    else:
+        annotation_info[
+            'text_contains_entities'
+        ] = llm_output[has_entities_key]
+        for key in entities_keys:
+            if key in llm_output.keys():
+                annotation_info['entities'] = llm_output[key]
+                break
+
+    return annotation_info
+
+
 def llm_output2eval_input(llm_output_dict, verbose=False):
     """ Convert LLM output to evaluation script input format.
 
@@ -149,57 +227,14 @@ def llm_output2eval_input(llm_output_dict, verbose=False):
         str: Evaluation script input in JSON format.
     """
 
+    # convert YAML to JSON
     llm_output = yaml2json(llm_output_dict, verbose=verbose)
     if llm_output is None:
+        # YAML parsing failed
         return None
 
     # input paragraph (used to determine text offsets)
     para = llm_output_dict['paragraph']
-
-    # Check if LLM output adheres to expected format
-    has_entities_key = 'text_contains_entities'
-    if type(llm_output) not in [list, dict]:
-        # unexpected format
-        print(
-            f'Expected list/dict as top-level YAML element, '
-            f'got {type(llm_output)}'
-        )
-        print(f'LLM output: {llm_output}')
-        sys.exit(1)
-    if type(llm_output) == dict:
-        # reconstruct list from dict
-        llm_output_fixed = []
-        for k, v in llm_output.items():
-            llm_output_fixed.append({k: v})
-        llm_output = llm_output_fixed
-    if len(llm_output) == 1:
-        # probably expected format (the info that nothing
-        # needs to be annotated in the paragraph)
-        try:
-            # check for expected format
-            assert (
-                has_entities_key in llm_output[0].keys() and
-                type(llm_output[0][has_entities_key]) == bool
-            )
-        except AssertionError:
-            print(
-                f'Expected key "{has_entities_key}" in LLM output, '
-                f'got {llm_output}'
-            )
-            sys.exit(1)
-    elif len(llm_output) != 2:
-        # unexpected format (if it’s not of length 1 or 2, we’re not
-        # sure how to deal with it)
-        print(
-            f'Expected list of length 1 or 2 as top-level YAML element, '
-            f'got {llm_output}'
-        )
-        sys.exit(1)
-        # NOTE: might be possible to just get the two dict elements
-        #       needed here and ignore the rest
-    else:
-        # expected format, good to proceed
-        pass
 
     out = empty_para_annotation(
         para['annotator_id'],
@@ -208,52 +243,25 @@ def llm_output2eval_input(llm_output_dict, verbose=False):
         para['text']
     )
 
-    if not llm_output[0][has_entities_key]:
+    # get coarse structure entries
+    annotation_info = get_coarse_structure_entries(llm_output)
+
+    if annotation_info['text_contains_entities'] is False:
         # If there are no entities, return the annotation dict empty
         return out
 
-    entity_key = (
-        'entities (datasets, models, methods, loss functions, '
-        'regularization techniques)'
-    )
-
-    llm_edict = llm_output[1]
-
-    llm_artifact_list = None
-    if type(llm_edict) != dict:
+    # check types
+    if not (
+        type(annotation_info['text_contains_entities']) == bool and
+        type(annotation_info['entities']) == list
+    ):
         print(
-            f'Expected dict as second element of LLM output, '
-            f'got {type(llm_edict)}'
+            f'Expected bool and list for coarse structure entries, '
+            f'got {type(annotation_info["text_contains_entities"])} and '
+            f'{type(annotation_info["entities"])}'
         )
-        if type(llm_edict) == list:
-            print('It is a list. Assuming it is a list of dicts.')
-            #      - check that it is a list of dicts
-            if not all([type(e) == dict for e in llm_edict]):
-                print(
-                    f'Not all elements of list are dicts: {llm_edict}'
-                )
-                sys.exit(1)
-            print('assuming it is a list of entity dicts')
-            llm_artifact_list = llm_edict
-    if len(llm_edict.keys()) == 0:
-        print(
-            f'No entities even though {has_entities_key} is true. '
-        )
-        return out
-    if len(llm_edict.keys()) > 1:
-        print(
-            f'More than one entity key in LLM output: {llm_edict.keys()}. '
-        )
-        if entity_key in llm_edict.keys():
-            print(f'Using key "{entity_key}" and ignoring rest')
-    if entity_key not in llm_edict.keys():
-        print(
-            f'Expected key "{entity_key}" in LLM output, '
-            f'got {llm_output}. Using first key.'
-        )
-        llm_artifact_list = llm_edict[list(llm_edict.keys())[0]]
-    else:
-        llm_artifact_list = llm_edict[entity_key]
+        print(f'LLM output: {llm_output}')
+        sys.exit(1)
 
     # coarse structure checking done
     # from hereon parse entity/relation dicts and build output
@@ -261,14 +269,8 @@ def llm_output2eval_input(llm_output_dict, verbose=False):
     if verbose:
         print('coarse structure looks good :)')
 
-    for artf_wrapper in llm_artifact_list:
-        # build entity and relation dicts
-        # - probably need to find surface foms in text to assign
-        #   offsets
-        # - might become tricky to deal with “overlapping” parameter
-        #   entities mentioned for multiple artifacts
-
-        # unwrap weird YAML->JSON conversion structure
+    for artf_wrapper in annotation_info['entities']:
+        # unwrap artifact dict
         artf = artf_wrapper[list(artf_wrapper.keys())[0]]
 
         # create the artifact entity

@@ -144,11 +144,6 @@ Only produce output in the YAML format specified above. Output no additional tex
 
 {instruction_output}"""  # noqa: E501
 
-# TODO:
-# - test revision of e2e zero shot prompt (test single examples, see if reduces FPs)
-# - test prompot which results in [a1]foo[/a1] types inserts in input text
-# - test few shot scenarios
-
 # first revision of end-to-end prompt with
 # - quotation marks around YAML dict values
 # - additionaly text to prevent inclusion of entities with out-of-scope type
@@ -163,10 +158,10 @@ Answer in the following YAML format.
 Format:
 ---
 - text_contains_entities: true/false
-- entities (datasets, models, methods, loss functions, regularization techniques):
+- entities:
     - entity<N>:
         name: "<entity name>"
-        type: "<entity type>"
+        type: dataset/model/method/loss function/regularization technique
         has_parameters: true/false
         parameters:
             - parameter<N>:
@@ -175,7 +170,94 @@ Format:
                 context: "<value context>"/null
 ...
 
-Only include entities that are of type dataset, model, method, loss function, or regularization technique.
+Only include entities that are of type dataset, model, method, loss function, or regularization technique. Do not output entities that are of another type.
 Only produce output in the YAML format specified above. Output no additional text.
 
 {instruction_output}"""  # noqa: E501
+
+
+text_e2e_fillin = f"""{instruction_context} what (if any) are the entities (datasets, models, methods, loss functions, regularization techniques) mentioned in the LaTeX Input Text below? What (if any) are their parameters and values?
+
+[LaTeX Input Text start]
+{{text}}
+[LaTeX Input Text end]
+
+Answer in the following YAML format.
+
+Format:
+---
+- text_contains_entities: true/false
+- entities:
+    - entity<N>:
+        id: <entity id>
+        name: "<entity name>"
+        type: dataset/model/method/loss function/regularization technique
+        has_parameters: true/false
+        parameters:
+            - parameter<N>:
+                id: <parameter id>
+                name: "<parameter name>"
+                value: "<parameter value>"/null
+                vid: <value id>/null
+                context: "<value context>"/null
+                cid: <context id>/null
+- text_annotated: "<annotated text>"
+...
+
+where in <annotated text> all entities, parameters, values, and contexts are annotated by enclosing them in square brackets, e.g. [eN|foo], [pN|bar], [vN|bam], or [cN|baz].
+
+Only include entities that are of type dataset, model, method, loss function, or regularization technique. Do not output entities that are of another type.
+Only produce output in the YAML format specified above. Output no additional text.
+
+{instruction_output}"""  # noqa: E501
+
+
+text_e2e_fillin_twostep_1 = f"""{instruction_context} what (if any) are the entities (datasets, models, methods, loss functions, regularization techniques) mentioned in the LaTeX Input Text below? What (if any) are their parameters and values?
+
+[LaTeX Input Text start]
+{{text}}
+[LaTeX Input Text end]
+
+Answer in the following YAML format.
+
+Format:
+---
+text_contains_entities: true/false
+entities:
+  - entity<N>:
+      id: e<N>
+      name: "<entity name>"
+      type: dataset/model/method/loss function/regularization technique
+      has_parameters: true/false
+      parameters:
+        - parameter<M>:
+            id: p<N.M>
+            name: "<parameter name>"
+            has_values: true/false
+            values:
+              - value<O>:
+                  value_id: v<N.M.O>
+                  value: "<parameter value>"
+                  context: "<value context>"/null
+                  context_id: c<N.M.O>/null
+...
+
+Only include entities that are of type dataset, model, method, loss function, or regularization technique. Do not output entities that are of another type. Do not include entities of type task, metric, library, software, or API.
+Only produce output in the YAML format specified above. Output no additional text.
+
+{instruction_output}"""  # noqa: E501
+
+
+text_e2e_fillin_twostep_2 = f"""{instruction_context} consider the following two pieces of information below. (1) YAML Entity Information, and (2) LaTeX Input Text. Based on (1) YAML Entity Information, annotate all mentions of the entities, parameters, values, and contexts in (2) LaTeX Input Text, by enclosing the mentions in square brackets, e.g. [eN|foo], [pN.M|bar], [vN.M.O|bam], or [cN.M.O|baz].
+
+[(1) YAML Entity Information start]
+{{yaml}}
+[(1) YAML Entity Information end]
+
+[(2) LaTeX Input Text start]
+{{text}}
+[(2) LaTeX Input Text end]
+
+Based on (1) YAML Entity Information, annotate all mentions of the entities, parameters, values, and contexts in (2) LaTeX Input Text, by enclosing the mentions in square brackets, e.g. [eN|foo], [pN.M|bar], [vN.M.O|bam], or [cN.M.O|baz].
+
+Annotated text:\n"""  # noqa: E501
