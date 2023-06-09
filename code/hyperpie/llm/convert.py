@@ -61,14 +61,14 @@ def relation_evidence_dict(src_srf, trg_srf):
     return relation_evidence
 
 
-def relation_dict(src_a_id, trg_a_id, src_srfs, trg_srfs):
+def relation_dict(src_e_id, trg_e_id, src_srfs, trg_srfs):
     """ Create a relation dict.
     """
 
     relation = OrderedDict({
         "id": str(uuid.uuid4()),
-        "source": src_a_id,
-        "target": trg_a_id,
+        "source": src_e_id,
+        "target": trg_e_id,
         "evidences": []
     })
 
@@ -133,10 +133,6 @@ def find_surface_forms_in_para(para_text, e_name):
          )
 
     return surfs
-
-
-def parse_annotated_text(text):
-    re.compile(r'\[([a-z])([0-9\.]+)\|([^]]+)]')
 
 
 def get_coarse_structure_entries(llm_output):
@@ -217,14 +213,26 @@ def get_coarse_structure_entries(llm_output):
     return annotation_info
 
 
-def llm_output2eval_input(llm_output_dict, verbose=False):
+def llm_output2eval_input(
+        llm_output_dict,
+        llm_annotated_text=None,
+        verbose=False
+):
     """ Convert LLM output to evaluation script input format.
 
     Args:
-        llm_output (str): LLM output in YAML format.
+        llm_output_dict: LLM output with completion in YAML as well as
+                         the original paragraph text.
+        llm_annotated_text: LLM annotated text (optional).
 
     Returns:
-        str: Evaluation script input in JSON format.
+        dict: Evaluation script input in JSON format.
+
+    NOTE: llm_annotated_text being given is used as a magick switch to
+          indicate a different input format where
+          - entities have IDs
+          - values are given as a list (i.e. multiple values per parameter
+            with different contexts are possible)
     """
 
     # convert YAML to JSON
@@ -236,7 +244,7 @@ def llm_output2eval_input(llm_output_dict, verbose=False):
     # input paragraph (used to determine text offsets)
     para = llm_output_dict['paragraph']
 
-    out = empty_para_annotation(
+    eval_input = empty_para_annotation(
         para['annotator_id'],
         para['document_id'],
         para['paragraph_index'],
@@ -248,7 +256,7 @@ def llm_output2eval_input(llm_output_dict, verbose=False):
 
     if annotation_info['text_contains_entities'] is False:
         # If there are no entities, return the annotation dict empty
-        return out
+        return eval_input
 
     # check types
     if not (
@@ -269,6 +277,171 @@ def llm_output2eval_input(llm_output_dict, verbose=False):
     if verbose:
         print('coarse structure looks good :)')
 
+    if llm_annotated_text is None:
+        # “single stage” prompt, surface forms  have to
+        # be string matched in the paragraph text
+        return singleprompt_llm_entities2eval_input(
+            para,
+            annotation_info,
+            eval_input,
+            verbose
+        )
+    else:
+        # “two stage” prompt, surface forms are given as
+        # annotated text with IDs
+        return twostage_llm_entities2eval_input(
+            para,
+            annotation_info,
+            llm_annotated_text,
+            eval_input,
+            verbose
+        )
+
+
+def get_llm_annotated_entities(text):
+    """ Parse text annotated by LLM with entity anntations in the form of
+
+            [e1|entity name]
+
+        Returns:
+            dict: entity annotations.
+            dict: offset mapping from annotated text to original text.
+
+        Entity annotations are directly created with the functions
+        entity_dict and surface_form_dict
+    """
+
+    annot_patt = re.compile(r'\[([a-z])([0-9\.]+)\|([^]]+)]')
+
+    # parse text
+    entities = {}
+    shift = 0
+    for match in annot_patt.finditer(text):
+        # get entity ID, surface form and offsets
+        entity_type = match.group(1)
+        entity_id = entity_type + match.group(2)
+        surface_form = match.group(3)
+        start_annot = match.start()
+        end_annot = match.end()
+        # determine start and end in original text (without annotations)
+        # offsets are shifted as shown in the example below
+        #   annotated text: "fo [e1|ba] r"
+        #   original text:  "fo ba r"
+        #   offset_mapping: {0: 0, 1: 1, 2: 2, 7: 3, 8: 4, 10: 5, 11: 6}
+        len_mrkr_pre = 1 + len(entity_id) + 1  # [e1|
+        len_mrkr_suf = 1                       # ]
+        # FIXME: because the LLM hallucinates spaces, we have to
+        #        check the LLMs output with markers removed against
+        #        the original text, and adjust the offsets accordingly
+        start_orig = start_annot - shift
+        end_orig = end_annot - shift - len_mrkr_pre - len_mrkr_suf
+        e = entity_dict(entity_id, entity_type)
+        surf_id = str(uuid.uuid4())
+        surf = surface_form_dict(
+            surf_id,
+            surface_form,
+            start_orig,
+            end_orig
+        )
+        e['surface_forms'].append(surf)
+        entities[entity_id] = e
+        # keep track of overall offset
+        shift += len_mrkr_pre + len_mrkr_suf
+        # keep track of end of last match
+
+    return entities
+
+
+def twostage_llm_entities2eval_input(
+    para,
+    annotation_info,
+    llm_annotated_text,
+    eval_input,
+    verbose
+):
+    # built dict of entities with ID, type, and name
+    # list of relations (using entity IDs)
+    entities = {}
+    relations = []
+    for artf_dict in annotation_info['entities']:
+        # parse artifact
+        artf = next(iter(artf_dict.values()))
+        entities[artf['id']] = {
+            'id': artf['id'],
+            'type': 'a',
+            'name': artf['name']
+        }
+        if not artf.get('has_parameters', False):
+            continue
+        for param_dict in artf['parameters']:
+            # parse parameter
+            param = next(iter(param_dict.values()))
+            entities[param['id']] = {
+                'id': param['id'],
+                'type': 'p',
+                'name': param['name']
+            }
+            # set relation
+            relations.append([
+                param['id'],
+                artf['id']
+            ])
+            if not param.get('has_values', False):
+                continue
+            for val_dict in param['values']:
+                # parse value and context
+                val = next(iter(val_dict.values()))
+                entities[val['value_id']] = {
+                    'id': val['value_id'],
+                    'type': 'v',
+                    'name': val['value']
+                }
+                # set relation
+                relations.append([
+                    val['value_id'],
+                    param['id']
+                ])
+                if val.get('context', None) is None:
+                    continue
+                entities[val['context_id']] = {
+                    'id': val['context_id'],
+                    'type': 'c',
+                    'name': val['context']
+                }
+                # set relation
+                relations.append([
+                    val['context_id'],
+                    val['value_id']
+                ])
+
+    # get entities from LLM annotated text
+    llm_entity_annots = get_llm_annotated_entities(llm_annotated_text)
+    # TODO: check if entities match
+
+    # create relation annots
+    rel_annots = {}
+    for from_id, to_id in relations:
+        rel_dict = relation_dict(
+            from_id,
+            to_id,
+            [],  # TODO: get suf form IDs from llm_entity_annots
+            []
+        )
+        rel_annots[rel_dict['id']] = rel_dict
+
+    eval_input['annotation']['entities'] = llm_entity_annots
+    eval_input['annotation']['relations'] = rel_annots
+
+    return eval_input
+
+
+def singleprompt_llm_entities2eval_input(
+        para,
+        annotation_info,
+        eval_input,
+        verbose
+):
+
     for artf_wrapper in annotation_info['entities']:
         # unwrap artifact dict
         artf = artf_wrapper[list(artf_wrapper.keys())[0]]
@@ -284,10 +457,10 @@ def llm_output2eval_input(llm_output_dict, verbose=False):
             # the missing quotes
             artif_name = f'[{artif_name[0]}]'
         # check if (identically named) artifact entity already exists
-        if artif_name in out['annotation']['entities']:
+        if artif_name in eval_input['annotation']['entities']:
             # not sure if this is sensible
             print('Duplicate artifact entity name, reusing existing entity')
-            artif_annot = out['annotation']['entities'][artif_name]
+            artif_annot = eval_input['annotation']['entities'][artif_name]
         else:
             artif_annot = entity_dict(artif_name, 'a')
         # find surface forms
@@ -296,7 +469,7 @@ def llm_output2eval_input(llm_output_dict, verbose=False):
             artif_name
         )
         artif_annot['surface_forms'] = artif_surfs
-        out['annotation']['entities'][artif_name] = artif_annot
+        eval_input['annotation']['entities'][artif_name] = artif_annot
 
         # check for parameters
         if (
@@ -304,7 +477,7 @@ def llm_output2eval_input(llm_output_dict, verbose=False):
             artf['parameters'] is None
         ):
             # no parameters, just add artifact entity
-            out['annotation']['entities'][artif_name] = artif_annot
+            eval_input['annotation']['entities'][artif_name] = artif_annot
             continue
         # create parameter entities
         for prm_wrapper in artf['parameters']:
@@ -321,7 +494,7 @@ def llm_output2eval_input(llm_output_dict, verbose=False):
             )
             prm_annot['surface_forms'] = prm_surfs
             # add parameter entity
-            out['annotation']['entities'][prm_name] = prm_annot
+            eval_input['annotation']['entities'][prm_name] = prm_annot
             # add relation between parameter and artifact
             rel_annot = relation_dict(
                 prm_name,
@@ -329,7 +502,7 @@ def llm_output2eval_input(llm_output_dict, verbose=False):
                 prm_surfs,
                 artif_surfs
             )
-            out['annotation']['relations'][rel_annot["id"]] = rel_annot
+            eval_input['annotation']['relations'][rel_annot["id"]] = rel_annot
             # check for a value
             if prm.get('value', None) is None or prm['value'] == '':
                 continue
@@ -341,7 +514,7 @@ def llm_output2eval_input(llm_output_dict, verbose=False):
                 val_name
             )
             val_annot['surface_forms'] = val_surfs
-            out['annotation']['entities'][val_name] = val_annot
+            eval_input['annotation']['entities'][val_name] = val_annot
             # add relation between parameter and value
             rel_annot = relation_dict(
                 val_name,
@@ -349,7 +522,7 @@ def llm_output2eval_input(llm_output_dict, verbose=False):
                 val_surfs,
                 prm_surfs
             )
-            out['annotation']['relations'][rel_annot["id"]] = rel_annot
+            eval_input['annotation']['relations'][rel_annot["id"]] = rel_annot
             # check for a context
             if prm.get('context', None) is None or prm['context'] == '':
                 continue
@@ -361,7 +534,7 @@ def llm_output2eval_input(llm_output_dict, verbose=False):
                 ctx_name
             )
             ctx_annot['surface_forms'] = ctx_surfs
-            out['annotation']['entities'][ctx_name] = ctx_annot
+            eval_input['annotation']['entities'][ctx_name] = ctx_annot
             # add relation between value and context
             rel_annot = relation_dict(
                 ctx_name,
@@ -369,13 +542,13 @@ def llm_output2eval_input(llm_output_dict, verbose=False):
                 ctx_surfs,
                 val_surfs
             )
-            out['annotation']['relations'][rel_annot["id"]] = rel_annot
+            eval_input['annotation']['relations'][rel_annot["id"]] = rel_annot
 
     if verbose:
-        print(f'Found {len(out["annotation"]["entities"])} entities')
-        print(f'Found {len(out["annotation"]["relations"])} relations')
+        print(f'Found {len(eval_input["annotation"]["entities"])} entities')
+        print(f'Found {len(eval_input["annotation"]["relations"])} relations')
 
-    return out
+    return eval_input
 
 
 def yaml2json(llm_output_dict, verbose=False):

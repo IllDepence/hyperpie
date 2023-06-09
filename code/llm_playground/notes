@@ -44,3 +44,48 @@ TODOs:
             * value: "0.5"
             * vid: v2
     * note: “threshold” though not marked in text
+
+* note llm hallucinates whitespace, which leads to offset errors
+    * below example shows paragraph sections as `<LLM annotated>`, `<LLM annot. w/o markers>`, `<original>`
+
+```
+ | For each dataset, we compare our results with the baseline which results were separately 
+✔| For each dataset, we compare our results with the baseline which results were separately 
+ | For each dataset, we compare our results with the baseline which results were separately 
+
+ | obtained based on the [e1|hyperparameter search] with the same [p1.1|batch size] \(= 
+✘| obtained based on the hyperparameter search with the same batch size \(= 
+ | obtained based on the hyperparameter search with the same batch size \(=
+
+ | [v1.1.1|64] \), [p1.2|learning rates] \(\in \lbrace [v1.2.1|1e-5], [v1.2.2|2e-5], 
+✘| 64 \), learning rates \(\in \lbrace 1e-5, 2e-5, 
+ | 64\) , learning rates \(\in \lbrace 1e-5, 2e-5, 
+
+ | [v1.2.3|3e-5]\rbrace \) , [p1.3|epochs number] \(\in \lbrace [v1.3.1|8], [v1.3.2|16], 
+✘| 3e-5\rbrace \) , epochs number \(\in \lbrace 8, 16, 
+ | 3e-5\rbrace \) , epochs number \(\in \lbrace 8,16,
+
+ | [v1.3.3|64], [v1.3.4|128]\rbrace \) , [p1.4|linear warmup] for the first [v1.4.1|6%] of 
+✘| 64, 128\rbrace \) , linear warmup for the first 6% of 
+ | 64,128\rbrace \) , linear warmup for the first 6% of 
+
+ | steps and [p1.5|weight decay coefficient] \(= [v1.5.1|0.01] \).
+✘| steps and weight decay coefficient \(= 0.01 \).
+ | steps and weight decay coefficient \(=0.01\) .
+
+ | The final best hyperparameters for the baselines are the following: the [p1.2|learning rate] 
+✔| The final best hyperparameters for the baselines are the following: the learning rate 
+ | The final best hyperparameters for the baselines are the following: the learning rate 
+
+ | of \([v1.2.1|1e-5]\)  for each dataset, and [v1.3.1|8] [c1.3.1|epochs] for 
+✔| of \(1e-5\)  for each dataset, and 8 epochs for 
+ | of \(1e-5\)  for each dataset, and 8 epochs for 
+
+ | [c1.3.1|1,000 elements datasets], [v1.3.3|64] for [c1.3.2|100-element datasets] and 
+✔| 1,000 elements datasets, 64 for 100-element datasets and 
+ | 1,000 elements datasets, 64 for 100-element datasets and 
+
+ | [v1.3.4|128] for [c1.3.3|20-element datasets].
+✔| 128 for 20-element datasets.
+ | 128 for 20-element datasets.
+```
