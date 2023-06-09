@@ -7,10 +7,10 @@ import hyperpie as hp
 # Use data filtered for “full info sets” (a<p<v[<c])
 # because GPT-3 only predicts those
 d = hp.data.load.load_annotated()
-paras_true = d
-# paras_true, filter_stats = hp.data.filter_annots.require_parent(
-#     d
-# )
+# paras_true = d
+paras_true, filter_stats = hp.data.filter_annots.require_parent(
+    d
+)
 paras_pred = []
 
 # get predictions

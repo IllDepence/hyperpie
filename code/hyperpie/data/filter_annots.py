@@ -196,19 +196,26 @@ if __name__ == '__main__':
     with open(input_file, 'r') as f:
         paras = json.load(f)
 
-    filtered_paras = []
+    filtered_paras_onlyfull = []
+    filtered_paras_reqparents = []
     num_full_triples = 0
     num_paras_with_full_triples = 0
     for para in paras:
-        filtered_para, num_full_triples_para = require_apv(para)
-        num_full_triples += num_full_triples_para
-        if num_full_triples_para > 0:
+        filtered_para_onlyfull, n_full_triples_para = require_apv_single(para)
+        num_full_triples += n_full_triples_para
+        if n_full_triples_para > 0:
             num_paras_with_full_triples += 1
-        filtered_paras.append(filtered_para)
+        filtered_paras_onlyfull.append(filtered_para_onlyfull)
+
+        filtered_para_reqparents, _ = require_parent_single(para)
+        filtered_paras_reqparents.append(filtered_para_reqparents)
 
     print(f'Found {num_full_triples} full triples in total.')
     print(f'Found {num_paras_with_full_triples} paragraphs with full triples.')
 
-    output_file = input_file.replace('.json', '_onlyfull.json')
-    with open(output_file, 'w') as f:
-        json.dump(filtered_paras, f)
+    fp_onlyfull = input_file.replace('.json', '_onlyfull.json')
+    with open(fp_onlyfull, 'w') as f:
+        json.dump(filtered_paras_onlyfull, f)
+    fp_reqparents = input_file.replace('.json', '_withparent.json')
+    with open(fp_reqparents, 'w') as f:
+        json.dump(filtered_paras_reqparents, f)
