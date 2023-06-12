@@ -76,18 +76,22 @@ def openai_api(para, prompt, params=None, verbose=False):
         )
         params_mod = params.copy()
         params_mod['max_tokens'] = max_for_completion
-        completion_dict['params'] = params_mod
         # first check cache for prompt with reduced max_tokens
         cached_completion = llm_cache.llm_completion_cache_load(
             params_mod, prompt
         )
         if cached_completion is not None:
             if verbose:
-                print('loading completion from cache')
-            return cached_completion, True
-        # not in cache, get from API
-        completion = completion_with_backoff(prompt=prompt, **params_mod)
-        completion_dict['completion'] = completion
+                print('loading completion from cache during retry')
+            completion_dict = cached_completion
+            # dont return here, we still need to save to cache
+        else:
+            # not in cache, get from API
+            completion = completion_with_backoff(prompt=prompt, **params_mod)
+            completion_dict['completion'] = completion
+            # completion_dict['params'] = params_mod  # we don’t save the
+            # completion with modified params, because we would then make the
+            # API call causing the error again when re-running the same prompt
 
     # save to cache
     llm_cache.llm_completion_cache_save(
