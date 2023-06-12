@@ -102,28 +102,28 @@ def _require_rel_sets(para, cascade, verbose=False):
         else:
             filtered_para[key] = None
 
-    keppers_entities = []
-    keppers_relations = []
+    keepers_entities = []
+    keepers_relations = []
 
     # if cascade, keep all artifacts
     if cascade:
         ents = para['annotation']['entities']
         for ent_id, ent in ents.items():
             if ent['type'] == 'a':
-                keppers_entities.append(ent_id)
+                keepers_entities.append(ent_id)
 
     num_full_triples = 0
     ents = para['annotation']['entities']
     rels = para['annotation']['relations']
     for rel_ap_id, rel_ap in rels.items():
         # look for artif <- param
-        if ents[rel_ap['target']]['type'] != 'a':
+        if ents.get(rel_ap['target'], {}).get('type') != 'a':
             # need artifact, skip
             continue
         if cascade:
             # found a parameter with artifact, keep
-            keppers_entities.append(rel_ap['source'])  # parameter
-            keppers_relations.append(rel_ap_id)  # artifact <- parameter
+            keepers_entities.append(rel_ap['source'])  # parameter
+            keepers_relations.append(rel_ap_id)  # artifact <- parameter
         for rel_pv_id, rel_pv in rels.items():
             # look for matching param <- value
             if rel_ap['source'] != rel_pv['target']:
@@ -131,14 +131,14 @@ def _require_rel_sets(para, cascade, verbose=False):
                 continue
             # found a set, keep all three entities and
             # both relations
-            keppers_entities.extend(
+            keepers_entities.extend(
                 [
                     rel_ap['target'],  # artifact
                     rel_ap['source'],  # parameter
                     rel_pv['source']   # value
                 ]
             )
-            keppers_relations.extend(
+            keepers_relations.extend(
                 [
                     rel_ap_id,  # artifact <- parameter
                     rel_pv_id   # parameter <- value
@@ -151,8 +151,8 @@ def _require_rel_sets(para, cascade, verbose=False):
                     # not connected, skip
                     continue
                 # additionally found a context, keep
-                keppers_entities.append(rel_vc['source'])  # context
-                keppers_relations.append(rel_vc_id)  # value <- context
+                keepers_entities.append(rel_vc['source'])  # context
+                keepers_relations.append(rel_vc_id)  # value <- context
 
                 # sice there is at most one context per value,
                 # we can break here
@@ -163,13 +163,13 @@ def _require_rel_sets(para, cascade, verbose=False):
     # copy entities
     filtered_para['annotation']['entities'] = {}
     for ent_id, ent in ents.items():
-        if ent_id in keppers_entities:
+        if ent_id in keepers_entities:
             filtered_para['annotation']['entities'][ent_id] = ent
 
     # copy relations
     filtered_para['annotation']['relations'] = {}
     for rel_id, rel in rels.items():
-        if rel_id in keppers_relations:
+        if rel_id in keepers_relations:
             filtered_para['annotation']['relations'][rel_id] = rel
 
     if verbose:
@@ -199,18 +199,22 @@ if __name__ == '__main__':
     filtered_paras_onlyfull = []
     filtered_paras_reqparents = []
     num_full_triples = 0
+    num_paras_with_annotations = 0
     num_paras_with_full_triples = 0
     for para in paras:
         filtered_para_onlyfull, n_full_triples_para = require_apv_single(para)
         num_full_triples += n_full_triples_para
         if n_full_triples_para > 0:
             num_paras_with_full_triples += 1
+        if len(para['annotation']['entities']) > 0:
+            num_paras_with_annotations += 1
         filtered_paras_onlyfull.append(filtered_para_onlyfull)
 
         filtered_para_reqparents, _ = require_parent_single(para)
         filtered_paras_reqparents.append(filtered_para_reqparents)
 
     print(f'Found {num_full_triples} full triples in total.')
+    print(f'Found {num_paras_with_annotations} paragraphs with annotations.')
     print(f'Found {num_paras_with_full_triples} paragraphs with full triples.')
 
     fp_onlyfull = input_file.replace('.json', '_onlyfull.json')

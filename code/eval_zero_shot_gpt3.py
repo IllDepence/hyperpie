@@ -15,22 +15,30 @@ paras_pred = []
 
 # get predictions
 for i, para in enumerate(paras_true):
-    print(f'{i+1}/{len(paras_true)}')
-    prompt = hp.llm.prompt_templates.text_e2e.format(
+    # prompt (stage 1)
+    print(f'{i+0.5}/{len(paras_true)}')
+    prompt1 = hp.llm.prompt_templates.text_e2e_fillin_twostep_1.format(
         text=para['text']
     )
-    completion_dict, from_cache = hp.llm.predict.openai_api(
-        para, prompt, params=hp.settings.gpt_default_params
+    completion_dict1, from_cache = hp.llm.predict.openai_api(
+        para, prompt1, params=hp.settings.gpt_default_params
     )
-    # print(completion_dict['completion']['choices'][0]['text'])
-    # x = input()
-    # if x == 'i':
-    #     import IPython
-    #     IPython.embed()
-    # elif x == 'q':
-    #     exit(1)
-    # continue
-    para_pred = hp.llm.convert.llm_output2eval_input(completion_dict)
+    # prompt (stage 2)
+    print(f'{i+1}/{len(paras_true)}')
+    prompt2 = hp.llm.prompt_templates.text_e2e_fillin_twostep_2.format(
+        yaml=completion_dict1['completion']['choices'][0]['text'],
+        text=para['text']
+    )
+    completion_dict2, from_cache = hp.llm.predict.openai_api(
+        para, prompt2, params=hp.settings.gpt_default_params
+    )
+    # convert
+    para_pred = hp.llm.convert.llm_output2eval_input(
+        completion_dict1,
+        completion_dict2['completion']['choices'][0]['text']
+    )
+
+    # filter
     filtered_para, num_full_triples_para = \
         hp.data.filter_annots.require_parent_single(para_pred)
     paras_pred.append(filtered_para)

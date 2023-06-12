@@ -319,6 +319,9 @@ def get_llm_annotated_entities(text):
     for match in annot_patt.finditer(text):
         # get entity ID, surface form and offsets
         entity_type = match.group(1)
+        # set 'e' type entities to 'a' type (prompt uses 'e', eval 'a')
+        if entity_type == 'e':
+            entity_type = 'a'
         entity_id = entity_type + match.group(2)
         surface_form = match.group(3)
         start_annot = match.start()
@@ -364,8 +367,12 @@ def twostage_llm_entities2eval_input(
     entities = {}
     relations = []
     for artf_dict in annotation_info['entities']:
+        if artf_dict is None:
+            continue
         # parse artifact
         artf = next(iter(artf_dict.values()))
+        # set 'e' type entities to 'a' type (prompt uses 'e', eval 'a')
+        artf['id'] = re.sub(r'[a-z]([0-9\.]+)', r'a\1', artf['id'])
         entities[artf['id']] = {
             'id': artf['id'],
             'type': 'a',
@@ -416,16 +423,18 @@ def twostage_llm_entities2eval_input(
 
     # get entities from LLM annotated text
     llm_entity_annots = get_llm_annotated_entities(llm_annotated_text)
-    # TODO: check if entities match
 
     # create relation annots
     rel_annots = {}
     for from_id, to_id in relations:
+        # make sure both entities exist in LLM annotations
+        if from_id not in llm_entity_annots or to_id not in llm_entity_annots:
+            continue
         rel_dict = relation_dict(
             from_id,
             to_id,
-            [],  # TODO: get suf form IDs from llm_entity_annots
-            []
+            llm_entity_annots[from_id]['surface_forms'],
+            llm_entity_annots[to_id]['surface_forms']
         )
         rel_annots[rel_dict['id']] = rel_dict
 
