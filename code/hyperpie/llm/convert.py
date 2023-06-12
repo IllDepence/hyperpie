@@ -298,7 +298,7 @@ def llm_output2eval_input(
         )
 
 
-def get_llm_annotated_entities(text):
+def get_llm_annotated_entities(llm_text, orig_text):
     """ Parse text annotated by LLM with entity anntations in the form of
 
             [e1|entity name]
@@ -313,10 +313,10 @@ def get_llm_annotated_entities(text):
 
     annot_patt = re.compile(r'\[([a-z])([0-9\.]+)\|([^]]+)]')
 
-    # parse text
+    # parse LLM annotated text
     entities = {}
     shift = 0
-    for match in annot_patt.finditer(text):
+    for match in annot_patt.finditer(llm_text):
         # get entity ID, surface form and offsets
         entity_type = match.group(1)
         # set 'e' type entities to 'a' type (prompt uses 'e', eval 'a')
@@ -338,7 +338,11 @@ def get_llm_annotated_entities(text):
         #        the original text, and adjust the offsets accordingly
         start_orig = start_annot - shift
         end_orig = end_annot - shift - len_mrkr_pre - len_mrkr_suf
-        e = entity_dict(entity_id, entity_type)
+        # create new entity dict or update existing one to add surface form
+        if entity_id not in entities.keys():
+            e = entity_dict(entity_id, entity_type)
+        else:
+            e = entities[entity_id]
         surf_id = str(uuid.uuid4())
         surf = surface_form_dict(
             surf_id,
@@ -346,6 +350,7 @@ def get_llm_annotated_entities(text):
             start_orig,
             end_orig
         )
+
         e['surface_forms'].append(surf)
         entities[entity_id] = e
         # keep track of overall offset
@@ -422,7 +427,10 @@ def twostage_llm_entities2eval_input(
                 ])
 
     # get entities from LLM annotated text
-    llm_entity_annots = get_llm_annotated_entities(llm_annotated_text)
+    llm_entity_annots = get_llm_annotated_entities(
+        llm_annotated_text,
+        para['text']
+    )
 
     # create relation annots
     rel_annots = {}
