@@ -13,6 +13,7 @@ import json
 import uuid
 import yaml
 from collections import OrderedDict
+from difflib import SequenceMatcher
 
 
 def surface_form_dict(s_id, surf_form, start, end):
@@ -298,6 +299,29 @@ def llm_output2eval_input(
         )
 
 
+def get_llm_text_offset_mapping(llm_text, orig_text, annot_patt):
+    """ Get offset mapping from LLM “repeated” text to original text.
+
+        (“repeated” text is the text with annotation markers removed.)
+
+        Example:
+             if llm_text = 'abc' and orig_text = 'abbc', then the mapping
+             would be {0:0, 1:1, 2:3}
+    """
+
+    # remove annotations from LLM text
+    # (in theory should work without, but this turns out to be more robust)
+    llm_text = annot_patt.sub(r'\3', llm_text)
+
+    annot_to_orig = {}
+    # get non-overlapping matching subsequences
+    blocks = SequenceMatcher(None, llm_text, orig_text).get_matching_blocks()
+    for i, j, n in blocks:
+        for k in range(n):
+            annot_to_orig[i+k] = j+k
+    return annot_to_orig
+
+
 def get_llm_annotated_entities(llm_text, orig_text):
     """ Parse text annotated by LLM with entity anntations in the form of
 
@@ -312,6 +336,13 @@ def get_llm_annotated_entities(llm_text, orig_text):
     """
 
     annot_patt = re.compile(r'\[([a-z])([0-9\.]+)\|([^]]+)]')
+
+    # prepare offset mapping
+    llm_to_orig = get_llm_text_offset_mapping(
+        llm_text,
+        orig_text,
+        annot_patt
+    )
 
     # parse LLM annotated text
     entities = {}
@@ -333,11 +364,23 @@ def get_llm_annotated_entities(llm_text, orig_text):
         #   offset_mapping: {0: 0, 1: 1, 2: 2, 7: 3, 8: 4, 10: 5, 11: 6}
         len_mrkr_pre = 1 + len(entity_id) + 1  # [e1|
         len_mrkr_suf = 1                       # ]
-        # FIXME: because the LLM hallucinates spaces, we have to
-        #        check the LLMs output with markers removed against
-        #        the original text, and adjust the offsets accordingly
-        start_orig = start_annot - shift
-        end_orig = end_annot - shift - len_mrkr_pre - len_mrkr_suf
+        # NOTE: the LLM sometimes repeats in input text with slight
+        #       modifications, e.g. spaces added/missing or punctuation
+        #       changed.
+        #       we therefore have use the offset mapping prepared above
+        #       to undo the changes
+        start_orig_pre = start_annot - shift
+        end_orig_pre = end_annot - shift - len_mrkr_pre - len_mrkr_suf
+        # FIXME: check if text at the offsets is actually matching and
+        #        only swap to difflib version if not
+        if start_orig_pre in llm_to_orig.keys():
+            start_orig = llm_to_orig[start_orig_pre]
+        else:
+            start_orig = start_orig_pre
+        if end_orig_pre in llm_to_orig.keys():
+            end_orig = llm_to_orig[end_orig_pre]
+        else:
+            end_orig = end_orig_pre
         # create new entity dict or update existing one to add surface form
         if entity_id not in entities.keys():
             e = entity_dict(entity_id, entity_type)
@@ -355,7 +398,6 @@ def get_llm_annotated_entities(llm_text, orig_text):
         entities[entity_id] = e
         # keep track of overall offset
         shift += len_mrkr_pre + len_mrkr_suf
-        # keep track of end of last match
 
     return entities
 
