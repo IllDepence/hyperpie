@@ -502,6 +502,9 @@ def singleprompt_llm_entities2eval_input(
 ):
 
     for artf_wrapper in annotation_info['entities']:
+        if artf_wrapper is None:
+            continue
+
         # unwrap artifact dict
         artf = artf_wrapper[list(artf_wrapper.keys())[0]]
 

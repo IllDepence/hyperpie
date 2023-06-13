@@ -1,7 +1,5 @@
 # First shot at LLM zero shot evaluation
 
-(raw data in `completion_cache_llm_zero_shot_230602.json.xz`)
-
 ## Prompt
 
 ```
@@ -35,6 +33,10 @@ Output:
 ```
 
 with `{text}` replaced by the paragraph text.
+
+<details><summary>numbers based on paragraph text before newline fix in here</summary>
+
+(raw data in `completion_cache_llm_zero_shot_230602.json.xz`)
 
 ## Parameters
 
@@ -163,6 +165,8 @@ Both ground truth and predictions ran through `hyperpie.data.filter_annots.requi
 * same prompt
 * parameter `max_tokens` set from 512 to 2048
 
+</details>
+
 ## Parameters
 
 ```
@@ -181,47 +185,43 @@ gpt_default_params = {
 
 **Partial overlap: False**
 
-| Method       | TP | FP  | FN  | Precision (P) | Recall (R) | F1 Score |
-|--------------|----|-----|-----|---------------|------------|----------|
-| ER           | 420| 1210| 1551| 0.258         | 0.213      | 0.233    |
-| ER + Clf     | 407| 1210| 1564| 0.252         | 0.206      | 0.227    |
-| Co-ref resol.| 244| 1320| 1032| 0.156         | 0.191      | 0.172    |
-| Rel. extr.   |  17|  693|  195| 0.024         | 0.080      | 0.037    |
+| Method       | TP | FP | FN | Precision (P) | Recall (R) | F1 Score |
+|--------------|----|----|----|---------------|------------|----------|
+| ER           | 523| 744| 739| 0.413         | 0.414      | 0.414    |
+| ER + Clf     | 507| 744| 755| 0.405         | 0.402      | 0.404    |
+| Co-ref resol.| 350| 704| 846| 0.332         | 0.293      | 0.311    |
+| Rel. extr.   | 8  | 202| 123| 0.038         | 0.061      | 0.047    |
 
 **Partial overlap: True**
 
-| Method       | TP | FP  | FN  | Precision (P) | Recall (R) | F1 Score |
-|--------------|----|-----|-----|---------------|------------|----------|
-| ER           | 731|  885| 1240| 0.452         | 0.371      | 0.408    |
-| ER + Clf     | 681|  885| 1290| 0.435         | 0.346      | 0.385    |
-| Co-ref resol.| 340| 1216|  936| 0.219         | 0.266      | 0.240    |
-| Rel. extr.   |  53|  665|  159| 0.074         | 0.250      | 0.114    |
+| Method       | TP | FP | FN | Precision (P) | Recall (R) | F1 Score |
+|--------------|----|----|----|---------------|------------|----------|
+| ER           | 641| 634| 621| 0.503         | 0.508      | 0.505    |
+| ER + Clf     | 619| 634| 643| 0.494         | 0.490      | 0.492    |
+| Co-ref resol.| 390| 660| 806| 0.371         | 0.326      | 0.347    |
+| Rel. extr.   | 15 | 194| 116| 0.072         | 0.115      | 0.088    |
 
 
 **False positives (exact match)**
 
-* a: 699
-* c: 76
-* p: 314
-* v: 121
+* a: 553
+* p: 191
 
 **False positives (partial overlap)**
 
-* a: 496
-* c: 47
-* p: 277
-* v: 65
+* a: 455
+* p: 179
 
 **False negatives (exact match)**
 
-* a: 773
-* c: 42
-* p: 109
-* v: 627
+* a: 633
+* c: 13
+* p: 48
+* v: 45
 
 **False negatives (partial overlap)**
 
-* a: 562
-* c: 23
-* p: 83
-* v: 572
+* a: 527
+* c: 13
+* p: 38
+* v: 43
