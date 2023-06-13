@@ -2,5 +2,5 @@
 """
 
 from . import (
-    convert, load, filter_annots, get_plaintext_paras
+    convert, load, validate, filter_annots, get_plaintext_paras
 )

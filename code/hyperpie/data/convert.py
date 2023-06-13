@@ -23,6 +23,7 @@
 
 import json
 import os
+import re
 import sys
 from collections import OrderedDict
 from nltk.tokenize import sent_tokenize
@@ -250,9 +251,22 @@ def untangle_single_para_annotations(para):
     return para
 
 
+def convert_line_para_text_breaks(para):
+    """ Make all line breaks in contexts \n.
+
+        This is done beacause in the raw annotation format offsets
+        are given assuming line breaks are \n. This causes leads to
+        misalignment in contexts that have \r\n line breaks.
+    """
+
+    para['text'] = re.sub(r'\r\n', '\n', para['text'])
+
+    return para
+
+
 def preprocess(annots_path):
     # load and pre-process annotated text segments
-    save_path = '../data/annotation'
+    save_path = '../data/'
     annots_fn = os.path.basename(annots_path)
     annots_fn_base, ext = os.path.splitext(annots_fn)
     annots_processed_fn = f'{annots_fn_base}_processed{ext}'
@@ -266,6 +280,7 @@ def preprocess(annots_path):
     annots_processed = []
     for para in annots_nice:
         para = untangle_single_para_annotations(para)
+        para = convert_line_para_text_breaks(para)
         annots_processed.append(para)
 
     # save processed annotations
@@ -277,7 +292,7 @@ if __name__ == '__main__':
     # check command line arguments
     if len(sys.argv) != 2:
         print(
-            'Usage: python preprocess_annotations_v2.py /path/to/annots.json'
+            'Usage: python hyperpie/data/convert.py /path/to/annots.json'
         )
         sys.exit(1)
     annots_path = sys.argv[1]
