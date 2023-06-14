@@ -14,7 +14,7 @@ def load_annotated_raw():
         return json.load(f)
 
 
-def load_annotated(only_full=False):
+def load_annotated(only_full=False, with_parent=False):
     """ Load (preprocessed) annotated data paragraphs.
 
         If `filtered` is True, load data filtered to only include
@@ -23,6 +23,8 @@ def load_annotated(only_full=False):
 
     if only_full:
         fp = settings.annot_onlyfull_fp
+    elif with_parent:
+        fp = settings.annot_withparent_fp
     else:
         fp = settings.annot_prep_fp
 

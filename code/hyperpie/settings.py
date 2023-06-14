@@ -6,6 +6,7 @@ data_base_path = '/home/tarek/proj/hyperparam_paper/xiao_collab_repo/data/'
 annot_raw_fp = data_base_path + 'tsa.json'
 annot_prep_fp = data_base_path + 'tsa_processed.json'
 annot_onlyfull_fp = data_base_path + 'tsa_processed_onlyfull.json'
+annot_withparent_fp = data_base_path + 'tsa_processed_withparent.json'
 llm_cache_fp = 'hyperpie/llm/completion_cache.json'
 
 # LLM
