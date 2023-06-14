@@ -1,0 +1,27 @@
+[a1] "method" / "Adam optimizer"      [a57] "Adam"            r8
+↑                                 ✔   ↑
+[p1.1] "learning rate"                [p4] "learning rate"
+
+[a1] "method" / "Adam optimizer"      [a57] "Adam"            r11
+↑                                 ✔   ↑
+[p1.2] "weight decay"                 [p5] "weight decay"
+
+
+
+[p1.1] "learning rate"                [p4] "learning rate"
+↑                                 ✔   ↑
+[v1.1.1] "1e-4"                       [v4] "1e-4 to 2e-2"
+
+[p1.1] "learning rate"                [p4] "learning rate"
+↑                                 ✔   ↑
+[v1.1.2] "2e-2"                       [v4] "1e-4 to 2e-2"
+
+
+
+[p1.2] "weight decay"                 [p5] "weight decay"
+↑                                 ✔   ↑
+[v1.2.1] "0"                          [v5] "0 to 0.01"
+
+[p1.2] "weight decay"                 [p5] "weight decay"
+↑                                 ✔   ↑
+[v1.2.2] "0.01"                       [v5] "0 to 0.01"
