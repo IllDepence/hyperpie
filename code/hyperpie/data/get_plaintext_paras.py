@@ -45,7 +45,76 @@ def replace_tabsandfig(text, tag_type):
         return pattern.sub("TABLE", text)
 
 
-def transform_ppr(ppr_dict):
+def _hyperparam_paragraph(para, formulas):
+    """ Gauge if a paragraph is likely to contain hyperparameter information.
+    """
+
+    sec_title = para['section']
+    sec_text = para['text']
+
+    if sec_title is None or sec_title == "":
+        # we need a section title
+        return False
+
+    # if paragraph is too short or too long, treat it as “noise”
+    # (enumeration items, broken section cut-offs, etc.)
+    if len(sec_text) < 200 or len(sec_text) > 2000:
+        return False
+
+    # we don't want to include paragraphs that only refer to tables
+    # or report on metrics
+    negative_keywords = [
+        'table',
+        'achieve',
+        'metric',
+        'measure'
+    ]
+    if any(kw in sec_text.lower() for kw in negative_keywords):
+        return False
+
+    # check section title for keywords
+    sec_title_keywords = [
+        'hyperparameter'
+        'hyper-parameter',
+        'hyper parameter',
+        'model parameters',
+        'training parameters',
+        'training setup',
+        'training settings',
+        'training configuration'
+        # - considered but in the end not used -
+        # 'experiment setup',
+        # 'experimental setup',
+        # 'experiment settings',
+        # 'experimental settings',
+        # 'baseline',
+        # 'implementation details',
+        # 'dataset',
+        # 'training details',
+    ]
+
+    promising_sec_title = any(
+        kw in sec_title.lower() for kw in sec_title_keywords
+    )
+
+    # check section text for keywords, values, or mathematical notation
+    sec_text = replace_tags(sec_text, "formula", formulas)
+    text_assigner_keywords = [
+        ' use ', ' used', ' using', ' set ', '='
+    ]
+    text_value_patt = re.compile(r'(=|\s|\\\()\d+(\s|,|\.|;|e|\^|\\\))')
+    promising_sec_text = (
+        any(
+            kw in sec_text.lower() for kw in text_assigner_keywords
+        )
+        and
+        text_value_patt.search(sec_text)
+    )
+
+    return promising_sec_title and promising_sec_text
+
+
+def transform_ppr(ppr_dict, pre_filter=False):
     formulas = generate_formula_lookup_dict(ppr_dict['ref_entries'])
     citation_marker_replacements = generate_cit_marker_lookup_dict(
         ppr_dict['bib_entries']
@@ -55,6 +124,8 @@ def transform_ppr(ppr_dict):
 
     plain_paras = []
     for para in paras:
+        if pre_filter and not _hyperparam_paragraph(para, formulas):
+            continue
         # get paragraph text
         plain_context = para['text']
         # replace markers of referenced non-text content with actual content
@@ -75,9 +146,17 @@ def transform_ppr(ppr_dict):
     return transformed_ppr
 
 
-def generate(in_fp):
+def generate(in_fp, pre_filter=False):
+    """ Generate transformed papers with plain text paragraphs.
+
+        If pre_filter is True, heuristically filter for paragraphs
+        that are likely to contain descriptions of hyperparameters.
+    """
+
     categories = ['cs.CL', 'cs.LG', 'cs.CV', 'cs.DL', 'cs.CV']
     out_fn = 'transformed_pprs.jsonl'
+    if pre_filter:
+        out_fn = 'transformed_pprs_filtered.jsonl'
 
     # get all JSONL files from in_dir
     ppr_fns = []
@@ -93,18 +172,32 @@ def generate(in_fp):
         with open(os.path.join(in_fp, ppr_fn), 'r') as f:
             for line in f:
                 ppr_dict = json.loads(line)
-                prime_cat = ppr_dict['metadata']['categories'].split(' ')[0]
+                prime_cat = ppr_dict['metadata'].get(
+                    'categories', ''
+                ).split(' ')[0]
                 if prime_cat not in categories:
                     continue
-                transformed_ppr = transform_ppr(ppr_dict)
+                transformed_ppr = transform_ppr(ppr_dict, pre_filter)
+                if len(transformed_ppr['paragraphs']) == 0:
+                    continue
                 with open(out_fn, 'a') as out_f:
                     json.dump(transformed_ppr, out_f)
                     out_f.write('\n')
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print('Usage: python3 get_plaintext_paras.py /path/to/unarXive/')
+    if len(sys.argv) not in [2, 3]:
+        print(
+            'Usage: python3 get_plaintext_paras.py '
+            '/path/to/unarXive/ [pre_filter]'
+        )
         sys.exit(1)
     in_fp = sys.argv[1]
-    generate(in_fp)
+    if len(sys.argv) == 3 and sys.argv[2] == 'pre_filter':
+        print('- * - * - * - * - * - * - * - * - * - * - *')
+        print('pre-filtering for hyperparameter paragraphs')
+        print('- * - * - * - * - * - * - * - * - * - * - *')
+        pre_filter = True
+    else:
+        pre_filter = False
+    generate(in_fp, pre_filter)
