@@ -1,7 +1,5 @@
 # LLM zero shot evaluation with two-stage prompt
 
-(preliminary numbers; post-processing of LLM output not final yet)
-
 ## Parameters
 
 ```
@@ -15,6 +13,7 @@ gpt_default_params = {
     "echo": False,
 } 
 ```
+
 
 ## Eval (“reqire parent entity”)
 
@@ -64,3 +63,108 @@ gpt_default_params = {
 * c: 13
 * p: 52
 * v: 30
+
+
+
+## Eval (“reqire parent entity”) — string-matched surface forms
+
+(instead of using second prompt for annotating entity surface forms in text, use simple string matching (same as in single prompt setup))
+
+**Partial overlap: False**
+
+| Method       | TP | FP | FN | Precision (P) | Recall (R) | F1 Score |
+|--------------|----|----|----|---------------|------------|----------|
+| ER           | 548| 1251| 714| 0.305         | 0.434      | 0.358    |
+| ER + Clf     | 535| 1251| 727| 0.300         | 0.424      | 0.351    |
+| Co-ref resol.| 356| 2602| 840| 0.120         | 0.298      | 0.171    |
+| Rel. extr.   | 19 | 479| 112| 0.038         | 0.145      | 0.060    |
+
+**Partial overlap: True**
+
+| Method       | TP | FP | FN | Precision (P) | Recall (R) | F1 Score |
+|--------------|----|----|----|---------------|------------|----------|
+| ER           | 679| 962| 583| 0.414         | 0.538      | 0.468    |
+| ER + Clf     | 657| 962| 605| 0.406         | 0.521      | 0.456    |
+| Co-ref resol.| 396| 2558| 800| 0.134         | 0.331      | 0.191    |
+| Rel. extr.   | 38 | 466| 93 | 0.075         | 0.290      | 0.120    |
+
+
+**False positives (exact match)**
+
+* a: 561
+* c: 79
+* p: 227
+* v: 384
+
+**False positives (partial overlap)**
+
+* a: 461
+* c: 78
+* p: 215
+* v: 208
+
+**False negatives (exact match)**
+
+* a: 629
+* c: 8
+* p: 46
+* v: 31
+
+**False negatives (partial overlap)**
+
+* a: 521
+* c: 8
+* p: 37
+* v: 17
+
+
+
+## Eval (“reqire parent entity”) — string-matched surface forms IGNORING P&C
+
+1. instead of using second prompt for annotating entity surface forms in text, use simple string matching (same as in single prompt setup)
+2. use YAML conversion code for single prompt, leading to values and contexts always being ignored (see 0 false positives below)
+
+**TODO: look into class specific F1 scores**
+
+**Partial overlap: False**
+
+| Method       | TP | FP | FN | Precision (P) | Recall (R) | F1 Score |
+|--------------|----|----|----|---------------|------------|----------|
+| ER           | 523| 744| 739| 0.413         | 0.414      | 0.414    |
+| ER + Clf     | 507| 744| 755| 0.405         | 0.402      | 0.404    |
+| Co-ref resol.| 350| 704| 846| 0.332         | 0.293      | 0.311    |
+| Rel. extr.   | 8  | 202| 123| 0.038         | 0.061      | 0.047    |
+
+**Partial overlap: True**
+
+| Method       | TP | FP | FN | Precision (P) | Recall (R) | F1 Score |
+|--------------|----|----|----|---------------|------------|----------|
+| ER           | 641| 634| 621| 0.503         | 0.508      | 0.505    |
+| ER + Clf     | 619| 634| 643| 0.494         | 0.490      | 0.492    |
+| Co-ref resol.| 390| 660| 806| 0.371         | 0.326      | 0.347    |
+| Rel. extr.   | 16 | 194| 115| 0.076         | 0.122      | 0.094    |
+
+
+**False positives (exact match)**
+
+* a: 553
+* p: 191
+
+**False positives (partial overlap)**
+
+* a: 455
+* p: 179
+
+**False negatives (exact match)**
+
+* a: 633
+* c: 13
+* p: 48
+* v: 45
+
+**False negatives (partial overlap)**
+
+* a: 527
+* c: 13
+* p: 38
+* v: 43

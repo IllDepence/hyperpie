@@ -217,6 +217,7 @@ def get_coarse_structure_entries(llm_output):
 def llm_output2eval_input(
         llm_output_dict,
         llm_annotated_text=None,
+        matched_surface_forms=None,
         verbose=False
 ):
     """ Convert LLM output to evaluation script input format.
@@ -225,16 +226,24 @@ def llm_output2eval_input(
         llm_output_dict: LLM output with completion in YAML as well as
                          the original paragraph text.
         llm_annotated_text: LLM annotated text (optional).
+        matched_surface_forms: If True, surface forms are matched in
+                               the text from entity names. If False,
+                               they need to be provided in
+                               llm_annotated_text. If None, the value
+                               will be determined automatically depending
+                               on whether or not llm_annotated_text is
+                               provided.
 
     Returns:
         dict: Evaluation script input in JSON format.
-
-    NOTE: llm_annotated_text being given is used as a magick switch to
-          indicate a different input format where
-          - entities have IDs
-          - values are given as a list (i.e. multiple values per parameter
-            with different contexts are possible)
     """
+
+    # determine if surface forms need to be matched in the text
+    if matched_surface_forms is None:
+        if llm_annotated_text is None:
+            matched_surface_forms = True
+        else:
+            matched_surface_forms = False
 
     # convert YAML to JSON
     llm_output = yaml2json(llm_output_dict, verbose=verbose)
@@ -279,6 +288,12 @@ def llm_output2eval_input(
         print('coarse structure looks good :)')
 
     if llm_annotated_text is None:
+        if not matched_surface_forms:
+            print(
+                f'if matched_surface_forms set to False '
+                f'llm_annotated_text must be provided'
+            )
+            sys.exit(1)
         # “single stage” prompt, surface forms  have to
         # be string matched in the paragraph text
         return singleprompt_llm_entities2eval_input(
@@ -288,15 +303,26 @@ def llm_output2eval_input(
             verbose
         )
     else:
-        # “two stage” prompt, surface forms are given as
-        # annotated text with IDs
-        return twostage_llm_entities2eval_input(
-            para,
-            annotation_info,
-            llm_annotated_text,
-            eval_input,
-            verbose
-        )
+        if not matched_surface_forms:
+            # “two stage” prompt and surface forms are given as
+            # annotated text with IDs
+            return twostage_llm_entities2eval_input(
+                para,
+                annotation_info,
+                llm_annotated_text,
+                eval_input,
+                verbose
+            )
+        else:
+            # “two stage” prompt but surface forms are requested
+            # to be extracted by matching entity names in the
+            # paragraph text
+            return onepointfivestage_llm_entities2eval_input(
+                para,
+                annotation_info,
+                eval_input,
+                verbose
+            )
 
 
 def get_llm_text_offset_mapping(llm_text, orig_text, annot_patt):
@@ -402,15 +428,10 @@ def get_llm_annotated_entities(llm_text, orig_text):
     return entities
 
 
-def twostage_llm_entities2eval_input(
-    para,
-    annotation_info,
-    llm_annotated_text,
-    eval_input,
-    verbose
-):
-    # built dict of entities with ID, type, and name
-    # list of relations (using entity IDs)
+def _twostage_llm_parse_yaml(annotation_info):
+    """ Parse LLM generated YAML and return entities and relations.
+    """
+
     entities = {}
     relations = []
     for artf_dict in annotation_info['entities']:
@@ -468,6 +489,20 @@ def twostage_llm_entities2eval_input(
                     val['value_id']
                 ])
 
+    return entities, relations
+
+
+def twostage_llm_entities2eval_input(
+    para,
+    annotation_info,
+    llm_annotated_text,
+    eval_input,
+    verbose
+):
+    # built dict of entities with ID, type, and name
+    # list of relations (using entity IDs)
+    entities, relations = _twostage_llm_parse_yaml(annotation_info)
+
     # get entities from LLM annotated text
     llm_entity_annots = get_llm_annotated_entities(
         llm_annotated_text,
@@ -489,6 +524,48 @@ def twostage_llm_entities2eval_input(
         rel_annots[rel_dict['id']] = rel_dict
 
     eval_input['annotation']['entities'] = llm_entity_annots
+    eval_input['annotation']['relations'] = rel_annots
+
+    return eval_input
+
+
+def onepointfivestage_llm_entities2eval_input(
+    para,
+    annotation_info,
+    eval_input,
+    verbose
+):
+    """ First prompt of twostage setup was used but surface
+        forms are to be determined by text matching.
+    """
+
+    # built dict of entities with ID, type, and name
+    # list of relations (using entity IDs)
+    entities, relations = _twostage_llm_parse_yaml(annotation_info)
+
+    ent_annots = {}
+    for e_id, ent in entities.items():
+        ent_dict = entity_dict(e_id, ent['type'])
+        # find surface forms
+        artif_surfs = find_surface_forms_in_para(
+            para['text'],
+            ent['name']
+        )
+        ent_dict['surface_forms'] = artif_surfs
+        ent_annots[ent['id']] = ent_dict
+
+    # create relation annots
+    rel_annots = {}
+    for from_id, to_id in relations:
+        rel_dict = relation_dict(
+            from_id,
+            to_id,
+            [],
+            []
+        )
+        rel_annots[rel_dict['id']] = rel_dict
+
+    eval_input['annotation']['entities'] = ent_annots
     eval_input['annotation']['relations'] = rel_annots
 
     return eval_input
