@@ -255,10 +255,10 @@ def llm_output2eval_input(
     para = llm_output_dict['paragraph']
 
     eval_input = empty_para_annotation(
-        para['annotator_id'],
-        para['document_id'],
-        para['paragraph_index'],
-        para['text']
+        para.get('annotator_id'),
+        para['document_id'],  # required
+        para.get('paragraph_index'),
+        para['text']  # required
     )
 
     # get coarse structure entries
@@ -748,6 +748,24 @@ def yaml2json(llm_output_dict, verbose=False):
                 parse_fail = False
             except yaml.YAMLError as e_quotes:
                 yaml_errors['quotes+esc'] = e_quotes
+                pass  # handle further down
+            # 2.2. assume text after closing quotes
+            try:
+                esc_yaml_lines = []
+                for line in new_yaml.split('\n'):
+                    m = re.match(r'^(\s+[a-z]+: )"(.+)"(.+)$', line)
+                    if m:
+                        key_part = m.group(1)
+                        val_part = m.group(2)
+                        trailing_part = m.group(3)
+                        # move trailing part inside quotes
+                        line = f'{key_part}"{val_part} {trailing_part}"'
+                    esc_yaml_lines.append(line)
+                esc_yaml = '\n'.join(esc_yaml_lines)
+                llm_output = yaml.load(esc_yaml, Loader=yaml.Loader)
+                parse_fail = False
+            except yaml.YAMLError as e_quotes:
+                yaml_errors['quotes+trailing'] = e_quotes
                 pass  # handle further down
 
         # if parsing still fails, print error and return None
