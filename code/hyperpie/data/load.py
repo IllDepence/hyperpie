@@ -34,6 +34,24 @@ def load_annotated(only_full=False, with_parent=False):
         return json.load(f)
 
 
+def load_filtered_unannotated():
+    """ Load filtered unannotated data paragraphs.
+    """
+
+    paras = []
+    with open(settings.filtered_unannot_fp) as f:
+        # flatten from papers with paras to list of paras
+        for line in f:
+            ppr = json.loads(line)
+            for para_text in ppr['paragraphs']:
+                para = {
+                    'document_id': ppr['id'],
+                    'text': para_text,
+                }
+                paras.append(para)
+    return paras
+
+
 def get_artifact_names(flat=False):
     """ Get list of artifact entities  where each is represented by a list
         of its names and its number of occurrences in the annotated data.
