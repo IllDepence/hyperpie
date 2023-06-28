@@ -7,6 +7,7 @@ annot_raw_fp = data_base_path + 'tsa.json'
 annot_prep_fp = data_base_path + 'tsa_processed.json'
 annot_onlyfull_fp = data_base_path + 'tsa_processed_onlyfull.json'
 annot_withparent_fp = data_base_path + 'tsa_processed_withparent.json'
+annot_llm_fp = data_base_path + 'transformed_pprs_filtered_llm_annotated.jsonl'
 filtered_unannot_fp = data_base_path + 'transformed_pprs_filtered.jsonl'
 llm_cache_fp = 'hyperpie/llm/completion_cache.json'
 

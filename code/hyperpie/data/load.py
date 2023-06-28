@@ -38,8 +38,15 @@ def load_filtered_unannotated():
     """ Load filtered unannotated data paragraphs.
     """
 
+    return load_unannotated(settings.filtered_unannot_fp)
+
+
+def load_unannotated(transformed_pprs_fp=False):
+    """ Load unannotated data paragraphs.
+    """
+
     paras = []
-    with open(settings.filtered_unannot_fp) as f:
+    with open(transformed_pprs_fp) as f:
         # flatten from papers with paras to list of paras
         for line in f:
             ppr = json.loads(line)
@@ -52,6 +59,64 @@ def load_filtered_unannotated():
     return paras
 
 
+def get_artifact_param_surface_form_pairs(paras_fp=None):
+    """ Get list of pairs of artifact and parameter surface forms.
+
+        Optionally an alternative file path to annotated data other
+        than the preprocessed manually annotated data can be provided.
+    """
+
+    if paras_fp is None:
+        paras_fp = settings.annot_prep_fp
+
+    with open(paras_fp) as f:
+        paras = json.load(f)
+
+    rel_tups = []
+    for para in paras:
+        ents = para['annotation']['entities']
+        # iterate over all relations in this paragraph’s annotations
+        for rid, rel in para['annotation']['relations'].items():
+            # only consider param -> artifact relations
+            rel_source_type = ents[rel['source']]['type']
+            rel_target_type = ents[rel['target']]['type']
+            if rel_source_type != 'p' or rel_target_type != 'a':
+                continue
+            # iterate over all surface forms of both entities
+            # and add all combinations to the pair list
+            for surf_dict_param in ents[rel['source']]['surface_forms']:
+                for surf_dict_artif in ents[rel['target']]['surface_forms']:
+                    # skip when artifact surface form is too generic
+                    if _artifact_surface_form_general(
+                        surf_dict_artif['surface_form']
+                    ):
+                        continue
+                    # add pair to the list
+                    rel_tups.append((
+                        surf_dict_param['surface_form'],
+                        surf_dict_artif['surface_form']
+                    ))
+
+    return rel_tups
+
+
+def _artifact_surface_form_general(surface_form):
+    """ Heuristically determine whether a surface form is generic
+        (and might therefore e.g. not be suitable for use in distant
+        supervision).
+    """
+
+    # patterns for generic names not to include
+    generic_patt = re.compile((
+        r'([a-z-_]*\s*)?(model|method|system|approach|'
+        r'framework|work|dataset|data set)'
+    ))
+
+    if generic_patt.match(surface_form) or len(surface_form) < 3:
+        return True
+    return False
+
+
 def get_artifact_names(flat=False):
     """ Get list of artifact entities  where each is represented by a list
         of its names and its number of occurrences in the annotated data.
@@ -61,12 +126,6 @@ def get_artifact_names(flat=False):
 
     with open(settings.annot_prep_fp) as f:
         paras = json.load(f)
-
-    # patterns for generic names not to include
-    generic_patt = re.compile((
-        r'([a-z-_]*\s*)?(model|method|system|approach|'
-        r'framework|work|dataset|data set)'
-    ))
 
     # dict for keeping track of artifact IDs within a paper (b/c they are
     # consistent within a paper but not across papers)
@@ -88,7 +147,7 @@ def get_artifact_names(flat=False):
                 # get the surface form
                 surf = surf_dict['surface_form']
                 # skip if the name is generic
-                if generic_patt.match(surf) or len(surf) < 3:
+                if _artifact_surface_form_general(surf):
                     continue
                 # get the known names for this artifact
                 known_names = paper_artifacts_global[
