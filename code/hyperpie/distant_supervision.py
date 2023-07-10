@@ -151,13 +151,13 @@ def annotate(
                     closest_num_match.start(),
                     closest_num_match.end()
                 )
-                val_dict['surface_form_dict'] = val_surf_dict
+                val_dict['surface_forms'] = [val_surf_dict]
                 entities[v_id] = val_dict
                 # create relation
                 rel_pv_id = str(uuid.uuid4())
                 rel_dict = relation_dict(
                     v_id, p_id,
-                    [val_dict['surface_form_dict']], p_dict['surface_forms']
+                    val_dict['surface_forms'], p_dict['surface_forms']
                 )
                 rels[rel_pv_id] = rel_dict
         if len(entities) > 0:
