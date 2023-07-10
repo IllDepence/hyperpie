@@ -148,8 +148,8 @@ def annotate(
                 val_surf_dict = surface_form_dict(
                     str(uuid.uuid4()),
                     closest_num_surf,
-                    closest_num_match.start(),
-                    closest_num_match.end()
+                    sent_start + closest_num_match.start(),
+                    sent_start + closest_num_match.end()
                 )
                 val_dict['surface_forms'] = [val_surf_dict]
                 entities[v_id] = val_dict
