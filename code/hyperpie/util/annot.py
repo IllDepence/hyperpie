@@ -91,3 +91,87 @@ def empty_para_annotation(
     })
 
     return empty_para_annot
+
+
+def raw_annotation_to_text(annot):
+    """ Return a textual representation of an annotation for a
+        whole context.
+    """
+
+    def get_annotated_text(sngl_annot):
+        text = False
+        for s in sngl_annot['target']['selector']:
+            if s['type'] == 'TextQuoteSelector':
+                text = s['exact']
+        return text
+
+    id_to_e_dict = dict()
+    simple_rel_list = []
+    entities = []
+    parameters = []
+    values = []
+    contexts = []
+
+    annot_list = annot['annotation']
+    for a in annot_list:
+        if 'body' in a and a['body'] and len(a['body']) > 0:
+            typ = a['body'][0]['value']
+            if typ[0] == "a":
+                text = get_annotated_text(a)
+                id_to_e_dict[a['id']] = (text, typ)
+                entities.append(text)
+            elif typ[0] == "p":
+                text = get_annotated_text(a)
+                id_to_e_dict[a['id']] = (text, typ)
+                parameters.append(text)
+            elif typ[0] == "v":
+                text = get_annotated_text(a)
+                id_to_e_dict[a['id']] = (text, typ)
+                values.append(text)
+            elif typ[0] == "c":
+                text = get_annotated_text(a)
+                id_to_e_dict[a['id']] = (text, typ)
+                contexts.append(text)
+            elif typ == 'r':
+                simple_rel_list.append(
+                    (a['target'][0]['id'], a['target'][1]['id'])
+                )
+    annotations = "Annotations:\n"
+    entities_str = "Research artifact: " + ", ".join(entities) + "\n"
+    parameters_str = "Parameters: " + ", ".join(parameters) + "\n"
+    values_str = "Values: " + ", ".join(values) + "\n"
+    contexts_str = "Contexts: " + ", ".join(contexts) + "\n"
+    ret = annot['context'] + '\n\n' + annotations + \
+        entities_str + parameters_str + values_str + contexts_str
+    for rel in simple_rel_list:
+        if (rel[1] in id_to_e_dict) and rel[0] in id_to_e_dict:
+            tail = id_to_e_dict[rel[0]]
+            head = id_to_e_dict[rel[1]]
+            ret += '{}[{}] → {}[{}]\n'.format(
+                tail[0], tail[1], head[0], head[1]
+            )
+
+    return ret
+
+
+def _get_annot_surface_forms(entity_dict):
+    surface_forms = [
+        f'"{sf["surface_form"]}"' for sf in entity_dict["surface_forms"]
+    ]
+    return " / ".join(surface_forms)
+
+
+def _print_rel_chain(entities, relation):
+    source_id = relation["source"]
+    target_id = relation["target"]
+    print(f'[{target_id}] {_get_annot_surface_forms(entities[target_id])}\n↑')
+    print(f'[{source_id}] {_get_annot_surface_forms(entities[source_id])}\n')
+
+
+def print_annotation(data):
+    entities = data["annotation"]["entities"]
+    relations = data["annotation"]["relations"]
+
+    # Finally, we'll print all the chains of relations
+    for relation in relations.values():
+        _print_rel_chain(entities, relation)

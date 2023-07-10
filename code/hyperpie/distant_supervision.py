@@ -117,6 +117,7 @@ def annotate(
                 # no parameter, so no need to look for values
                 continue
             # parameter value rels
+            entities[p_id] = p_dict
             para_sents = sent_tokenize(text)
             for sent in para_sents:
                 # check for numbers in sentence
