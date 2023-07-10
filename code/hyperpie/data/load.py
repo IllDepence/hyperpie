@@ -64,6 +64,9 @@ def get_artifact_param_surface_form_pairs(paras_fp=None):
 
         Optionally an alternative file path to annotated data other
         than the preprocessed manually annotated data can be provided.
+
+        Returns
+            list of tuples of (parameter surface form, artifact surface form)
     """
 
     if paras_fp is None:

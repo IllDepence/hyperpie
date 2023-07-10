@@ -16,7 +16,8 @@ from hyperpie.util.annot import (
 
 def annotate(
     ground_truth_fp=None,
-    target_para_fp=None
+    target_para_fp=None,
+    lim=None
 ):
     """ Annotate unannotated data based on ground truth data.
 
@@ -39,6 +40,8 @@ def annotate(
     target_paras = load_unannotated(
         transformed_pprs_fp=target_para_fp
     )
+    if lim is None:
+        lim = len(target_paras)
 
     annotated_paras = []
 
@@ -52,7 +55,7 @@ def annotate(
         r'\b(zero|one|two|three|four|five|six|seven|eight|nine)\b'
     )
     # go though paras and annotate
-    for para in target_paras:
+    for para in target_paras[:lim]:
         text = para['text']
         doc_id = para['document_id']
         # annotate any of
@@ -60,7 +63,7 @@ def annotate(
         # - known paragraph + closest number (within the same sentence)
         entities = {}
         rels = {}
-        for artif_surf, param_surf in artif_param_pairs:
+        for param_surf, artif_surf in artif_param_pairs:
             # artifact parameter rels
             artif_patt = re.compile(
                 r'\b{}\b'.format(
