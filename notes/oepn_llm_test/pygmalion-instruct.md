@@ -1,7 +1,5 @@
 # AlpinDale/pygmalion-instruct
 
-## Notes
-
 ## Prompts
 
 ### Original (default params)

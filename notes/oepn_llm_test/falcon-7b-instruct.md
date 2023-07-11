@@ -1,9 +1,5 @@
 # tiiuae/falcon-7b-instruct
 
-## Notes
-
-Seems to not know when to stop
-
 ## Prompts
 
 ### Original (default params)
