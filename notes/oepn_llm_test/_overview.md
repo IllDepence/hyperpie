@@ -9,6 +9,8 @@
 * eachadea/vicuna-7b-1.1
     * ... -> re-test w/ ### Instr. + ### Resp.
     * promising results but doesn’t know when to stop
+* WizardLM/WizardLM-13B-V1.1
+    * TODO
 * AlpinDale/pygmalion-instruct
     * intended for “role playing”, “out of scope: Assistant Bot [subject to providing incorrect instructions]”
     * promising results but doesn’t know when to stop
