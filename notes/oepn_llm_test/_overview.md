@@ -7,13 +7,14 @@
     * author defined prompt format
     * promising results
 * eachadea/vicuna-7b-1.1
-    * ... -> re-test w/ ### Instr. + ### Resp.
+    * author defined prompt format
     * promising results but doesn’t know when to stop
-* WizardLM/WizardLM-13B-V1.1
-    * TODO
 * AlpinDale/pygmalion-instruct
     * intended for “role playing”, “out of scope: Assistant Bot [subject to providing incorrect instructions]”
     * promising results but doesn’t know when to stop
+* WizardLM/WizardLM-13B-V1.1
+    * author defined prompt format
+    * some sensible output but has problems with adhering to format (may output JSON instead of YAML)
 * bigscience/bloomz-7b1
     * author give natural language free form examples
     * just repeats part of input
