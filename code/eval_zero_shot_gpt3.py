@@ -4,6 +4,8 @@
 import json
 import hyperpie as hp
 
+assert hp.settings.use_openai_api is True  # make sure we’re using GPT3
+
 # Use data filtered for “full info sets” (a<p<v[<c])
 # because GPT-3 only predicts those
 d = hp.data.load.load_annotated()

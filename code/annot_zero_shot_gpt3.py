@@ -4,6 +4,8 @@
 import json
 import hyperpie as hp
 
+assert hp.settings.use_openai_api is True  # make sure we’re using GPT3
+
 paras_unannot = hp.data.load.load_filtered_unannotated()
 paras_pred = []
 
