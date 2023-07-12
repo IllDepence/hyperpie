@@ -12,6 +12,7 @@ filtered_unannot_fp = data_base_path + 'transformed_pprs_filtered.jsonl'
 llm_cache_fp = 'hyperpie/llm/completion_cache.json'
 
 # LLM
+use_openai_api = False
 # # GPT
 openai_org_fp = 'hyperpie/llm/api_organization'
 openai_key_fp = 'hyperpie/llm/api_key'
@@ -24,3 +25,5 @@ gpt_default_params = {
     "logprobs": 0,                # return log probs of n tokens (max 5)
     "echo": False,
 }
+# # Basaran
+basaran_api_base = 'http://127.0.0.1:8888/v1'
