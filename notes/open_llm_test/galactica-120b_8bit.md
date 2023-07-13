@@ -2,7 +2,13 @@
 
 ## Note
 
-run w/ half precision
+when loading w/ half precision
+
+```
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 44.00 MiB (GPU 1; 79.18 GiB total capacity; 77.90 GiB already allocated; 25.50 MiB free; 77.97 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+```
+
+currently only usable in 8bit: `MODEL=facebook/galactica-120b MODEL_LOAD_IN_8BIT=true MODEL_TRUST_REMOTE_CODE=true PORT=10127 python -m basaran`
 
 
 ## Prompts
@@ -52,15 +58,20 @@ Only produce output in the YAML format specified above. Output no additional tex
 (for default)
 
 ```
-**Explanation**
+[LaTeX Output Text start]
+We use a 1 layer BiLSTM with 200-dimensional hidden layers. All the FFNNs have 2 hidden layers of 150 dimensions each. We use 0.4 variational dropout [15] for the LSTMs, 0.4 dropout for the FFNNs, and 0.5 dropout for the input embeddings. We model spans up to 8 words. For beam pruning, we use \(\lambda _{\text{C}}=0.3\) for coreference resolution and \(\lambda _{\text{R}}=0.4\) for relation extraction. For constructing the knowledge graph
+[LaTeX Output Text end]
 
-The LaTeX input text is processed using the `allennlp.service.predictors.predictor_for_json` service.  The service processes the input text as follows:
+### Context:
 
-1.  It converts the input text into a JSON object using the `json` predictor, which is configured to recognize `text_contains_entities` and `entities` fields.
-2.  It passes the JSON object to the predictor `allennlp.service.predictors.predictor_for_json`, which is configured to recognize `text_contains_entities` and `entities` fields.
-3.  It outputs the `text_contains_entities` and `entities` fields of the JSON object produced by the `allennlp.service.predictors.predictor_for_json` predictor.
+- You will be given a short text with LaTeX Input Text.
+- The goal is to output a short text with LaTeX Output Text.
+- You will be given a short text with LaTeX Input Text.
+- The goal is to output a short text with LaTeX Output Text.
 
-The `json` predictor is configured to recognize the `text_contains_entities` and `entities` fields, and to include an `id`, `name`, and `type` field in the `entities` field for each entity it detects. The `allenn
+## Example:
+
+- You will be given a short text with LaTeX
 ```
 
 (with deterministic preset)
@@ -92,12 +103,12 @@ entities:
       type: model
       has_parameters: true
       parameters:
-        - parameter1:
+        - parameter0:
             id: p1
             name: "ffnn_hidden_size"
             has_values: true
             values:
-              - value1:
+              - value0:
                   value_id: v1
                   value: "150"
                   context: "hidden size of the FFNN"
@@ -108,12 +119,12 @@ entities:
       type: model
       has_parameters: true
       parameters:
-        - parameter2:
+        - parameter0:
             id: p2
             name: "ffnn_depth"
             has_values: true
             values:
-              - value2:
+              - value0:
                   value_id: v2
                   value: "2"
                   context: "depth of the FFNN"
@@ -124,12 +135,12 @@ entities:
       type: model
       has_parameters: true
       parameters:
-        - parameter3:
+        - parameter0:
             id: p3
             name: "ffnn_dropout"
             has_values: true
             values:
-              - value3:
+              - value0:
                   value_id: v3
                   value: "0.4"
                   context: "dropout rate for the FFNN"
@@ -140,12 +151,12 @@ entities:
       type: model
       has_parameters: true
       parameters:
-        - parameter4:
+        - parameter0:
             id: p4
             name: "lstm_dropout"
             has_values: true
             values:
-              - value4:
+              - value0:
                   value_id: v4
                   value: "0.4"
                   context: "dropout rate for the BiLSTM"
@@ -156,12 +167,12 @@ entities:
       type: model
       has_parameters: true
       parameters:
-        - parameter5:
+        - parameter0:
             id: p5
             name: "span_width"
             has_values: true
             values:
-              - value5:
+              - value0:
                   value_id: v5
                   value: "8"
                   context: "maximum span width"
@@ -169,11 +180,33 @@ entities:
 [YAML Output end]
 
 
+### Sample Input 1
 
+### Sample Output 1
 
+### Sample Input 2
 
+### Sample Output 2
 
-... (endless repetition of newlines)
+### Sample Input 3
+
+### Sample Output 3
+
+### Sample Input 4
+
+### Sample Output 4
+
+### Sample Input 5
+
+### Sample Output 5
+
+### Sample Input 6
+
+### Sample Output 6
+
+### Sample Input 7
+
+### Sample Output 
 ```
 
 ### Alt1
@@ -190,7 +223,8 @@ What scientific entities are mentioned in the text above?
 ---
 
 ```
-protein, gene, protein complex, protein family, protein structure, protein function, protein interaction, protein structure, protein domain, protein function, protein structure, protein domain, protein function, protein structure, protein domain, protein function, protein structure, protein domain, protein function, protein structure, protein domain, protein function, protein structure [...]
+No chemical entities were mentioned
+
 ```
 
 ### Alt2
@@ -229,67 +263,12 @@ Output:
 ---
 
 ```
+
 ---
-text_contains_entities: true
-entities (datasets, models, methods, loss functions, regularization techniques):
-    - entity0:
-        name: LSTM
-        type: model
-        has_parameters: true
-        parameters:
-            - parameter0:
-                name: hidden_size
-                value: 200
-                context: hidden_size of the LSTM
-    - entity1:
-        name: FFNN
-        type: model
-        has_parameters: true
-        parameters:
-            - parameter0:
-                name: hidden_size
-                value: 150
-                context: hidden_size of the FFNN
-    - entity2:
-        name: dropout
-        type: regularization
-        has_parameters: true
-        parameters:
-            - parameter0:
-                name: value
-                value: 0.4
-                context: value of the dropout
-    - entity3:
-        name: variational_dropout
-        type: regularization
-        has_parameters: true
-        parameters:
-            - parameter0:
-                name: value
-                value: 0.4
-                context: value of the variational dropout
-    - entity4:
-        name: span_length
-        type: method
-        has_parameters: false
-    - entity5:
-        name: beam_pruning
-        type: method
-        has_parameters: true
-        parameters:
-            - parameter0:
-                name: lambda_C
-                value: 0.3
-                context: lambda_C for the coreference resolution
-            - parameter1:
-                name: lambda_R
-                value: 0.4
-                context: lambda_R for the relation extraction
 
+## References
 
-
-
-(repeats newlines)
+[1] https://spacy.io/
 ```
 
 ### Alt3
@@ -331,6 +310,7 @@ Only produce output in the YAML format specified above. Output no additional tex
 ---
 
 ```
+
 
 
 
@@ -386,125 +366,86 @@ Only produce output in the YAML format specified above. Output no additional tex
 ---
 text_contains_entities: true
 entities:
-  - entity0:
-      id: e0
+  - entity1:
+      id: e1
       name: "CoNLL-2012"
       type: dataset
       has_parameters: true
       parameters:
-        - parameter0:
-            id: p0
+        - parameter1:
+            id: p1
             name: "train_file"
             has_values: true
             values:
-              - value0:
-                  value_id: v0
+              - value1:
+                  value_id: v1
                   value: "data/conll-2012/train.txt"
-                  context: "CoNLL-2012"
-                  context_id: c0
-  - entity1:
-      id: e1
+                  context: "The train file."
+                  context_id: c1
+  - entity2:
+      id: e2
       name: "Lee2017EndtoendNC"
       type: model
       has_parameters: true
       parameters:
-        - parameter0:
-            id: p1
-            name: "word_dim"
-            has_values: true
-            values:
-              - value0:
-                  value_id: v1
-                  value: "300"
-                  context: "Lee2017EndtoendNC"
-                  context_id: c1
         - parameter1:
             id: p2
-            name: "tag_dim"
+            name: "hidden_dim"
             has_values: true
             values:
-              - value0:
+              - value1:
                   value_id: v2
-                  value: "30"
-                  context: "Lee2017EndtoendNC"
+                  value: "200"
+                  context: "The hidden dimension."
                   context_id: c2
         - parameter2:
             id: p3
-            name: "lstm_dim"
+            name: "ffnn_hidden_dim"
             has_values: true
             values:
-              - value0:
+              - value1:
                   value_id: v3
-                  value: "200"
-                  context: "Lee2017EndtoendNC"
+                  value: "150"
+                  context: "The hidden dimension of the FFNN."
                   context_id: c3
         - parameter3:
             id: p4
-            name: "mlp_dim"
+            name: "ffnn_depth"
             has_values: true
             values:
-              - value0:
+              - value1:
                   value_id: v4
-                  value: "150"
-                  context: "Lee2017EndtoendNC"
+                  value: "2"
+                  context: "The depth of the FFNN."
                   context_id: c4
         - parameter4:
             id: p5
-            name: "train_epochs"
+            name: "word_embedding_dim"
             has_values: true
             values:
-              - value0:
+              - value1:
                   value_id: v5
                   value: "100"
-                  context: "Lee2017EndtoendNC"
+                  context: "The dimension of the word embeddings."
                   context_id: c5
         - parameter5:
             id: p6
-            name: "train_batch_size"
+            name: "train_file"
             has_values: true
             values:
-              - value0:
+              - value1:
                   value_id: v6
-                  value: "10"
-                  context: "Lee2017EndtoendNC"
+                  value: "data/conll-2012/train.txt"
+                  context: "The train file."
                   context_id: c6
         - parameter6:
             id: p7
-            name: "dropout"
+            name: "eval_file"
             has_values: true
             values:
-              - value0:
+              - value1:
                   value_id: v7
-                  value: "0.4"
-                  context: "Lee2017EndtoendNC"
-                  context_id: c7
-        - parameter7:
-            id: p8
-            name: "word_dropout"
-            has_values: true
-            values:
-              - value0:
-                  value_id: v8
-                  value: "0.05"
-                  context: "Lee2017EndtoendNC"
-                  context_id: c8
-        - parameter8:
-            id: p9
-            name: "tag_dropout"
-            has_values: true
-            values:
-              - value0:
-                  value_id: v9
-                  value: "0.4"
-                  context: "Lee2017EndtoendNC"
-                  context_id: c9
-        - parameter9:
-            id: p10
-            name: "lstm_dropout"
-            has_values: true
-            values:
-              - value0:
-                  value_id: v10
-                  value: "0.4"
-                  context: "Lee2017...
+                  value: "data/conll-2012/test.txt"
+                  context: "The test file."
+                  context_id:
 ```
