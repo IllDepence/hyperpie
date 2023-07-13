@@ -270,3 +270,182 @@ Output:
 
 [1] https://spacy.io/
 ```
+
+### Alt3
+
+```
+In the context of machine learning and related fields,  what (if any) are the scientific entities (datasets, models, methods, loss functions, regularization techniques) mentioned in the LaTeX Input Text below? What (if any) are their parameters and values?
+
+LaTeX Input Text:
+Our system extends the implementation and hyper-parameters from Lee2017EndtoendNC with the following adjustments. We use a 1 layer BiLSTM with 200-dimensional hidden layers. All the FFNNs have 2 hidden layers of 150 dimensions each. We use 0.4 variational dropout [15] for the LSTMs, 0.4 dropout for the FFNNs, and 0.5 dropout for the input embeddings. We model spans up to 8 words. For beam pruning, we use \(\lambda _{\text{C}}=0.3\) for coreference resolution and \(\lambda _{\text{R}}=0.4\) for relation extraction. For constructing the knowledge graph
+
+Answer in the following YAML format.
+
+Format:
+---
+text_contains_entities: true/false
+entities:
+  - entity<N>:
+      id: e<N>
+      name: "<entity name>"
+      type: dataset/model/method/loss function/regularization technique
+      has_parameters: true/false
+      parameters:
+        - parameter<M>:
+            id: p<N.M>
+            name: "<parameter name>"
+            has_values: true/false
+            values:
+              - value<O>:
+                  value_id: v<N.M.O>
+                  value: "<parameter value>"
+                  context: "<value context>"/null
+                  context_id: c<N.M.O>/null
+...
+
+Only include entities that are of type dataset, model, method, loss function, or regularization technique. Do not output entities that are of another type. Do not include entities of type task, metric, library, software, or API.
+Only produce output in the YAML format specified above. Output no additional text.
+```
+
+---
+
+```
+
+
+
+
+...
+```
+
+(only outputs newlines)
+
+
+### Alt4
+
+```
+### Instruction:
+In the context of machine learning and related fields,  what (if any) are the scientific entities (datasets, models, methods, loss functions, regularization techniques) mentioned in the LaTeX Input Text below? What (if any) are their parameters and values?
+
+LaTeX Input Text:
+Our system extends the implementation and hyper-parameters from Lee2017EndtoendNC with the following adjustments. We use a 1 layer BiLSTM with 200-dimensional hidden layers. All the FFNNs have 2 hidden layers of 150 dimensions each. We use 0.4 variational dropout [15] for the LSTMs, 0.4 dropout for the FFNNs, and 0.5 dropout for the input embeddings. We model spans up to 8 words. For beam pruning, we use \(\lambda _{\text{C}}=0.3\) for coreference resolution and \(\lambda _{\text{R}}=0.4\) for relation extraction. For constructing the knowledge graph
+
+Answer in the following YAML format.
+
+Format:
+---
+text_contains_entities: true/false
+entities:
+  - entity<N>:
+      id: e<N>
+      name: "<entity name>"
+      type: dataset/model/method/loss function/regularization technique
+      has_parameters: true/false
+      parameters:
+        - parameter<M>:
+            id: p<N.M>
+            name: "<parameter name>"
+            has_values: true/false
+            values:
+              - value<O>:
+                  value_id: v<N.M.O>
+                  value: "<parameter value>"
+                  context: "<value context>"/null
+                  context_id: c<N.M.O>/null
+...
+
+Only include entities that are of type dataset, model, method, loss function, or regularization technique. Do not output entities that are of another type. Do not include entities of type task, metric, library, software, or API.
+Only produce output in the YAML format specified above. Output no additional text.
+
+### Response:
+```
+
+---
+
+```
+(three backticks)yaml
+---
+text_contains_entities: true
+entities:
+  - entity1:
+      id: e1
+      name: "CoNLL-2012"
+      type: dataset
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p1
+            name: "train_file"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v1
+                  value: "data/conll-2012/train.txt"
+                  context: "The train file."
+                  context_id: c1
+  - entity2:
+      id: e2
+      name: "Lee2017EndtoendNC"
+      type: model
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p2
+            name: "hidden_dim"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v2
+                  value: "200"
+                  context: "The hidden dimension."
+                  context_id: c2
+        - parameter2:
+            id: p3
+            name: "ffnn_hidden_dim"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v3
+                  value: "150"
+                  context: "The hidden dimension of the FFNN."
+                  context_id: c3
+        - parameter3:
+            id: p4
+            name: "ffnn_depth"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v4
+                  value: "2"
+                  context: "The depth of the FFNN."
+                  context_id: c4
+        - parameter4:
+            id: p5
+            name: "word_embedding_dim"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v5
+                  value: "100"
+                  context: "The dimension of the word embeddings."
+                  context_id: c5
+        - parameter5:
+            id: p6
+            name: "train_file"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v6
+                  value: "data/conll-2012/train.txt"
+                  context: "The train file."
+                  context_id: c6
+        - parameter6:
+            id: p7
+            name: "eval_file"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v7
+                  value: "data/conll-2012/test.txt"
+                  context: "The test file."
+                  context_id:
+```

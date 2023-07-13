@@ -1,10 +1,4 @@
-# WizardLM/WizardLM-13B-V1.1
-
-## Notes
-
-* also tested with prompt format listed for 13B model at https://github.com/nlpxucan/WizardLM)
-    * “A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions. USER: hello, who are you? ASSISTANT: ”
-    * resulted in empty completions
+# tiiuae/falcon-40b-instruct
 
 ## Prompts
 
