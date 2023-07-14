@@ -1,6 +1,8 @@
 # Notes
 
-* facebook/galactica-120b (run on 8bit precision)
+* bigscience/bloomz
+    * 1 token/min when run on 4 A100s
+* facebook/galactica-120b
     * author defined prompt format + aplaca style format + authors also give natural language free form examples
     * depending on prompt gives reasonable, but not quite format conforming output
     * generally output quality/usefulness appears to vary *greatly* based on small prompt changes
@@ -10,10 +12,12 @@
 * GeorgiaTechResearchInstitute/galactica-6.7b-evol-instruct-70k
     * author defined prompt format + tried “free form”
     * somewhat promising results but doesn’t know when to stop
-    * TODO: try with `ENT_TEXT = TEXT + '\n\nWhat scientific entities are mentioned in the abstract above?\n\n'` (see https://github.com/paperswithcode/galai#capabilities)
 * NousResearch/Nous-Hermes-13b
     * author defined prompt format
     * promising results
+* eachadea/vicuna-13b
+    * author defined prompt format
+    * depending on prompt gives some reasonable output, but format does not always adhere to output format and does not know when to stop
 * eachadea/vicuna-7b-1.1
     * author defined prompt format
     * promising results but doesn’t know when to stop
