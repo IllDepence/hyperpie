@@ -264,13 +264,54 @@ Annotated text:\n"""  # noqa: E501
 
 
 # Alpcaca style prompt
-# (see: github.com/tatsu-lab/alpaca_farm/blob/main/examples/prompts/v0_inputs_noinputs.json)  # noqa
+# (see: github.com/tatsu-lab/alpaca_farm/blob/main/examples/prompts/v0_inputs_noinputs.json)  # noqa: E501
 # (see: github.com/tatsu-lab/stanford_alpaca/issues/8#issuecomment-1468487028)
 alpaca_style_prompt_start = """Below is an instruction that describes a task. Write a response that appropriately completes the request.\n\n"""  # noqa: E501
 alpaca_style_prompt_instruction_pre = """### Instruction:\n"""
 alpaca_style_prompt_response_pre = """### Response:"""
 
-text_e2e_fillin_twostep_1_alpaca_style_nointro = f"""{alpaca_style_prompt_instruction_pre}{instruction_context} what (if any) are the entities (datasets, models, methods, loss functions, regularization techniques) mentioned in the LaTeX Input Text below? What (if any) are their parameters and values?
+text_e2e_fillin_twostep_1_alpaca_style_nointro = f"""{alpaca_style_prompt_instruction_pre}{instruction_context} what are the most important datasets, models, methods, loss functions, regularization techniques mentioned in the LaTeX Input Text below? What are their parameters and values?
+
+[LaTeX Input Text start]
+{{text}}
+[LaTeX Input Text end]
+
+Answer in the following YAML format.
+
+Format:
+---
+text_contains_entities: true/false
+entities:
+  - entity<N>:
+      id: e<N>
+      name: "<entity name>"
+      type: dataset/model/method/loss function/regularization technique
+      has_parameters: true/false
+      parameters:
+        - parameter<M>:
+            id: p<N.M>
+            name: "<parameter name>"
+            has_values: true/false
+            values:
+              - value<O>:
+                  value_id: v<N.M.O>
+                  value: "<parameter value>"
+                  context: "<value context>"/null
+                  context_id: c<N.M.O>/null
+...
+
+Only produce output in the YAML format specified above. Output no additional text. Only include the most important datasets, models, methods, loss functions, regularization techniques mentioned in the LaTeX Input Text. Then end your response.
+
+{alpaca_style_prompt_response_pre}"""  # noqa: E501
+
+text_has_artifs_alpaca_style_nointro = f"""{alpaca_style_prompt_instruction_pre}{instruction_context} does the text below mention any datasets, models, methods, loss functions, or regularization techniques? Answer with only either "yes" or "no".
+
+Text:
+{{text}}
+
+{alpaca_style_prompt_response_pre}"""  # noqa: E501
+
+text_e2e_fillin_twostep_1_galacitca = f"""{alpaca_style_prompt_instruction_pre}{instruction_context} what (if any) are the entities (datasets, models, methods, loss functions, regularization techniques) mentioned in the LaTeX Input Text below? What (if any) are their parameters and values?
 
 [LaTeX Input Text start]
 {{text}}

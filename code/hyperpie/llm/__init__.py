@@ -9,6 +9,7 @@ from hyperpie import settings
 if settings.use_openai_api:
     print(f'WARNING: using OpenAI API for LLM completion')
     print(f'WARNING: this will cost money')
+    x = input('INFO: press enter to continue\n')
     if os.path.exists(settings.openai_org_fp):
         with open(settings.openai_org_fp) as f:
             openai.organization = f.read().strip()
@@ -31,3 +32,4 @@ else:
     settings.gpt_default_params['model'] = model_in_use
     print(f'INFO: using model {model_in_use} for LLM completion')
     print(f'INFO: the model says "{completion["choices"][0]["text"]}"')
+    x = input('INFO: press enter to continue\n')
