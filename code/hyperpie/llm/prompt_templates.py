@@ -311,37 +311,10 @@ Text:
 
 {alpaca_style_prompt_response_pre}"""  # noqa: E501
 
-text_e2e_fillin_twostep_1_galacitca = f"""{alpaca_style_prompt_instruction_pre}{instruction_context} what (if any) are the entities (datasets, models, methods, loss functions, regularization techniques) mentioned in the LaTeX Input Text below? What (if any) are their parameters and values?
+text_e2e_fillin_twostep_1_galacitca = text_e2e_fillin_twostep_1_alpaca_style_nointro  # noqa: E501
 
-[LaTeX Input Text start]
-{{text}}
-[LaTeX Input Text end]
-
-Answer in the following YAML format.
-
-Format:
+start_completion = """
 ---
-text_contains_entities: true/false
-entities:
-  - entity<N>:
-      id: e<N>
-      name: "<entity name>"
-      type: dataset/model/method/loss function/regularization technique
-      has_parameters: true/false
-      parameters:
-        - parameter<M>:
-            id: p<N.M>
-            name: "<parameter name>"
-            has_values: true/false
-            values:
-              - value<O>:
-                  value_id: v<N.M.O>
-                  value: "<parameter value>"
-                  context: "<value context>"/null
-                  context_id: c<N.M.O>/null
-...
+text_contains_entities:"""
 
-Only include entities that are of type dataset, model, method, loss function, or regularization technique. Do not output entities that are of another type. Do not include entities of type task, metric, library, software, or API.
-Only produce output in the YAML format specified above. Output no additional text.
-
-{alpaca_style_prompt_response_pre}"""  # noqa: E501
+text_e2e_fillin_twostep_1_vicuna = text_e2e_fillin_twostep_1_alpaca_style_nointro + start_completion  # noqa: E501
