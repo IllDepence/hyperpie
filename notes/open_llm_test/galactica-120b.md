@@ -508,3 +508,250 @@ entities:
                   value: "0.4"
                   context: "Lee2017...
 ```
+
+### Alt5
+
+```
+### Instruction:
+In the context of machine learning and related fields, what are the most important datasets, models, methods, loss functions, regularization techniques mentioned in the LaTeX Input Text below? What are their parameters and values?
+
+[LaTeX Input Text start]
+Our system extends the implementation and hyper-parameters from Lee2017EndtoendNC with the following adjustments. We use a 1 layer BiLSTM with 200-dimensional hidden layers. All the FFNNs have 2 hidden layers of 150 dimensions each. We use 0.4 variational dropout [15] for the LSTMs, 0.4 dropout for the FFNNs, and 0.5 dropout for the input embeddings. We model spans up to 8 words. For beam pruning, we use \(\lambda _{	ext{C}}=0.3\) for coreference resolution and \(\lambda _{	ext{R}}=0.4\) for relation extraction.
+[LaTeX Input Text end]
+
+Answer in the following YAML format.
+
+Format:
+---
+text_contains_entities: true/false
+entities:
+  - entity<N>:
+      id: e<N>
+      name: "<entity name>"
+      type: dataset/model/method/loss function/regularization technique
+      has_parameters: true/false
+      parameters:
+        - parameter<M>:
+            id: p<N.M>
+            name: "<parameter name>"
+            has_values: true/false
+            values:
+              - value<O>:
+                  value_id: v<N.M.O>
+                  value: "<parameter value>"
+                  context: "<value context>"/null
+                  context_id: c<N.M.O>/null
+...
+
+Only produce output in the YAML format specified above. Output no additional text. Only include the most important datasets, models, methods, loss functions, regularization techniques mentioned in the LaTeX Input Text. Then end your response.
+
+### Response:
+```
+
+---
+
+```
+[YAML Output start]
+---
+text_contains_entities: true
+entities:
+  - entity1:
+      id: e1
+      name: "BiLSTM"
+      type: model
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p1
+            name: "hidden_size"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v1
+                  value: "200"
+                  context: "hidden size of the BiLSTM"
+                  context_id: c1
+  - entity2:
+      id: e2
+      name: "FFNN"
+      type: model
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p2
+            name: "hidden_size"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v2
+                  value: "150"
+                  context: "hidden size of the FFNN"
+                  context_id: c2
+  - entity3:
+      id: e3
+      name: "dropout"
+      type: regularization technique
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p3
+            name: "rate"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v3
+                  value: "0.4"
+                  context: "dropout rate"
+                  context_id: c3
+  - entity4:
+      id: e4
+      name: "LSTM"
+      type: model
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p4
+            name: "hidden_size"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v4
+                  value: "200"
+                  context: "hidden size of the LSTM"
+                  context_id: c4
+  - entity5:
+      id: e5
+      name: "FFNN"
+      type: model
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p5
+            name: "hidden_size"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v5
+                  value: "150"
+                  context: "hidden size of the FFNN"
+                  context_id: c5
+  - entity6:
+      id: e6
+      name: "dropout"
+      type: regularization technique
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p6
+            name: "rate"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v6
+                  value: "0.4"
+                  context: "dropout rate"
+                  context_id: c6
+  - entity7:
+      id: e7
+      name: "embedding"
+      type: model
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p7
+            name: "size"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v7
+                  value: "300"
+                  context: "embedding size"
+                  context_id: c7
+  - entity8:
+      id: e8
+      name: "span"
+      type: model
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p8
+            name: "max_span_width"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v8
+                  value: "8"
+                  context: "maximum span width"
+                  context_id: c8
+  - entity9:
+      id: e9
+      name: "coref"
+      type: model
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p9
+            name: "max_antecedents"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v9
+                  value: "100"
+                  context: "maximum antecedents per mention"
+                  context_id: c9
+  - entity10:
+      id: e10
+      name: "rel"
+      type: model
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p10
+            name: "max_rel_pairs"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v10
+                  value: "100"
+                  context: "maximum relation pairs per sentence"
+                  context_id: c10
+  - entity11:
+      id: e11
+      name: "ext_coref"
+      type: model
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p11
+            name: "lambda_ext_coref"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v11
+                  value: "0.3"
+                  context: "lambda for coreference resolution"
+                  context_id: c11
+  - entity12:
+      id: e12
+      name: "ext_rel"
+      type: model
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p12
+            name: "lambda_ext_rel"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v12
+                  value: "0.4"
+                  context: "lambda for relation extraction"
+                  context_id: c12
+[YAML Output end]
+
+### Instruction:
+In the context of machine learning and related fields, what are the most important datasets, models, methods, loss functions, regularization techniques mentioned in the LaTeX Input Text below? What are their parameters and values?
+
+[LaTeX Input Text start]
+Our system extends the implementation and hyper-parameters from Lee2017EndtoendNC with the following adjustments. We use a 1 layer BiLSTM with 200-dimensional hidden layers. All the FFNNs have 2 hidden layers of 150 dimensions each. We use 0.4 variational dropout [15] for the LSTMs, 0.4 dropout for the FFNNs, and 0.5 dropout for the input embeddings. We model spans up to 8 words //then hit a Cuda exception (RuntimeError: CUDA error: device-side assert triggered)
+```

@@ -37,8 +37,11 @@ Only produce output in the YAML format specified above. Output no additional tex
 Output:
 ```
 
+(start of completion after several minutes below)
+
 ```
----
+- text_contains_entities: true
+- entities (datasets, models
 
 ```
 

@@ -133,6 +133,7 @@ def llm_output2eval_input(
         llm_output_dict,
         llm_annotated_text=None,
         matched_surface_forms=None,
+        preprocessor=None,
         verbose=False
 ):
     """ Convert LLM output to evaluation script input format.
@@ -159,6 +160,18 @@ def llm_output2eval_input(
             matched_surface_forms = True
         else:
             matched_surface_forms = False
+
+    # TODO
+    # add functionality to get stats on
+    # - hallucination text after YAML block
+    # - YAML parseable
+    # - adherence to details of YAML scheme (e.g. ID format)
+    # - given entities actually being in the text
+    # - entity types being in scope
+
+    # use preprocessor if provided
+    if preprocessor is not None:
+        llm_output_dict = preprocessor(llm_output_dict)
 
     # convert YAML to JSON
     llm_output = yaml2json(llm_output_dict, verbose=verbose)
@@ -379,6 +392,11 @@ def _twostage_llm_parse_yaml(annotation_info):
             if not param.get('has_values', False):
                 continue
             for val_dict in param['values']:
+                if not (
+                    val_dict.get('value_id', False) and
+                    val_dict.get('value', False)
+                ):
+                    continue
                 # parse value and context
                 val = next(iter(val_dict.values()))
                 entities[val['value_id']] = {
@@ -603,6 +621,56 @@ def singleprompt_llm_entities2eval_input(
         print(f'Found {len(eval_input["annotation"]["relations"])} relations')
 
     return eval_input
+
+
+def galactica_yaml_extract(llm_output_dict, verbose=False):
+    """ Extract YAML part of a response that GALACTICA gave and return
+        modified llm_output_dict.
+    """
+
+    gal_yaml_patt = re.compile(
+        (
+            r'\[YAML Output start\].*text_contains_entities:(.*)'
+            r'\[YAML Output end\]'
+        ),
+        flags=re.S | re.I  # dot matches newlines, case insensitive
+    )
+
+    gal_yaml_patt_cut = re.compile(
+        (
+            r'\[YAML Output start\].*text_contains_entities:(.*)'
+            r'$'
+        ),
+        flags=re.S | re.I  # dot matches newlines, case insensitive
+    )
+
+    llm_output_gal = llm_output_dict['completion']['choices'][0]['text']
+
+    gal_yaml_pre = None
+    if not re.search(r'(?i)\[YAML Output end\]', llm_output_gal):
+        # YAML output is cut off, match w/o ending marker
+        yaml_match = gal_yaml_patt_cut.search(llm_output_gal)
+        gal_yaml_pre = yaml_match.group(1)
+    else:
+        yaml_match = gal_yaml_patt.search(llm_output_gal)
+        gal_yaml_pre = yaml_match.group(1)
+        gal_yaml_pre = [
+            '\n'.join(gal_yaml_pre.split('\n')[:-1])  # remove last line
+        ]
+
+    if gal_yaml_pre is None:
+        print('No YAML output found')
+        return None
+
+    if gal_yaml_pre[-4:] in ['...', '```', '---']:
+        # remove YAML/Markdown code ending
+        gal_yaml_pre = gal_yaml_pre[:-4]
+
+    gal_yaml = 'text_contains_entities:' + gal_yaml_pre
+
+    llm_output_dict['completion']['choices'][0]['text'] = gal_yaml
+
+    return llm_output_dict
 
 
 def yaml2json(llm_output_dict, verbose=False):
