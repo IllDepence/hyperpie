@@ -41,7 +41,7 @@ for i, para in enumerate(paras_true[from_idx:to_idx]):
     print(completion_dict['completion']['choices'][0]['text'][:300], '...')
     print('\n\n')
     # # convert
-    # para_pred = hp.llm.convert.llm_output2eval_input(
+    # para_pred, status = hp.llm.convert.llm_output2eval_input(
     #     completion_dict,
     # )
 

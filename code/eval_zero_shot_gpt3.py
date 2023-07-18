@@ -44,7 +44,7 @@ for i, para in enumerate(paras_true[from_idx:to_idx]):
         para, prompt, params=hp.settings.gpt_default_params
     )
     # convert
-    para_pred = hp.llm.convert.llm_output2eval_input(
+    para_pred, status = hp.llm.convert.llm_output2eval_input(
         completion_dict,
     )
 
@@ -67,12 +67,12 @@ for i, para in enumerate(paras_true[from_idx:to_idx]):
     #     para, prompt2, params=hp.settings.gpt_default_params
     # )
     # # convert
-    # para_pred = hp.llm.convert.llm_output2eval_input(
+    # para_pred, status = hp.llm.convert.llm_output2eval_input(
     #     completion_dict1,
     #     completion_dict2['completion']['choices'][0]['text']
     # )
     # # # “1.5 stage” version
-    # # para_pred = hp.llm.convert.llm_output2eval_input(
+    # # para_pred, status = hp.llm.convert.llm_output2eval_input(
     # #     completion_dict1,
     # #     # completion_dict2['completion']['choices'][0]['text']
     # #     '',
@@ -80,7 +80,7 @@ for i, para in enumerate(paras_true[from_idx:to_idx]):
     # # )
     # # # “broken” “1.5 stage” version leading to higher F1 score
     # # # b/c of fewer false positives
-    # # para_pred = hp.llm.convert.llm_output2eval_input(
+    # # para_pred, status = hp.llm.convert.llm_output2eval_input(
     # #     completion_dict1,
     # # )
 

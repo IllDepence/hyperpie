@@ -7,6 +7,7 @@
     to convert LLM output to the format expected by the evaluation function.
 """
 
+import copy
 import re
 import sys
 import json
@@ -149,10 +150,16 @@ def llm_output2eval_input(
                                will be determined automatically depending
                                on whether or not llm_annotated_text is
                                provided.
+        preprocessor: Preprocessor function that takes the LLM output
+                      and extracts the YAML part (optional)
 
     Returns:
         dict: Evaluation script input in JSON format.
+        dict: Status dicts with info from parsing steps
     """
+
+    llm_output_dict = copy.deepcopy(llm_output_dict)  # create working copy
+    status_dicts = {}
 
     # determine if surface forms need to be matched in the text
     if matched_surface_forms is None:
@@ -163,21 +170,29 @@ def llm_output2eval_input(
 
     # TODO
     # add functionality to get stats on
-    # - hallucination text after YAML block
-    # - YAML parseable
-    # - adherence to details of YAML scheme (e.g. ID format)
+    # - hallucination text after YAML block ✔
+    # - YAML parseable ✔
     # - given entities actually being in the text
     # - entity types being in scope
+    # - adherence to details of YAML scheme (e.g. ID format)
 
     # use preprocessor if provided
     if preprocessor is not None:
-        llm_output_dict = preprocessor(llm_output_dict)
+        llm_output_dict, preprocessor_status_dict = preprocessor(
+            llm_output_dict
+        )
+        status_dicts['preprocessor'] = preprocessor_status_dict
 
     # convert YAML to JSON
-    llm_output = yaml2json(llm_output_dict, verbose=verbose)
+    llm_output, yaml2json_status_dict = yaml2json(
+        llm_output_dict, verbose=verbose
+    )
+    status_dicts['yaml2json'] = yaml2json_status_dict
+
+    # return if parsing failed
     if llm_output is None:
         # YAML parsing failed
-        return None
+        return None, status_dicts
 
     # input paragraph (used to determine text offsets)
     para = llm_output_dict['paragraph']
@@ -194,7 +209,7 @@ def llm_output2eval_input(
 
     if annotation_info['text_contains_entities'] is False:
         # If there are no entities, return the annotation dict empty
-        return eval_input
+        return eval_input, status_dicts
 
     # check types
     if not (
@@ -214,6 +229,9 @@ def llm_output2eval_input(
     # compatible with eval script
     if verbose:
         print('coarse structure looks good :)')
+
+    # test format adherence
+    # TODO
 
     if llm_annotated_text is None:
         if not matched_surface_forms:
@@ -356,19 +374,75 @@ def get_llm_annotated_entities(llm_text, orig_text):
     return entities
 
 
-def _twostage_llm_parse_yaml(annotation_info):
-    """ Parse LLM generated YAML and return entities and relations.
+def _in_scope_artifact_type(typ):
+    scope = [
+        'dataset',
+        'data set',
+        'model',
+        'method',
+        'loss function',
+        'loss',
+        'regularization technique',
+        'regularization'
+    ]
+
+    return typ in scope
+
+
+def _artif_id_format_valid(aid):
+    return re.match(r'p[0-9]+', aid)
+
+
+def _param_id_format_valid(pid):
+    return re.match(r'p[0-9]+\.[0-9]+', pid)
+
+
+def _value_context_id_format_valid(vcid):
+    return re.match(r'v[0-9]+\.[0-9]+\.[0-9]+', vcid)
+
+
+def _twostage_llm_parse_yaml(annotation_info, para_text):
+    """ Parse LLM generated YAML and return entities, relations,
+        and a status dict.
     """
 
     entities = {}
     relations = []
+    status_dict = {
+        'num_ents_intext_notintext': [0, 0],
+        'num_ent_types_valid_invalid': [0, 0],
+        'num_aids_valid_invalid': [0, 0],
+        'num_pids_valid_invalid': [0, 0],
+        'num_vids_valid_invalid': [0, 0],
+        'num_cids_valid_invalid': [0, 0],
+    }
     for artf_dict in annotation_info['entities']:
         if artf_dict is None:
             continue
         # parse artifact
         artf = next(iter(artf_dict.values()))
+        if 'id' not in artf.keys() or 'name' not in artf.keys():
+            continue
         # set 'e' type entities to 'a' type (prompt uses 'e', eval 'a')
         artf['id'] = re.sub(r'[a-z]([0-9\.]+)', r'a\1', artf['id'])
+        # check id format
+        if _artif_id_format_valid(artf['id']):
+            status_dict['num_aids_valid_invalid'][0] += 1
+        else:
+            status_dict['num_aids_valid_invalid'][1] += 1
+        # check if artifact is actually in the text
+        if artf['name'] in para_text:
+            status_dict['num_ents_intext_notintext'][0] += 1
+        else:
+            status_dict['num_ents_intext_notintext'][1] += 1
+        # check type
+        if _in_scope_artifact_type(artf['type']):
+            # NOTE: might consider distinguishing between artifacts
+            #       in scope + in text vs in scope but not in text
+            status_dict['num_ent_types_valid_invalid'][0] += 1
+        else:
+            status_dict['num_ent_types_valid_invalid'][1] += 1
+        # create entity
         entities[artf['id']] = {
             'id': artf['id'],
             'type': 'a',
@@ -379,6 +453,11 @@ def _twostage_llm_parse_yaml(annotation_info):
         for param_dict in artf['parameters']:
             # parse parameter
             param = next(iter(param_dict.values()))
+            # check id format
+            if _param_id_format_valid(param['id']):
+                status_dict['num_pids_valid_invalid'][0] += 1
+            else:
+                status_dict['num_pids_valid_invalid'][1] += 1
             entities[param['id']] = {
                 'id': param['id'],
                 'type': 'p',
@@ -399,6 +478,11 @@ def _twostage_llm_parse_yaml(annotation_info):
                     continue
                 # parse value and context
                 val = next(iter(val_dict.values()))
+                # check id format
+                if _value_context_id_format_valid(val['value_id']):
+                    status_dict['num_vids_valid_invalid'][0] += 1
+                else:
+                    status_dict['num_vids_valid_invalid'][1] += 1
                 entities[val['value_id']] = {
                     'id': val['value_id'],
                     'type': 'v',
@@ -411,6 +495,11 @@ def _twostage_llm_parse_yaml(annotation_info):
                 ])
                 if val.get('context', None) is None:
                     continue
+                # check id format
+                if _value_context_id_format_valid(val['context_id']):
+                    status_dict['num_cids_valid_invalid'][0] += 1
+                else:
+                    status_dict['num_cids_valid_invalid'][1] += 1
                 entities[val['context_id']] = {
                     'id': val['context_id'],
                     'type': 'c',
@@ -422,7 +511,7 @@ def _twostage_llm_parse_yaml(annotation_info):
                     val['value_id']
                 ])
 
-    return entities, relations
+    return entities, relations, status_dict
 
 
 def twostage_llm_entities2eval_input(
@@ -434,7 +523,10 @@ def twostage_llm_entities2eval_input(
 ):
     # built dict of entities with ID, type, and name
     # list of relations (using entity IDs)
-    entities, relations = _twostage_llm_parse_yaml(annotation_info)
+    entities, relations, entrel_status_dict = _twostage_llm_parse_yaml(
+        annotation_info,
+        para['text']
+    )
 
     # get entities from LLM annotated text
     llm_entity_annots = get_llm_annotated_entities(
@@ -474,7 +566,10 @@ def onepointfivestage_llm_entities2eval_input(
 
     # built dict of entities with ID, type, and name
     # list of relations (using entity IDs)
-    entities, relations = _twostage_llm_parse_yaml(annotation_info)
+    entities, relations, entrel_status_dict = _twostage_llm_parse_yaml(
+        annotation_info,
+        para['text']
+    )
 
     ent_annots = {}
     for e_id, ent in entities.items():
@@ -623,44 +718,76 @@ def singleprompt_llm_entities2eval_input(
     return eval_input
 
 
+def _preprocessor_status_dict(
+    no_yaml_found,
+    empty_yaml,
+    garbage_around_yaml
+):
+    """ Return a dictionary to be used as part of the return value of
+        a preprocessor function for LLM output, used before YAML parsing.
+    """
+
+    return {
+        'no_yaml_found': no_yaml_found,
+        'empty_yaml': empty_yaml,
+        'garbage_around_yaml': garbage_around_yaml
+    }
+
+
 def galactica_yaml_extract(llm_output_dict, verbose=False):
     """ Extract YAML part of a response that GALACTICA gave and return
         modified llm_output_dict.
+
+        Returns a tuple of the form (llm_output_dict, preprocessor_status_dict)
+
     """
 
     gal_yaml_patt = re.compile(
         (
-            r'\[YAML Output start\].*text_contains_entities:(.*)'
-            r'\[YAML Output end\]'
+            r'\[YAML [\w\s]+ start\].*text_contains_entities:(.*)'
+            r'\[YAML [\w\s]+ end\]'
         ),
         flags=re.S | re.I  # dot matches newlines, case insensitive
     )
 
     gal_yaml_patt_cut = re.compile(
         (
-            r'\[YAML Output start\].*text_contains_entities:(.*)'
+            r'\[YAML [\w\s]+ start\].*text_contains_entities:(.*)'
             r'$'
         ),
-        flags=re.S | re.I  # dot matches newlines, case insensitive
+        flags=re.S | re.I
+    )
+
+    gal_empty_yaml_block_patt = re.compile(
+        r'\[YAML [\w\s]+ start\]\s+\[YAML [\w\s]+ end\]',  # empty YAML block
+        flags=re.S | re.I
+    )
+
+    gal_post_yaml_garbage_patt = re.compile(
+        r'\[YAML [\w\s]+ end\].*(\w{5,}.*\n).*$',  # unwanted text after YAML
+        flags=re.S | re.I
     )
 
     llm_output_gal = llm_output_dict['completion']['choices'][0]['text']
 
     gal_yaml_pre = None
-    if not re.search(r'(?i)\[YAML Output end\]', llm_output_gal):
-        # YAML output is cut off, match w/o ending marker
-        yaml_match = gal_yaml_patt_cut.search(llm_output_gal)
-        gal_yaml_pre = yaml_match.group(1)
-    else:
+    if gal_yaml_patt.search(llm_output_gal):
+        # expected format
         yaml_match = gal_yaml_patt.search(llm_output_gal)
         gal_yaml_pre = yaml_match.group(1)
-        gal_yaml_pre = [
-            '\n'.join(gal_yaml_pre.split('\n')[:-1])  # remove last line
-        ]
+    elif gal_yaml_patt_cut.search(llm_output_gal):
+        # expected format but cut off, match w/o ending marker
+        yaml_match = gal_yaml_patt_cut.search(llm_output_gal)
+        gal_yaml_pre = yaml_match.group(1)
+        # remove last line
+        gal_yaml_pre = '\n'.join(gal_yaml_pre.split('\n')[:-1])
+    else:
+        # assume it’s just YAML and hope for the best
+        gal_yaml_pre = llm_output_gal
 
     if gal_yaml_pre is None:
         print('No YAML output found')
-        return None
+        return llm_output_dict, _preprocessor_status_dict(True, None, None)
 
     if gal_yaml_pre[-4:] in ['...', '```', '---']:
         # remove YAML/Markdown code ending
@@ -670,12 +797,31 @@ def galactica_yaml_extract(llm_output_dict, verbose=False):
 
     llm_output_dict['completion']['choices'][0]['text'] = gal_yaml
 
-    return llm_output_dict
+    preprocess_status_dict = _preprocessor_status_dict(False, None, None)
+
+    if gal_empty_yaml_block_patt.search(gal_yaml):
+        preprocess_status_dict['empty_yaml'] = True
+
+        # replace empty YAML block with stating no entities were found
+        no_entities_yaml = 'text_contains_entities: false'
+        llm_output_dict['completion']['choices'][0]['text'] = no_entities_yaml
+
+    if gal_post_yaml_garbage_patt.search(llm_output_gal):
+        preprocess_status_dict['garbage_around_yaml'] = True
+
+    return llm_output_dict, preprocess_status_dict
 
 
 def yaml2json(llm_output_dict, verbose=False):
     """ Try to parse LLM output YAML and convert it to JSON.
+
+        Returns a tuple of the form (llm_output_JSON, status_dict)
     """
+
+    status_dict = {
+        'parse_fail': False,
+        'parsing_error_dict': {},
+    }
 
     # predicted annotations in YAML
     llm_output_yaml = llm_output_dict['completion']['choices'][0]['text']
@@ -758,10 +904,12 @@ def yaml2json(llm_output_dict, verbose=False):
             for k, v in yaml_errors.items():
                 print(f'  {k}: {v}')
             print(f'LLM output:\n{llm_output_yaml}')
-            return None
+            status_dict['parse_fail'] = True
+            status_dict['parsing_error_dict'] = yaml_errors
+            return None, status_dict
 
     # if we reach this point, parsing was successful
-    return llm_output
+    return llm_output, status_dict
 
 
 if __name__ == '__main__':
