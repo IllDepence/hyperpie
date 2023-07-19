@@ -392,15 +392,15 @@ def _in_scope_artifact_type(typ):
 
 
 def _artif_id_format_valid(aid):
-    return re.match(r'p[0-9]+', aid)
+    return re.match(r'^a[0-9]+$', aid) is not None
 
 
 def _param_id_format_valid(pid):
-    return re.match(r'p[0-9]+\.[0-9]+', pid)
+    return re.match(r'^p[0-9]+\.[0-9]+$', pid) is not None
 
 
 def _value_context_id_format_valid(vcid):
-    return re.match(r'v[0-9]+\.[0-9]+\.[0-9]+', vcid)
+    return re.match(r'^[vc][0-9]+\.[0-9]+\.[0-9]+$', vcid) is not None
 
 
 def _twostage_llm_parse_yaml(annotation_info, para_text):
