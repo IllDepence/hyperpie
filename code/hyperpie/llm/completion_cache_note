@@ -1,1 +1,8 @@
-completion cache up to 230711 contains completions from OpenAI API (left in separate file to increase write speeds for open LLM work)
+completion_cache.json.xz
+-> WIP completion cache of GALACTICA evaluation
+
+completion_cache.json_gpt3_230712.xz
+-> full completion cache for OpenAI text-davinci-003 evaluation
+
+completion_cache.json_vicuna230717.xz
+-> full completion cache of Vicuna evaluation
