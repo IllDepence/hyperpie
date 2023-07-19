@@ -25,11 +25,15 @@ else:
     print(f'INFO: change settings.use_openai_api to True to use OpenAI API\n')
     openai.api_key = 'xxx'
     openai.api_base = settings.basaran_api_base
-    completion = openai.Completion.create(
-        model='xxx', prompt='Han shot ', max_tokens=2, echo=True
-    )
-    model_in_use = completion['model']
-    settings.gpt_default_params['model'] = model_in_use
-    print(f'INFO: using model {model_in_use} for LLM completion')
-    print(f'INFO: the model says "{completion["choices"][0]["text"]}"')
+    try:
+        completion = openai.Completion.create(
+            model='xxx', prompt='Han shot ', max_tokens=2, echo=True
+        )
+        model_in_use = completion['model']
+        settings.gpt_default_params['model'] = model_in_use
+        print(f'INFO: using model {model_in_use} for LLM completion')
+        print(f'INFO: the model says "{completion["choices"][0]["text"]}"')
+    except openai.error.APIConnectionError:
+        print(f'WARNING: Could not connect to Basaran API')
+        print(f'WARNING: (!!!) Inference will not work (!!!)')
     x = input('INFO: press enter to continue\n')
