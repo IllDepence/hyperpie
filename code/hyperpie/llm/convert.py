@@ -52,7 +52,7 @@ def find_surface_forms_in_para(para_text, e_name):
     return surfs
 
 
-def get_coarse_structure_entries(llm_output):
+def get_coarse_structure_entries(llm_output, verbose=False):
     """ Get the coarse structure entries from LLM output.
 
         Expected entries:
@@ -62,6 +62,10 @@ def get_coarse_structure_entries(llm_output):
         Optional entries:
         - annotated_text
     """
+
+    status_dict = {
+        'coarse_structure_error': False,
+    }
 
     annotation_info = {
         'text_contains_entities': None,
@@ -78,12 +82,14 @@ def get_coarse_structure_entries(llm_output):
     # check if LLM output is a list or a dict
     if type(llm_output) not in [list, dict]:
         # unexpected format
-        print(
-            f'Expected list/dict as top-level YAML element, '
-            f'got {type(llm_output)}'
-        )
-        print(f'LLM output: {llm_output}')
-        sys.exit(1)
+        if verbose:
+            print(
+                f'Expected list/dict as top-level YAML element, '
+                f'got {type(llm_output)}'
+            )
+            print(f'LLM output: {llm_output}')
+        status_dict['coarse_structure_error'] = True
+        return annotation_info, status_dict
 
     # if it’s a list, convert it to a dict
     if type(llm_output) == list:
@@ -91,11 +97,13 @@ def get_coarse_structure_entries(llm_output):
         llm_output_fixed = {}
         for elem in llm_output:
             if type(elem) != dict:
-                print(
-                    f'Expected list of dicts as top-level YAML element, '
-                    f'got {llm_output}'
-                )
-                sys.exit(1)
+                if verbose:
+                    print(
+                        f'Expected list of dicts as top-level YAML element, '
+                        f'got {llm_output}'
+                    )
+                status_dict['coarse_structure_error'] = True
+                return annotation_info, status_dict
             llm_output_fixed.update(elem)
         llm_output = llm_output_fixed
 
@@ -112,12 +120,14 @@ def get_coarse_structure_entries(llm_output):
     )
     if not has_expected_keys:
         # unexpected format
-        print(
-            f'Expected dict with keys {has_entities_key} and '
-            f'{entities_keys}, got {llm_output.keys()}'
-        )
-        print(f'LLM output: {llm_output}')
-        sys.exit(1)
+        if verbose:
+            print(
+                f'Expected dict with keys {has_entities_key} and '
+                f'{entities_keys}, got {llm_output.keys()}'
+            )
+            print(f'LLM output: {llm_output}')
+        status_dict['coarse_structure_error'] = True
+        return annotation_info, status_dict
     else:
         annotation_info[
             'text_contains_entities'
@@ -127,7 +137,7 @@ def get_coarse_structure_entries(llm_output):
                 annotation_info['entities'] = llm_output[key]
                 break
 
-    return annotation_info
+    return annotation_info, status_dict
 
 
 def llm_output2eval_input(
@@ -168,14 +178,6 @@ def llm_output2eval_input(
         else:
             matched_surface_forms = False
 
-    # TODO
-    # add functionality to get stats on
-    # - hallucination text after YAML block ✔
-    # - YAML parseable ✔
-    # - given entities actually being in the text
-    # - entity types being in scope
-    # - adherence to details of YAML scheme (e.g. ID format)
-
     # use preprocessor if provided
     if preprocessor is not None:
         llm_output_dict, preprocessor_status_dict = preprocessor(
@@ -205,7 +207,11 @@ def llm_output2eval_input(
     )
 
     # get coarse structure entries
-    annotation_info = get_coarse_structure_entries(llm_output)
+    annotation_info, cs_status = get_coarse_structure_entries(
+        llm_output,
+        verbose
+    )
+    status_dicts['coarse_structure'] = cs_status
 
     if annotation_info['text_contains_entities'] is False:
         # If there are no entities, return the annotation dict empty
@@ -216,13 +222,15 @@ def llm_output2eval_input(
         type(annotation_info['text_contains_entities']) == bool and
         type(annotation_info['entities']) == list
     ):
-        print(
-            f'Expected bool and list for coarse structure entries, '
-            f'got {type(annotation_info["text_contains_entities"])} and '
-            f'{type(annotation_info["entities"])}'
-        )
-        print(f'LLM output: {llm_output}')
-        sys.exit(1)
+        if verbose:
+            print(
+                f'Expected bool and list for coarse structure entries, '
+                f'got {type(annotation_info["text_contains_entities"])} and '
+                f'{type(annotation_info["entities"])}'
+            )
+            print(f'LLM output: {llm_output}')
+        status_dicts['coarse_structure']['coarse_structure_error'] = True
+        return eval_input, status_dicts
 
     # coarse structure checking done
     # from hereon parse entity/relation dicts and build output
@@ -423,7 +431,12 @@ def _twostage_llm_parse_yaml(annotation_info, para_text):
             continue
         # parse artifact
         artf = next(iter(artf_dict.values()))
-        if 'id' not in artf.keys() or 'name' not in artf.keys():
+        if (
+            artf is None or
+            'id' not in artf.keys() or
+            'name' not in artf.keys() or
+            'type' not in artf.keys()
+        ):
             continue
         # set 'e' type entities to 'a' type (prompt uses 'e', eval 'a')
         artf['id'] = re.sub(r'[a-z]([0-9\.]+)', r'a\1', artf['id'])
@@ -452,9 +465,19 @@ def _twostage_llm_parse_yaml(annotation_info, para_text):
         }
         if not artf.get('has_parameters', False):
             continue
+        if 'parameters' not in artf or artf['parameters'] is None:
+            continue
         for param_dict in artf['parameters']:
+            if param_dict is None:
+                continue
             # parse parameter
             param = next(iter(param_dict.values()))
+            if (
+                param is None or
+                'id' not in param.keys() or
+                'name' not in param.keys()
+            ):
+                continue
             # check id format
             if _param_id_format_valid(param['id']):
                 status_dict['num_pids_valid_invalid'][0] += 1
@@ -472,10 +495,18 @@ def _twostage_llm_parse_yaml(annotation_info, para_text):
             ])
             if not param.get('has_values', False):
                 continue
+            if 'values' not in param or param['values'] is None:
+                continue
             for val_dict in param['values']:
+                if val_dict is None:
+                    continue
                 # parse value and context
                 val = next(iter(val_dict.values()))
-                if 'value_id' not in val.keys() or 'value' not in val.keys():
+                if (
+                    val is None or
+                    'value_id' not in val.keys() or
+                    'value' not in val.keys()
+                ):
                     continue
                 # check id format
                 if _value_context_id_format_valid(val['value_id']):
@@ -830,6 +861,7 @@ def yaml2json(llm_output_dict, verbose=False):
 
     # try to parse
     yaml_errors = {}
+    llm_output = None
     try:
         llm_output = yaml.load(llm_output_yaml, Loader=yaml.Loader)
     except yaml.YAMLError as e_general:
@@ -900,7 +932,7 @@ def yaml2json(llm_output_dict, verbose=False):
                 pass  # handle further down
 
         # if parsing still fails, print error and return None
-        if parse_fail:
+        if parse_fail and verbose:
             print('Error parsing LLM output YAML:')
             print(f'YAML errors:')
             for k, v in yaml_errors.items():
