@@ -230,9 +230,6 @@ def llm_output2eval_input(
     if verbose:
         print('coarse structure looks good :)')
 
-    # test format adherence
-    # TODO
-
     if llm_annotated_text is None:
         if not matched_surface_forms:
             print(
@@ -242,33 +239,38 @@ def llm_output2eval_input(
             sys.exit(1)
         # “single stage” prompt, surface forms  have to
         # be string matched in the paragraph text
-        return singleprompt_llm_entities2eval_input(
+        eval_input = singleprompt_llm_entities2eval_input(
             para,
             annotation_info,
             eval_input,
             verbose
         )
+        return eval_input, status_dicts
     else:
         if not matched_surface_forms:
             # “two stage” prompt and surface forms are given as
             # annotated text with IDs
-            return twostage_llm_entities2eval_input(
+            eval_input, cntnt_stat = twostage_llm_entities2eval_input(
                 para,
                 annotation_info,
                 llm_annotated_text,
                 eval_input,
                 verbose
             )
+            status_dicts['json_content'] = cntnt_stat
+            return eval_input, status_dicts
         else:
             # “two stage” prompt but surface forms are requested
             # to be extracted by matching entity names in the
             # paragraph text
-            return onepointfivestage_llm_entities2eval_input(
+            eval_input, cntnt_stat = onepointfivestage_llm_entities2eval_input(
                 para,
                 annotation_info,
                 eval_input,
                 verbose
             )
+            status_dicts['json_content'] = cntnt_stat
+            return eval_input, status_dicts
 
 
 def get_llm_text_offset_mapping(llm_text, orig_text, annot_patt):
@@ -551,7 +553,7 @@ def twostage_llm_entities2eval_input(
     eval_input['annotation']['entities'] = llm_entity_annots
     eval_input['annotation']['relations'] = rel_annots
 
-    return eval_input
+    return eval_input, entrel_status_dict
 
 
 def onepointfivestage_llm_entities2eval_input(
@@ -596,7 +598,7 @@ def onepointfivestage_llm_entities2eval_input(
     eval_input['annotation']['entities'] = ent_annots
     eval_input['annotation']['relations'] = rel_annots
 
-    return eval_input
+    return eval_input, entrel_status_dict
 
 
 def singleprompt_llm_entities2eval_input(
