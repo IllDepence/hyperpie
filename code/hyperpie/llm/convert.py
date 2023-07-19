@@ -473,13 +473,10 @@ def _twostage_llm_parse_yaml(annotation_info, para_text):
             if not param.get('has_values', False):
                 continue
             for val_dict in param['values']:
-                if not (
-                    val_dict.get('value_id', False) and
-                    val_dict.get('value', False)
-                ):
-                    continue
                 # parse value and context
                 val = next(iter(val_dict.values()))
+                if 'value_id' not in val.keys() or 'value' not in val.keys():
+                    continue
                 # check id format
                 if _value_context_id_format_valid(val['value_id']):
                     status_dict['num_vids_valid_invalid'][0] += 1
@@ -495,7 +492,10 @@ def _twostage_llm_parse_yaml(annotation_info, para_text):
                     val['value_id'],
                     param['id']
                 ])
-                if val.get('context', None) is None:
+                if (
+                    'context' not in val.keys() or
+                    'context_id' not in val.keys()
+                ):
                     continue
                 # check id format
                 if _value_context_id_format_valid(val['context_id']):
