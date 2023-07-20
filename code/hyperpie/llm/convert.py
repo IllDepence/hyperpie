@@ -865,10 +865,16 @@ def _format_eval_markdown_table(data):
         md += f"| {key_string} | {str(value).rjust(5)} |\n"
 
     key_string = paragraph_eval_keys['parse_fail'].ljust(22)
-    md += f"| {key_string} | {str(data['yaml2json']['parse_fail']).rjust(5)} |\n"
+    md += (
+        f"| {key_string} | {str(data['yaml2json']['parse_fail']).rjust(5)} |\n"
+    )
 
     key_string = paragraph_eval_keys['coarse_structure_error'].ljust(20)
-    md += f"| {key_string} | {str(data['coarse_structure']['coarse_structure_error']).rjust(5)} |\n"
+    md += (
+        f"| {key_string} | "
+        f"{str(data['coarse_structure']['coarse_structure_error']).rjust(5)}"
+        f"|\n"
+    )
 
     md += "\n##### Entity eval\n\n"
     md += "| Criterion      | Valid | Invalid |\n"
@@ -876,7 +882,10 @@ def _format_eval_markdown_table(data):
 
     for key, values in data['json_content'].items():
         key_string = entity_eval_keys[key].ljust(14)
-        md += f"| {key_string} | {str(values[0]).rjust(5)} | {str(values[1]).rjust(7)} |\n"
+        md += (
+            f"| {key_string} | {str(values[0]).rjust(5)} | "
+            f"{str(values[1]).rjust(7)} |\n"
+        )
 
     return md
 
