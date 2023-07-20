@@ -14,6 +14,9 @@ INFO: using model facebook/galactica-120b for LLM completion
 INFO: the model says "Han shot 8 lighting"
 
 INFO: using model facebook/galactica-120b for LLM completion
+INFO: the model says "Han shot "Don"
+
+INFO: using model facebook/galactica-120b for LLM completion
 INFO: the model says "Han shot  Kerr "
 
 INFO: using model facebook/galactica-120b for LLM completion
