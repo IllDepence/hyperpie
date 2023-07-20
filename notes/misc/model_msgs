@@ -1,11 +1,23 @@
 INFO: using model lmsys/vicuna-13b-v1.3 for LLM completion
 INFO: the model says "Han shot 1st"
 
+INFO: using model WizardLM/WizardLM-13B-V1.1 for LLM completion
+INFO: the model says "Han shot 1st"
+
+INFO: using model WizardLM/WizardLM-13B-V1.1 for LLM completion
+INFO: the model says "Han shot 3 times"
+
 INFO: using model facebook/galactica-120b for LLM completion
 INFO: the model says "Han shot 'em"
 
 INFO: using model facebook/galactica-120b for LLM completion
 INFO: the model says "Han shot 8 lighting"
+
+INFO: using model facebook/galactica-120b for LLM completion
+INFO: the model says "Han shot  Kerr "
+
+INFO: using model facebook/galactica-120b for LLM completion
+INFO: the model says "Han shot , Bee"
 
 INFO: using model facebook/galactica-120b for LLM completion
 INFO: the model says "Han shot 99"
@@ -47,6 +59,9 @@ INFO: using model facebook/galactica-120b for LLM completion
 INFO: the model says "Han shot 0-"
 
 INFO: using model facebook/galactica-120b for LLM completion
+INFO: the model says "Han shot .2"
+
+INFO: using model facebook/galactica-120b for LLM completion
 INFO: the model says "Han shot [D"
 
 INFO: using model facebook/galactica-120b for LLM completion
@@ -54,6 +69,9 @@ INFO: the model says "Han shot "Wh"
 
 INFO: using model facebook/galactica-120b for LLM completion
 INFO: the model says "Han shot "P"
+
+INFO: using model facebook/galactica-120b for LLM completion
+INFO: the model says "Han shot "I"
 
 INFO: using model facebook/galactica-120b for LLM completion
 INFO: the model says "Han shot (b"

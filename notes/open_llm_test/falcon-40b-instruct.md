@@ -507,3 +507,167 @@ Coreference resolution:
 Relation extraction:
 - lambda_R = 0.4
 ```
+
+### Var 5
+
+(user/assitant, entity type placeholder syntax modified, updated instruction phrasing)
+
+```
+User: In the context of machine learning and related fields, what are the most important datasets, models, methods, loss functions, regularization techniques mentioned in the LaTeX Input Text below? What are their parameters and values?
+
+[LaTeX Input Text start]
+We divide our 438 annotated documents into training (70%), validation (30%) and test set (30%).
+The base document representation of our model is formed by SciBERT-base [4] and BiLSTM with 128-d hidden state. We use a dropout of 0.2 after BiLSTM embeddings. All feedforward networks are composed of two hidden layers, each of dimension 128 with gelu activation and with a dropout of 0.2 between layers. For additive attention layer in span representation, we collapse the token embeddings to scalars by passing through the feedforward layer with 128-d hidden state and performing a softmax. We train our model for 30 epochs using Adam optimizer with 1e-3 as learning rate for all non BERT weights and 2e-5 for BERT weights. We use early stopping with a patience value of 7 on the validation set using relation extraction F1 score. All our models were trained using 48Gb Quadro RTX 8000 GPUs. The multitask model takes approximately 3 hrs to train.
+
+[LaTeX Input Text end]
+
+Answer in the following YAML format.
+
+Format:
+---
+text_contains_entities: true/false
+entities:
+  - entity<N>:
+      id: e<N>
+      name: "<entity name>"
+      type: <dataset/model/method/loss function/regularization technique>
+      has_parameters: true/false
+      parameters:
+        - parameter<M>:
+            id: p<N.M>
+            name: "<parameter name>"
+            has_values: true/false
+            values:
+              - value<O>:
+                  value_id: v<N.M.O>
+                  value: "<parameter value>"
+                  context: "<value context>"/null
+                  context_id: c<N.M.O>/null
+...
+
+Only produce output in the YAML format specified above. Output no additional text. Only include the most important datasets, models, methods, loss functions, regularization techniques mentioned in the LaTeX Input Text. Then end your response.
+
+Assistant:
+---
+text_contains_entities: 
+```
+
+### Var 6
+
+(proof that in can output parameters w/ the complex YAML format)
+
+```
+User: In the context of machine learning and related fields, what are the datasets, models, methods, loss functions, and regularization techniques mentioned in the LaTeX Input Text below? What are their hyperparameters and values? An example of a parameter 
+
+[LaTeX Input Text start]
+We train our model for 30 epochs using Adam optimizer with 1e-3 as learning rate for all non BERT weights and 2e-5 for BERT weights. We use early stopping with a patience value of 7 on the validation set using relation extraction F1 score. All our models were trained using 48Gb Quadro RTX 8000 GPUs. The multitask model takes approximately 3 hrs to train.
+
+[LaTeX Input Text end]
+
+Answer in the following YAML format.
+
+Format:
+---
+text_contains_entities: true/false
+entities:
+  - entity<N>:
+      id: e<N>
+      name: "<entity name>"
+      type: <dataset/model/method/loss function/regularization technique>
+      has_parameters: true/false
+      parameters:
+        - parameter<M>:
+            id: p<N.M>
+            name: "<parameter name>"
+            has_values: true/false
+            values:
+              - value<O>:
+                  value_id: v<N.M.O>
+                  value: "<parameter value>"
+                  context: "<value context>"/null
+                  context_id: c<N.M.O>/null
+...
+
+Only produce output in the YAML format specified above. Output no additional text. Only include the most important datasets, models, methods, loss functions, regularization techniques mentioned in the LaTeX Input Text. Then end your response. Give a brief response.
+
+Assistant:
+---
+text_contains_entities: 
+```
+
+---
+"true"
+entities:
+  - entity1:
+      id: e1
+      name: "Dataset 1"
+      type: "dataset"
+      has_parameters: "false"
+      parameters: []
+  - entity2:
+      id: e2
+      name: "Model 1"
+      type: "model"
+      has_parameters: "true"
+      parameters:
+        - parameter1:
+            id: p1
+            name: "Learning rate"
+            has_values: "true"
+            values:
+              - value1:
+                  value_id: v1
+                  value: "1e-3"
+                  context: "Learning rate for all non BERT weights"
+              - value2:
+                  value_id: v2
+                  value: "2e-5"
+                  context: "Learning rate for BERT weights"
+  - entity3:
+      id: e3
+      name: "Method 1"
+      type: "method"
+      has_parameters: "false"
+      parameters: []
+  - entity4:
+      id: e4
+      name: "Loss function 1"
+      type: "loss function"
+      has_parameters: "false"
+      parameters: []
+  - entity5:
+      id: e5
+      name: "Regularization technique 1"
+      type: "regularization technique"
+      has_parameters: "false"
+      parameters: []
+  - entity6:
+      id: e6
+      name: "Multitask model"
+      type: "model"
+      has_parameters: "true"
+      parameters:
+        - parameter1:
+            id: p1
+            name: "Learning rate"
+            has_values: "true"
+            values:
+              - value1:
+                  value_id: v1
+                  value: "1e-3"
+                  context: "Learning rate for all non BERT weights"
+              - value2:
+                  value_id: v2
+                  value: "2e-5"
+                  context: "Learning rate for BERT weights"
+  - entity7:
+      id: e7
+      name: "Patience value"
+      type: "hyperparameter"
+      has_parameters: "false"
+      parameters: []
+  - entity8:
+      id: e8
+      name: "Early stopping"
+      type: 
+```
