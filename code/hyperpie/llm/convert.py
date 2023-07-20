@@ -401,14 +401,20 @@ def _in_scope_artifact_type(typ):
 
 
 def _artif_id_format_valid(aid):
+    if not type(aid) == str:
+        return False
     return re.match(r'^a[0-9]+$', aid) is not None
 
 
 def _param_id_format_valid(pid):
+    if not type(pid) == str:
+        return False
     return re.match(r'^p[0-9]+\.[0-9]+$', pid) is not None
 
 
 def _value_context_id_format_valid(vcid):
+    if not type(vcid) == str:
+        return False
     return re.match(r'^[vc][0-9]+\.[0-9]+\.[0-9]+$', vcid) is not None
 
 
@@ -826,7 +832,53 @@ def aggregate_format_stats(stats_dicts):
                     zip(values, aggregate_stats['json_content'][stat_name])
                 ]
 
+    print(_format_eval_markdown_table(aggregate_stats))
+
     return aggregate_stats
+
+
+def _format_eval_markdown_table(data):
+    paragraph_eval_keys = {
+        'no_yaml_found': 'No YAML found',
+        'empty_yaml': 'Empty YAML',
+        'garbage_around_yaml': 'Garbage around YAML',
+        'parse_fail': 'YAML parse fail',
+        'coarse_structure_error': 'Coarse Structure error'
+    }
+
+    entity_eval_keys = {
+        'num_ents_intext_notintext': 'Entity in text',
+        'num_ent_types_valid_invalid': 'Entity type',
+        'num_aids_valid_invalid': 'Artifact ID',
+        'num_pids_valid_invalid': 'Parameter ID',
+        'num_vids_valid_invalid': 'Value ID',
+        'num_cids_valid_invalid': 'Context ID'
+    }
+
+    md = f"Paragraphs total: {data['num_total']}\n\n"
+    md += "##### Paragraph eval\n\n"
+    md += "| Category               | Count |\n"
+    md += "| ---------------------- | ----- |\n"
+
+    for key, value in data['preprocessor'].items():
+        key_string = paragraph_eval_keys[key].ljust(22)
+        md += f"| {key_string} | {str(value).rjust(5)} |\n"
+
+    key_string = paragraph_eval_keys['parse_fail'].ljust(22)
+    md += f"| {key_string} | {str(data['yaml2json']['parse_fail']).rjust(5)} |\n"
+
+    key_string = paragraph_eval_keys['coarse_structure_error'].ljust(20)
+    md += f"| {key_string} | {str(data['coarse_structure']['coarse_structure_error']).rjust(5)} |\n"
+
+    md += "\n##### Entity eval\n\n"
+    md += "| Criterion      | Valid | Invalid |\n"
+    md += "| -------------- | ----- | ------- |\n"
+
+    for key, values in data['json_content'].items():
+        key_string = entity_eval_keys[key].ljust(14)
+        md += f"| {key_string} | {str(values[0]).rjust(5)} | {str(values[1]).rjust(7)} |\n"
+
+    return md
 
 
 def galactica_yaml_extract(llm_output_dict, verbose=False):
