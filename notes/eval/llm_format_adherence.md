@@ -23,6 +23,33 @@ Paragraphs total: 444
 | Value ID       |   178 |      53 |
 | Context ID     |    48 |     183 |
 
+
+### Vicuna 13b v1.3
+
+Paragraphs total: 444
+
+##### Paragraph eval
+
+| Category               | Count |
+| ---------------------- | ----- |
+| No YAML found          |     0 |
+| Empty YAML             |     0 |
+| Garbage around YAML    |    28 |
+| YAML parse fail        |     0 |
+| Coarse Structure error |     0|
+
+##### Entity eval
+
+| Criterion      | Valid | Invalid |
+| -------------- | ----- | ------- |
+| Entity in text |  2362 |    1005 |
+| Entity type    |  2114 |    1253 |
+| Artifact ID    |  3351 |      16 |
+| Parameter ID   |     0 |     758 |
+| Value ID       |     0 |     741 |
+| Context ID     |     0 |     719 |
+
+
 ### GALACTICA 120b
 
 (still running)

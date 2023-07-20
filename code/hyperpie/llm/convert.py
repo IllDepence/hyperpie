@@ -15,6 +15,7 @@ import uuid
 import yaml
 from collections import defaultdict
 from difflib import SequenceMatcher
+from hyperpie.llm import prompt_templates
 from hyperpie.util.annot import (
     entity_dict, empty_para_annotation, relation_dict,
     surface_form_dict
@@ -888,6 +889,41 @@ def _format_eval_markdown_table(data):
         )
 
     return md
+
+
+def vicuna_yaml_extract(llm_output_dict, verbose=False):
+    """ Preprocessor for Vicuna output where the start of the YAML is part
+        of the prompt and needs to be added back.
+        Also detects garbage text output after the YAML block.
+    """
+
+    yaml_start = prompt_templates.start_completion
+    yaml_end = '\n...'
+    yaml_with_garbage_patt = re.compile(
+        r"^(\s*['\"]?(true|false)['\"]?\n.*)\n\.\.\.\n.{7,}$",
+        flags=re.S
+    )
+    yaml_end_patt = re.compile(r'^(.*)\.\.\.(\W+---)?$', flags=re.S)
+
+    llm_out = llm_output_dict['completion']['choices'][0]['text']
+    status_dict = _preprocessor_status_dict(None, None, None)
+
+    # ensure clean YAML end and take stats
+    m_garbage = yaml_with_garbage_patt.match(llm_out)
+    m_end = yaml_end_patt.match(llm_out)
+    if m_garbage:
+        llm_out = m_garbage.group(1)
+        status_dict['garbage_around_yaml'] = True
+    elif m_end:
+        llm_out = m_end.group(1)
+    else:
+        # assume cut off YAML, remove last line
+        llm_out = '\n'.join(llm_out.split('\n')[:-1])
+
+    yaml_full = yaml_start + llm_out + yaml_end
+    llm_output_dict['completion']['choices'][0]['text'] = yaml_full
+
+    return llm_output_dict, status_dict
 
 
 def galactica_yaml_extract(llm_output_dict, verbose=False):
