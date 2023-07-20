@@ -2,6 +2,8 @@
 
 ### text-davinci-0003
 
+##### Paragraph eval
+
 Paragraphs total: 444
 
 | Category               | Count |
@@ -36,7 +38,7 @@ Paragraphs total: 444
 | Empty YAML             |     0 |
 | Garbage around YAML    |    28 |
 | YAML parse fail        |     0 |
-| Coarse Structure error |     0|
+| Coarse Structure error |     0 |
 
 ##### Entity eval
 
@@ -52,17 +54,15 @@ Paragraphs total: 444
 
 ### GALACTICA 120b
 
-(still running)
-
-Paragraphs total: 322
+Paragraphs total: 444
 
 ##### Paragraph eval
 
 | Category               | Count |
 | ---------------------- | ----- |
 | No YAML found          |     0 |
-| Empty YAML             |    63 |
-| Garbage around YAML    |   116 |
+| Empty YAML             |    88 |
+| Garbage around YAML    |   161 |
 | YAML parse fail        |     0 |
 | Coarse Structure error |     5 |
 
@@ -70,9 +70,9 @@ Paragraphs total: 322
 
 | Criterion      | Valid | Invalid |
 | -------------- | ----- | ------- |
-| Entity in text |   322 |     612 |
-| Entity type    |   837 |      97 |
-| Artifact ID    |   934 |       0 |
-| Parameter ID   |     0 |     771 |
-| Value ID       |     0 |     759 |
-| Context ID     |     0 |     725 |
+| Entity in text |   435 |     850 |
+| Entity type    |  1151 |     134 |
+| Artifact ID    |  1285 |       0 |
+| Parameter ID   |     0 |    1068 |
+| Value ID       |     0 |    1052 |
+| Context ID     |     0 |    1003 |

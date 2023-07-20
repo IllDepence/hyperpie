@@ -40,17 +40,20 @@ INFO: the model says "Han shot 37"
 INFO: using model lmsys/vicuna-13b-v1.3 for LLM completion
 INFO: the model says "Han shot 22"
 
-INFO: using model facebook/galactica-120b for LLM completion
-INFO: the model says "Han shot 10"
-
 INFO: using model lmsys/vicuna-13b-v1.3 for LLM completion
 INFO: the model says "Han shot 12"
 
 INFO: using model lmsys/vicuna-13b-v1.3 for LLM completion
 INFO: the model says "Han shot 11"
 
+INFO: using model facebook/galactica-120b for LLM completion
+INFO: the model says "Han shot 10"
+
 INFO: using model lmsys/vicuna-13b-v1.3 for LLM completion
 INFO: the model says "Han shot 10"
+
+INFO: using model facebook/galactica-120b for LLM completion
+INFO: the model says "Han shot 1."
 
 INFO: using model facebook/galactica-120b for LLM completion
 INFO: the model says "Han shot 3 home"
@@ -60,6 +63,9 @@ INFO: the model says "Han shot 4 of"
 
 INFO: using model facebook/galactica-120b for LLM completion
 INFO: the model says "Han shot 0-"
+
+INFO: using model facebook/galactica-120b for LLM completion
+INFO: the model says "Han shot .3"
 
 INFO: using model facebook/galactica-120b for LLM completion
 INFO: the model says "Han shot .2"
