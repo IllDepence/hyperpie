@@ -76,3 +76,30 @@ Paragraphs total: 444
 | Parameter ID   |     0 |    1068 |
 | Value ID       |     0 |    1052 |
 | Context ID     |     0 |    1003 |
+
+
+### WizardLM
+
+Paragraphs total: 444
+
+##### Paragraph eval
+
+| Category               | Count |
+| ---------------------- | ----- |
+| No YAML found          |     0 |
+| Empty YAML             |     0 |
+| Garbage around YAML    |    42 |
+| YAML parse fail        |     0 |
+| Coarse Structure error |     0 |
+
+##### Entity eval
+
+| Criterion      | Valid | Invalid |
+| -------------- | ----- | ------- |
+| Entity in text |  2089 |    1070 |
+| Entity type    |  2788 |     371 |
+| Artifact ID    |  2951 |     208 |
+| Parameter ID   |     0 |     929 |
+| Value ID       |     0 |     879 |
+| Context ID     |     0 |     818 |
+

@@ -447,7 +447,11 @@ def _twostage_llm_parse_yaml(annotation_info, para_text):
         ):
             continue
         # set 'e' type entities to 'a' type (prompt uses 'e', eval 'a')
-        artf['id'] = re.sub(r'[a-z]([0-9\.]+)', r'a\1', artf['id'])
+        artf['id'] = re.sub(
+            r'[a-z]([0-9\.]+)',
+            r'a\1',
+            str(artf.get('id'))
+        )
         # check id format
         if _artif_id_format_valid(artf['id']):
             status_dict['num_aids_valid_invalid'][0] += 1
@@ -873,7 +877,7 @@ def _format_eval_markdown_table(data):
     key_string = paragraph_eval_keys['coarse_structure_error'].ljust(20)
     md += (
         f"| {key_string} | "
-        f"{str(data['coarse_structure']['coarse_structure_error']).rjust(5)}"
+        f"{str(data['coarse_structure']['coarse_structure_error']).rjust(5)} "
         f"|\n"
     )
 
@@ -889,6 +893,62 @@ def _format_eval_markdown_table(data):
         )
 
     return md
+
+
+def fix_indent(yaml):
+    """ Fix YAML indentation to fit pre-defined schema.
+    """
+
+    fixed_yaml = ''
+    if re.match(r'^\s*(true|false)', yaml):
+        # preserve space in initial key/value pair split between
+        # prompt and completion
+        fixed_yaml += ' '
+    indent = 0
+    for line in yaml.split('\n'):
+        m_ent = re.match(r'^\s*(-\s*entity.*)$', line)
+        m_par = re.match(r'^\s*(-\s*parameter.*)$', line)
+        m_val = re.match(r'^\s*(-\s*value.*)$', line)
+        if m_ent:
+            # beginning an entity list element
+            indent = 2
+            fixed_yaml += ' '*indent + m_ent.group(1) + '\n'
+            indent = 2 + 4
+        elif m_par:
+            # beginning a parameter list element
+            indent = 2 + 4 + 2
+            fixed_yaml += ' '*indent + m_par.group(1) + '\n'
+            indent = 2 + 4 + 2 + 4
+        elif m_val:
+            # beginning a value list element
+            indent = 2 + 4 + 2 + 4 + 2
+            fixed_yaml += ' '*indent + m_val.group(1) + '\n'
+            indent = 2 + 4 + 2 + 4 + 2 + 4
+        else:
+            # continuation of the current block of key value pairs
+            fixed_yaml += ' '*indent + line.lstrip() + '\n'
+
+    return fixed_yaml.rstrip()
+
+
+def wizard_lm_yaml_extract(llm_output_dict, verbose=False):
+    """ Preprocessor for WizardLM output where the start of the YAML is part
+        of the prompt and needs to be added back.
+        Also detects garbage text output after the YAML block.
+    """
+
+    llm_out = llm_output_dict['completion']['choices'][0]['text']
+    # ret preprocessor stats
+    lod_copy = copy.deepcopy(llm_output_dict)
+    lod_copy, raw_stats = vicuna_yaml_extract(lod_copy)
+    # ensure correct YAML indentation
+    llm_output_dict['completion']['choices'][0]['text'] = fix_indent(llm_out)
+    # get YAML to be used for parsing
+    clean_llm_output, stats = vicuna_yaml_extract(llm_output_dict)
+    # add proper preprocessor stats
+    for k in ['no_yaml_found', 'empty_yaml', 'garbage_around_yaml']:
+        stats[k] = raw_stats[k]
+    return clean_llm_output, stats
 
 
 def vicuna_yaml_extract(llm_output_dict, verbose=False):

@@ -40,15 +40,9 @@ for i, para in enumerate(paras_true[from_idx:to_idx]):
         completion_dict,
         llm_annotated_text='foo',
         matched_surface_forms=True,
-        preprocessor=hp.llm.convert.vicuna_yaml_extract
+        preprocessor=hp.llm.convert.wizard_lm_yaml_extract
     )
     stats_dicts.append(stats_dict)
-
-    print('COMPLETION')
-    print(completion_dict['completion']['choices'][0]['text'])
-    print('/COMPLETION')
-    print('\n\n')
-    input()
 
     # # filter
     # filtered_para, num_full_triples_para = \
