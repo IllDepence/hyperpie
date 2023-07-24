@@ -671,3 +671,134 @@ entities:
       name: "Early stopping"
       type: 
 ```
+
+
+### Var 7
+
+(large overhaul baesd on above and additional trial and error)
+
+```
+User: I will give you instructions consisting of three parts. The three parts are called TASK, FORMAT and TEXT. You have to perform TASK based solely on information in TEXT, and in your output adhering to FORMAT.
+
+TASK:
+Your task is to extract information on the datasets, models, methods, loss functions, and regularization techniques mentioned in a text from machine learning and related fields, The information to extract are the aforementioned entities (datasets, models, methods, loss functions, and regularization techniques) as well as their parameters and values. Parameters are the aspects of an entity chosen or set by the authors of the text. Note that parameters are not entities. You have to output the extracted information in the YAML format described further down. Replace placeholders in format with actual values. For example, replace <entity name> with the name of an entity mentioned in the text. Only output information mentioned in the text.
+
+FORMAT:
+---
+text_contains_entities: true/false
+entities:
+  - entity<N>:
+      id: e<N>
+      name: "<entity name>"
+      type: <dataset/model/method/loss function/regularization technique>
+      has_parameters: true/false
+      parameters:
+        - parameter<M>:
+            id: p<N.M>
+            name: "<parameter name>"
+            has_values: true/false
+            values:
+              - value<O>:
+                  value_id: v<N.M.O>
+                  value: "<parameter value>"
+                  context: "<value context>"/null
+                  context_id: c<N.M.O>/null
+...
+
+TEXT:
+We divide our 438 annotated documents into training (70%), validation (30%) and test set (30%).
+The base document representation of our model is formed by SciBERT-base [4] and BiLSTM with 128-d hidden state. We use a dropout of 0.2 after BiLSTM embeddings. All feedforward networks are composed of two hidden layers, each of dimension 128 with gelu activation and with a dropout of 0.2 between layers. For additive attention layer in span representation, we collapse the token embeddings to scalars by passing through the feedforward layer with 128-d hidden state and performing a softmax.  We train our model for 30 epochs using Adam optimizer with 1e-3 as learning rate for all non BERT weights and 2e-5 for BERT weights. We use early stopping with a patience value of 7 on the validation set using relation extraction F1 score. All our models were trained using 48Gb Quadro RTX 8000 GPUs. The multitask model takes approximately 3 hrs to train.
+
+
+Assistant:
+---
+text_contains_entities:
+```
+
+```
+ true
+entities:
+  - entity1:
+      id: e1
+      name: "SciBERT-base"
+      type: "dataset"
+      has_parameters: false
+      parameters: []
+  - entity2:
+      id: e2
+      name: "BiLSTM"
+      type: "model"
+      has_parameters: false
+      parameters: []
+  - entity3:
+      id: e3
+      name: "dropout"
+      type: "regularization technique"
+      has_parameters: false
+      parameters: []
+  - entity4:
+      id: e4
+      name: "feedforward network"
+      type: "model"
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p1
+            name: "hidden state"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v1
+                  value: "128"
+                  context: "hidden state"
+  - entity5:
+      id: e5
+      name: "gelu activation"
+      type: "regularization technique"
+      has_parameters: false
+      parameters: []
+  - entity6:
+      id: e6
+      name: "dropout"
+      type: "regularization technique"
+      has_parameters: false
+      parameters: []
+  - entity7:
+      id: e7
+      name: "softmax"
+      type: "regularization technique"
+      has_parameters: false
+      parameters: []
+  - entity8:
+      id: e8
+      name: "Adam optimizer"
+      type: "optimizer"
+      has_parameters: false
+      parameters: []
+  - entity9:
+      id: e9
+      name: "relation extraction F1 score"
+      type: "metric"
+      has_parameters: false
+      parameters: []
+  - entity10:
+      id: e10
+      name: "Quadro RTX 8000 GPUs"
+      type: "hardware"
+      has_parameters: false
+      parameters: []
+  - entity11:
+      id: e11
+      name: "multitask model"
+      type: "model"
+      has_parameters: true
+      parameters:
+        - parameter2:
+            id: p2
+            name: "learning rate"
+            has_values: true
+            values:
+              - value2:
+                
+```
+```
