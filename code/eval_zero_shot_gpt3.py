@@ -2,6 +2,7 @@
 """
 
 import json
+import re
 import hyperpie as hp
 
 assert hp.settings.use_openai_api is True  # make sure we’re using GPT3
@@ -93,6 +94,16 @@ for i, para in enumerate(paras_true[from_idx:to_idx]):
     paras_pred.append(filtered_para)
 
 aggregate_stats = hp.llm.convert.aggregate_format_stats(stats_dicts)
+
+mode_fn_save = re.sub(
+    r'[^\w]',
+    '_',
+    hp.settings.gpt_default_params['model']
+    )
+
+with open(f'format_eval_{mode_fn_save}.json', 'w') as f:
+    print(f'Saving format eval to {f.name}')
+    json.dump(aggregate_stats, f, indent=2)
 
 eval_name = 'zero_shot_gpt3_twostep'
 # save paras_pred in JSON file in /tmp/

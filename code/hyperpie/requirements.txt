@@ -4,3 +4,4 @@ jupyter
 nltk
 tenacity
 pynvim
+matplotlib

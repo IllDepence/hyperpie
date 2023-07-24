@@ -1,6 +1,7 @@
 """ Evaluate zero-shot setting for WizardLM.
 """
 
+import re
 import json
 import random
 import hyperpie as hp
@@ -51,7 +52,15 @@ for i, para in enumerate(paras_true[from_idx:to_idx]):
 
 aggregate_stats = hp.llm.convert.aggregate_format_stats(stats_dicts)
 
-print(json.dumps(aggregate_stats, indent=4))
+mode_fn_save = re.sub(
+    r'[^\w]',
+    '_',
+    params_512['model']
+    )
+
+with open(f'format_eval_{mode_fn_save}.json', 'w') as f:
+    print(f'Saving format eval to {f.name}')
+    json.dump(aggregate_stats, f, indent=2)
 
 # # evaluate
 # relext_f1 = hp.evaluation.full(
