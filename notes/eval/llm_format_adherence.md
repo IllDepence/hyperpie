@@ -78,7 +78,7 @@ Paragraphs total: 444
 | Context ID     |     0 |    1003 |
 
 
-### WizardLM
+### WizardLM 13b v1.1
 
 Paragraphs total: 444
 
@@ -103,3 +103,28 @@ Paragraphs total: 444
 | Value ID       |     0 |     879 |
 | Context ID     |     0 |     818 |
 
+
+### Falcon 40b instruct
+
+Paragraphs total: 444
+
+##### Paragraph eval
+
+| Category               | Count |
+| ---------------------- | ----- |
+| No YAML found          |     0 |
+| Empty YAML             |     0 |
+| Garbage around YAML    |   283 |
+| YAML parse fail        |   269 |
+| Coarse Structure error |     0 |
+
+##### Entity eval
+
+| Criterion      | Valid | Invalid |
+| -------------- | ----- | ------- |
+| Entity in text |   592 |     813 |
+| Entity type    |  1105 |     300 |
+| Artifact ID    |  1405 |       0 |
+| Parameter ID   |     0 |     128 |
+| Value ID       |     0 |     183 |
+| Context ID     |     0 |      53 |

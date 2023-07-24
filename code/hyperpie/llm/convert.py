@@ -948,6 +948,18 @@ def falcon_yaml_extract(llm_output_dict, verbose=False):
     else:
         falcon_garbage = False
 
+    # fix Falcon specific bools w/ qoutes
+    qbool_patt = re.compile(
+        r'("|\')?(true|false)("|\')?',
+        flags=re.I | re.M
+    )
+    llm_out = qbool_patt.sub(r'\2', llm_out)
+
+    # fix Falcon specific missing space at the beginning
+    llm_out = ' ' + llm_out
+
+    llm_output_dict['completion']['choices'][0]['text'] = llm_out
+
     # parse YAML
     llm_output, stats = vicuna_yaml_extract(llm_output_dict)
     # adjust preprocessor stats if necessary
