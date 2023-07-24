@@ -110,25 +110,101 @@ def plot_format_eval(eval_results, save_path):
     # Save figure
     plt.savefig(save_path + 'format_eval_errors.png')
 
+    # Reset figure
+    plt.clf()
+
     # - - - 2. Number of valid / invalid (enitiy) (1 by 2) - - -
 
     val_ent_eval_types = {
-        'Entity in text':
+        'Entity not in text':
             lambda x: x['json_content']['num_ents_intext_notintext'],
-        'Entity type in scope':
+        'Entity type out of scope':
             lambda x: x['json_content']['num_ent_types_valid_invalid'],
     }
 
-    # validity_eval_types_e = [
-    #     'Entity in text',
-    #     'Entity type'
-    # ]
-    # validity_eval_types_id = [
-    #     'Artifact ID',
-    #     'Parameter ID',
-    #     'Value ID',
-    #     'Context ID'
-    # ]
+    # Create figure and axes with shared y-axis
+    fig, axs = plt.subplots(
+        1, len(val_ent_eval_types),
+        figsize=(5, 1.5),
+        sharey=True,
+        sharex=True
+    )
+
+    # Plot relative distribution of valid/invalid entities for each model
+    for i, eval_type in enumerate(val_ent_eval_types):
+        eval_type_name, accsses_func = eval_type, val_ent_eval_types[eval_type]
+        axs[i].set_title(eval_type_name)
+
+        # Set y limit
+        axs[i].set_xlim(0, 100)
+
+        # Horizontal lot bars for each model where the x-axis shows the
+        # percentage of invalid entities
+        axs[i].barh(
+            list(eval_results.keys()),
+            [100*(accsses_func(eval_results[model])[1] /
+             (accsses_func(eval_results[model])[0] +
+              accsses_func(eval_results[model])[1]))
+             for model in eval_results],
+            align='center',
+            color=[cmap(i) for i in range(len(eval_results))]
+        )
+
+    # Adjust layout
+    fig.tight_layout()
+
+    # Save figure
+    plt.savefig(save_path + 'format_eval_valid_ent.png')
+
+    # Reset figure
+    plt.clf()
+
+    # - - - 3. Number of valid / invalid (enitiy) (1 by 4) - - -
+
+    val_ent_eval_ids = {
+        'Artifact ID':
+            lambda x: x['json_content']['num_aids_valid_invalid'],
+        'Parameter ID':
+            lambda x: x['json_content']['num_pids_valid_invalid'],
+        'Value ID':
+            lambda x: x['json_content']['num_vids_valid_invalid'],
+        'Context ID':
+            lambda x: x['json_content']['num_cids_valid_invalid'],
+    }
+
+    # Create figure and axes with shared y-axis
+    fig, axs = plt.subplots(
+        1, len(val_ent_eval_ids),
+        figsize=(10, 1.5),
+        sharey=True,
+        sharex=True
+    )
+
+    # Plot relative distribution of valid/invalid IDs for each model
+    for i, eval_type in enumerate(val_ent_eval_ids):
+        eval_type_name, accsses_func = eval_type, val_ent_eval_ids[eval_type]
+        axs[i].set_title(eval_type_name)
+
+        # Set y limit
+        axs[i].set_xlim(0, 100)
+
+        # Horizontal lot bars for each model where the x-axis shows the
+        # percentage of invalid entities
+        axs[i].barh(
+            list(eval_results.keys()),
+            [100*(accsses_func(eval_results[model])[1] /
+             (accsses_func(eval_results[model])[0] +
+              accsses_func(eval_results[model])[1]))
+             for model in eval_results],
+            align='center',
+            color=[cmap(i) for i in range(len(eval_results))]
+        )
+
+    # Adjust layout
+    fig.tight_layout()
+
+    # Save figure
+    plt.savefig(save_path + 'format_eval_valid_ids.png')
 
 
 if __name__ == '__main__':
