@@ -25,6 +25,9 @@ INFO: the model says "Han shot , Bee"
 INFO: using model facebook/galactica-120b for LLM completion
 INFO: the model says "Han shot 99"
 
+INFO: using model tiiuae/falcon-40b-instruct for LLM completion
+INFO: the model says "Han shot 86 and"
+
 INFO: using model facebook/galactica-120b for LLM completion
 INFO: the model says "Han shot 57"
 
@@ -69,6 +72,9 @@ INFO: the model says "Han shot .3"
 
 INFO: using model facebook/galactica-120b for LLM completion
 INFO: the model says "Han shot .2"
+
+INFO: using model tiiuae/falcon-40b-instruct for LLM completion
+INFO: the model says "Han shot 4/"
 
 INFO: using model facebook/galactica-120b for LLM completion
 INFO: the model says "Han shot [D"
