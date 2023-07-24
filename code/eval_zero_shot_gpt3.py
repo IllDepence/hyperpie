@@ -19,6 +19,7 @@ paras_pred = []
 # from_idx = 269, 279
 from_idx = 0
 to_idx = len(paras_true)
+stats_dicts = []
 for i, para in enumerate(paras_true[from_idx:to_idx]):
     # prompt (stage 1)
     print(f'{i+0.5}/{len(paras_true)}')
@@ -34,29 +35,29 @@ for i, para in enumerate(paras_true[from_idx:to_idx]):
     #     print(para['text'])
     # continue
 
-    # - - - - - - - - - - - - - - - - - - - - -
-    # - - - - - - single step eval - - - - - -
-    # - - - - - - - - - - - - - - - - - - - - -
-    prompt = hp.llm.prompt_templates.text_e2e.format(
-        text=para['text']
-    )
-    completion_dict, from_cache = hp.llm.predict.openai_api(
-        para, prompt, params=hp.settings.gpt_default_params
-    )
-    # convert
-    para_pred, status = hp.llm.convert.llm_output2eval_input(
-        completion_dict,
-    )
+    # # - - - - - - - - - - - - - - - - - - - - -
+    # # - - - - - - single step eval - - - - - -
+    # # - - - - - - - - - - - - - - - - - - - - -
+    # prompt = hp.llm.prompt_templates.text_e2e.format(
+    #     text=para['text']
+    # )
+    # completion_dict, from_cache = hp.llm.predict.openai_api(
+    #     para, prompt, params=hp.settings.gpt_default_params
+    # )
+    # # convert
+    # para_pred, status = hp.llm.convert.llm_output2eval_input(
+    #     completion_dict,
+    # )
 
     # # - - - - - - - - - - - - - - - - - - -
     # # - - - - - - two step eval - - - - - -
     # # - - - - - - - - - - - - - - - - - - -
-    # prompt1 = hp.llm.prompt_templates.text_e2e_fillin_twostep_1.format(
-    #     text=para['text']
-    # )
-    # completion_dict1, from_cache = hp.llm.predict.openai_api(
-    #     para, prompt1, params=hp.settings.gpt_default_params
-    # )
+    prompt1 = hp.llm.prompt_templates.text_e2e_fillin_twostep_1.format(
+        text=para['text']
+    )
+    completion_dict1, from_cache = hp.llm.predict.openai_api(
+        para, prompt1, params=hp.settings.gpt_default_params
+    )
     # # prompt (stage 2)
     # print(f'{i+1}/{len(paras_true)}')
     # prompt2 = hp.llm.prompt_templates.text_e2e_fillin_twostep_2.format(
@@ -67,27 +68,31 @@ for i, para in enumerate(paras_true[from_idx:to_idx]):
     #     para, prompt2, params=hp.settings.gpt_default_params
     # )
     # # convert
-    # para_pred, status = hp.llm.convert.llm_output2eval_input(
+    # para_pred, stats_dict= hp.llm.convert.llm_output2eval_input(
     #     completion_dict1,
     #     completion_dict2['completion']['choices'][0]['text']
     # )
-    # # # “1.5 stage” version
-    # # para_pred, status = hp.llm.convert.llm_output2eval_input(
-    # #     completion_dict1,
-    # #     # completion_dict2['completion']['choices'][0]['text']
-    # #     '',
-    # #     matched_surface_forms=True
-    # # )
-    # # # “broken” “1.5 stage” version leading to higher F1 score
-    # # # b/c of fewer false positives
-    # # para_pred, status = hp.llm.convert.llm_output2eval_input(
-    # #     completion_dict1,
-    # # )
+    # “1.5 stage” version
+    para_pred, stats_dict = hp.llm.convert.llm_output2eval_input(
+        completion_dict1,
+        # completion_dict2['completion']['choices'][0]['text']
+        '',
+        matched_surface_forms=True
+    )
+    # # “broken” “1.5 stage” version leading to higher F1 score
+    # # b/c of fewer false positives
+    # para_pred, stats_dict = hp.llm.convert.llm_output2eval_input(
+    #     completion_dict1,
+    # )
+
+    stats_dicts.append(stats_dict)
 
     # filter
     filtered_para, num_full_triples_para = \
         hp.data.filter_annots.require_parent_single(para_pred)
     paras_pred.append(filtered_para)
+
+aggregate_stats = hp.llm.convert.aggregate_format_stats(stats_dicts)
 
 eval_name = 'zero_shot_gpt3_twostep'
 # save paras_pred in JSON file in /tmp/

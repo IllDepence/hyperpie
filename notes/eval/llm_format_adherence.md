@@ -37,7 +37,7 @@ Paragraphs total: 444
 | No YAML found          |     0 |
 | Empty YAML             |     0 |
 | Garbage around YAML    |    28 |
-| YAML parse fail        |     0 |
+| YAML parse fail        |    36 |
 | Coarse Structure error |     0 |
 
 ##### Entity eval
@@ -63,7 +63,7 @@ Paragraphs total: 444
 | No YAML found          |     0 |
 | Empty YAML             |    88 |
 | Garbage around YAML    |   161 |
-| YAML parse fail        |     0 |
+| YAML parse fail        |    56 |
 | Coarse Structure error |     5 |
 
 ##### Entity eval
@@ -89,7 +89,7 @@ Paragraphs total: 444
 | No YAML found          |     0 |
 | Empty YAML             |     0 |
 | Garbage around YAML    |    42 |
-| YAML parse fail        |     0 |
+| YAML parse fail        |    62 |
 | Coarse Structure error |     0 |
 
 ##### Entity eval
