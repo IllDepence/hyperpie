@@ -789,7 +789,7 @@ def aggregate_format_stats(stats_dicts):
             'no_yaml_found': 0, 'empty_yaml': 0, 'garbage_around_yaml': 0
         },
         'yaml2json': {
-            'parse_fail': 0, 'parsing_error_dict': defaultdict(list)
+            'parse_fail': 0, 'parsing_error_dict': defaultdict(dict)
         },
         'coarse_structure': {'coarse_structure_error': 0},
         'json_content': {
@@ -816,12 +816,12 @@ def aggregate_format_stats(stats_dicts):
         ):
             aggregate_stats['yaml2json']['parse_fail'] += 1
         if 'parsing_error_dict' in stats_dict['yaml2json']:
-            for error_type, msg in stats_dict['yaml2json'][
-                'parsing_error_dict'
-            ].items():
-                aggregate_stats['yaml2json']['parsing_error_dict'][
-                    error_type
-                ].append(msg)
+            pe_dict = stats_dict['yaml2json']['parsing_error_dict']
+            for error_type, msg in pe_dict.items():
+                ag_pe_dict = aggregate_stats['yaml2json']['parsing_error_dict']
+                if msg not in ag_pe_dict[error_type]:
+                    ag_pe_dict[error_type][msg] = 0
+                ag_pe_dict[error_type][msg] += 1
 
         if 'coarse_structure' in stats_dict:
             if stats_dict['coarse_structure']['coarse_structure_error']:
@@ -929,6 +929,33 @@ def fix_indent(yaml):
             fixed_yaml += ' '*indent + line.lstrip() + '\n'
 
     return fixed_yaml.rstrip()
+
+
+def falcon_yaml_extract(llm_output_dict, verbose=False):
+    """ Preprocessor for Falcon output where the start of the YAML is part
+        of the prompt.
+    """
+
+    llm_out = llm_output_dict['completion']['choices'][0]['text']
+
+    # look for Falcon specific garbage
+    garbage_patt = re.compile(
+        r'^The (output|assistant|user)',  # typically fonud after YAML
+        flags=re.I | re.M
+    )
+    if garbage_patt.search(llm_out):
+        falcon_garbage = True
+    else:
+        falcon_garbage = False
+
+    # parse YAML
+    llm_output, stats = vicuna_yaml_extract(llm_output_dict)
+    # adjust preprocessor stats if necessary
+    stats['garbage_around_yaml'] = (
+        stats['garbage_around_yaml'] or falcon_garbage
+    )
+
+    return llm_output, stats
 
 
 def wizard_lm_yaml_extract(llm_output_dict, verbose=False):
@@ -1084,7 +1111,7 @@ def yaml2json(llm_output_dict, verbose=False):
     try:
         llm_output = yaml.load(llm_output_yaml, Loader=yaml.Loader)
     except yaml.YAMLError as e_general:
-        yaml_errors['general'] = e_general
+        yaml_errors['general'] = str(e_general)
         parse_fail = True
         # try to fix YAML
         # 1. assume output is cut off, remove last line
@@ -1093,7 +1120,7 @@ def yaml2json(llm_output_dict, verbose=False):
             llm_output = yaml.load(last_line_cut, Loader=yaml.Loader)
             parse_fail = False
         except yaml.YAMLError as e_last_line_cut:
-            yaml_errors['last_line_cut'] = e_last_line_cut
+            yaml_errors['last_line_cut'] = str(e_last_line_cut)
             pass  # try next fix
         # 2. assume special characters in dict values. add quotes
         #    to dict values that don't have quotes
@@ -1112,7 +1139,7 @@ def yaml2json(llm_output_dict, verbose=False):
             llm_output = yaml.load(new_yaml, Loader=yaml.Loader)
             parse_fail = False
         except yaml.YAMLError as e_quotes:
-            yaml_errors['quotes'] = e_quotes
+            yaml_errors['quotes'] = str(e_quotes)
             # 2.1. assume backslashes causing “unknown escape character” error
             try:
                 esc_yaml_lines = []
@@ -1129,7 +1156,7 @@ def yaml2json(llm_output_dict, verbose=False):
                 llm_output = yaml.load(esc_yaml, Loader=yaml.Loader)
                 parse_fail = False
             except yaml.YAMLError as e_quotes:
-                yaml_errors['quotes+esc'] = e_quotes
+                yaml_errors['quotes+esc'] = str(e_quotes)
                 pass  # handle further down
             # 2.2. assume text after closing quotes
             try:
@@ -1147,16 +1174,17 @@ def yaml2json(llm_output_dict, verbose=False):
                 llm_output = yaml.load(esc_yaml, Loader=yaml.Loader)
                 parse_fail = False
             except yaml.YAMLError as e_quotes:
-                yaml_errors['quotes+trailing'] = e_quotes
+                yaml_errors['quotes+trailing'] = str(e_quotes)
                 pass  # handle further down
 
         # if parsing still fails, print error and return None
-        if parse_fail and verbose:
-            print('Error parsing LLM output YAML:')
-            print(f'YAML errors:')
-            for k, v in yaml_errors.items():
-                print(f'  {k}: {v}')
-            print(f'LLM output:\n{llm_output_yaml}')
+        if parse_fail:
+            if verbose:
+                print('Error parsing LLM output YAML:')
+                print(f'YAML errors:')
+                for k, v in yaml_errors.items():
+                    print(f'  {k}: {v}')
+                print(f'LLM output:\n{llm_output_yaml}')
             status_dict['parse_fail'] = True
             status_dict['parsing_error_dict'] = yaml_errors
             return None, status_dict
