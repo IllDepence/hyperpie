@@ -51,7 +51,8 @@ class REModel_INS(nn.Module):
         self.word_emb = nn.Embedding(word_num, word_dim, padding_idx=0)
         self.tag_emb = nn.Embedding(tag_num, tag_dim, padding_idx=0)
 
-        self.word_emb.weight.data.set_(vocab.vectors)
+        with torch.no_grad():
+            self.word_emb.weight.set_(vocab.vectors)
 
         in_dim = word_dim + tag_dim
 
@@ -156,7 +157,8 @@ class REModel_BAG(nn.Module):
         self.word_emb = nn.Embedding(word_num, word_dim, padding_idx=0)
         self.tag_emb = nn.Embedding(tag_num, tag_dim, padding_idx=0)
 
-        self.word_emb.weight.data.set_(vocab.vectors)
+        with torch.no_grad():
+            self.word_emb.weight.set_(vocab.vectors)
 
         in_dim = word_dim + tag_dim
 

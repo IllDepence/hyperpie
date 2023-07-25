@@ -8,7 +8,7 @@ from network.model import *
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s %(levelname)-8s %(message)s')
 
-DEVICE = 'cuda:1'
+DEVICE = 'cuda:0'
 VALID_TIMES = 20
 
 
@@ -133,7 +133,7 @@ def train(config, log_path):
                                                                                         labels=[1, 2, 3, 4],
                                                                                         average='micro')
 
-                train_f1 = metrics.f1_score(train_labels, train_preds, [1, 2, 3, 4], average='micro')
+                train_f1 = metrics.f1_score(train_labels, train_preds, average='micro')
 
                 progress = epoch_num + (batch_iter + 1) / len(train_loader)
 

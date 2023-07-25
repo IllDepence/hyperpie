@@ -73,6 +73,7 @@ class REDataset(Dataset):
         self.pad_id = vocab.pad_id
 
         data_path = os.path.join(data_dir, data_name)
+        print('data_path: ', data_path)
         data = json.load(open(data_path, 'r'))
 
         self._data = []

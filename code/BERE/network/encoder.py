@@ -62,7 +62,7 @@ class PackedGRU(nn.Module):
         self.gru = nn.GRU(in_dim, hid_dim, batch_first=True, bidirectional=bidirectional)
 
     def forward(self, x, length):
-        packed = torch.nn.utils.rnn.pack_padded_sequence(x, length, batch_first=True)
+        packed = torch.nn.utils.rnn.pack_padded_sequence(x, length.cpu(), batch_first=True)
         out, _ = self.gru(packed)
         out, _ = torch.nn.utils.rnn.pad_packed_sequence(out, batch_first=True)
 
