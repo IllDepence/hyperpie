@@ -133,6 +133,7 @@ if __name__ == '__main__':
         if file.endswith(".json"):
             fname = os.path.join(data_path, file)
             output = parse_file(fname, tokenizer=tokenizer)
+            print(output)
             # parsed_files.extend(output)
     # print(len(output))
     # print(output[0])

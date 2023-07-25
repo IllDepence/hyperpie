@@ -12,3 +12,5 @@ completion_cache.json
 /code/joint_model/data
 /code/joint_model/models
 /code/joint_model/outputs
+code/distant_supervision
+code/BERE/data

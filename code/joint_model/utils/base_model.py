@@ -18,24 +18,21 @@ class Encoder(nn.Module):
         self.config = config
         self.model = model
         self.hidden_size = config.hidden_size
-
-        self.relation_embeddings = nn.Parameter(torch.zeros((3,1536)))
-        torch.nn.init.uniform_(self.relation_embeddings, a=-1.0, b=1.0)            
-        self.nota_embeddings = nn.Parameter(torch.zeros((20,1536)))
-        torch.nn.init.uniform_(self.nota_embeddings, a=-1.0, b=1.0)
+        
+        # Uniform Distribution Initialization
+        self.relation_embeddings = nn.Parameter(torch.Tensor(3, 1536).uniform_(-1.0, 1.0))
+        self.nota_embeddings = nn.Parameter(torch.Tensor(20, 1536).uniform_(-1.0, 1.0))
+        self.entity_anchor = nn.Parameter(torch.Tensor(4, 768).uniform_(-1.0, 1.0))
 
         # unused parameters (left in to prevent checkpoints from breaking)
-        self.relation_classifier = None
-        self.block_size = None
-
-        self.emb_size = 768
-
-        self.entity_anchor = nn.Parameter(torch.zeros((4, 768)))
-        torch.nn.init.uniform_(self.entity_anchor, a=-1.0, b=1.0)
+        # self.relation_classifier = None
+        # self.block_size = None
+        # self.emb_size = 768
 
         self.cls_token_id = cls_token_id
         self.sep_token_id = sep_token_id
 
+        # metrics
         self.false_positives = 0
         self.true_positives = 0
         self.false_negatives = 0

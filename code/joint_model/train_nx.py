@@ -24,7 +24,7 @@ torch.cuda.empty_cache()
 gpu_count = torch.cuda.device_count()
 print("Number of GPU: ", gpu_count)
 is_using_gpu = torch.cuda.is_available()
-if is_using_gpu:
+if is_using_gpu:  
     current_device = torch.cuda.current_device()
     print("using GPU is: ", current_device)
 
@@ -118,26 +118,8 @@ dev_loader = DataLoader(parsed_files_dev,
                         shuffle=False, 
                         collate_fn=Collate_Fn_Manager(max_span_len=15).collate_fn)
 
-
-test_data = './data/'
-test_files = os.listdir(test_data)
-parsed_files_test = []
-for file in test_files:
-    if file.endswith(".json"):
-        fname = os.path.join(data_path, file)
-        output = parse_file(fname, tokenizer=tokenizer)
-        parsed_files_test.extend(output)
-
-test_loader = DataLoader(parsed_files_test, 
-                         batch_size=1, 
-                         shuffle=False, 
-                         collate_fn=Collate_Fn_Manager(max_span_len=15).collate_fn)
-
-print('data loader finished ...')
-
 # # -------------- model loading --------------
 # start by loading language model
-
 lm_config = AutoConfig.from_pretrained(args.language_model,
                                        num_labels=10)
 lm_model = AutoModel.from_pretrained(args.language_model,
@@ -153,12 +135,16 @@ model = Encoder(config=lm_config,
 
 model.to(device)
 
-print('Model load finised ...')
+
+print('Model load finised ...\n', model)
 # -------------- optimizer things --------------
 optimizer = AdamW(model.parameters(), lr=args.learning_rate, eps=1e-6)
 total_steps = len(train_loader) * args.num_epochs
 warmup_steps = len(train_loader) * args.warmup_epochs
-lr_scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps=warmup_steps, num_training_steps=total_steps)
+lr_scheduler = get_linear_schedule_with_warmup(optimizer, 
+                                               num_warmup_steps=warmup_steps, 
+                                               num_training_steps=total_steps
+                                               )
 
 scaler = GradScaler()
 # %% --------------- TRAIN LOOP ------------------
@@ -180,10 +166,6 @@ for ep in tqdm(range(args.num_epochs)):
         for b in progress_bar:
             step_global += 1
             input_ids, attention_masks, candidate_spans, relation_labels, offset_mapping, ids, sources = b
-            # print('relation_labels,,,,',relation_labels)
-            # if input_ids.size(1) > 4096:
-            #     # skip an insanely long document...
-            #     continue
 
             # reduce candidate spans via random sampling
             if args.candidate_downsampling != -1:
@@ -259,10 +241,6 @@ for ep in tqdm(range(args.num_epochs)):
         for b in progress_bar:
 
             input_ids, attention_masks, candidate_spans, relation_labels, offset_mapping, ids, sources = b
-
-            # if input_ids.size(1) > 4096:
-            #     # skip an insanely long document...
-            #     continue
             
             # pass data to model
             relation_loss, mention_loss, loss, output = model(input_ids.to(device), 
@@ -275,6 +253,7 @@ for ep in tqdm(range(args.num_epochs)):
             del loss
 
             acc, p, r, f1 = 0, 0, 0, 0
+            # print('model.true_positives:   ',model.true_positives)
             if model.true_positives != 0:
                 p = model.true_positives/(model.true_positives+model.false_positives)
                 r = model.true_positives/(model.true_positives+model.false_negatives)
@@ -300,103 +279,3 @@ for ep in tqdm(range(args.num_epochs)):
         # wandb.log({"recall_dev": r}, step=step_global)
         # wandb.log({"f1_micro_dev": f1}, step=step_global)
         # wandb.log({"accuracy_dev": acc}, step=step_global)
-
-# %%
-
-# print("---- TEST EVAL -----")
-# --------------- EVAL ON TEST ------------------
-
-# if args.num_epochs > 0:
-#     model.load_state_dict(torch.load(f'{model_fname}.pt'))
-# else:
-#     step_global = 0
-
-# model.eval()
-
-# model.k_mentions = args.k_mentions_test
-
-# outputs = {}
-
-# with tqdm(test_loader) as progress_bar:
-#     for b in progress_bar:
-
-#         input_ids, attention_masks, candidate_spans, relation_labels, offset_mapping, ids, sources = b
-
-#         # pass data to model
-#         _, _, _, output = model(input_ids.to('cuda'), attention_masks.to('cuda'), candidate_spans)
-
-#         # convert label indexing from tokens to chars and save in correct format
-#         for preds, offsets, doc_id, source in zip(output, offset_mapping, ids, sources):
-#             detected_entities = []
-#             detected_relations = {}
-#             for prediction in preds:
-#                 (h_span, h_type), (t_span, t_type), r_type = prediction
-#                 h_span = [offsets[tk] for tk in h_span]
-#                 h_ent = {
-#                     "label": h_type,
-#                     "start": h_span[0][0],
-#                     "end": h_span[1][1],
-#                 }
-#                 t_span = [offsets[tk] for tk in t_span]
-#                 t_ent = {
-#                     "label": t_type,
-#                     "start": t_span[0][0],
-#                     "end": t_span[1][1],
-#                 }
-                
-#                 if h_ent in detected_entities:
-#                     h_id = detected_entities.index(h_ent)
-#                 else:
-#                     h_id = len(detected_entities)
-#                     detected_entities.append(h_ent)    
-
-#                 if t_ent in detected_entities:
-#                     t_id = detected_entities.index(t_ent)
-#                 else:
-#                     t_id = len(detected_entities)
-#                     detected_entities.append(t_ent)
-
-#                 detected_relations[f"R{len(detected_relations)+1}"] = {
-#                     "rid": f"R{len(detected_relations)+1}",
-#                     "label": r_type,
-#                     "arg0": f"T{h_id+1}",
-#                     "arg1": f"T{t_id+1}",
-#                 }
-            
-#             ent_dict = {}
-#             for i, ent in enumerate(detected_entities):
-#                 ent_dict[f"T{i+1}"] = {
-#                     "eid": f"T{i+1}",
-#                     "label": ent["label"],
-#                     "start": ent["start"],
-#                     "end": ent["end"],
-#                 }
-
-#             doc = source
-#             doc["entity"] = ent_dict
-#             doc["relation"] = detected_relations
-#             file_id = doc["file"]
-#             del doc["file"]
-#             if file_id not in outputs.keys():
-#                 outputs[file_id] = {}
-#             outputs[file_id][doc_id] = doc
-
-#         del output
-
-
-# os.makedirs(f'outputs/{args.project}_{folder_name}_test/')
-# tozip = []
-# for filename in outputs.keys():
-#     tozip.append(f'outputs/{args.project}_{folder_name}_test/{filename}')
-#     with open(f'outputs/{args.project}_{folder_name}_test/{filename}', 'w') as f:
-#         json.dump(outputs[filename], f, indent=4)
-
-# import zipfile
-# ZipFile = zipfile.ZipFile(f'outputs/{args.project}_{folder_name}_test/{args.project}_{folder_name}_test.zip', "w")
-# for a in tozip:
-#     ZipFile.write(a, os.path.basename(a), compress_type=zipfile.ZIP_DEFLATED)
-# ZipFile.close()
-# artifact = wandb.Artifact(f'{folder_name}', 'predictions')
-# artifact.add_file(f'outputs/{args.project}_{folder_name}_test/{args.project}_{folder_name}_test.zip')
-
-# wandb.log_artifact(artifact)
