@@ -2,6 +2,15 @@
 
 import json
 import matplotlib.pyplot as plt
+# import matplotlib
+
+# matplotlib.use("pgf")
+# matplotlib.rcParams.update({
+#     "pgf.texsystem": "pdflatex",
+#     'font.family': 'serif',
+#     'text.usetex': True,
+#     'pgf.rcfonts': False,
+# })
 
 eval_result_fns = {
     'GPT3': 'format_eval_text_davinci_003.json',
@@ -11,56 +20,16 @@ eval_result_fns = {
     'Falcon': 'format_eval_tiiuae_falcon_40b_instruct.json',
 }
 
-# # Example format eval results
-# {
-#   "num_total": 444,
-#   "preprocessor": {
-#     "no_yaml_found": 0,
-#     "empty_yaml": 0,
-#     "garbage_around_yaml": 42
-#   },
-#   "yaml2json": {
-#     "parse_fail": 62
-#   },
-#   "coarse_structure": {
-#     "coarse_structure_error": 0
-#   },
-#   "json_content": {
-#     "num_ents_intext_notintext": [
-#       2089,
-#       1070
-#     ],
-#     "num_ent_types_valid_invalid": [
-#       2788,
-#       371
-#     ],
-#     "num_aids_valid_invalid": [
-#       2951,
-#       208
-#     ],
-#     "num_pids_valid_invalid": [
-#       0,
-#       929
-#     ],
-#     "num_vids_valid_invalid": [
-#       0,
-#       879
-#     ],
-#     "num_cids_valid_invalid": [
-#       0,
-#       818
-#     ]
-#   }
-# }
-
 
 def plot_format_eval(eval_results, save_path):
-    """ Create and save three types of bar plots for format eval results.
+    """ Create horizontal bar plots for format eval results.
 
         All subplots have the same y-axis, which is the model name.
 
+        Overall a (3 by 4) grid of subplots with rows as follows
+
         1. Number of errors (1 by 4)
-        2. Number of valid / invalid (enitiy) (1 by 2)
+        2. Number of valid / invalid (enitiy) (1 by 2, two empty)
         3. Number of valid / invalid (enitiy) (1 by 4)
     """
 
@@ -76,42 +45,37 @@ def plot_format_eval(eval_results, save_path):
             lambda x: x['preprocessor']['empty_yaml'],
         'Garbage around YAML':
             lambda x: x['preprocessor']['garbage_around_yaml'],
-        'Coarse Structure error':
+        'Coarse structure error':
             lambda x: x['coarse_structure']['coarse_structure_error'],
     }
 
     # Create figure and axes with shared y-axis
     fig, axs = plt.subplots(
-        1, len(error_eval_types),
-        figsize=(10, 1.5),
+        3, 4,
+        figsize=(10, 4.5),
         sharey=True,
-        sharex=True
+        sharex=True,
+        layout='constrained'
     )
 
-    # Plot error counts for each model
+    # Plot relative error counts for each model
     for i, eval_type in enumerate(error_eval_types):
         eval_type_name, accsses_func = eval_type, error_eval_types[eval_type]
-        axs[i].set_title(eval_type_name)
+        axs[0, i].set_title(eval_type_name)
 
         # Set y limit
-        axs[i].set_xlim(0, 300)
+        axs[0, i].set_xlim(0, 100)
 
         # Horizontal lot bars for each model
-        axs[i].barh(
+        axs[0, i].barh(
             list(eval_results.keys()),
-            [accsses_func(eval_results[model]) for model in eval_results],
+            [
+                100 * accsses_func(eval_results[model]) / 444
+                for model in eval_results
+            ],
             align='center',
             color=[cmap(i) for i in range(len(eval_results))]
         )
-
-    # Adjust layout
-    fig.tight_layout()
-
-    # Save figure
-    plt.savefig(save_path + 'format_eval_errors.png')
-
-    # Reset figure
-    plt.clf()
 
     # - - - 2. Number of valid / invalid (enitiy) (1 by 2) - - -
 
@@ -122,25 +86,17 @@ def plot_format_eval(eval_results, save_path):
             lambda x: x['json_content']['num_ent_types_valid_invalid'],
     }
 
-    # Create figure and axes with shared y-axis
-    fig, axs = plt.subplots(
-        1, len(val_ent_eval_types),
-        figsize=(5, 1.5),
-        sharey=True,
-        sharex=True
-    )
-
     # Plot relative distribution of valid/invalid entities for each model
     for i, eval_type in enumerate(val_ent_eval_types):
         eval_type_name, accsses_func = eval_type, val_ent_eval_types[eval_type]
-        axs[i].set_title(eval_type_name)
+        axs[1, i].set_title(eval_type_name)
 
         # Set y limit
-        axs[i].set_xlim(0, 100)
+        axs[1, i].set_xlim(0, 100)
 
         # Horizontal lot bars for each model where the x-axis shows the
         # percentage of invalid entities
-        axs[i].barh(
+        axs[1, i].barh(
             list(eval_results.keys()),
             [100*(accsses_func(eval_results[model])[1] /
              (accsses_func(eval_results[model])[0] +
@@ -150,47 +106,34 @@ def plot_format_eval(eval_results, save_path):
             color=[cmap(i) for i in range(len(eval_results))]
         )
 
-    # Adjust layout
-    fig.tight_layout()
-
-    # Save figure
-    plt.savefig(save_path + 'format_eval_valid_ent.png')
-
-    # Reset figure
-    plt.clf()
+    # add two empty subplots
+    axs[1, 2].axis('off')
+    axs[1, 3].axis('off')
 
     # - - - 3. Number of valid / invalid (enitiy) (1 by 4) - - -
 
     val_ent_eval_ids = {
-        'Artifact ID':
+        'Invalid artifact ID':
             lambda x: x['json_content']['num_aids_valid_invalid'],
-        'Parameter ID':
+        'Invalid parameter ID':
             lambda x: x['json_content']['num_pids_valid_invalid'],
-        'Value ID':
+        'Invalid value ID':
             lambda x: x['json_content']['num_vids_valid_invalid'],
-        'Context ID':
+        'Invalid context ID':
             lambda x: x['json_content']['num_cids_valid_invalid'],
     }
-
-    # Create figure and axes with shared y-axis
-    fig, axs = plt.subplots(
-        1, len(val_ent_eval_ids),
-        figsize=(10, 1.5),
-        sharey=True,
-        sharex=True
-    )
 
     # Plot relative distribution of valid/invalid IDs for each model
     for i, eval_type in enumerate(val_ent_eval_ids):
         eval_type_name, accsses_func = eval_type, val_ent_eval_ids[eval_type]
-        axs[i].set_title(eval_type_name)
+        axs[2, i].set_title(eval_type_name)
 
         # Set y limit
-        axs[i].set_xlim(0, 100)
+        axs[2, i].set_xlim(0, 100)
 
         # Horizontal lot bars for each model where the x-axis shows the
         # percentage of invalid entities
-        axs[i].barh(
+        axs[2, i].barh(
             list(eval_results.keys()),
             [100*(accsses_func(eval_results[model])[1] /
              (accsses_func(eval_results[model])[0] +
@@ -200,11 +143,14 @@ def plot_format_eval(eval_results, save_path):
             color=[cmap(i) for i in range(len(eval_results))]
         )
 
-    # Adjust layout
-    fig.tight_layout()
+    # Set x-axis label without using fig.text
+    fig.supxlabel(
+        'Percentage of [row 1: samples | row 2,3: predicted entities]'
+    )
 
     # Save figure
-    plt.savefig(save_path + 'format_eval_valid_ids.png')
+    # plt.savefig(save_path + 'format_eval.pgf')
+    plt.savefig(save_path + 'format_eval.svg')
 
 
 if __name__ == '__main__':
