@@ -33,7 +33,7 @@ else:
         settings.gpt_default_params['model'] = model_in_use
         print(f'INFO: using model {model_in_use} for LLM completion')
         print(f'INFO: the model says "{completion["choices"][0]["text"]}"')
-    except openai.error.APIConnectionError:
+    except (openai.error.APIConnectionError, openai.error.APIError):
         print(f'WARNING: Could not connect to Basaran API')
         print(f'WARNING: (!!!) Inference will not work (!!!)')
     x = input('INFO: press enter to continue\n')

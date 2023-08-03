@@ -390,3 +390,62 @@ TEXT:
 Assistant:
 ---
 text_contains_entities: """  # noqa: E501
+
+# - - - - - - - -
+# JSON comparison
+# - - - - - - - -
+
+text_e2e_fillin_twostep_1_alpaca_style_nointro_json = f"""{alpaca_style_prompt_instruction_pre}{instruction_context} what are the most important datasets, models, methods, loss functions, regularization techniques mentioned in the LaTeX Input Text below? What are their parameters and values?
+
+[LaTeX Input Text start]
+{{text}}
+[LaTeX Input Text end]
+
+Answer in the following JSON format.
+
+Format:
+```python
+{{{{
+  "text_contains_entities": true/false,
+  "entities": [
+    {{{{
+      "entity<N>": {{{{
+        "id": "e<N>",
+        "name": "<entity name>",
+        "type": "dataset/model/method/loss function/regularization technique",
+        "has_parameters": true/false,
+        "parameters": [
+          {{{{
+            "parameter<M>": {{{{
+              "id": "p<N.M>",
+              "name": "<parameter name>",
+              "has_values": true/false,
+              "values": [
+                {{{{
+                  "value<O>": {{{{
+                    "value_id": "v<N.M.O>",
+                    "value": "<parameter value>",
+                    "context": "<value context>",
+                    "context_id": "c<N.M.O>"/null
+                  }}}}
+                }}}}
+              ]
+            }}}}
+          }}}}
+        ]
+      }}}}
+    }}}}
+  ]
+}}}}
+```
+
+Only produce output in the JSON format specified above. Output no additional text. Only include the most important datasets, models, methods, loss functions, regularization techniques mentioned in the LaTeX Input Text. Then end your response.
+
+{alpaca_style_prompt_response_pre}"""  # noqa: E501
+
+start_completion_json = """
+```python
+{{
+  "text_contains_entities": """
+
+text_e2e_fillin_twostep_1_vicuna_json = text_e2e_fillin_twostep_1_alpaca_style_nointro_json + start_completion_json  # noqa: E501
