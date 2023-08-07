@@ -37,8 +37,10 @@ Paragraphs total: 444
 | No YAML found          |     0 |            |     0 |
 | Empty YAML             |     0 |            |     0 |
 | Garbage around YAML    |    28 |            |   205 |
-| YAML parse fail        |    36 |            |   188 |
+| YAML parse fail        |    36 |            |  188¹ |
 | Coarse Structure error |     0 |            |    82 |
+
+¹ 166 of those b/c format template w/ things like `true/false` was just copied
 
 ##### Entity eval
 

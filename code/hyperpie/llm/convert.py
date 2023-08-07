@@ -1190,6 +1190,21 @@ def parse_llm_json(llm_output_dict, verbose=False):
     except json.JSONDecodeError as e_general:
         parse_errors['general'] = str(e_general)
         parse_fail = True
+        # check if output template was just copied
+        onlycopy_test_strs = [
+            '"name": "<entity name>",',
+            (
+                '"type": "dataset/model/method/loss function/'
+                'regularization technique",'
+            ),
+            '"has_parameters": true/false,',
+        ]
+        all_in = True
+        for tstr in onlycopy_test_strs:
+            if tstr not in llm_output_json:
+                all_in = False
+        if all_in:
+            parse_errors['only_copy'] = True
         # try to fix (assume output is cut off)
         # - remove last line
         llm_output_json = '\n'.join(llm_output_json.split('\n')[:-1])
