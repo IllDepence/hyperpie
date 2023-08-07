@@ -41,7 +41,8 @@ for i, para in enumerate(paras_true[from_idx:to_idx]):
         completion_dict1,
         llm_annotated_text='',
         matched_surface_forms=True,
-        preprocessor=hp.llm.convert.gpt3_json_extract
+        preprocessor=hp.llm.convert.gpt3_json_extract,
+        output_format='json'
     )
 
     stats_dicts.append(stats_dict)

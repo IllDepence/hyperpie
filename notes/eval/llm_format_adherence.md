@@ -10,20 +10,23 @@ Paragraphs total: 444
 | ---------------------- | ----- | ---------- | ----- |
 | No YAML found          |     0 |            |     0 |
 | Empty YAML             |     0 |            |     0 |
-| Garbage around YAML    |     0 |            |     6 |
-| YAML parse fail        |     0 |            |     0 |
+| Garbage around YAML    |     0 |            |     0 |
+| YAML parse fail        |     0 |            |    2¹ |
 | Coarse Structure error |     0 |            |     0 |
+
+¹ one b/c of token limit, other one legitimate JSON format error  
+  (`{'k': 'v', {'k': 'v'}, ...}` → dict in place of dict key)
 
 ##### Entity eval
 
 | Criterion      | Valid | Invalid | JSON eval: | Valid | Invalid |
 | -------------- | ----- | ------- | ---------- | ----- | ------- |
-| Entity in text |   858 |     121 |            |   883 |      94 |
-| Entity type    |   905 |      74 |            |   914 |      63 |
-| Artifact ID    |   979 |       0 |            |   977 |       0 |
-| Parameter ID   |   164 |      53 |            |   132 |      56 |
-| Value ID       |   178 |      53 |            |   105 |      39 |
-| Context ID     |    48 |     183 |            |    82 |      62 |
+| Entity in text |   858 |     121 |            |   890 |      96 |
+| Entity type    |   905 |      74 |            |   922 |      64 |
+| Artifact ID    |   979 |       0 |            |   986 |       0 |
+| Parameter ID   |   164 |      53 |            |   139 |      56 |
+| Value ID       |   178 |      53 |            |   112 |      39 |
+| Context ID     |    48 |     183 |            |    86 |      65 |
 
 
 ### Vicuna 13b v1.3
@@ -46,12 +49,12 @@ Paragraphs total: 444
 
 | Criterion      | Valid | Invalid | JSON eval: | Valid | Invalid |
 | -------------- | ----- | ------- | ---------- | ----- | ------- |
-| Entity in text |  2362 |    1005 |            |   495 |     161 |
-| Entity type    |  2114 |    1253 |            |   442 |     214 |
-| Artifact ID    |  3351 |      16 |            |   610 |      46 |
-| Parameter ID   |     0 |     758 |            |     0 |     270 |
-| Value ID       |     0 |     741 |            |     0 |     264 |
-| Context ID     |     0 |     719 |            |     0 |     264 |
+| Entity in text |  2362 |    1005 |            |   578 |     263 |
+| Entity type    |  2114 |    1253 |            |   514 |     327 |
+| Artifact ID    |  3351 |      16 |            |   630 |     211 |
+| Parameter ID   |     0 |     758 |            |     0 |     408 |
+| Value ID       |     0 |     741 |            |     0 |     404 |
+| Context ID     |     0 |     719 |            |     0 |     404 |
 
 
 ### GALACTICA 120b
@@ -91,7 +94,7 @@ Paragraphs total: 444
 | No YAML found          |     0 |            |     0 |
 | Empty YAML             |     0 |            |     0 |
 | Garbage around YAML    |    42 |            |     6 |
-| YAML parse fail        |    62 |            |  234¹ |
+| YAML parse fail        |    62 |            |  220¹ |
 | Coarse Structure error |     0 |            |     9 |
 
 ¹ 164 of those b/c format template w/ things like `true/false` was just copied
@@ -100,12 +103,12 @@ Paragraphs total: 444
 
 | Criterion      | Valid | Invalid | JSON eval: | Valid | Invalid |
 | -------------- | ----- | ------- | ---------- | ----- | ------- |
-| Entity in text |  2089 |    1070 |            |   236 |     339 |
-| Entity type    |  2788 |     371 |            |   469 |     106 |
-| Artifact ID    |  2951 |     208 |            |   497 |      78 |
-| Parameter ID   |     0 |     929 |            |     4 |     477 |
-| Value ID       |     0 |     879 |            |     0 |     755 |
-| Context ID     |     0 |     818 |            |     0 |     755 |
+| Entity in text |  2089 |    1070 |            |   254 |     368 |
+| Entity type    |  2788 |     371 |            |   511 |     111 |
+| Artifact ID    |  2951 |     208 |            |   540 |      82 |
+| Parameter ID   |     0 |     929 |            |     4 |     516 |
+| Value ID       |     0 |     879 |            |     0 |     821 |
+| Context ID     |     0 |     818 |            |     0 |     821 |
 
 
 ### Falcon 40b instruct

@@ -1240,7 +1240,26 @@ def parse_llm_json(llm_output_dict, verbose=False):
                 all_in = False
         if all_in:
             parse_errors['only_copy'] = True
-        # try to fix (assume output is cut off)
+        # 1.1. assume invalid escape sequence
+        try:
+            esc_json_lines = []
+            for line in llm_output_json.split('\n'):
+                m = re.match(r'^(\s+"[a-z]+": )"(.+)"(,?)$', line)
+                if m:
+                    key_part = m.group(1)
+                    val_part = m.group(2)
+                    delim_part = m.group(3)
+                    # escape backsplashes in value part
+                    val_part = re.sub(r'\\', r'\\\\', val_part)
+                    line = f'{key_part}"{val_part}"{delim_part}'
+                esc_json_lines.append(line)
+            esc_json = '\n'.join(esc_json_lines)
+            llm_output = json.loads(esc_json)
+            parse_fail = False
+        except json.JSONDecodeError as e_quotes:
+            parse_errors['quotes+esc'] = str(e_quotes)
+            pass  # handle further down
+        # 1. 2 try to fix (assume output is cut off)
         # - remove last line
         llm_output_json = '\n'.join(llm_output_json.split('\n')[:-1])
         # - add necessary delimiters according to indent
@@ -1272,6 +1291,7 @@ def parse_llm_json(llm_output_dict, verbose=False):
             parse_fail = False
         except json.JSONDecodeError as e_cut_delim_fix:
             parse_errors['fixed'] = str(e_cut_delim_fix)
+        # if not fixed until here, give up
         if parse_fail:
             if verbose:
                 print('Error parsing LLM output JSON:')
@@ -1375,6 +1395,11 @@ def yaml2json(llm_output_dict, verbose=False):
 
         # if parsing still fails, print error and return None
         if parse_fail:
+            print(llm_output_dict['completion']['choices'][0]['text'])
+            input()
+            # max tokens reached, fixable w/ adding brackets: 2
+            # unescaped backslash from LaTeX in string: 3
+            # JSON format error `{'k': 'v', {'k': 'v'}, ...}`:  1
             if verbose:
                 print('Error parsing LLM output YAML:')
                 print(f'YAML errors:')
