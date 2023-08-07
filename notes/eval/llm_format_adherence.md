@@ -34,11 +34,11 @@ Paragraphs total: 444
 
 | Category               | Count | JSON eval: | Count |
 | ---------------------- | ----- | ---------- | ----- |
-| No YAML found          |     0 |            |   107 |
+| No YAML found          |     0 |            |     0 |
 | Empty YAML             |     0 |            |     0 |
-| Garbage around YAML    |    28 |            |   188 |
-| YAML parse fail        |    36 |            |   270 |
-| Coarse Structure error |     0 |            |     0 |
+| Garbage around YAML    |    28 |            |   205 |
+| YAML parse fail        |    36 |            |   188 |
+| Coarse Structure error |     0 |            |    82 |
 
 ##### Entity eval
 

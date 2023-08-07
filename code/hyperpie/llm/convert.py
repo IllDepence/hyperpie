@@ -1023,16 +1023,22 @@ def vicuna_json_extract(llm_output_dict, verbose=False):
 
     # try to extract JSON block
     json_patt = re.compile(
-        r"(\s*['\"]?(true|false)['\"]?,\s*\n.*?^\}$)(\n```)?(.*)",
+        r"(\s*['\"]?(true|false|1|0)['\"]?,\s*\n.*?^\}$)(\n```)?(.*)",
+        re.S | re.M
+    )
+    json_beginning_patt = re.compile(
+        r"\s*['\"]?(true|false|1|0)['\"]?,\n\s+\"entities\":\s+\[\s*{",
         re.S | re.M
     )
     m = json_patt.search(llm_output_text)
+    json_found = True
     if m is not None:
-        json_found = True
         json_text = m.group(1)
         garbage = m.group(4)
     else:
-        json_found = False
+        m_beg = json_beginning_patt.search(llm_output_text)
+        if m_beg is None:
+            json_found = False
         json_text = llm_output_text
         garbage = ''  # unknown so leave empty
 
