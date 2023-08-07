@@ -6,24 +6,24 @@
 
 Paragraphs total: 444
 
-| Category               | Count |
-| ---------------------- | ----- |
-| No YAML found          |     0 |
-| Empty YAML             |     0 |
-| Garbage around YAML    |     0 |
-| YAML parse fail        |     0 |
-| Coarse Structure error |     0 |
+| Category               | Count | JSON eval: | Count |
+| ---------------------- | ----- | ---------- | ----- |
+| No YAML found          |     0 |            |     0 |
+| Empty YAML             |     0 |            |     0 |
+| Garbage around YAML    |     0 |            |     6 |
+| YAML parse fail        |     0 |            |     0 |
+| Coarse Structure error |     0 |            |     0 |
 
 ##### Entity eval
 
-| Criterion      | Valid | Invalid |
-| -------------- | ----- | ------- |
-| Entity in text |   858 |     121 |
-| Entity type    |   905 |      74 |
-| Artifact ID    |   979 |       0 |
-| Parameter ID   |   164 |      53 |
-| Value ID       |   178 |      53 |
-| Context ID     |    48 |     183 |
+| Criterion      | Valid | Invalid | JSON eval: | Valid | Invalid |
+| -------------- | ----- | ------- | ---------- | ----- | ------- |
+| Entity in text |   858 |     121 |            |   883 |      94 |
+| Entity type    |   905 |      74 |            |   914 |      63 |
+| Artifact ID    |   979 |       0 |            |   977 |       0 |
+| Parameter ID   |   164 |      53 |            |   132 |      56 |
+| Value ID       |   178 |      53 |            |   105 |      39 |
+| Context ID     |    48 |     183 |            |    82 |      62 |
 
 
 ### Vicuna 13b v1.3

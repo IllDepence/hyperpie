@@ -1013,6 +1013,41 @@ def wizard_lm_yaml_extract(llm_output_dict, verbose=False):
     return clean_llm_output, stats
 
 
+def gpt3_json_extract(llm_output_dict, verbose=False):
+    """ Preprocessor for GPT3 output.
+    """
+
+    llm_output_text = llm_output_dict['completion']['choices'][0]['text']
+
+    json_code_block_patt = re.compile(
+        r'```python\n?(.*)(^```$)',
+        re.S | re.M
+    )
+    json_simple_patt = re.compile(
+        r'\s*{\s*"text_contains_entities":.*}',
+        re.S | re.M
+    )
+
+    m = json_code_block_patt.search(llm_output_text)
+    if m is not None:
+        json_text = m.group(1)
+    else:
+        ms = json_simple_patt.search(llm_output_text)
+        if ms is not None:
+            json_text = ms.group(0)
+        else:
+            print(llm_output_text)
+            raise
+
+    status_dict = _preprocessor_status_dict(
+        None, None, None
+    )
+
+    llm_output_dict['completion']['choices'][0]['text'] = json_text
+
+    return llm_output_dict, status_dict
+
+
 def vicuna_json_extract(llm_output_dict, verbose=False):
     """ Preprocessor for Vicuna output where the start of the JSON is part
         of the prompt and needs to be added back.

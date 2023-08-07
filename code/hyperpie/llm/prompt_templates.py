@@ -395,6 +395,55 @@ text_contains_entities: """  # noqa: E501
 # JSON comparison
 # - - - - - - - -
 
+text_e2e_fillin_twostep_1_json = f"""{instruction_context} what (if any) are the entities (datasets, models, methods, loss functions, regularization techniques) mentioned in the LaTeX Input Text below? What (if any) are their parameters and values?
+
+[LaTeX Input Text start]
+{{text}}
+[LaTeX Input Text end]
+
+Answer in the following JSON format.
+
+Format:
+```python
+{{{{
+  "text_contains_entities": true/false,
+  "entities": [
+    {{{{
+      "entity<N>": {{{{
+        "id": "e<N>",
+        "name": "<entity name>",
+        "type": "dataset/model/method/loss function/regularization technique",
+        "has_parameters": true/false,
+        "parameters": [
+          {{{{
+            "parameter<M>": {{{{
+              "id": "p<N.M>",
+              "name": "<parameter name>",
+              "has_values": true/false,
+              "values": [
+                {{{{
+                  "value<O>": {{{{
+                    "value_id": "v<N.M.O>",
+                    "value": "<parameter value>",
+                    "context": "<value context>",
+                    "context_id": "c<N.M.O>"/null
+                  }}}}
+                }}}}
+              ]
+            }}}}
+          }}}}
+        ]
+      }}}}
+    }}}}
+  ]
+}}}}
+```
+
+Only include entities that are of type dataset, model, method, loss function, or regularization technique. Do not output entities that are of another type. Do not include entities of type task, metric, library, software, or API.
+Only produce output in the JSON format specified above. Output no additional text.
+
+{instruction_output}"""  # noqa: E501
+
 text_e2e_fillin_twostep_1_alpaca_style_nointro_json = f"""{alpaca_style_prompt_instruction_pre}{instruction_context} what are the most important datasets, models, methods, loss functions, regularization techniques mentioned in the LaTeX Input Text below? What are their parameters and values?
 
 [LaTeX Input Text start]
