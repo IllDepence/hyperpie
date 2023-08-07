@@ -86,24 +86,26 @@ Paragraphs total: 444
 
 ##### Paragraph eval
 
-| Category               | Count |
-| ---------------------- | ----- |
-| No YAML found          |     0 |
-| Empty YAML             |     0 |
-| Garbage around YAML    |    42 |
-| YAML parse fail        |    62 |
-| Coarse Structure error |     0 |
+| Category               | Count | JSON eval: | Count |
+| ---------------------- | ----- | ---------- | ----- |
+| No YAML found          |     0 |            |     0 |
+| Empty YAML             |     0 |            |     0 |
+| Garbage around YAML    |    42 |            |     6 |
+| YAML parse fail        |    62 |            |  234¹ |
+| Coarse Structure error |     0 |            |     9 |
+
+¹ 164 of those b/c format template w/ things like `true/false` was just copied
 
 ##### Entity eval
 
-| Criterion      | Valid | Invalid |
-| -------------- | ----- | ------- |
-| Entity in text |  2089 |    1070 |
-| Entity type    |  2788 |     371 |
-| Artifact ID    |  2951 |     208 |
-| Parameter ID   |     0 |     929 |
-| Value ID       |     0 |     879 |
-| Context ID     |     0 |     818 |
+| Criterion      | Valid | Invalid | JSON eval: | Valid | Invalid |
+| -------------- | ----- | ------- | ---------- | ----- | ------- |
+| Entity in text |  2089 |    1070 |            |   236 |     339 |
+| Entity type    |  2788 |     371 |            |   469 |     106 |
+| Artifact ID    |  2951 |     208 |            |   497 |      78 |
+| Parameter ID   |     0 |     929 |            |     4 |     477 |
+| Value ID       |     0 |     879 |            |     0 |     755 |
+| Context ID     |     0 |     818 |            |     0 |     755 |
 
 
 ### Falcon 40b instruct
