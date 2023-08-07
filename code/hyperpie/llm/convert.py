@@ -147,6 +147,7 @@ def llm_output2eval_input(
         llm_annotated_text=None,
         matched_surface_forms=None,
         preprocessor=None,
+        output_format='yaml',
         verbose=False
 ):
     """ Convert LLM output to evaluation script input format.
@@ -188,9 +189,16 @@ def llm_output2eval_input(
         status_dicts['preprocessor'] = preprocessor_status_dict
 
     # convert YAML to JSON
-    llm_output, yaml2json_status_dict = yaml2json(
-        llm_output_dict, verbose=verbose
-    )
+    if output_format == 'yaml':
+        llm_output, yaml2json_status_dict = yaml2json(
+            llm_output_dict, verbose=verbose
+        )
+    elif output_format == 'json':
+        llm_output, yaml2json_status_dict = parse_llm_json(
+            llm_output_dict, verbose=verbose
+        )
+    else:
+        raise ValueError(f'Unknown output format {output_format}')
     status_dicts['yaml2json'] = yaml2json_status_dict
 
     # return if parsing failed
@@ -438,9 +446,14 @@ def _twostage_llm_parse_yaml(annotation_info, para_text):
         if artf_dict is None:
             continue
         # parse artifact
-        artf = next(iter(artf_dict.values()))
+        if 'parameters' in artf_dict.keys():
+            # already “unpacked”
+            artf = artf_dict
+        else:
+            artf = next(iter(artf_dict.values()))
         if (
             artf is None or
+            type(artf) != dict or
             'id' not in artf.keys() or
             'name' not in artf.keys() or
             'type' not in artf.keys()
@@ -483,9 +496,14 @@ def _twostage_llm_parse_yaml(annotation_info, para_text):
             if param_dict is None:
                 continue
             # parse parameter
-            param = next(iter(param_dict.values()))
+            if 'values' in param_dict.keys():
+                # already “unpacked”
+                param = param_dict
+            else:
+                param = next(iter(param_dict.values()))
             if (
                 param is None or
+                type(param) != dict or
                 'id' not in param.keys() or
                 'name' not in param.keys()
             ):
@@ -513,9 +531,14 @@ def _twostage_llm_parse_yaml(annotation_info, para_text):
                 if val_dict is None:
                     continue
                 # parse value and context
-                val = next(iter(val_dict.values()))
+                if 'context' in val_dict.keys():
+                    # already “unpacked”
+                    val = val_dict
+                else:
+                    val = next(iter(val_dict.values()))
                 if (
                     val is None or
+                    type(val) != dict or
                     'value_id' not in val.keys() or
                     'value' not in val.keys()
                 ):
@@ -990,6 +1013,40 @@ def wizard_lm_yaml_extract(llm_output_dict, verbose=False):
     return clean_llm_output, stats
 
 
+def vicuna_json_extract(llm_output_dict, verbose=False):
+    """ Preprocessor for Vicuna output where the start of the JSON is part
+        of the prompt and needs to be added back.
+        Also detects garbage text output after the JSON block.
+    """
+
+    llm_output_text = llm_output_dict['completion']['choices'][0]['text']
+
+    # try to extract JSON block
+    json_patt = re.compile(
+        r"(\s*['\"]?(true|false)['\"]?,\s*\n.*?^\}$)(\n```)?(.*)",
+        re.S | re.M
+    )
+    m = json_patt.search(llm_output_text)
+    if m is not None:
+        json_found = True
+        json_text = m.group(1)
+        garbage = m.group(4)
+    else:
+        json_found = False
+        json_text = llm_output_text
+        garbage = ''  # unknown so leave empty
+
+    # add back beginning which was part of the prompt
+    json_text = '{"text_contains_entities": ' + json_text
+    status_dict = _preprocessor_status_dict(
+        not json_found, None, len(garbage) > 3
+    )
+
+    llm_output_dict['completion']['choices'][0]['text'] = json_text
+
+    return llm_output_dict, status_dict
+
+
 def vicuna_yaml_extract(llm_output_dict, verbose=False):
     """ Preprocessor for Vicuna output where the start of the YAML is part
         of the prompt and needs to be added back.
@@ -1101,6 +1158,77 @@ def galactica_yaml_extract(llm_output_dict, verbose=False):
         preprocess_status_dict['garbage_around_yaml'] = True
 
     return llm_output_dict, preprocess_status_dict
+
+
+def parse_llm_json(llm_output_dict, verbose=False):
+    """ Try to parse LLM output JSON.
+
+        Returns a tuple of the form (llm_output, status_dict)
+    """
+
+    status_dict = {
+        'parse_fail': False,
+        'parsing_error_dict': {},
+    }
+    leading_space_patt = re.compile(r'^[ ]*')
+
+    # predicted annotations in JSON
+    llm_output_json = llm_output_dict['completion']['choices'][0]['text']
+
+    # try to parse
+    parse_errors = {}
+    llm_output = None
+
+    try:
+        llm_output = json.loads(llm_output_json)
+    except json.JSONDecodeError as e_general:
+        parse_errors['general'] = str(e_general)
+        parse_fail = True
+        # try to fix (assume output is cut off)
+        # - remove last line
+        llm_output_json = '\n'.join(llm_output_json.split('\n')[:-1])
+        # - add necessary delimiters according to indent
+        last_line = llm_output_json.split('\n')[-1]
+        leading_spaces = leading_space_patt.match(last_line).group(0)
+        num_leading_spaces = len(leading_spaces)
+        if num_leading_spaces >= 18:
+            llm_output_json += '}}]}}]}}]}'
+        elif num_leading_spaces >= 16:
+            llm_output_json += '}]}}]}}]}'
+        elif num_leading_spaces >= 14:
+            llm_output_json += ']}}]}}]}'
+        elif num_leading_spaces >= 12:
+            llm_output_json += '}}]}}]}'
+        elif num_leading_spaces >= 10:
+            llm_output_json += '}]}}]}'
+        elif num_leading_spaces >= 8:
+            llm_output_json += ']}}]}'
+        elif num_leading_spaces >= 6:
+            llm_output_json += '}}]}'
+        elif num_leading_spaces >= 4:
+            llm_output_json += '}]}'
+        elif num_leading_spaces >= 2:
+            llm_output_json += ']}'
+        else:
+            llm_output_json += '}'
+        try:
+            llm_output = json.loads(llm_output_json)
+            parse_fail = False
+        except json.JSONDecodeError as e_cut_delim_fix:
+            parse_errors['fixed'] = str(e_cut_delim_fix)
+        if parse_fail:
+            if verbose:
+                print('Error parsing LLM output JSON:')
+                print(f'JSON errors:')
+                for k, v in parse_errors.items():
+                    print(f'  {k}: {v}')
+                print(f'LLM output:\n{llm_output_json}')
+            status_dict['parse_fail'] = True
+            status_dict['parsing_error_dict'] = parse_errors
+            return None, status_dict
+
+    # if we reach this point, parsing was successful
+    return llm_output, status_dict
 
 
 def yaml2json(llm_output_dict, verbose=False):

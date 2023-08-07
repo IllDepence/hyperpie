@@ -1,4 +1,4 @@
-""" Evaluate zero-shot setting for Vicuna.
+""" Evaluate zero-shot setting for Vicuna with JSON format.
 """
 
 import re
@@ -23,9 +23,9 @@ from_idx = 0
 to_idx = len(paras_true)
 params_2048 = hp.settings.gpt_default_params.copy()
 params_2048['max_tokens'] = 2048
-# # FIXME: ↓ temporary for cache access w/o API endpoint ↓
-# params_2048['model'] = 'lmsys/vicuna-13b-v1.3'
-# # FIXME: ↑ temporary for cache access w/o API endpoint ↑
+# FIXME: ↓ temporary for cache access w/o API endpoint ↓
+params_2048['model'] = 'lmsys/vicuna-13b-v1.3'
+# FIXME: ↑ temporary for cache access w/o API endpoint ↑
 stats_dicts = []
 for i, para in enumerate(paras_true[from_idx:to_idx]):
     print(f'{i}/{len(paras_true)}')
@@ -38,27 +38,25 @@ for i, para in enumerate(paras_true[from_idx:to_idx]):
         para, prompt, params=params_2048
     )
 
-    print('TEXT')
-    print(para['text'][0:300], '...')
-    print('COMPLETION')
-    print(completion_dict['completion']['choices'][0]['text'][:300], '...')
-    print('\n\n')
+    # print('TEXT')
+    # print(para['text'][0:300], '...')
+    # print('COMPLETION')
+    # print(completion_dict['completion']['choices'][0]['text'][:300], '...')
+    # print('\n\n')
 
-    # para_pred, stats_dict = hp.llm.convert.llm_output2eval_input(
-    #     completion_dict,
-    #     llm_annotated_text='foo',
-    #     matched_surface_forms=True,
-    #     preprocessor=hp.llm.convert.vicuna_yaml_extract
-    # )
-    # stats_dicts.append(stats_dict)
+    para_pred, stats_dict = hp.llm.convert.llm_output2eval_input(
+        completion_dict,
+        llm_annotated_text='foo',
+        matched_surface_forms=True,
+        preprocessor=hp.llm.convert.vicuna_json_extract,
+        output_format='json'
+    )
+    stats_dicts.append(stats_dict)
 
     # # filter
     # filtered_para, num_full_triples_para = \
     #     hp.data.filter_annots.require_parent_single(para_pred)
     # paras_pred.append(filtered_para)
-
-import sys
-sys.exit()
 
 aggregate_stats = hp.llm.convert.aggregate_format_stats(stats_dicts)
 
@@ -68,7 +66,7 @@ mode_fn_save = re.sub(
     params_2048['model']
     )
 
-with open(f'format_eval_{mode_fn_save}.json', 'w') as f:
+with open(f'format_eval_{mode_fn_save}_json.json', 'w') as f:
     print(f'Saving format eval to {f.name}')
     json.dump(aggregate_stats, f, indent=2)
 

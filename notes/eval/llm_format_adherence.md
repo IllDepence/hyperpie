@@ -32,24 +32,24 @@ Paragraphs total: 444
 
 ##### Paragraph eval
 
-| Category               | Count |
-| ---------------------- | ----- |
-| No YAML found          |     0 |
-| Empty YAML             |     0 |
-| Garbage around YAML    |    28 |
-| YAML parse fail        |    36 |
-| Coarse Structure error |     0 |
+| Category               | Count | JSON eval: | Count |
+| ---------------------- | ----- | ---------- | ----- |
+| No YAML found          |     0 |            |   107 |
+| Empty YAML             |     0 |            |     0 |
+| Garbage around YAML    |    28 |            |   188 |
+| YAML parse fail        |    36 |            |   270 |
+| Coarse Structure error |     0 |            |     0 |
 
 ##### Entity eval
 
-| Criterion      | Valid | Invalid |
-| -------------- | ----- | ------- |
-| Entity in text |  2362 |    1005 |
-| Entity type    |  2114 |    1253 |
-| Artifact ID    |  3351 |      16 |
-| Parameter ID   |     0 |     758 |
-| Value ID       |     0 |     741 |
-| Context ID     |     0 |     719 |
+| Criterion      | Valid | Invalid | JSON eval: | Valid | Invalid |
+| -------------- | ----- | ------- | ---------- | ----- | ------- |
+| Entity in text |  2362 |    1005 |            |   495 |     161 |
+| Entity type    |  2114 |    1253 |            |   442 |     214 |
+| Artifact ID    |  3351 |      16 |            |   610 |      46 |
+| Parameter ID   |     0 |     758 |            |     0 |     270 |
+| Value ID       |     0 |     741 |            |     0 |     264 |
+| Context ID     |     0 |     719 |            |     0 |     264 |
 
 
 ### GALACTICA 120b

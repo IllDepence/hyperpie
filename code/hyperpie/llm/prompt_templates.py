@@ -449,3 +449,54 @@ start_completion_json = """
   "text_contains_entities": """
 
 text_e2e_fillin_twostep_1_vicuna_json = text_e2e_fillin_twostep_1_alpaca_style_nointro_json + start_completion_json  # noqa: E501
+
+text_e2e_fillin_twostep_1_wizardlm_json = f"""A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions. USER: In the context of machine learning and related fields, what are the entities (allowed types: datasets, models, methods, loss functions, regularization techniques) mentioned in the LaTeX Input Text below? What are their parameters and values?
+
+[LaTeX Input Text start]
+{{text}}
+[LaTeX Input Text end]
+
+Answer in the following JSON format (everything in angle brackets (<example>) is a placeholder, everything divided by slashes (like/this) are options.
+
+Format:
+```python
+{{{{
+  "text_contains_entities": true/false,
+  "entities": [
+    {{{{
+      "entity<N>": {{{{
+        "id": "e<N>",
+        "name": "<entity name>",
+        "type": "dataset/model/method/loss function/regularization technique",
+        "has_parameters": true/false,
+        "parameters": [
+          {{{{
+            "parameter<M>": {{{{
+              "id": "p<N.M>",
+              "name": "<parameter name>",
+              "has_values": true/false,
+              "values": [
+                {{{{
+                  "value<O>": {{{{
+                    "value_id": "v<N.M.O>",
+                    "value": "<parameter value>",
+                    "context": "<value context>",
+                    "context_id": "c<N.M.O>"/null
+                  }}}}
+                }}}}
+              ]
+            }}}}
+          }}}}
+        ]
+      }}}}
+    }}}}
+  ]
+}}}}
+```
+
+Only produce output in the JSON format specified above. Output no additional text. Only include entities (of type datasets, models, methods, loss functions, or regularization techniques), parameters and values that are mentioned in the LaTeX Input Text.
+
+ASSISTANT:
+```python
+{{{{
+  "text_contains_entities": """  # noqa: E501
