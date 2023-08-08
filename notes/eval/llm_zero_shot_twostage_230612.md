@@ -74,49 +74,102 @@ gpt_default_params = {
 
 | Method       | TP | FP | FN | Precision (P) | Recall (R) | F1 Score |
 |--------------|----|----|----|---------------|------------|----------|
-| ER           | 548| 1251| 714| 0.305         | 0.434      | 0.358    |
-| ER + Clf     | 535| 1251| 727| 0.300         | 0.424      | 0.351    |
-| Co-ref resol.| 356| 2602| 840| 0.120         | 0.298      | 0.171    |
-| Rel. extr.   | 19 | 479| 112| 0.038         | 0.145      | 0.060    |
+| ER           | 536| 1024| 726| 0.344         | 0.425      | 0.380    |
+| ER + Clf     | 526| 1024| 736| 0.339         | 0.417      | 0.374    |
+| Co-ref resol.| 356| 1756| 840| 0.169         | 0.298      | 0.215    |
+| Rel. extr.   | 16 | 261| 115| 0.058         | 0.122      | 0.078    |
 
 **Partial overlap: True**
 
 | Method       | TP | FP | FN | Precision (P) | Recall (R) | F1 Score |
 |--------------|----|----|----|---------------|------------|----------|
-| ER           | 679| 962| 583| 0.414         | 0.538      | 0.468    |
-| ER + Clf     | 657| 962| 605| 0.406         | 0.521      | 0.456    |
-| Co-ref resol.| 396| 2558| 800| 0.134         | 0.331      | 0.191    |
-| Rel. extr.   | 38 | 466| 93 | 0.075         | 0.290      | 0.120    |
+| ER           | 661| 818| 601| 0.447         | 0.524      | 0.482    |
+| ER + Clf     | 644| 818| 618| 0.440         | 0.510      | 0.473    |
+| Co-ref resol.| 394| 1714| 802| 0.187         | 0.329      | 0.238    |
+| Rel. extr.   | 31 | 248| 100| 0.111         | 0.237      | 0.151    |
 
 
 **False positives (exact match)**
 
 * a: 561
-* c: 79
-* p: 227
-* v: 384
+* c: 46
+* p: 184
+* v: 233
 
 **False positives (partial overlap)**
 
 * a: 461
-* c: 78
-* p: 215
-* v: 208
+* c: 45
+* p: 178
+* v: 134
 
 **False negatives (exact match)**
 
-* a: 629
-* c: 8
-* p: 46
-* v: 31
+* a: 631
+* c: 11
+* p: 48
+* v: 36
 
 **False negatives (partial overlap)**
 
-* a: 521
-* c: 8
-* p: 37
-* v: 17
+* a: 525
+* c: 11
+* p: 43
+* v: 22
 
+
+## Eval JSON (“reqire parent entity”) — string-matched surface forms
+
+(JSON format output)
+
+(same as above: instead of using second prompt for annotating entity surface forms in text, use simple string matching (same as in single prompt setup))
+
+**Partial overlap: False**
+
+| Method       | TP | FP | FN | Precision (P) | Recall (R) | F1 Score |
+|--------------|----|----|----|---------------|------------|----------|
+| ER           | 547| 1371| 715| 0.285         | 0.433      | 0.344    |
+| ER + Clf     | 538| 1371| 724| 0.282         | 0.426      | 0.339    |
+| Co-ref resol.| 354| 93460| 842| 0.004         | 0.296      | 0.007    |
+| Rel. extr.   | 14 | 237| 117| 0.056         | 0.107      | 0.073    |
+
+**Partial overlap: True**
+
+| Method       | TP | FP | FN | Precision (P) | Recall (R) | F1 Score |
+|--------------|----|----|----|---------------|------------|----------|
+| ER           | 672| 1213| 590| 0.356         | 0.532      | 0.427    |
+| ER + Clf     | 650| 1213| 612| 0.349         | 0.515      | 0.416    |
+| Co-ref resol.| 388| 93430| 808| 0.004         | 0.324      | 0.008    |
+| Rel. extr.   | 26 | 228| 105| 0.102         | 0.198      | 0.135    |
+
+
+**False positives (exact match)**
+
+* a: 579
+* c: 459
+* p: 206
+* v: 127
+
+**False positives (partial overlap)**
+
+* a: 479
+* c: 425
+* p: 203
+* v: 106
+
+**False negatives (exact match)**
+
+* a: 617
+* c: 13
+* p: 49
+* v: 36
+
+**False negatives (partial overlap)**
+
+* a: 511
+* c: 11
+* p: 45
+* v: 23
 
 
 ## Eval (“reqire parent entity”) — string-matched surface forms IGNORING P&C

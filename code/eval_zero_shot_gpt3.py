@@ -76,9 +76,9 @@ for i, para in enumerate(paras_true[from_idx:to_idx]):
     # “1.5 stage” version
     para_pred, stats_dict = hp.llm.convert.llm_output2eval_input(
         completion_dict1,
-        # completion_dict2['completion']['choices'][0]['text']
-        '',
-        matched_surface_forms=True
+        llm_annotated_text='',
+        matched_surface_forms=True,
+        skip_nonmatching=True
     )
     # # “broken” “1.5 stage” version leading to higher F1 score
     # # b/c of fewer false positives
@@ -105,15 +105,15 @@ with open(f'format_eval_{mode_fn_save}.json', 'w') as f:
     print(f'Saving format eval to {f.name}')
     json.dump(aggregate_stats, f, indent=2)
 
-eval_name = 'zero_shot_gpt3_twostep'
-# save paras_pred in JSON file in /tmp/
-fp = f'/tmp/{eval_name}_pred.json'
-with open(fp, 'w') as f:
-    json.dump(paras_pred, f, indent=2)
-# save paras_true in JSON file in /tmp/
-fp = f'/tmp/{eval_name}_true.json'
-with open(fp, 'w') as f:
-    json.dump(paras_true[from_idx:to_idx], f, indent=2)
+# eval_name = 'zero_shot_gpt3_twostep'
+# # save paras_pred in JSON file in /tmp/
+# fp = f'/tmp/{eval_name}_pred.json'
+# with open(fp, 'w') as f:
+#     json.dump(paras_pred, f, indent=2)
+# # save paras_true in JSON file in /tmp/
+# fp = f'/tmp/{eval_name}_true.json'
+# with open(fp, 'w') as f:
+#     json.dump(paras_true[from_idx:to_idx], f, indent=2)
 
 # evaluate
 relext_f1 = hp.evaluation.full(
@@ -121,38 +121,3 @@ relext_f1 = hp.evaluation.full(
     paras_pred,
     # verbose=True
 )
-
-# for eval_idx in range(80, 81):
-
-#     print(f'eval_idx: {eval_idx}')
-
-#     # get predictions
-#     for i, para in enumerate(paras_true[eval_idx:eval_idx+1]):
-#         print(f'{i+1}/{len(paras_true)}')
-#         prompt = hp.llm.prompt_templates.text_e2e.format(
-#             text=para['text']
-#         )
-#         completion_dict, from_cache = hp.llm.predict.openai_api(
-#             para, prompt, params=hp.settings.gpt_default_params
-#         )
-#         para_pred = hp.llm.convert.yaml2json(completion_dict)
-#         filtered_para, num_full_triples_para = \
-#             hp.data.filter_annots.require_parent_single(para_pred)
-#         paras_pred.append(filtered_para)
-
-#     # evaluate
-#     relext_f1 = hp.evaluation.full(
-#         paras_true[eval_idx:eval_idx+1],
-#         [filtered_para]
-#     )
-
-#     if relext_f1 < 1:
-#         print(f'para text: {paras_true[eval_idx:eval_idx+1][0]["text"]}')
-#         print()
-#         print(f'{completion_dict["completion"]["choices"][0]["text"]}')
-#         print()
-#         with open('/tmp/paras_true.json', 'w') as f:
-#             json.dump(paras_true[eval_idx:eval_idx+1], f, indent=4)
-#         with open('/tmp/paras_pred.json', 'w') as f:
-#             json.dump([filtered_para], f, indent=4)
-#         input()

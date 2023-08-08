@@ -42,15 +42,15 @@ for i, para in enumerate(paras_true[from_idx:to_idx]):
         llm_annotated_text='',
         matched_surface_forms=True,
         preprocessor=hp.llm.convert.gpt3_json_extract,
-        output_format='json'
+        output_format='json',
+        skip_nonmatching=True
     )
 
     stats_dicts.append(stats_dict)
 
-    # # filter
-    # filtered_para, num_full_triples_para = \
-    #     hp.data.filter_annots.require_parent_single(para_pred)
-    # paras_pred.append(filtered_para)
+    filtered_para, num_full_triples_para = \
+        hp.data.filter_annots.require_parent_single(para_pred)
+    paras_pred.append(filtered_para)
 
 aggregate_stats = hp.llm.convert.aggregate_format_stats(stats_dicts)
 
@@ -64,9 +64,9 @@ with open(f'format_eval_{mode_fn_save}_json.json', 'w') as f:
     print(f'Saving format eval to {f.name}')
     json.dump(aggregate_stats, f, indent=2)
 
-# # evaluate
-# relext_f1 = hp.evaluation.full(
-#     paras_true[from_idx:to_idx],
-#     paras_pred,
-#     # verbose=True
-# )
+# evaluate
+relext_f1 = hp.evaluation.full(
+    paras_true[from_idx:to_idx],
+    paras_pred,
+    # verbose=True
+)

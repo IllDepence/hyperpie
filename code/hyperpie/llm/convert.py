@@ -148,6 +148,7 @@ def llm_output2eval_input(
         matched_surface_forms=None,
         preprocessor=None,
         output_format='yaml',
+        skip_nonmatching=False,
         verbose=False
 ):
     """ Convert LLM output to evaluation script input format.
@@ -165,6 +166,11 @@ def llm_output2eval_input(
                                provided.
         preprocessor: Preprocessor function that takes the LLM output
                       and extracts the YAML part (optional)
+        output_format: Output format produced by the LLM ('yaml' or 'json')
+        skip_nonmatching: If True, surface form matching in paragraph
+                          text will skip “hallucinated” entities and
+                          relations between them. (Only used in
+                          onepointfivestage_llm_entities2eval_input)
 
     Returns:
         dict: Evaluation script input in JSON format.
@@ -285,7 +291,8 @@ def llm_output2eval_input(
                 para,
                 annotation_info,
                 eval_input,
-                verbose
+                skip_nonmatching=skip_nonmatching,
+                verbose=verbose
             )
             status_dicts['json_content'] = cntnt_stat
             return eval_input, status_dicts
@@ -626,10 +633,16 @@ def onepointfivestage_llm_entities2eval_input(
     para,
     annotation_info,
     eval_input,
-    verbose
+    skip_nonmatching=False,
+    verbose=False
 ):
     """ First prompt of twostage setup was used but surface
         forms are to be determined by text matching.
+
+        If `skip_nonmatching` is True, then entities that do not
+        have any surface forms in the paragraph are skipped.
+        Similarly, relations between non-existent/skipped entities
+        are skipped.
     """
 
     # built dict of entities with ID, type, and name
@@ -647,12 +660,18 @@ def onepointfivestage_llm_entities2eval_input(
             para['text'],
             ent['name']
         )
+        if skip_nonmatching and len(artif_surfs) == 0:
+            continue
         ent_dict['surface_forms'] = artif_surfs
         ent_annots[ent['id']] = ent_dict
 
     # create relation annots
     rel_annots = {}
     for from_id, to_id in relations:
+        if skip_nonmatching and (
+            from_id not in ent_annots or to_id not in ent_annots
+        ):
+            continue
         rel_dict = relation_dict(
             from_id,
             to_id,
