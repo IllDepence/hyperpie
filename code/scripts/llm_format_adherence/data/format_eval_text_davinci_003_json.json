@@ -1,0 +1,54 @@
+{
+  "num_total": 444,
+  "preprocessor": {
+    "no_yaml_found": 0,
+    "empty_yaml": 0,
+    "garbage_around_yaml": 0
+  },
+  "yaml2json": {
+    "parse_fail": 2,
+    "parsing_error_dict": {
+      "general": {
+        "Expecting ',' delimiter: line 262 column 12 (char 7199)": 1,
+        "Expecting property name enclosed in double quotes: line 58 column 19 (char 1590)": 1
+      },
+      "quotes+esc": {
+        "Expecting ',' delimiter: line 262 column 12 (char 7199)": 1,
+        "Expecting property name enclosed in double quotes: line 58 column 19 (char 1590)": 1
+      },
+      "fixed": {
+        "Expecting ',' delimiter: line 261 column 15 (char 7188)": 1,
+        "Expecting property name enclosed in double quotes: line 58 column 19 (char 1590)": 1
+      }
+    }
+  },
+  "coarse_structure": {
+    "coarse_structure_error": 0
+  },
+  "json_content": {
+    "num_ents_intext_notintext": [
+      890,
+      96
+    ],
+    "num_ent_types_valid_invalid": [
+      922,
+      64
+    ],
+    "num_aids_valid_invalid": [
+      986,
+      0
+    ],
+    "num_pids_valid_invalid": [
+      139,
+      56
+    ],
+    "num_vids_valid_invalid": [
+      112,
+      39
+    ],
+    "num_cids_valid_invalid": [
+      86,
+      65
+    ]
+  }
+}

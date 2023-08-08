@@ -1,0 +1,41 @@
+{
+  "num_total": 444,
+  "preprocessor": {
+    "no_yaml_found": 0,
+    "empty_yaml": 0,
+    "garbage_around_yaml": 0
+  },
+  "yaml2json": {
+    "parse_fail": 0,
+    "parsing_error_dict": {}
+  },
+  "coarse_structure": {
+    "coarse_structure_error": 0
+  },
+  "json_content": {
+    "num_ents_intext_notintext": [
+      858,
+      121
+    ],
+    "num_ent_types_valid_invalid": [
+      905,
+      74
+    ],
+    "num_aids_valid_invalid": [
+      979,
+      0
+    ],
+    "num_pids_valid_invalid": [
+      164,
+      53
+    ],
+    "num_vids_valid_invalid": [
+      178,
+      53
+    ],
+    "num_cids_valid_invalid": [
+      48,
+      183
+    ]
+  }
+}

@@ -1,0 +1,148 @@
+{
+  "num_total": 444,
+  "preprocessor": {
+    "no_yaml_found": 0,
+    "empty_yaml": 88,
+    "garbage_around_yaml": 161
+  },
+  "yaml2json": {
+    "parse_fail": 56,
+    "parsing_error_dict": {
+      "general": {
+        "while scanning a simple key\n  in \"<unicode string>\", line 4, column 1:\n    In the context of machine learni ... \n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 6, column 1:\n    [LaTeX Input Text start]\n    ^": 21,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [YAML Response]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 7, column 1:\n    The response is evaluated as fol ... \n    ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 15, column 19:\n                      value_id: v<N.M.O>\n                      ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 17, column 45:\n     ...       context: \"<value context>\"/null\n                                         ^": 15,
+        "while scanning an alias\n  in \"<unicode string>\", line 2, column 1:\n    * entities:\n    ^\nexpected alphabetic or numeric character, but found ' '\n  in \"<unicode string>\", line 2, column 2:\n    * entities:\n     ^": 1,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [YAML Response]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 4, column 1:\n    ---\n    ^": 2,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [LaTeX Input Text start]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 4, column 1:\n    (3) Updating teacher with fine-g ... \n    ^": 1,
+        "while scanning for the next token\nfound character '`' that cannot start any token\n  in \"<unicode string>\", line 49, column 1:\n    ```\n    ^": 1,
+        "while scanning for the next token\nfound character '`' that cannot start any token\n  in \"<unicode string>\", line 68, column 1:\n    ```\n    ^": 1,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [YAML Response](https://github.c ... \n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 5, column 1:\n    ### Evaluation:\n    ^": 1,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [YAML Response]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 7, column 1:\n    [Evaluation]\n    ^": 1,
+        "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 5, column 13:\n          name: \"Other ODE solvers use more comp ... \n                ^\nfound unknown escape character 'm'\n  in \"<unicode string>\", line 5, column 73:\n     ... complicated methods to update $\\mathbf {h}(t + \\tau )$  from $\\m ... \n                                         ^": 1,
+        "while scanning for the next token\nfound character '`' that cannot start any token\n  in \"<unicode string>\", line 3, column 1:\n    ```yaml\n    ^": 2,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [YAML Output Text start]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 5, column 1:\n    We provide a detailed approach t ... \n    ^": 1,
+        "while scanning for the next token\nfound character '`' that cannot start any token\n  in \"<unicode string>\", line 28, column 1:\n    ```\n    ^": 1,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [LaTeX Output Text start]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 5, column 1:\n    [LaTeX Output Text end]\n    ^": 1,
+        "mapping values are not allowed here\n  in \"<unicode string>\", line 4, column 12:\n          - `id: e0`\n               ^": 1,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [YAML Response]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 7, column 1:\n    The response is evaluated using  ... \n    ^": 2,
+        "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 16, column 26:\n                      value: \"Given a predicted cluster \\(\\ma ... \n                             ^\nfound unknown escape character '('\n  in \"<unicode string>\", line 16, column 54:\n     ... ue: \"Given a predicted cluster \\(\\mathcal {P}\\)  and a gold clus ... \n                                         ^": 1,
+        "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 11, column 19:\n                name: \"\\(\\mathbf {\\theta }_f\\)\"\n                      ^\nfound unknown escape character '('\n  in \"<unicode string>\", line 11, column 21:\n                name: \"\\(\\mathbf {\\theta }_f\\)\"\n                        ^": 1
+      },
+      "last_line_cut": {
+        "while scanning a simple key\n  in \"<unicode string>\", line 4, column 1:\n    In the context of machine learni ... \n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 6, column 1:\n    [LaTeX Input Text start]\n    ^": 21,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [YAML Response]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 7, column 1:\n    The response is evaluated as fol ... \n    ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 15, column 19:\n                      value_id: v<N.M.O>\n                      ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 17, column 45:\n     ...       context: \"<value context>\"/null\n                                         ^": 15,
+        "while scanning an alias\n  in \"<unicode string>\", line 2, column 1:\n    * entities:\n    ^\nexpected alphabetic or numeric character, but found ' '\n  in \"<unicode string>\", line 2, column 2:\n    * entities:\n     ^": 1,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [YAML Response]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 4, column 1:\n    ---\n    ^": 2,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [LaTeX Input Text start]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 4, column 1:\n    (3) Updating teacher with fine-g ... \n    ^": 1,
+        "while scanning for the next token\nfound character '`' that cannot start any token\n  in \"<unicode string>\", line 49, column 1:\n    ```\n    ^": 1,
+        "while scanning for the next token\nfound character '`' that cannot start any token\n  in \"<unicode string>\", line 68, column 1:\n    ```\n    ^": 1,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [YAML Response](https://github.c ... \n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 5, column 1:\n    ### Evaluation:\n    ^": 1,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [YAML Response]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 7, column 1:\n    [Evaluation]\n    ^": 1,
+        "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 5, column 13:\n          name: \"Other ODE solvers use more comp ... \n                ^\nfound unknown escape character 'm'\n  in \"<unicode string>\", line 5, column 73:\n     ... complicated methods to update $\\mathbf {h}(t + \\tau )$  from $\\m ... \n                                         ^": 1,
+        "while scanning for the next token\nfound character '`' that cannot start any token\n  in \"<unicode string>\", line 3, column 1:\n    ```yaml\n    ^": 2,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [YAML Output Text start]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 5, column 1:\n    We provide a detailed approach t ... \n    ^": 1,
+        "while scanning for the next token\nfound character '`' that cannot start any token\n  in \"<unicode string>\", line 28, column 1:\n    ```\n    ^": 1,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [LaTeX Output Text start]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 5, column 1:\n    [LaTeX Output Text end]\n    ^": 1,
+        "mapping values are not allowed here\n  in \"<unicode string>\", line 4, column 12:\n          - `id: e0`\n               ^": 1,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [YAML Response]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 7, column 1:\n    The response is evaluated using  ... \n    ^": 2,
+        "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 16, column 26:\n                      value: \"Given a predicted cluster \\(\\ma ... \n                             ^\nfound unknown escape character '('\n  in \"<unicode string>\", line 16, column 54:\n     ... ue: \"Given a predicted cluster \\(\\mathcal {P}\\)  and a gold clus ... \n                                         ^": 1,
+        "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 11, column 19:\n                name: \"\\(\\mathbf {\\theta }_f\\)\"\n                      ^\nfound unknown escape character '('\n  in \"<unicode string>\", line 11, column 21:\n                name: \"\\(\\mathbf {\\theta }_f\\)\"\n                        ^": 1
+      },
+      "quotes": {
+        "while scanning a simple key\n  in \"<unicode string>\", line 4, column 1:\n    In the context of machine learni ... \n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 6, column 1:\n    [LaTeX Input Text start]\n    ^": 21,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [YAML Response]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 7, column 1:\n    The response is evaluated as fol ... \n    ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 15, column 19:\n                      value_id: v<N.M.O>\n                      ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 17, column 45:\n     ...       context: \"<value context>\"/null\n                                         ^": 15,
+        "while scanning an alias\n  in \"<unicode string>\", line 2, column 1:\n    * entities:\n    ^\nexpected alphabetic or numeric character, but found ' '\n  in \"<unicode string>\", line 2, column 2:\n    * entities:\n     ^": 1,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [YAML Response]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 4, column 1:\n    ---\n    ^": 2,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [LaTeX Input Text start]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 4, column 1:\n    (3) Updating teacher with fine-g ... \n    ^": 1,
+        "while scanning for the next token\nfound character '`' that cannot start any token\n  in \"<unicode string>\", line 49, column 1:\n    ```\n    ^": 1,
+        "while scanning for the next token\nfound character '`' that cannot start any token\n  in \"<unicode string>\", line 68, column 1:\n    ```\n    ^": 1,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [YAML Response](https://github.c ... \n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 5, column 1:\n    ### Evaluation:\n    ^": 1,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [YAML Response]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 7, column 1:\n    [Evaluation]\n    ^": 1,
+        "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 5, column 13:\n          name: \"Other ODE solvers use more comp ... \n                ^\nfound unknown escape character 'm'\n  in \"<unicode string>\", line 5, column 73:\n     ... complicated methods to update $\\mathbf {h}(t + \\tau )$  from $\\m ... \n                                         ^": 1,
+        "while scanning for the next token\nfound character '`' that cannot start any token\n  in \"<unicode string>\", line 3, column 1:\n    ```yaml\n    ^": 2,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [YAML Output Text start]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 5, column 1:\n    We provide a detailed approach t ... \n    ^": 1,
+        "while scanning for the next token\nfound character '`' that cannot start any token\n  in \"<unicode string>\", line 28, column 1:\n    ```\n    ^": 1,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [LaTeX Output Text start]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 5, column 1:\n    [LaTeX Output Text end]\n    ^": 1,
+        "mapping values are not allowed here\n  in \"<unicode string>\", line 4, column 12:\n          - `id: e0`\n               ^": 1,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [YAML Response]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 7, column 1:\n    The response is evaluated using  ... \n    ^": 2,
+        "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 16, column 26:\n                      value: \"Given a predicted cluster \\(\\ma ... \n                             ^\nfound unknown escape character '('\n  in \"<unicode string>\", line 16, column 54:\n     ... ue: \"Given a predicted cluster \\(\\mathcal {P}\\)  and a gold clus ... \n                                         ^": 1,
+        "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 11, column 19:\n                name: \"\\(\\mathbf {\\theta }_f\\)\"\n                      ^\nfound unknown escape character '('\n  in \"<unicode string>\", line 11, column 21:\n                name: \"\\(\\mathbf {\\theta }_f\\)\"\n                        ^": 1
+      },
+      "quotes+esc": {
+        "while scanning a simple key\n  in \"<unicode string>\", line 4, column 1:\n    In the context of machine learni ... \n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 6, column 1:\n    [LaTeX Input Text start]\n    ^": 21,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [YAML Response]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 7, column 1:\n    The response is evaluated as fol ... \n    ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 15, column 19:\n                      value_id: v<N.M.O>\n                      ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 17, column 45:\n     ...       context: \"<value context>\"/null\n                                         ^": 15,
+        "while scanning an alias\n  in \"<unicode string>\", line 2, column 1:\n    * entities:\n    ^\nexpected alphabetic or numeric character, but found ' '\n  in \"<unicode string>\", line 2, column 2:\n    * entities:\n     ^": 1,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [YAML Response]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 4, column 1:\n    ---\n    ^": 2,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [LaTeX Input Text start]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 4, column 1:\n    (3) Updating teacher with fine-g ... \n    ^": 1,
+        "while scanning for the next token\nfound character '`' that cannot start any token\n  in \"<unicode string>\", line 49, column 1:\n    ```\n    ^": 1,
+        "while scanning for the next token\nfound character '`' that cannot start any token\n  in \"<unicode string>\", line 68, column 1:\n    ```\n    ^": 1,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [YAML Response](https://github.c ... \n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 5, column 1:\n    ### Evaluation:\n    ^": 1,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [YAML Response]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 7, column 1:\n    [Evaluation]\n    ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 15, column 19:\n                      value_id: v1\n                      ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 17, column 35:\n                      context: \"Other\"/null\n                                      ^": 1,
+        "while scanning for the next token\nfound character '`' that cannot start any token\n  in \"<unicode string>\", line 3, column 1:\n    ```yaml\n    ^": 2,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [YAML Output Text start]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 5, column 1:\n    We provide a detailed approach t ... \n    ^": 1,
+        "while scanning for the next token\nfound character '`' that cannot start any token\n  in \"<unicode string>\", line 28, column 1:\n    ```\n    ^": 1,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [LaTeX Output Text start]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 5, column 1:\n    [LaTeX Output Text end]\n    ^": 1,
+        "mapping values are not allowed here\n  in \"<unicode string>\", line 4, column 12:\n          - `id: e0`\n               ^": 1,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [YAML Response]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 7, column 1:\n    The response is evaluated using  ... \n    ^": 2,
+        "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 17, column 28:\n                      context: \"that is \\(\\frac{|\\mathcal {P} \\ ... \n                               ^\nfound unknown escape character '('\n  in \"<unicode string>\", line 17, column 38:\n     ...              context: \"that is \\(\\frac{|\\mathcal {P} \\cap \\mathc ... \n                                         ^": 1,
+        "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 17, column 28:\n                      context: \"\\(\\mathbf {\\theta }_f\\)\"/null\n                               ^\nfound unknown escape character '('\n  in \"<unicode string>\", line 17, column 30:\n                      context: \"\\(\\mathbf {\\theta }_f\\)\"/null\n                                 ^": 1
+      },
+      "quotes+trailing": {
+        "while scanning a simple key\n  in \"<unicode string>\", line 4, column 1:\n    In the context of machine learni ... \n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 6, column 1:\n    [LaTeX Input Text start]\n    ^": 21,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [YAML Response]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 7, column 1:\n    The response is evaluated as fol ... \n    ^": 1,
+        "expected '<document start>', but found '<scalar>'\n  in \"<unicode string>\", line 21, column 1:\n    Only produce output in the JSON  ... \n    ^": 3,
+        "while scanning an alias\n  in \"<unicode string>\", line 2, column 1:\n    * entities:\n    ^\nexpected alphabetic or numeric character, but found ' '\n  in \"<unicode string>\", line 2, column 2:\n    * entities:\n     ^": 1,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [YAML Response]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 4, column 1:\n    ---\n    ^": 2,
+        "expected '<document start>', but found '<scalar>'\n  in \"<unicode string>\", line 21, column 1:\n    Only produce output in the YAML  ... \n    ^": 12,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [LaTeX Input Text start]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 4, column 1:\n    (3) Updating teacher with fine-g ... \n    ^": 1,
+        "while scanning for the next token\nfound character '`' that cannot start any token\n  in \"<unicode string>\", line 49, column 1:\n    ```\n    ^": 1,
+        "while scanning for the next token\nfound character '`' that cannot start any token\n  in \"<unicode string>\", line 68, column 1:\n    ```\n    ^": 1,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [YAML Response](https://github.c ... \n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 5, column 1:\n    ### Evaluation:\n    ^": 1,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [YAML Response]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 7, column 1:\n    [Evaluation]\n    ^": 1,
+        "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 5, column 13:\n          name: \"Other ODE solvers use more comp ... \n                ^\nfound unknown escape character 'm'\n  in \"<unicode string>\", line 5, column 73:\n     ... complicated methods to update $\\mathbf {h}(t + \\tau )$  from $\\m ... \n                                         ^": 1,
+        "while scanning for the next token\nfound character '`' that cannot start any token\n  in \"<unicode string>\", line 3, column 1:\n    ```yaml\n    ^": 2,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [YAML Output Text start]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 5, column 1:\n    We provide a detailed approach t ... \n    ^": 1,
+        "while scanning for the next token\nfound character '`' that cannot start any token\n  in \"<unicode string>\", line 28, column 1:\n    ```\n    ^": 1,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [LaTeX Output Text start]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 5, column 1:\n    [LaTeX Output Text end]\n    ^": 1,
+        "mapping values are not allowed here\n  in \"<unicode string>\", line 4, column 12:\n          - `id: e0`\n               ^": 1,
+        "while scanning a simple key\n  in \"<unicode string>\", line 3, column 1:\n    [YAML Response]\n    ^\ncould not find expected ':'\n  in \"<unicode string>\", line 7, column 1:\n    The response is evaluated using  ... \n    ^": 2,
+        "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 16, column 26:\n                      value: \"Given a predicted cluster \\(\\ma ... \n                             ^\nfound unknown escape character '('\n  in \"<unicode string>\", line 16, column 54:\n     ... ue: \"Given a predicted cluster \\(\\mathcal {P}\\)  and a gold clus ... \n                                         ^": 1,
+        "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 11, column 19:\n                name: \"\\(\\mathbf {\\theta }_f\\)\"\n                      ^\nfound unknown escape character '('\n  in \"<unicode string>\", line 11, column 21:\n                name: \"\\(\\mathbf {\\theta }_f\\)\"\n                        ^": 1
+      }
+    }
+  },
+  "coarse_structure": {
+    "coarse_structure_error": 5
+  },
+  "json_content": {
+    "num_ents_intext_notintext": [
+      435,
+      850
+    ],
+    "num_ent_types_valid_invalid": [
+      1151,
+      134
+    ],
+    "num_aids_valid_invalid": [
+      1285,
+      0
+    ],
+    "num_pids_valid_invalid": [
+      0,
+      1068
+    ],
+    "num_vids_valid_invalid": [
+      0,
+      1052
+    ],
+    "num_cids_valid_invalid": [
+      0,
+      1003
+    ]
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "num_total": 444,
+  "preprocessor": {
+    "no_yaml_found": 0,
+    "empty_yaml": 0,
+    "garbage_around_yaml": 28
+  },
+  "yaml2json": {
+    "parse_fail": 36,
+    "parsing_error_dict": {
+      "general": {
+        "while parsing a block mapping\n  in \"<unicode string>\", line 6, column 7:\n          id: e1\n          ^\nexpected <block end>, but found '-'\n  in \"<unicode string>\", line 21, column 7:\n          - parameter<2>:\n          ^": 9,
+        "while scanning for the next token\nfound character '\\t' that cannot start any token\n  in \"<unicode string>\", line 6, column 1:\n    \tid: e1\n    ^": 4,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 3, column 1:\n    text_contains_entities: true\n    ^\nexpected <block end>, but found '-'\n  in \"<unicode string>\", line 21, column 1:\n    - entity<2>:\n    ^": 2,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 21, column 19:\n                      value_id: v1\n                      ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 23, column 202:\n     ... parts of the teacher unchanged.\"/null\n                                         ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 5, column 5:\n      - entity<1>:\n        ^\nexpected <block end>, but found '-'\n  in \"<unicode string>\", line 11, column 5:\n        -\n        ^": 1,
+        "while scanning a simple key\n  in \"<unicode string>\", line 21, column 7:\n          ...\n          ^\ncould not find expected ':'\n  in \"<unicode string>\", line 22, column 3:\n      - entity<2>:\n      ^": 5,
+        "while scanning a simple key\n  in \"<unicode string>\", line 53, column 19:\n                      ...\n                      ^\ncould not find expected ':'\n  in \"<unicode string>\", line 54, column 19:\n                      - value<10>:\n                      ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 17, column 19:\n                      value_id: v1\n                      ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 19, column 45:\n     ...       context: \"<value context>\"/null\n                                         ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 3, column 1:\n    text_contains_entities: true\n    ^\nexpected <block end>, but found '-'\n  in \"<unicode string>\", line 21, column 1:\n    - value<2>:\n    ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 3, column 1:\n    text_contains_entities: true\n    ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 19, column 27:\n    context: \"<value context>\"/null\n                              ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 17, column 19:\n                      value_id: v1\n                      ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 19, column 96:\n     ... nd anchor samples in a triplet.\"/null\n                                         ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 17, column 19:\n                      value_id: v1\n                      ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 19, column 89:\n     ... ent architectures in this work.\"/null\n                                         ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 17, column 19:\n                      value_id: v1\n                      ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 19, column 71:\n     ... r is a part of the GREAD model.\"/null\n                                         ^": 1,
+        "mapping values are not allowed here\n  in \"<unicode string>\", line 67, column 27:\n                      value_id: v1\n                              ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 3, column 1:\n    text_contains_entities: true\n    ^\nexpected <block end>, but found '-'\n  in \"<unicode string>\", line 21, column 1:\n    - parameter<2>:\n    ^": 2,
+        "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 23, column 26:\n                      value: \"A in [0,1]^{|\\mathcal {V}| \\tim ... \n                             ^\nfound unknown escape character 'm'\n  in \"<unicode string>\", line 23, column 41:\n     ...           value: \"A in [0,1]^{|\\mathcal {V}| \\times |\\mathcal {V}|}\"\n                                         ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 5, column 5:\n      - entity<1>:\n        ^\nexpected <block end>, but found '-'\n  in \"<unicode string>\", line 11, column 5:\n        - parameter<1>:\n        ^": 2,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 22, column 19:\n                      value_id: v1\n                      ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 24, column 45:\n     ...       context: \"<value context>\"/null\n                                         ^": 1
+      },
+      "last_line_cut": {
+        "while parsing a block mapping\n  in \"<unicode string>\", line 6, column 7:\n          id: e1\n          ^\nexpected <block end>, but found '-'\n  in \"<unicode string>\", line 21, column 7:\n          - parameter<2>:\n          ^": 9,
+        "while scanning for the next token\nfound character '\\t' that cannot start any token\n  in \"<unicode string>\", line 6, column 1:\n    \tid: e1\n    ^": 4,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 3, column 1:\n    text_contains_entities: true\n    ^\nexpected <block end>, but found '-'\n  in \"<unicode string>\", line 21, column 1:\n    - entity<2>:\n    ^": 2,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 21, column 19:\n                      value_id: v1\n                      ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 23, column 202:\n     ... parts of the teacher unchanged.\"/null\n                                         ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 5, column 5:\n      - entity<1>:\n        ^\nexpected <block end>, but found '-'\n  in \"<unicode string>\", line 11, column 5:\n        -\n        ^": 1,
+        "while scanning a simple key\n  in \"<unicode string>\", line 21, column 7:\n          ...\n          ^\ncould not find expected ':'\n  in \"<unicode string>\", line 22, column 3:\n      - entity<2>:\n      ^": 5,
+        "while scanning a simple key\n  in \"<unicode string>\", line 53, column 19:\n                      ...\n                      ^\ncould not find expected ':'\n  in \"<unicode string>\", line 54, column 19:\n                      - value<10>:\n                      ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 17, column 19:\n                      value_id: v1\n                      ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 19, column 45:\n     ...       context: \"<value context>\"/null\n                                         ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 3, column 1:\n    text_contains_entities: true\n    ^\nexpected <block end>, but found '-'\n  in \"<unicode string>\", line 21, column 1:\n    - value<2>:\n    ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 3, column 1:\n    text_contains_entities: true\n    ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 19, column 27:\n    context: \"<value context>\"/null\n                              ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 17, column 19:\n                      value_id: v1\n                      ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 19, column 96:\n     ... nd anchor samples in a triplet.\"/null\n                                         ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 17, column 19:\n                      value_id: v1\n                      ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 19, column 89:\n     ... ent architectures in this work.\"/null\n                                         ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 17, column 19:\n                      value_id: v1\n                      ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 19, column 71:\n     ... r is a part of the GREAD model.\"/null\n                                         ^": 1,
+        "mapping values are not allowed here\n  in \"<unicode string>\", line 67, column 27:\n                      value_id: v1\n                              ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 3, column 1:\n    text_contains_entities: true\n    ^\nexpected <block end>, but found '-'\n  in \"<unicode string>\", line 21, column 1:\n    - parameter<2>:\n    ^": 2,
+        "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 23, column 26:\n                      value: \"A in [0,1]^{|\\mathcal {V}| \\tim ... \n                             ^\nfound unknown escape character 'm'\n  in \"<unicode string>\", line 23, column 41:\n     ...           value: \"A in [0,1]^{|\\mathcal {V}| \\times |\\mathcal {V}|}\"\n                                         ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 5, column 5:\n      - entity<1>:\n        ^\nexpected <block end>, but found '-'\n  in \"<unicode string>\", line 11, column 5:\n        - parameter<1>:\n        ^": 2,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 22, column 19:\n                      value_id: v1\n                      ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 24, column 45:\n     ...       context: \"<value context>\"/null\n                                         ^": 1
+      },
+      "quotes": {
+        "while parsing a block mapping\n  in \"<unicode string>\", line 6, column 7:\n          id: \"e1\"\n          ^\nexpected <block end>, but found '-'\n  in \"<unicode string>\", line 21, column 7:\n          - parameter<2>:\n          ^": 9,
+        "while scanning for the next token\nfound character '\\t' that cannot start any token\n  in \"<unicode string>\", line 6, column 1:\n    \tid: \"e1\"\n    ^": 4,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 3, column 1:\n    text_contains_entities: true\n    ^\nexpected <block end>, but found '-'\n  in \"<unicode string>\", line 21, column 1:\n    - entity<2>:\n    ^": 2,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 21, column 19:\n                      value_id: v1\n                      ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 23, column 202:\n     ... parts of the teacher unchanged.\"/null\n                                         ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 5, column 5:\n      - entity<1>:\n        ^\nexpected <block end>, but found '-'\n  in \"<unicode string>\", line 11, column 5:\n        -\n        ^": 1,
+        "while scanning a simple key\n  in \"<unicode string>\", line 21, column 7:\n          ...\n          ^\ncould not find expected ':'\n  in \"<unicode string>\", line 22, column 3:\n      - entity<2>:\n      ^": 5,
+        "while scanning a simple key\n  in \"<unicode string>\", line 53, column 19:\n                      ...\n                      ^\ncould not find expected ':'\n  in \"<unicode string>\", line 54, column 19:\n                      - value<10>:\n                      ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 17, column 19:\n                      value_id: v1\n                      ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 19, column 45:\n     ...       context: \"<value context>\"/null\n                                         ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 3, column 1:\n    text_contains_entities: true\n    ^\nexpected <block end>, but found '-'\n  in \"<unicode string>\", line 21, column 1:\n    - value<2>:\n    ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 3, column 1:\n    text_contains_entities: true\n    ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 19, column 27:\n    context: \"<value context>\"/null\n                              ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 17, column 19:\n                      value_id: v1\n                      ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 19, column 96:\n     ... nd anchor samples in a triplet.\"/null\n                                         ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 17, column 19:\n                      value_id: v1\n                      ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 19, column 89:\n     ... ent architectures in this work.\"/null\n                                         ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 17, column 19:\n                      value_id: v1\n                      ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 19, column 71:\n     ... r is a part of the GREAD model.\"/null\n                                         ^": 1,
+        "mapping values are not allowed here\n  in \"<unicode string>\", line 67, column 27:\n                      value_id: v1\n                              ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 3, column 1:\n    text_contains_entities: true\n    ^\nexpected <block end>, but found '-'\n  in \"<unicode string>\", line 21, column 1:\n    - parameter<2>:\n    ^": 2,
+        "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 23, column 26:\n                      value: \"A in [0,1]^{|\\mathcal {V}| \\tim ... \n                             ^\nfound unknown escape character 'm'\n  in \"<unicode string>\", line 23, column 41:\n     ...           value: \"A in [0,1]^{|\\mathcal {V}| \\times |\\mathcal {V}|}\"\n                                         ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 5, column 5:\n      - entity<1>:\n        ^\nexpected <block end>, but found '-'\n  in \"<unicode string>\", line 11, column 5:\n        - parameter<1>:\n        ^": 2,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 22, column 19:\n                      value_id: v1\n                      ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 24, column 45:\n     ...       context: \"<value context>\"/null\n                                         ^": 1
+      },
+      "quotes+esc": {
+        "while parsing a block mapping\n  in \"<unicode string>\", line 6, column 7:\n          id: \"e1\"\n          ^\nexpected <block end>, but found '-'\n  in \"<unicode string>\", line 21, column 7:\n          - parameter<2>:\n          ^": 9,
+        "while scanning for the next token\nfound character '\\t' that cannot start any token\n  in \"<unicode string>\", line 6, column 1:\n    \tid: \"e1\"\n    ^": 4,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 3, column 1:\n    text_contains_entities: true\n    ^\nexpected <block end>, but found '-'\n  in \"<unicode string>\", line 21, column 1:\n    - entity<2>:\n    ^": 2,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 21, column 19:\n                      value_id: v1\n                      ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 23, column 202:\n     ... parts of the teacher unchanged.\"/null\n                                         ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 5, column 5:\n      - entity<1>:\n        ^\nexpected <block end>, but found '-'\n  in \"<unicode string>\", line 11, column 5:\n        -\n        ^": 1,
+        "while scanning a simple key\n  in \"<unicode string>\", line 21, column 7:\n          ...\n          ^\ncould not find expected ':'\n  in \"<unicode string>\", line 22, column 3:\n      - entity<2>:\n      ^": 5,
+        "while scanning a simple key\n  in \"<unicode string>\", line 53, column 19:\n                      ...\n                      ^\ncould not find expected ':'\n  in \"<unicode string>\", line 54, column 19:\n                      - value<10>:\n                      ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 17, column 19:\n                      value_id: v1\n                      ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 19, column 45:\n     ...       context: \"<value context>\"/null\n                                         ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 3, column 1:\n    text_contains_entities: true\n    ^\nexpected <block end>, but found '-'\n  in \"<unicode string>\", line 21, column 1:\n    - value<2>:\n    ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 3, column 1:\n    text_contains_entities: true\n    ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 19, column 27:\n    context: \"<value context>\"/null\n                              ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 17, column 19:\n                      value_id: v1\n                      ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 19, column 96:\n     ... nd anchor samples in a triplet.\"/null\n                                         ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 17, column 19:\n                      value_id: v1\n                      ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 19, column 89:\n     ... ent architectures in this work.\"/null\n                                         ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 17, column 19:\n                      value_id: v1\n                      ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 19, column 71:\n     ... r is a part of the GREAD model.\"/null\n                                         ^": 1,
+        "mapping values are not allowed here\n  in \"<unicode string>\", line 67, column 27:\n                      value_id: v1\n                              ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 3, column 1:\n    text_contains_entities: true\n    ^\nexpected <block end>, but found '-'\n  in \"<unicode string>\", line 21, column 1:\n    - parameter<2>:\n    ^": 2,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 22, column 19:\n                      value_id: v1\n                      ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 24, column 45:\n     ...       context: \"<value context>\"/null\n                                         ^": 2,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 5, column 5:\n      - entity<1>:\n        ^\nexpected <block end>, but found '-'\n  in \"<unicode string>\", line 11, column 5:\n        - parameter<1>:\n        ^": 2
+      },
+      "quotes+trailing": {
+        "while parsing a block mapping\n  in \"<unicode string>\", line 6, column 7:\n          id: \"e1\"\n          ^\nexpected <block end>, but found '-'\n  in \"<unicode string>\", line 21, column 7:\n          - parameter<2>:\n          ^": 12,
+        "while scanning for the next token\nfound character '\\t' that cannot start any token\n  in \"<unicode string>\", line 6, column 1:\n    \tid: \"e1\"\n    ^": 4,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 3, column 1:\n    text_contains_entities: true\n    ^\nexpected <block end>, but found '-'\n  in \"<unicode string>\", line 21, column 1:\n    - entity<2>:\n    ^": 2,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 37, column 19:\n                      value_id: v1\n                      ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 39, column 50:\n     ...  context: \"At iteration <tau> ,\"/ \"\"\n                                         ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 5, column 5:\n      - entity<1>:\n        ^\nexpected <block end>, but found '-'\n  in \"<unicode string>\", line 11, column 5:\n        -\n        ^": 1,
+        "while scanning a simple key\n  in \"<unicode string>\", line 21, column 7:\n          ...\n          ^\ncould not find expected ':'\n  in \"<unicode string>\", line 22, column 3:\n      - entity<2>:\n      ^": 6,
+        "while scanning a simple key\n  in \"<unicode string>\", line 53, column 19:\n                      ...\n                      ^\ncould not find expected ':'\n  in \"<unicode string>\", line 54, column 19:\n                      - value<10>:\n                      ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 3, column 1:\n    text_contains_entities: true\n    ^\nexpected <block end>, but found '-'\n  in \"<unicode string>\", line 21, column 1:\n    - value<2>:\n    ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 3, column 1:\n    text_contains_entities: true\n    ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 19, column 27:\n    context: \"<value context>\"/null\n                              ^": 1,
+        "mapping values are not allowed here\n  in \"<unicode string>\", line 67, column 27:\n                      value_id: v1\n                              ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 3, column 1:\n    text_contains_entities: true\n    ^\nexpected <block end>, but found '-'\n  in \"<unicode string>\", line 21, column 1:\n    - parameter<2>:\n    ^": 2,
+        "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 23, column 26:\n                      value: \"A in [0,1]^{|\\mathcal {V}| \\tim ... \n                             ^\nfound unknown escape character 'm'\n  in \"<unicode string>\", line 23, column 41:\n     ...           value: \"A in [0,1]^{|\\mathcal {V}| \\times |\\mathcal {V}|}\"\n                                         ^": 1,
+        "while parsing a block mapping\n  in \"<unicode string>\", line 5, column 5:\n      - entity<1>:\n        ^\nexpected <block end>, but found '-'\n  in \"<unicode string>\", line 11, column 5:\n        - parameter<1>:\n        ^": 2,
+        "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 65, column 13:\n          name: \"L\\*H(t)\"\n                ^\nfound unknown escape character '*'\n  in \"<unicode string>\", line 65, column 16:\n          name: \"L\\*H(t)\"\n                   ^": 1
+      }
+    }
+  },
+  "coarse_structure": {
+    "coarse_structure_error": 0
+  },
+  "json_content": {
+    "num_ents_intext_notintext": [
+      2362,
+      1005
+    ],
+    "num_ent_types_valid_invalid": [
+      2114,
+      1253
+    ],
+    "num_aids_valid_invalid": [
+      3351,
+      16
+    ],
+    "num_pids_valid_invalid": [
+      0,
+      758
+    ],
+    "num_vids_valid_invalid": [
+      0,
+      741
+    ],
+    "num_cids_valid_invalid": [
+      0,
+      719
+    ]
+  }
+}

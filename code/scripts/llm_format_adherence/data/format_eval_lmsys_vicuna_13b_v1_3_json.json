@@ -1,0 +1,123 @@
+{
+  "num_total": 444,
+  "preprocessor": {
+    "no_yaml_found": 0,
+    "empty_yaml": 0,
+    "garbage_around_yaml": 205
+  },
+  "yaml2json": {
+    "parse_fail": 188,
+    "parsing_error_dict": {
+      "general": {
+        "Expecting ',' delimiter: line 8 column 31 (char 241)": 159,
+        "Expecting property name enclosed in double quotes: line 11 column 7 (char 222)": 1,
+        "Expecting ',' delimiter: line 254 column 9 (char 5799)": 1,
+        "Invalid control character at: line 253 column 23 (char 6574)": 1,
+        "Expecting ':' delimiter: line 238 column 30 (char 5626)": 1,
+        "Expecting ',' delimiter: line 8 column 31 (char 237)": 7,
+        "Expecting ',' delimiter: line 19 column 35 (char 484)": 1,
+        "Invalid \\escape: line 218 column 13 (char 4610)": 1,
+        "Expecting value: line 208 column 1 (char 5059)": 1,
+        "Expecting ',' delimiter: line 243 column 33 (char 6094)": 1,
+        "Invalid control character at: line 230 column 25 (char 5326)": 1,
+        "Expecting ',' delimiter: line 197 column 31 (char 4683)": 1,
+        "Invalid \\escape: line 216 column 18 (char 4401)": 1,
+        "Expecting ',' delimiter: line 267 column 37 (char 6549)": 1,
+        "Expecting ',' delimiter: line 258 column 33 (char 6351)": 1,
+        "Invalid \\escape: line 242 column 27 (char 5728)": 1,
+        "Expecting property name enclosed in double quotes: line 19 column 17 (char 1099)": 1,
+        "Expecting ',' delimiter: line 44 column 31 (char 1339)": 1,
+        "Expecting ',' delimiter: line 8 column 31 (char 195)": 1,
+        "Expecting ',' delimiter: line 236 column 3 (char 5490)": 1,
+        "Invalid control character at: line 267 column 44 (char 5622)": 1,
+        "Invalid control character at: line 249 column 75 (char 4948)": 1,
+        "Invalid control character at: line 50 column 19 (char 1191)": 1,
+        "Invalid control character at: line 130 column 21 (char 3159)": 1
+      },
+      "only_copy": {
+        "true": 166
+      },
+      "quotes+esc": {
+        "Expecting ',' delimiter: line 8 column 31 (char 241)": 159,
+        "Expecting property name enclosed in double quotes: line 11 column 7 (char 222)": 1,
+        "Expecting ',' delimiter: line 254 column 9 (char 5799)": 1,
+        "Invalid control character at: line 253 column 23 (char 6574)": 1,
+        "Expecting ':' delimiter: line 238 column 30 (char 5626)": 1,
+        "Expecting ',' delimiter: line 8 column 31 (char 237)": 7,
+        "Expecting ',' delimiter: line 19 column 35 (char 484)": 1,
+        "Invalid \\escape: line 218 column 13 (char 4610)": 1,
+        "Expecting value: line 208 column 1 (char 5059)": 1,
+        "Expecting ',' delimiter: line 243 column 33 (char 6094)": 1,
+        "Invalid control character at: line 230 column 25 (char 5326)": 1,
+        "Expecting ',' delimiter: line 197 column 31 (char 4683)": 1,
+        "Invalid \\escape: line 216 column 18 (char 4401)": 1,
+        "Expecting ',' delimiter: line 267 column 37 (char 6549)": 1,
+        "Expecting ',' delimiter: line 258 column 33 (char 6351)": 1,
+        "Invalid \\escape: line 243 column 19 (char 5758)": 1,
+        "Expecting property name enclosed in double quotes: line 19 column 17 (char 1099)": 1,
+        "Expecting ',' delimiter: line 44 column 31 (char 1339)": 1,
+        "Expecting ',' delimiter: line 8 column 31 (char 195)": 1,
+        "Expecting ',' delimiter: line 236 column 3 (char 5490)": 1,
+        "Invalid control character at: line 267 column 44 (char 5622)": 1,
+        "Invalid control character at: line 249 column 75 (char 4948)": 1,
+        "Invalid control character at: line 50 column 19 (char 1191)": 1,
+        "Invalid control character at: line 130 column 21 (char 3159)": 1
+      },
+      "fixed": {
+        "Expecting ',' delimiter: line 8 column 31 (char 241)": 159,
+        "Expecting property name enclosed in double quotes: line 11 column 7 (char 222)": 1,
+        "Expecting ',' delimiter: line 254 column 9 (char 5799)": 1,
+        "Unterminated string starting at: line 253 column 17 (char 6568)": 1,
+        "Expecting ':' delimiter: line 238 column 30 (char 5626)": 1,
+        "Expecting ',' delimiter: line 8 column 31 (char 237)": 7,
+        "Expecting ',' delimiter: line 19 column 35 (char 484)": 1,
+        "Invalid \\escape: line 218 column 13 (char 4610)": 1,
+        "Expecting value: line 207 column 28 (char 5058)": 1,
+        "Expecting ',' delimiter: line 243 column 33 (char 6094)": 1,
+        "Unterminated string starting at: line 230 column 17 (char 5318)": 1,
+        "Expecting ',' delimiter: line 197 column 31 (char 4683)": 1,
+        "Invalid \\escape: line 216 column 18 (char 4401)": 1,
+        "Expecting ',' delimiter: line 267 column 37 (char 6549)": 1,
+        "Expecting ',' delimiter: line 258 column 33 (char 6351)": 1,
+        "Invalid \\escape: line 242 column 27 (char 5728)": 1,
+        "Expecting property name enclosed in double quotes: line 19 column 17 (char 1099)": 1,
+        "Expecting ',' delimiter: line 44 column 31 (char 1339)": 1,
+        "Expecting ',' delimiter: line 8 column 31 (char 195)": 1,
+        "Expecting ',' delimiter: line 236 column 3 (char 5490)": 1,
+        "Unterminated string starting at: line 267 column 17 (char 5595)": 1,
+        "Invalid control character at: line 249 column 75 (char 4948)": 1,
+        "Unterminated string starting at: line 50 column 17 (char 1189)": 1,
+        "Unterminated string starting at: line 130 column 17 (char 3155)": 1
+      }
+    }
+  },
+  "coarse_structure": {
+    "coarse_structure_error": 82
+  },
+  "json_content": {
+    "num_ents_intext_notintext": [
+      495,
+      161
+    ],
+    "num_ent_types_valid_invalid": [
+      442,
+      214
+    ],
+    "num_aids_valid_invalid": [
+      610,
+      46
+    ],
+    "num_pids_valid_invalid": [
+      0,
+      270
+    ],
+    "num_vids_valid_invalid": [
+      0,
+      264
+    ],
+    "num_cids_valid_invalid": [
+      0,
+      264
+    ]
+  }
+}
