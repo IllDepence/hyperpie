@@ -154,6 +154,20 @@ Evaluating: 100%|█████████████████████
 {'dev_best_f1': 0, 'f1_': 0.5390254420008624, 'f1_with_ner_': 0.4286330314790858, 'ner_f1_': 0.7009456264775414}
 ```
 
+## Successful NER train+eval run
+
+```
+CUDA_VISIBLE_DEVICES=0  python3 run_acener.py --model_type bertspanmarker --model_name_or_path ./bert_models/scibert_scivocab_uncased --do_lower_case --data_dir scierc --learning_rate 2e-10 --num_train_epochs 1 --per_gpu_train_batch_size  8  --per_gpu_eval_batch_size 16 --gradient_accumulation_steps 1 --max_seq_length 512  --save_steps 2000 --max_pair_length 256 --max_mention_ori_length 8 --do_train --do_eval --evaluate_during_training --eval_all_checkpoints --fp16 --seed 42 --onedropout --lminit --train_file train.json --dev_file dev.json --test_file test.json --output_dir ./sciner-scibert_bad --output_results
+```
+
+## Successful RE train+eval run
+
+`cp sciner-scibert_bad/ent_pred_test.json scierc/`
+
+```
+CUDA_VISIBLE_DEVICES=0 python3 run_re.py --model_type bertsub --model_name_or_path ./bert_models/scibert_scivocab_uncased --do_lower_case --data_dir ./scierc --learning_rate 2e-15  --num_train_epochs 1 --per_gpu_train_batch_size 8 --per_gpu_eval_batch_size 16  --gradient_accumulation_steps 1 --max_seq_length 256 --max_pair_length 16 --save_steps 2500 --do_train --do_eval --evaluate_during_training --eval_all_checkpoints --eval_logsoftmax --fp16  --test_file ent_pred_test.json --use_ner_results --output_dir ./scire-scibert_bad
+```
+
 # Data notes
 
 [notes on data format and preprocessing](https://github.com/thunlp/PL-Marker/issues/11)
