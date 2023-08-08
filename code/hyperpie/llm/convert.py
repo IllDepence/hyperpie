@@ -201,11 +201,6 @@ def llm_output2eval_input(
         raise ValueError(f'Unknown output format {output_format}')
     status_dicts['yaml2json'] = yaml2json_status_dict
 
-    # return if parsing failed
-    if llm_output is None:
-        # YAML parsing failed
-        return None, status_dicts
-
     # input paragraph (used to determine text offsets)
     para = llm_output_dict['paragraph']
 
@@ -215,6 +210,11 @@ def llm_output2eval_input(
         para.get('paragraph_index'),
         para['text']  # required
     )
+
+    # return if parsing failed
+    if llm_output is None:
+        # YAML parsing failed
+        return eval_input, status_dicts
 
     # get coarse structure entries
     annotation_info, cs_status = get_coarse_structure_entries(
