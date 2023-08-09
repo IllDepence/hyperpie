@@ -3,13 +3,14 @@
 
 import json
 import os
+import random
 import re
 import sys
-from collections import OrderedDict, defaultdict
+from collections import OrderedDict
 from nltk.tokenize import sent_tokenize, word_tokenize
 
 
-def _replace_brackets(text):
+def _replace_brackets(sentence):
     """ Replace brackets with replacement tokens.
     """
 
@@ -22,11 +23,14 @@ def _replace_brackets(text):
         "}": "-RCB-"
     }
 
-    # TODO
+    new_sentence = []
+    for word in sentence:
+        if word in brackets:
+            new_sentence.append(brackets[word])
+        else:
+            new_sentence.append(word)
 
-    brackets
-
-    return None
+    return new_sentence
 
 
 def _convert_single_para(para):
@@ -203,10 +207,14 @@ def _convert_single_para(para):
                 'USED-FOR'
             ))
 
+    # replace brackets in sentences with replacement tokens
+    for sent_idx, sent in enumerate(conv_para['sentences']):
+        conv_para['sentences'][sent_idx] = _replace_brackets(sent)
+
     return conv_para
 
 
-def convert(annots_path):
+def convert(annots_path, generate_splits=False):
     # load and pre-process annotated text segments
     save_path = '../data/'
     annots_fn = os.path.basename(annots_path)
@@ -227,14 +235,63 @@ def convert(annots_path):
         for annot in annots_processed:
             f.write(json.dumps(annot) + '\n')
 
+    if not generate_splits:
+        return
+    # safe train/dev/test splits for 10-fold cross-validation
+    random.seed(42)
+    random.shuffle(annots_processed)
+    n = len(annots_processed)
+    num_folds = 10
+    # split data into <num_folds> folds
+    fold_size = n // num_folds
+    folds = []
+    for i in range(num_folds):
+        if i == num_folds - 1:
+            # last fold, add remaining samples
+            folds.append(annots_processed[i * fold_size:])
+        else:
+            # not last fold, add <fold_size> samples
+            folds.append(annots_processed[i * fold_size:(i + 1) * fold_size])
+    for i in range(num_folds):
+        # distribute samples to train/dev/test splits
+        # (train and dev eaach one fold, test the remaining folds)
+        train = []
+        dev = []
+        test = []
+        for j in range(num_folds):
+            if j == i:
+                # current fold, add to dev
+                dev.extend(folds[j])
+            elif j == (i + 1) % num_folds:
+                # next fold, add to test
+                test.extend(folds[j])
+            else:
+                # other folds, add to train
+                train.extend(folds[j])
+        # save train/dev/test splits
+        fold_name = f'fold_{i}'
+        fold_save_path = os.path.join(save_path, fold_name)
+        os.makedirs(fold_save_path, exist_ok=True)
+        with open(os.path.join(fold_save_path, 'train.jsonl'), 'w') as f:
+            for annot in train:
+                f.write(json.dumps(annot) + '\n')
+        with open(os.path.join(fold_save_path, 'dev.jsonl'), 'w') as f:
+            for annot in dev:
+                f.write(json.dumps(annot) + '\n')
+        with open(os.path.join(fold_save_path, 'test.jsonl'), 'w') as f:
+            for annot in test:
+                f.write(json.dumps(annot) + '\n')
+
 
 if __name__ == '__main__':
     # check command line arguments
-    if len(sys.argv) != 2:
+    if len(sys.argv) not in [2, 3]:
         print(
             'Usage: python hyperpie/data/convert_plmarker.py '
-            '/path/to/annots.json'
+            '/path/to/annots.jsonl [generate_splits]'
         )
         sys.exit(1)
     annots_path = sys.argv[1]
-    convert(annots_path)
+    if len(sys.argv) == 3:
+        generate_splits = bool(sys.argv[2])
+    convert(annots_path, generate_splits)
