@@ -105,18 +105,9 @@ def _convert_single_para(para):
             # increment counters
             global_word_idx += 1
 
-    # TODO
-    # - tokenize paragraph into sentences while keeping track of offsets
-    # - iterate over entities
-    #   - iterate over surface forms
-    #     - create "ner" dict entries
-    #     - create "clusters" dict entries
-    # - iterate over relations
-    #   - create "relations" dict
-    #     - open question: how to handle
-    #       1. relations accross sentence boundaries
-    #       2. relations between entities with multiple surface forms
+    # convert NER annotations
     surf_id_to_global_word_offset = {}
+    surf_id_to_send_idx = {}
     for e_id, entity in para['annotation']['entities'].items():
         e_type = entity['type']
         for surf_form in entity['surface_forms']:
@@ -142,16 +133,10 @@ def _convert_single_para(para):
                 ):
                     # both offsets found, stop searching
                     break
-            try:
-                assert output_offset_start is not None
-            except:
-                # initialize debugger to step through code
-                import pdb
-                pdb.set_trace()
-                import sys
-                print('bye')
-                sys.exit()
+            assert output_offset_start is not None
             assert output_offset_end is not None
+            # NOTE: if "clusters" key turns out to be needed in
+            # output, create here if start and end differ
             surf_id_to_global_word_offset[surf_form['id']] = (
                 output_offset_start,
                 output_offset_end
@@ -167,9 +152,31 @@ def _convert_single_para(para):
                     output_sent_idx = sent_idx
                     break
             assert output_sent_idx is not None
+            surf_id_to_send_idx[surf_form['id']] = output_sent_idx
             # save output
             conv_para['ner'][output_sent_idx].append(
                 (output_offset_start, output_offset_end, e_type)
+            )
+
+    # convert relation annotations
+    for rel_id, relation in para['annotation']['relations'].items():
+        for evidence in relation['evidences']:
+            source_surf_id = evidence['source_surface_form']
+            target_surf_id = evidence['target_surface_form']
+            source_offset = surf_id_to_global_word_offset[source_surf_id]
+            target_offset = surf_id_to_global_word_offset[target_surf_id]
+            source_sent_idx = surf_id_to_send_idx[source_surf_id]
+            target_sent_idx = surf_id_to_send_idx[target_surf_id]
+            if source_sent_idx != target_sent_idx:
+                # not compatible with PL-Marker output format
+                continue
+            # save output
+            conv_para['relations'][source_sent_idx].append(
+                source_offset[0],
+                source_offset[1],
+                target_offset[0],
+                target_offset[1],
+                'USED-FOR'
             )
 
     with open('/tmp/conv_para.json', 'w') as f:
