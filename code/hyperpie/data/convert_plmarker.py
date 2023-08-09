@@ -62,13 +62,24 @@ def _convert_single_para(para):
         sent_words = word_tokenize(sent)
         # get offset of all words in sentence
         para_sent_word_offsets[sent_idx] = {}
+        # prepare list of words in sentence that is safe for later
+        # regex matching (needed b/c nltk.work_tokenize converts
+        # quotation marks to `` and '')
+        # (see: https://stackoverflow.com/a/32197336)
+        nltk_regex_safe_words = []
+        for word in sent_words:
+            if word in ['``', "''"]:
+                safe_word = r'``|\'\'|\"'
+            else:
+                safe_word = re.escape(word)
+            nltk_regex_safe_words.append(safe_word)
         # create regex for tokenised words of sentence with optional
         # whitespace in between, example:
         # 'This is (maybe) a test.'
         # -> r'(This)\s*(is)\s*(\()\s*(maybe)\s*(\))\s*(a)\s*(test)\s*(\.)
         words_patt = re.compile(
             r'(' +
-            r')\s*('.join([re.escape(wrd) for wrd in sent_words]) +
+            r')\s*('.join(nltk_regex_safe_words) +
             r')'
         )
         words_match = words_patt.search(sent)
@@ -91,7 +102,16 @@ def _convert_single_para(para):
             assert conv_para['sentences'][sent_idx][word_idx] == word
             # get offsets of sentence words in para
             word_match = word_matches[word_idx]
-            assert word_match[2] == word
+            try:
+                assert word_match[2] == word
+            except AssertionError:
+                if word in ['``', "''", "\""]:
+                    assert word_match[2] in ['``', "''", "\""]
+                    # b/c nltk.work_tokenize converts
+                    # quotation marks to `` and ''
+                    # (see: https://stackoverflow.com/a/32197336)
+                else:
+                    raise AssertionError
             # determine start and end offset of word in sentence, taking
             # into account that the same word may occur multiple times
             para_sent_word_offsets[sent_idx][word_idx] = (
@@ -111,6 +131,10 @@ def _convert_single_para(para):
     for e_id, entity in para['annotation']['entities'].items():
         e_type = entity['type']
         for surf_form in entity['surface_forms']:
+            if surf_form['id'] == '#c1840f52-7e45-4dea-9fbf-47a5607675e3':
+                # NOTE: known edge with the data where the conversion
+                # method gets confused b/c a sentnce match is not unique
+                continue
             # determine global word offset of surface form
             output_offset_start = None
             output_offset_end = None
@@ -171,16 +195,13 @@ def _convert_single_para(para):
                 # not compatible with PL-Marker output format
                 continue
             # save output
-            conv_para['relations'][source_sent_idx].append(
+            conv_para['relations'][source_sent_idx].append((
                 source_offset[0],
                 source_offset[1],
                 target_offset[0],
                 target_offset[1],
                 'USED-FOR'
-            )
-
-    with open('/tmp/conv_para.json', 'w') as f:
-        json.dump(conv_para, f, indent=2)
+            ))
 
     return conv_para
 
@@ -190,7 +211,7 @@ def convert(annots_path):
     save_path = '../data/'
     annots_fn = os.path.basename(annots_path)
     annots_fn_base, ext = os.path.splitext(annots_fn)
-    annots_processed_fn = f'{annots_fn_base}_plmarker{ext}'
+    annots_processed_fn = f'{annots_fn_base}_plmarker.jsonl'
 
     # load annotations
     with open(annots_path, 'r') as f:
@@ -203,7 +224,8 @@ def convert(annots_path):
 
     # save converted annotations
     with open(os.path.join(save_path, annots_processed_fn), 'w') as f:
-        json.dump(annots_processed, f)
+        for annot in annots_processed:
+            f.write(json.dumps(annot) + '\n')
 
 
 if __name__ == '__main__':
