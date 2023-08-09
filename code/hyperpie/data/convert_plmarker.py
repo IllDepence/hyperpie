@@ -8,6 +8,7 @@ import re
 import sys
 from collections import OrderedDict
 from nltk.tokenize import sent_tokenize, word_tokenize
+from uuid import uuid4
 
 
 def _replace_brackets(sentence):
@@ -33,14 +34,18 @@ def _replace_brackets(sentence):
     return new_sentence
 
 
-def _convert_single_para(para):
+def _convert_single_para(para, loose_matching=False):
     """ Convert single paragraph to PL-Marker format.
     """
 
     conv_para = OrderedDict()
+    if para['paragraph_index'] is not None:
+        sub_id = para['paragraph_index']
+    else:
+        sub_id = str(uuid4())
     conv_para['doc_key'] = '{}-{}'.format(
         para['document_id'],
-        para['paragraph_index']
+        sub_id
     )
     conv_para['sentences'] = []
     conv_para['ner'] = []
@@ -161,6 +166,11 @@ def _convert_single_para(para):
                 ):
                     # both offsets found, stop searching
                     break
+            if loose_matching and (
+                output_offset_start is None or
+                output_offset_end is None
+            ):
+                continue
             assert output_offset_start is not None
             assert output_offset_end is not None
             # NOTE: if "clusters" key turns out to be needed in
@@ -179,6 +189,8 @@ def _convert_single_para(para):
                     # surf form within sentence, stop searching
                     output_sent_idx = sent_idx
                     break
+            if loose_matching and output_sent_idx is None:
+                continue
             assert output_sent_idx is not None
             surf_id_to_send_idx[surf_form['id']] = output_sent_idx
             # save output
@@ -214,7 +226,7 @@ def _convert_single_para(para):
     return conv_para
 
 
-def convert(annots_path, generate_splits=False):
+def convert(annots_path, generate_splits=False, loose_matching=False):
     # load and pre-process annotated text segments
     save_path = '../data/'
     annots_fn = os.path.basename(annots_path)
@@ -227,7 +239,7 @@ def convert(annots_path, generate_splits=False):
     # process annotations
     annots_processed = []
     for para in annots:
-        para_proc = _convert_single_para(para)
+        para_proc = _convert_single_para(para, loose_matching)
         annots_processed.append(para_proc)
 
     # save converted annotations
@@ -285,13 +297,18 @@ def convert(annots_path, generate_splits=False):
 
 if __name__ == '__main__':
     # check command line arguments
-    if len(sys.argv) not in [2, 3]:
+    if len(sys.argv) not in [2, 3, 4]:
         print(
             'Usage: python hyperpie/data/convert_plmarker.py '
-            '/path/to/annots.jsonl [generate_splits]'
+            '/path/to/annots.jsonl [generate_splits|loose_matching]'
         )
         sys.exit(1)
     annots_path = sys.argv[1]
-    if len(sys.argv) == 3:
-        generate_splits = bool(sys.argv[2])
-    convert(annots_path, generate_splits)
+    generate_splits = False
+    loose_matching = False
+    if len(sys.argv) >= 3:
+        if 'generate_splits' in sys.argv[2:]:
+            generate_splits = True
+        if 'loose_matching' in sys.argv[2:]:
+            loose_matching = True
+    convert(annots_path, generate_splits, loose_matching)

@@ -160,6 +160,8 @@ Evaluating: 100%|█████████████████████
 CUDA_VISIBLE_DEVICES=0  python3 run_acener.py --model_type bertspanmarker --model_name_or_path ./bert_models/scibert_scivocab_uncased --do_lower_case --data_dir scierc --learning_rate 2e-10 --num_train_epochs 1 --per_gpu_train_batch_size  8  --per_gpu_eval_batch_size 16 --gradient_accumulation_steps 1 --max_seq_length 512  --save_steps 2000 --max_pair_length 256 --max_mention_ori_length 8 --do_train --do_eval --evaluate_during_training --eval_all_checkpoints --fp16 --seed 42 --onedropout --lminit --train_file train.json --dev_file dev.json --test_file test.json --output_dir ./sciner-scibert_bad --output_results
 ```
 
+**NOTE:** if `output_dir` contains "test", not all data will be used (!!!)
+
 ## Successful RE train+eval run
 
 `cp sciner-scibert_bad/ent_pred_test.json scierc/`
@@ -169,6 +171,8 @@ CUDA_VISIBLE_DEVICES=0 python3 run_re.py --model_type bertsub --model_name_or_pa
 ```
 
 # Data notes
+
+## Data prep
 
 [notes on data format and preprocessing](https://github.com/thunlp/PL-Marker/issues/11)
 
@@ -185,7 +189,11 @@ token replacements (seen in SciERC and found below mapping in ontonotes preproce
 
 ## Using with new data
 
-Need to adjust number of labels ([source](https://github.com/thunlp/PL-Marker/issues/35#issuecomment-1289256473))
+Need to adjust number of labels ([source](https://github.com/thunlp/PL-Marker/issues/35#issuecomment-1289256473)) and label list
+
+entity types:
+
+**NOTE:** add 'NIL' + actual entity types
 
 ```
 PL-Marker/run_acener.py
@@ -200,3 +208,34 @@ Lines 939 to 946 in 07fde08
  else: 
      assert (False) 
 ```
+
+```
+PL-Marker/run_acener.py
+
+Lines 112 onwards
+      if args.data_dir.find('ace')!=-1:
+          self.ner_label_list = ['NIL', 'FAC', 'WEA', 'LOC', 'VEH', 'GPE', 'ORG', 'PER']
+      [...]
+```
+
+relation types:
+
+```
+PL-Marker/run_re.py
+
+Lines 1071 onwards
+    if args.data_dir.find('ace')!=-1:
+        num_ner_labels = 8
+      [...]
+```
+
+```
+PL-Marker/run_re.py
+
+Lines 120 onwards
+        if args.data_dir.find('ace05')!=-1:
+            self.ner_label_list = ['NIL', 'FAC', 'WEA', 'LOC', 'VEH', 'GPE', 'ORG', 'PER']
+      [...]
+```
+
+**↑ NOTE:** the number of labels is (`<num_actual_labels+1>` + `<num_actual_labels+1>` - `<num_sym_labels>` (the +1s are for 'NIL'). Example: only one type of relation 'USED-FOR' and only 'NIL' in `sym_labels` -> 2 + 2 - 1
