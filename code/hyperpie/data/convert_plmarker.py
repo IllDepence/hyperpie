@@ -34,7 +34,7 @@ def _replace_brackets(sentence):
     return new_sentence
 
 
-def _convert_single_para(para, loose_matching=False):
+def _convert_single_para(para, loose_matching=False, cap_num_words=False):
     """ Convert single paragraph to PL-Marker format.
     """
 
@@ -106,6 +106,10 @@ def _convert_single_para(para, loose_matching=False):
         # keep track of how often each potentially reoccurring
         # word has already been seen
         for word_idx, word, in enumerate(sent_words):
+            if type(cap_num_words) == int and word_idx > cap_num_words:
+                # cap sentence length to ensure compatibility with
+                # PL-Marker model
+                break
             # generate conversion output
             conv_para['sentences'][sent_idx].append(word)
             assert conv_para['sentences'][sent_idx][word_idx] == word
@@ -226,7 +230,12 @@ def _convert_single_para(para, loose_matching=False):
     return conv_para
 
 
-def convert(annots_path, generate_splits=False, loose_matching=False):
+def convert(
+    annots_path,
+    generate_splits=False,
+    loose_matching=False,
+    cap_num_words=False
+):
     # load and pre-process annotated text segments
     save_path = '../data/'
     annots_fn = os.path.basename(annots_path)
@@ -236,10 +245,14 @@ def convert(annots_path, generate_splits=False, loose_matching=False):
     # load annotations
     with open(annots_path, 'r') as f:
         annots = json.load(f)
+
+    if type(cap_num_words) == int:
+        print(f'WARNING: setting word cap to {cap_num_words}')
+
     # process annotations
     annots_processed = []
     for para in annots:
-        para_proc = _convert_single_para(para, loose_matching)
+        para_proc = _convert_single_para(para, loose_matching, cap_num_words)
         annots_processed.append(para_proc)
 
     # save converted annotations
@@ -296,6 +309,8 @@ def convert(annots_path, generate_splits=False, loose_matching=False):
 
 
 if __name__ == '__main__':
+    # set word limit (optional)
+    cap_num_words = False
     # check command line arguments
     if len(sys.argv) not in [2, 3, 4]:
         print(
@@ -311,4 +326,4 @@ if __name__ == '__main__':
             generate_splits = True
         if 'loose_matching' in sys.argv[2:]:
             loose_matching = True
-    convert(annots_path, generate_splits, loose_matching)
+    convert(annots_path, generate_splits, loose_matching, cap_num_words)
