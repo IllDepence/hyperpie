@@ -6,7 +6,7 @@ import os
 import random
 import re
 import sys
-from collections import OrderedDict
+from collections import OrderedDict, defaultdict
 from nltk.tokenize import sent_tokenize, word_tokenize
 from uuid import uuid4
 
@@ -263,36 +263,51 @@ def convert(
     if not generate_splits:
         return
     # safe train/dev/test splits for 10-fold cross-validation
-    random.seed(42)
-    random.shuffle(annots_processed)
-    n = len(annots_processed)
+    # group samples by document (paragraph “doc ID” is
+    # <paper ID>-<para ID/uuid>)
+    ppr_groups_dict = defaultdict(list)
+    for annot in annots_processed:
+        ppr_id = annot['doc_key'].split('-', maxsplit=1)[0]
+        ppr_groups_dict[ppr_id].append(annot)
+    ppr_groups = list(ppr_groups_dict.values())
+    # shuffle groups
+    random.shuffle(ppr_groups)
+    n = len(ppr_groups)
     num_folds = 10
-    # split data into <num_folds> folds
+    # split data into <num_folds> folds (keep ppr groups for now)
     fold_size = n // num_folds
-    folds = []
+    ppr_group_folds = []
     for i in range(num_folds):
         if i == num_folds - 1:
             # last fold, add remaining samples
-            folds.append(annots_processed[i * fold_size:])
+            ppr_group_folds.append(
+                ppr_groups[i * fold_size:]
+            )
         else:
             # not last fold, add <fold_size> samples
-            folds.append(annots_processed[i * fold_size:(i + 1) * fold_size])
+            ppr_group_folds.append(
+                ppr_groups[i * fold_size:(i + 1) * fold_size]
+            )
     for i in range(num_folds):
         # distribute samples to train/dev/test splits
         # (train and dev eaach one fold, test the remaining folds)
+        # (when assigning samples to folds, unpack ppr groups)
         train = []
         dev = []
         test = []
         for j in range(num_folds):
             if j == i:
                 # current fold, add to dev
-                dev.extend(folds[j])
+                for ppr_paras in ppr_group_folds[j]:
+                    dev.extend(ppr_paras)
             elif j == (i + 1) % num_folds:
                 # next fold, add to test
-                test.extend(folds[j])
+                for ppr_paras in ppr_group_folds[j]:
+                    test.extend(ppr_paras)
             else:
                 # other folds, add to train
-                train.extend(folds[j])
+                for ppr_paras in ppr_group_folds[j]:
+                    train.extend(ppr_paras)
         # save train/dev/test splits
         fold_name = f'fold_{i}'
         fold_save_path = os.path.join(save_path, fold_name)

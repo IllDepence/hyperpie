@@ -210,3 +210,32 @@ debugging:
 
 * made sure only valid entity types are used ✔
 * capping length of sentences to 200 words → fixed issue
+
+**Results**
+
+```
+08/11/2023 00:22:12 - INFO - __main__ -   ***** Running evaluation  *****
+08/11/2023 00:22:12 - INFO - __main__ -     Num examples = 270
+08/11/2023 00:22:12 - INFO - __main__ -     Batch size = 16
+Evaluating: 100%|██████████████████████████████████████████████| 17/17 [00:05<00:00,  3.14it/s]
+08/11/2023 00:22:17 - INFO - __main__ -     Evaluation done in total 5.432165 secs (49.703941 example per second)
+08/11/2023 00:22:17 - INFO - __main__ -   Result: {"f1": 0.8238213399503722, "f1_overlap": 0.8275862068965516, "precision": 0.8383838383838383, "recall": 0.8097560975609757}
+08/11/2023 00:22:17 - INFO - __main__ -   Result: {"dev_best_f1": 0.7066246056782334, "f1_": 0.8238213399503722, "f1_overlap_": 0.8275862068965516, "precision_": 0.8383838383838383, "recall_": 0.8097560975609757}
+```
+
+**Comparison to no dist. sup.**
+
+* w/o: `Result: {"f1": 0.8640776699029126, "f1_overlap": 0.8687350835322196, "precision": 0.8599033816425121, "recall": 0.8682926829268293}`
+* w/: `Result: {"f1": 0.8238213399503722, "f1_overlap": 0.8275862068965516, "precision": 0.8383838383838383, "recall": 0.8097560975609757}`
+
+* w/o: `Result: {"dev_best_f1": 0.7849829351535836, "f1_": 0.8640776699029126, "f1_overlap_": 0.8687350835322196, "precision_": 0.8599033816425121, "recall_": 0.8682926829268293}`
+* w/: `Result: {"dev_best_f1": 0.7066246056782334, "f1_": 0.8238213399503722, "f1_overlap_": 0.8275862068965516, "precision_": 0.8383838383838383, "recall_": 0.8097560975609757}`
+
+→ splits done by shuffling all samples → w/o dist sup. benefit from same paper data, w/ dist sup. introduce out of sample data
+→ do stratified sampling train/dev/test split wrt paper ID
+
+## Stratified data splits
+
+```
+...
+```
