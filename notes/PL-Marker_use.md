@@ -236,6 +236,161 @@ Evaluating: 100%|█████████████████████
 
 ## Stratified data splits
 
+### Fold 0
+
+#### NER
+
 ```
-...
+CUDA_VISIBLE_DEVICES=0  python3 run_acener.py --model_type bertspanmarker --model_name_or_path ./bert_models/scibert_scivocab_uncased --do_lower_case --data_dir ./hyperpie/fold_0/ --learning_rate 2e-5 --num_train_epochs 50 --per_gpu_train_batch_size 8  --per_gpu_eval_batch_size 16 --gradient_accumulation_steps 1 --max_seq_length 512  --save_steps 2000 --max_pair_length 256 --max_mention_ori_length 8 --do_train --do_eval --evaluate_during_training --eval_all_checkpoints --fp16 --seed 42 --onedropout --lminit --train_file train.jsonl --dev_file dev.jsonl --test_file test.jsonl --output_dir ./sciner-hyperpie_fold_0 --output_results
+```
+
+```
+08/11/2023 11:13:02 - INFO - __main__ -   ***** Running evaluation  *****
+08/11/2023 11:13:02 - INFO - __main__ -     Num examples = 258
+08/11/2023 11:13:02 - INFO - __main__ -     Batch size = 16
+Evaluating: 100%|██████████████████████████████████████████████| 17/17 [00:04<00:00,  3.44it/s]
+08/11/2023 11:13:07 - INFO - __main__ -     Evaluation done in total 4.942271 secs (52.202719 example per second)
+08/11/2023 11:13:07 - INFO - __main__ -   Result: {"f1": 0.702127659574468, "f1_overlap": 0.6984126984126985, "precision": 0.7951807228915663, "recall": 0.6285714285714286}
+08/11/2023 11:13:07 - INFO - __main__ -   Result: {"dev_best_f1": 0.7180277349768875, "f1_": 0.702127659574468, "f1_overlap_": 0.6984126984126985, "precision_": 0.7951807228915663, "recall_": 0.6285714285714286}
+```
+
+#### NER w/ dist
+
+```
+CUDA_VISIBLE_DEVICES=0  python3 run_acener.py --model_type bertspanmarker --model_name_or_path ./bert_models/scibert_scivocab_uncased --do_lower_case --data_dir ./hyperpie/fold_0_wLLMdist/ --learning_rate 2e-5 --num_train_epochs 50 --per_gpu_train_batch_size 8  --per_gpu_eval_batch_size 16 --gradient_accumulation_steps 1 --max_seq_length 512  --save_steps 2000 --max_pair_length 256 --max_mention_ori_length 8 --do_train --do_eval --evaluate_during_training --eval_all_checkpoints --fp16 --seed 42 --onedropout --lminit --train_file train.jsonl --dev_file dev.jsonl --test_file test.jsonl --output_dir ./sciner-hyperpie_fold_0_wLLMdist --output_results
+```
+
+```
+08/11/2023 17:49:28 - INFO - __main__ -   ***** Running evaluation  *****
+08/11/2023 17:49:28 - INFO - __main__ -     Num examples = 258
+08/11/2023 17:49:28 - INFO - __main__ -     Batch size = 16
+Evaluating: 100%|██████████████████████████████████████████████| 17/17 [00:05<00:00,  3.37it/s]
+08/11/2023 17:49:33 - INFO - __main__ -     Evaluation done in total 5.055305 secs (51.035495 example per second)
+08/11/2023 17:49:33 - INFO - __main__ -   Result: {"f1": 0.6035502958579881, "f1_overlap": 0.6017699115044247, "precision": 0.796875, "recall": 0.4857142857142857}
+08/11/2023 17:49:33 - INFO - __main__ -   Result: {"dev_best_f1": 0.5960264900662252, "f1_": 0.6035502958579881, "f1_overlap_": 0.6017699115044247, "precision_": 0.796875, "recall_": 0.4857142857142857}
+```
+
+#### Copy over intermediate results
+
+`cp sciner-hyperpie_fold_0/ent_pred_* hyperpie/fold_0/`
+
+#### RE
+
+```
+CUDA_VISIBLE_DEVICES=0 python3 run_re.py --model_type bertsub --model_name_or_path ./bert_models/scibert_scivocab_uncased --do_lower_case --data_dir ./hyperpie/fold_0 --learning_rate 2e-5  --num_train_epochs 10 --per_gpu_train_batch_size 8 --per_gpu_eval_batch_size 16  --gradient_accumulation_steps 1 --max_seq_length 256 --max_pair_length 16 --save_steps 2500 --do_train --do_eval --evaluate_during_training --eval_all_checkpoints --eval_logsoftmax --fp16 --train_file train.jsonl --test_file ent_pred_test.json --dev_file ent_pred_dev.json --use_ner_results --output_dir ./scire-hyperpie_fold_0
+```
+
+```
+08/15/2023 08:36:05 - INFO - __main__ -   ***** Running evaluation  *****
+08/15/2023 08:36:05 - INFO - __main__ -     Batch size = 16
+08/15/2023 08:36:05 - INFO - __main__ -     Num examples = 165
+Evaluating: 100%|██████████████████████████████████████████████| 11/11 [00:00<00:00, 14.60it/s]
+08/15/2023 08:36:06 - INFO - __main__ -     Evaluation done in total 0.757086 secs (265.491726 example per second)
+08/15/2023 08:36:06 - INFO - __main__ -   Result: {"f1": 0.0, "f1_with_ner": 0.0, "ner_f1": 0.7040000000000001}
+{'dev_best_f1': 0.10526315789473684, 'f1_': 0.0, 'f1_with_ner_': 0.0, 'ner_f1_': 0.7040000000000001}
+```
+
+**try to fix**
+* play w/ `run_re.py` params
+    * `--no_sym`: no change
+    * `--no_sym --eval_unidirect`: dev\_best\_f1 0.105 → 0.111, otherweise no change
+    * `--use_typemarker`: f1 0.0 → 0.16 (full result below)
+
+### RE w/ use\_typemarker
+
+```
+CUDA_VISIBLE_DEVICES=0 python3 run_re.py --model_type bertsub --model_name_or_path ./bert_models/scibert_scivocab_uncased --do_lower_case --data_dir ./hyperpie/fold_0 --learning_rate 2e-5  --num_train_epochs 10 --per_gpu_train_batch_size 8 --per_gpu_eval_batch_size 16  --gradient_accumulation_steps 1 --max_seq_length 256 --max_pair_length 16 --save_steps 2500 --do_train --do_eval --evaluate_during_training --eval_all_checkpoints --eval_logsoftmax --fp16 --train_file train.jsonl --test_file ent_pred_test.json --dev_file ent_pred_dev.json --use_ner_results --output_dir ./scire-hyperpie_fold_0_use_typemarker --use_typemarker
+```
+
+**TODO**: re-run w/ prec/rec output
+
+```
+08/15/2023 10:25:49 - INFO - __main__ -   ***** Running evaluation  *****
+08/15/2023 10:25:49 - INFO - __main__ -     Batch size = 16
+08/15/2023 10:25:49 - INFO - __main__ -     Num examples = 165
+Evaluating: 100%|██████████████████████████████████████████████████████████| 11/11 [00:00<00:00, 14.59it/s]
+08/15/2023 10:25:50 - INFO - __main__ -     Evaluation done in total 0.757997 secs (265.172457 example per second)
+08/15/2023 10:25:50 - INFO - __main__ -   Result: {"f1": 0.16, "f1_with_ner": 0.16, "ner_f1": 0.7040000000000001}
+{'dev_best_f1': 0.10526315789473684, 'f1_': 0.16, 'f1_with_ner_': 0.16, 'ner_f1_': 0.7040000000000001}
+```
+
+### Fold 1
+
+#### NER
+
+```
+CUDA_VISIBLE_DEVICES=0  python3 run_acener.py --model_type bertspanmarker --model_name_or_path ./bert_models/scibert_scivocab_uncased --do_lower_case --data_dir ./hyperpie/fold_1/ --learning_rate 2e-5 --num_train_epochs 50 --per_gpu_train_batch_size 8  --per_gpu_eval_batch_size 16 --gradient_accumulation_steps 1 --max_seq_length 512  --save_steps 2000 --max_pair_length 256 --max_mention_ori_length 8 --do_train --do_eval --evaluate_during_training --eval_all_checkpoints --fp16 --seed 42 --onedropout --lminit --train_file train.jsonl --dev_file dev.jsonl --test_file test.jsonl --output_dir ./sciner-hyperpie_fold_1 --output_results
+```
+
+```
+08/15/2023 11:46:40 - INFO - __main__ -   ***** Running evaluation  *****
+08/15/2023 11:46:40 - INFO - __main__ -     Num examples = 188
+08/15/2023 11:46:40 - INFO - __main__ -     Batch size = 16
+Evaluating: 100%|██████████████████████████████████████████████████████████| 12/12 [00:03<00:00,  3.15it/s]
+08/15/2023 11:46:44 - INFO - __main__ -     Evaluation done in total 3.822012 secs (49.188746 example per second)
+08/15/2023 11:46:44 - INFO - __main__ -   Result: {"f1": 0.621160409556314, "f1_overlap": 0.5967213114754097, "precision": 0.6026490066225165, "recall": 0.6408450704225352}
+08/15/2023 11:46:44 - INFO - __main__ -   Result: {"dev_best_f1": 0.7268170426065163, "f1_": 0.621160409556314, "f1_overlap_": 0.5967213114754097, "precision_": 0.6026490066225165, "recall_": 0.6408450704225352}
+```
+
+#### RE
+
+```
+CUDA_VISIBLE_DEVICES=0 python3 run_re.py --model_type bertsub --model_name_or_path ./bert_models/scibert_scivocab_uncased --do_lower_case --data_dir ./hyperpie/fold_1 --learning_rate 2e-5  --num_train_epochs 10 --per_gpu_train_batch_size 8 --per_gpu_eval_batch_size 16  --gradient_accumulation_steps 1 --max_seq_length 256 --max_pair_length 16 --save_steps 2500 --do_train --do_eval --evaluate_during_training --eval_all_checkpoints --eval_logsoftmax --fp16 --train_file train.jsonl --test_file ent_pred_test.json --dev_file ent_pred_dev.json --use_ner_results --output_dir ./scire-hyperpie_fold_1_use_typemarker --use_typemarker
+```
+
+**TODO**: re-run w/ prec/rec output
+
+```
+08/15/2023 11:55:54 - INFO - __main__ -   ***** Running evaluation  *****
+08/15/2023 11:55:54 - INFO - __main__ -     Batch size = 16
+08/15/2023 11:55:54 - INFO - __main__ -     Num examples = 151
+Evaluating: 100%|██████████████████████████████████████████████████████████| 10/10 [00:00<00:00, 13.82it/s]
+08/15/2023 11:55:55 - INFO - __main__ -     Evaluation done in total 0.728407 secs (223.776022 example per second)
+08/15/2023 11:55:55 - INFO - __main__ -   Result: {"f1": 0.22222222222222224, "f1_with_ner": 0.22222222222222224, "ner_f1": 0.621160409556314}
+{'dev_best_f1': 0.0, 'f1_': 0.22222222222222224, 'f1_with_ner_': 0.22222222222222224, 'ner_f1_': 0.621160409556314}
+```
+
+### Fold 2
+
+#### NER
+
+```
+CUDA_VISIBLE_DEVICES=0  python3 run_acener.py --model_type bertspanmarker --model_name_or_path ./bert_models/scibert_scivocab_uncased --do_lower_case --data_dir ./hyperpie/fold_2/ --learning_rate 2e-5 --num_train_epochs 50 --per_gpu_train_batch_size 8  --per_gpu_eval_batch_size 16 --gradient_accumulation_steps 1 --max_seq_length 512  --save_steps 2000 --max_pair_length 256 --max_mention_ori_length 8 --do_train --do_eval --evaluate_during_training --eval_all_checkpoints --fp16 --seed 42 --onedropout --lminit --train_file train.jsonl --dev_file dev.jsonl --test_file test.jsonl --output_dir ./sciner-hyperpie_fold_2 --output_results
+```
+
+```
+08/15/2023 14:28:06 - INFO - __main__ -   ***** Running evaluation  *****
+08/15/2023 14:28:06 - INFO - __main__ -     Num examples = 135
+08/15/2023 14:28:06 - INFO - __main__ -     Batch size = 16
+Evaluating: 100%|████████████████████████████████████████████████████████████| 9/9 [00:02<00:00,  3.25it/s]
+08/15/2023 14:28:09 - INFO - __main__ -     Evaluation done in total 2.782101 secs (48.524478 example per second)
+08/15/2023 14:28:09 - INFO - __main__ -   Result: {"f1": 0.7414634146341463, "f1_overlap": 0.7535545023696683, "precision": 0.6877828054298643, "recall": 0.8042328042328042}
+08/15/2023 14:28:09 - INFO - __main__ -   Result: {"dev_best_f1": 0.6811594202898551, "f1_": 0.7414634146341463, "f1_overlap_": 0.7535545023696683, "precision_": 0.6877828054298643, "recall_": 0.8042328042328042
+```
+
+
+#### RE
+
+```
+CUDA_VISIBLE_DEVICES=0 python3 run_re.py --model_type bertsub --model_name_or_path ./bert_models/scibert_scivocab_uncased --do_lower_case --data_dir ./hyperpie/fold_2 --learning_rate 2e-5  --num_train_epochs 10 --per_gpu_train_batch_size 8 --per_gpu_eval_batch_size 16  --gradient_accumulation_steps 1 --max_seq_length 256 --max_pair_length 16 --save_steps 2500 --do_train --do_eval --evaluate_during_training --eval_all_checkpoints --eval_logsoftmax --fp16 --train_file train.jsonl --test_file ent_pred_test.json --dev_file ent_pred_dev.json --use_ner_results --output_dir ./scire-hyperpie_fold_2_use_typemarker --use_typemarker
+```
+
+**TODO**: re-run w/ prec/rec output
+
+```
+08/15/2023 14:48:17 - INFO - __main__ -   ***** Running evaluation  *****
+08/15/2023 14:48:17 - INFO - __main__ -     Batch size = 16
+08/15/2023 14:48:17 - INFO - __main__ -     Num examples = 221
+Evaluating: 100%|██████████████████████████████████████████████████████████| 14/14 [00:00<00:00, 16.51it/s]
+08/15/2023 14:48:17 - INFO - __main__ -     Evaluation done in total 0.854982 secs (148.541185 example per second)
+08/15/2023 14:48:17 - INFO - __main__ -   Result: {"f1": 0.0, "f1_with_ner": 0.0, "ner_f1": 0.7414634146341463}
+{'dev_best_f1': 0.22222222222222224, 'f1_': 0.0, 'f1_with_ner_': 0.0, 'ner_f1_': 0.7414634146341463}
+```
+
+### Fold 3
+
+#### NER
+
+```
+
 ```

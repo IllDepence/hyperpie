@@ -1,0 +1,165 @@
+diff --git a/run_acener.py b/run_acener.py
+index 26cd0cf..ef8de9f 100644
+--- a/run_acener.py
++++ b/run_acener.py
+@@ -113,6 +113,9 @@ class ACEDatasetNER(Dataset):
+             self.ner_label_list = ['NIL', 'FAC', 'WEA', 'LOC', 'VEH', 'GPE', 'ORG', 'PER']
+         elif args.data_dir.find('scierc')!=-1:
+             self.ner_label_list = ['NIL', 'Method', 'OtherScientificTerm', 'Task', 'Generic', 'Material', 'Metric']
++        elif args.data_dir.find('hyperpie')!=-1:  # NOTE: added ~tsa
++            logger.info('[hyperpie] setting ner_label_list to NIL + a, p, v, c')
++            self.ner_label_list = ['NIL', 'a', 'p', 'v', 'c']
+         else:
+             self.ner_label_list = ['NIL', 'CARDINAL', 'DATE', 'EVENT', 'FAC', 'GPE', 'LANGUAGE', 'LAW', 'LOC', 'MONEY', 'NORP', 'ORDINAL', 'ORG', 'PERCENT', 'PERSON', 'PRODUCT', 'QUANTITY', 'TIME', 'WORK_OF_ART']
+ 
+@@ -173,9 +176,9 @@ class ACEDatasetNER(Dataset):
+             # if len(self.data) > 5:
+             #     break
+ 
+-            if self.args.output_dir.find('test')!=-1:
+-                if len(self.data) > 5:
+-                    break
++            # if self.args.output_dir.find('test')!=-1:  # commented out ~tsa
++            #     if len(self.data) > 5:
++            #         break
+ 
+             sentences = data['sentences']
+             for i in range(len(sentences)):
+@@ -748,12 +751,12 @@ def evaluate(args, model, tokenizer, prefix="", do_test=False):
+     logger.info("  Evaluation done in total %f secs (%f example per second)", evalTime,  len(eval_dataset) / evalTime)
+ 
+ 
+-    precision_score = p = cor / tot_pred if tot_pred > 0 else 0 
+-    recall_score = r = cor / ner_tot_recall 
++    precision_score = p = cor / tot_pred if tot_pred > 0 else 0
++    recall_score = r = cor / ner_tot_recall if ner_tot_recall > 0 else 0
+     f1 = 2 * (p * r) / (p + r) if cor > 0 else 0.0
+ 
+-    p = cor_tot / tot_pred_tot if tot_pred_tot > 0 else 0 
+-    r = cor_tot / ner_tot_recall 
++    p = cor_tot / tot_pred_tot if tot_pred_tot > 0 else 0
++    r = cor_tot / ner_tot_recall if ner_tot_recall > 0 else 0
+     f1_tot = 2 * (p * r) / (p + r) if cor > 0 else 0.0
+ 
+     results = {'f1':  f1, 'f1_overlap': f1_tot, 'precision': precision_score, 'recall': recall_score}
+@@ -942,6 +945,9 @@ def main():
+         num_labels = 7
+     elif args.data_dir.find('ontonotes')!=-1:
+         num_labels = 19
++    elif args.data_dir.find('hyperpie')!=-1:  # NOTE: added ~tsa
++        logger.info('[hyperpie] setting num_labels to 5')
++        num_labels = 5
+     else:
+         assert (False)
+ 
+diff --git a/run_re.py b/run_re.py
+index eeb2c42..94e945b 100644
+--- a/run_re.py
++++ b/run_re.py
+@@ -70,13 +70,13 @@ MODEL_CLASSES = {
+     'albertsub': (AlbertConfig, AlbertForACEBothOneDropoutSub, AlbertTokenizer),
+ }
+ 
+-task_ner_labels = {
++task_ner_labels = {  # appears to never be used  ~ tsa (23/08/15)
+     'ace04': ['FAC', 'WEA', 'LOC', 'VEH', 'GPE', 'ORG', 'PER'],
+     'ace05': ['FAC', 'WEA', 'LOC', 'VEH', 'GPE', 'ORG', 'PER'],
+     'scierc': ['Method', 'OtherScientificTerm', 'Task', 'Generic', 'Material', 'Metric'],
+ }
+ 
+-task_rel_labels = {
++task_rel_labels = {  # appears to never be used  ~ tsa (23/08/15)
+     'ace04': ['PER-SOC', 'OTHER-AFF', 'ART', 'GPE-AFF', 'EMP-ORG', 'PHYS'],
+     'ace05': ['PER-SOC', 'ART', 'ORG-AFF', 'GEN-AFF', 'PHYS', 'PART-WHOLE'],
+     'scierc': ['PART-OF', 'USED-FOR', 'FEATURE-OF', 'CONJUNCTION', 'EVALUATE-FOR', 'HYPONYM-OF', 'COMPARE'],
+@@ -101,7 +101,13 @@ class ACEDataset(Dataset):
+                 else:
+                     file_path = args.dev_file
+ 
+-        assert os.path.isfile(file_path)
++        try:
++            assert os.path.isfile(file_path)
++        except AssertionError:
++            logger.info('= '*20)
++            logger.info('not a file:', file_path)
++            logger.info('= '*20)
++            raise AssertionError
+ 
+         self.file_path = file_path
+                 
+@@ -153,8 +159,20 @@ class ACEDataset(Dataset):
+                 self.sym_labels = ['NIL', 'CONJUNCTION', 'COMPARE']
+                 self.label_list = self.sym_labels + label_list
+ 
++        elif args.data_dir.find('hyperpie') != -1:  # added ~tsa
++            self.ner_label_list = ['NIL', 'a', 'p', 'v', 'c']
++
++            if args.no_sym:
++                label_list = ['USED-FOR']
++                self.sym_labels = ['NIL']
++                self.label_list = self.sym_labels + label_list
++            else:
++                label_list = ['USED-FOR']
++                self.sym_labels = ['NIL']
++                self.label_list = self.sym_labels + label_list
++
+         else:
+-            assert (False)  
++            assert (False)
+ 
+         self.global_predicted_ners = {}
+         self.initialize()
+@@ -205,8 +223,8 @@ class ACEDataset(Dataset):
+                 for x in sentence_relation:
+                     if x[4] in self.sym_labels[1:]:
+                         self.tot_recall += 2
+-                    else: 
+-                        self.tot_recall +=  1
++                    else:
++                        self.tot_recall += 1
+ 
+             sentence_boundaries = [0]
+             words = []
+@@ -995,21 +1013,21 @@ def evaluate(args, model, tokenizer, prefix="", do_test=False):
+         output_w = open(os.path.join(args.output_dir, 'pred_results.json'), 'w')
+         json.dump(tot_output_results, output_w)
+ 
+-    ner_p = ner_cor / ner_tot_pred if ner_tot_pred > 0 else 0 
+-    ner_r = ner_cor / len(ner_golden_labels) 
++    ner_p = ner_cor / ner_tot_pred if ner_tot_pred > 0 else 0
++    ner_r = ner_cor / len(ner_golden_labels)
+     ner_f1 = 2 * (ner_p * ner_r) / (ner_p + ner_r) if ner_cor > 0 else 0.0
+ 
+-    p = cor / tot_pred if tot_pred > 0 else 0 
+-    r = cor / tot_recall 
++    p = cor / tot_pred if tot_pred > 0 else 0
++    r = cor / tot_recall if tot_recall > 0 else 0
+     f1 = 2 * (p * r) / (p + r) if cor > 0 else 0.0
+     assert(tot_recall==len(golden_labels))
+ 
+-    p_with_ner = cor_with_ner / tot_pred if tot_pred > 0 else 0 
+-    r_with_ner = cor_with_ner / tot_recall
++    p_with_ner = cor_with_ner / tot_pred if tot_pred > 0 else 0
++    r_with_ner = cor_with_ner / tot_recall if tot_recall > 0 else 0
+     assert(tot_recall==len(golden_labels_withner))
+     f1_with_ner = 2 * (p_with_ner * r_with_ner) / (p_with_ner + r_with_ner) if cor_with_ner > 0 else 0.0
+ 
+-    results = {'f1':  f1,  'f1_with_ner': f1_with_ner, 'ner_f1': ner_f1}
++    results = {'f1': f1, 'prec': p, 'rec': r, 'f1_with_ner': f1_with_ner, 'prec_w_ner': p_with_ner, 'rec_w_ner': r_with_ner, 'ner_f1': ner_f1}
+ 
+     logger.info("Result: %s", json.dumps(results))
+ 
+@@ -1182,6 +1200,13 @@ def main():
+             num_labels = 8 + 8 - 1
+         else:
+             num_labels = 8 + 8 - 3
++    elif args.data_dir.find('hyperpie')!=-1:  # added ~tsa
++        num_ner_labels = 5
++
++        if args.no_sym:
++            num_labels = 2 + 2 - 1
++        else:
++            num_labels = 2 + 2 - 1
+     else:
+         assert (False)
+ 
