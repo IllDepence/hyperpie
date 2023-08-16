@@ -6,6 +6,5 @@ api_key
 api_organization
 completion_cache.json
 *.ipynb
-/data
 code/distant_supervision
 code/PL-Marker/source/*.py
