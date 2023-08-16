@@ -1414,8 +1414,6 @@ def yaml2json(llm_output_dict, verbose=False):
 
         # if parsing still fails, print error and return None
         if parse_fail:
-            print(llm_output_dict['completion']['choices'][0]['text'])
-            input()
             # max tokens reached, fixable w/ adding brackets: 2
             # unescaped backslash from LaTeX in string: 3
             # JSON format error `{'k': 'v', {'k': 'v'}, ...}`:  1

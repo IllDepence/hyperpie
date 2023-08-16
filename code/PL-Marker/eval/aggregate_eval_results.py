@@ -50,29 +50,27 @@ def aggregate(root_dir):
             re_recalls.append(re_results['rec_w_ner_'])
             re_f1s.append(re_results['f1_with_ner_'])
 
+    # Calculate mean and standard deviation in percentages
+    ner_p_mean = statistics.mean(ner_precisions) * 100
+    ner_p_std = statistics.stdev(ner_precisions) * 100
+    ner_r_mean = statistics.mean(ner_recalls) * 100
+    ner_r_std = statistics.stdev(ner_recalls) * 100
+    ner_f1_mean = statistics.mean(ner_f1s) * 100
+    ner_f1_std = statistics.stdev(ner_f1s) * 100
+    re_p_mean = statistics.mean(re_precisions) * 100
+    re_p_std = statistics.stdev(re_precisions) * 100
+    re_r_mean = statistics.mean(re_recalls) * 100
+    re_r_std = statistics.stdev(re_recalls) * 100
+    re_f1_mean = statistics.mean(re_f1s) * 100
+    re_f1_std = statistics.stdev(re_f1s) * 100
+
     print(
-        f'NER precision: {statistics.mean(ner_precisions):.3f} '
-        f'± {statistics.stdev(ner_precisions):.3f}'
-    )
-    print(
-        f'NER recall: {statistics.mean(ner_recalls):.3f} '
-        f'± {statistics.stdev(ner_recalls):.3f}'
-    )
-    print(
-        f'NER f1: {statistics.mean(ner_f1s):.3f} '
-        f'± {statistics.stdev(ner_f1s):.3f}'
-    )
-    print(
-        f'RE precision: {statistics.mean(re_precisions):.3f} '
-        f'± {statistics.stdev(re_precisions):.3f}'
-    )
-    print(
-        f'RE recall: {statistics.mean(re_recalls):.3f} '
-        f'± {statistics.stdev(re_recalls):.3f}'
-    )
-    print(
-        f'RE f1: {statistics.mean(re_f1s):.3f} '
-        f'± {statistics.stdev(re_f1s):.3f}'
+        f'NER precision: {ner_p_mean:.1f} ± {ner_p_std:.1f}\n'
+        f'NER recall: {ner_r_mean:.1f} ± {ner_r_std:.1f}\n'
+        f'NER f1: {ner_f1_mean:.1f} ± {ner_f1_std:.1f}\n'
+        f'RE precision: {re_p_mean:.1f} ± {re_p_std:.1f}\n'
+        f'RE recall: {re_r_mean:.1f} ± {re_r_std:.1f}\n'
+        f'RE f1: {re_f1_mean:.1f} ± {re_f1_std:.1f}\n'
     )
 
 
