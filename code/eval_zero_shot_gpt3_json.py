@@ -65,8 +65,12 @@ with open(f'format_eval_{mode_fn_save}_json.json', 'w') as f:
     json.dump(aggregate_stats, f, indent=2)
 
 # evaluate
-relext_f1 = hp.evaluation.full(
+eval_res = hp.evaluation.full(
     paras_true[from_idx:to_idx],
     paras_pred,
     # verbose=True
 )
+
+with open(f'eval_{mode_fn_save}_json.json', 'w') as f:
+    print(f'Saving eval to {f.name}')
+    json.dump(eval_res, f, indent=2)
