@@ -1,6 +1,6 @@
 # Hyperparameter extraction from ML papers
 
-![](notes/schema_visual.png)
+![](misc/schema_visual.png)
 
 ### General
 

@@ -1,6 +1,6 @@
 * **Manually annotated ground truth**
     * raw: tsa.json
-    * **main**: tsa\_processed.json
+    * **main**: tsa\_processed.json ([see format description](preprocessed_data_format.md))
     * filtered variants:
         * tsa\_processed\_withparent.json (see `code/hyperpie/data/filter_annots.py:require_apv_single()`)
         * tsa\_processed\_onlyfull.json (see `code/hyperpie/data/filter_annots.py:require_parent_single()`)

@@ -1,6 +1,6 @@
-full_annot.json: full set of text segments annotated in pilot study
-jkr_221110.json: set of text segments annotated by two annotators (annotator jkr)
-tsa_221110.json: set of text segments annotated by two annotators (annotator tsa)
+* full\_annot.json: full set of text segments annotated in pilot study
+* jkr\_221110.json: set of text segments annotated by two annotators (annotator jkr)
+* tsa\_221110.json: set of text segments annotated by two annotators (annotator tsa)
 
 ```
 $ python3 iaa.py
