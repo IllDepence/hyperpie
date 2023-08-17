@@ -7,6 +7,48 @@ import sys
 # import matplotlib.pyplot as plt
 
 
+def print_predictions(root_dir):
+    """ Print merged NER+RE predictions for inspection.
+    """
+
+    for subdir in os.listdir(root_dir):
+        subdir_path = os.path.join(root_dir, subdir)
+        if not os.path.isdir(subdir_path):
+            continue
+        print(f'Processing {subdir_path}')
+        # lpad data
+        data_fp = os.path.join(subdir_path, 'merged_preds.jsonl')
+        paras = []
+        with open(data_fp, 'r') as f:
+            for line in f:
+                paras.append(json.loads(line))
+        # iterate over docs
+        for para in paras:
+            print(f'= = = {para["doc_key"]} = = =')
+            para_delta = 0
+            # iterate over sentences
+            for sent_idx, sent in enumerate(para['sentences']):
+                print('[' + '] ['.join(sent) + ']')
+                ner_true = para['ner'][sent_idx]
+                re_true = para['relations'][sent_idx]
+                ner_pred = para['predicted_ner'][sent_idx]
+                re_pred = para['predicted_relations'][sent_idx]
+                print('<<<NER>>>')
+                for (start, end, label) in ner_pred:
+                    # print(start-para_delta, end-para_delta+1, label)
+                    print(sent[start-para_delta:end-para_delta+1], label)
+                print('<<<RE>>>')
+                for (start_from, end_from, start_to, end_to, label) in re_pred:
+                    print(
+                        sent[start_from-para_delta:end_from-para_delta+1],
+                        '--',
+                        label,
+                        '->',
+                        sent[start_to-para_delta:end_to-para_delta+1]
+                    )
+                para_delta += len(sent)
+                input()
+
 def aggregate_predictions(root_dir):
     """ Merge NER and RE predictions.
     """
@@ -123,4 +165,5 @@ def aggregate_numbers(root_dir):
 if __name__ == '__main__':
     root_dir = sys.argv[1]
     # aggregate_numbers(root_dir)
-    aggregate_predictions(root_dir)
+    # aggregate_predictions(root_dir)
+    print_predictions(root_dir)
