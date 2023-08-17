@@ -4,7 +4,77 @@ import json
 import os
 import statistics
 import sys
-# import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+import matplotlib.pyplot as plt
+
+
+def error_analysis(root_dir):
+    """ Analyze errors.
+    """
+
+    ner_class_true = []
+    ner_class_pred = []
+
+    for subdir in os.listdir(root_dir):
+        subdir_path = os.path.join(root_dir, subdir)
+        if not os.path.isdir(subdir_path):
+            continue
+        print(f'Processing {subdir_path}')
+        # lpad data
+        data_fp = os.path.join(subdir_path, 'merged_preds.jsonl')
+        paras = []
+        with open(data_fp, 'r') as f:
+            for line in f:
+                paras.append(json.loads(line))
+        # iterate over paras
+        for para in paras:
+            para_ner_true = []
+            para_ner_pred = []
+            para_delta = 0
+            # iterate over sentences
+            for sent_idx, sent in enumerate(para['sentences']):
+                ner_true = para['ner'][sent_idx]
+                re_true = para['relations'][sent_idx]
+                ner_pred = para['predicted_ner'][sent_idx]
+                re_pred = para['predicted_relations'][sent_idx]
+                # fill with “None” labels
+                for word_idx in range(len(sent)):
+                    para_ner_true.append('-')
+                    para_ner_pred.append('-')
+                # fill true labels
+                for (start, end, label) in ner_true:
+                    lbl_sent_start = start-para_delta
+                    lbl_sent_end = end-para_delta+1
+                    for word_idx in range(lbl_sent_start, lbl_sent_end):
+                        para_ner_true[word_idx] = label
+                # fill predicted labels
+                for (start, end, label) in ner_pred:
+                    lbl_sent_start = start-para_delta
+                    lbl_sent_end = end-para_delta+1
+                    for word_idx in range(lbl_sent_start, lbl_sent_end):
+                        para_ner_pred[word_idx] = label
+                ner_class_true .extend(para_ner_true)
+                ner_class_pred.extend(para_ner_pred)
+                para_delta += len(sent)
+
+    # print confusion matrix
+    print('NER confusion matrix:')
+    cm_labels = ['-', 'a', 'p', 'v', 'c']
+    cm = confusion_matrix(
+        ner_class_true,
+        ner_class_pred,
+        labels=cm_labels,
+        normalize='true'
+    )
+    print(cm)
+    # plot confusion matrix with labels and legend, on a log scale
+    disp = ConfusionMatrixDisplay(
+        confusion_matrix=cm,
+        display_labels=cm_labels,
+    )
+    disp.plot()
+    plt.tight_layout()
+    plt.show()
 
 
 def print_predictions(root_dir):
@@ -22,7 +92,7 @@ def print_predictions(root_dir):
         with open(data_fp, 'r') as f:
             for line in f:
                 paras.append(json.loads(line))
-        # iterate over docs
+        # iterate over paras
         for para in paras:
             print(f'= = = {para["doc_key"]} = = =')
             para_delta = 0
@@ -48,6 +118,7 @@ def print_predictions(root_dir):
                     )
                 para_delta += len(sent)
                 input()
+
 
 def aggregate_predictions(root_dir):
     """ Merge NER and RE predictions.
@@ -166,4 +237,5 @@ if __name__ == '__main__':
     root_dir = sys.argv[1]
     # aggregate_numbers(root_dir)
     # aggregate_predictions(root_dir)
-    print_predictions(root_dir)
+    # print_predictions(root_dir)
+    error_analysis(root_dir)
