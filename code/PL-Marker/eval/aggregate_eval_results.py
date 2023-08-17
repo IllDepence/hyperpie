@@ -7,7 +7,53 @@ import sys
 # import matplotlib.pyplot as plt
 
 
-def aggregate(root_dir):
+def aggregate_predictions(root_dir):
+    """ Merge NER and RE predictions.
+    """
+
+    for subdir in os.listdir(root_dir):
+        subdir_path = os.path.join(root_dir, subdir)
+        if not os.path.isdir(subdir_path):
+            continue
+        print(f'Processing {subdir_path}')
+        # lpad data
+        ner_fp = os.path.join(subdir_path, 'ner', 'ent_pred_test.json')
+        re_fp = os.path.join(subdir_path, 're', 'pred_results.json')
+        smpls = []
+        with open(ner_fp, 'r') as f:
+            for line in f:
+                smpls.append(json.loads(line))
+        with open(re_fp, 'r') as f:
+            rel_preds = json.load(f)
+        # merge in RE predictions
+        for smpl_idx, smpl in enumerate(smpls):
+            # create empty list of predictions
+            smpl['predicted_relations'] = []
+            for r in smpl['relations']:
+                smpl['predicted_relations'].append([])  # one per sentence
+            if str(smpl_idx) not in rel_preds:
+                # no relations predicted, leave predictions empty
+                continue
+            rel_preds_doc = rel_preds[str(smpl_idx)]
+            # iterate over predictions
+            for (sent_idx, rels_raw) in rel_preds_doc:
+                rels = []
+                for (from_span, to_span, rel_type) in rels_raw:
+                    rels.append([
+                        from_span[0], from_span[1],
+                        to_span[0], to_span[1],
+                        rel_type
+                    ])
+                smpl['predicted_relations'][sent_idx] = rels
+
+        out_fp = os.path.join(subdir_path, 'merged_preds.jsonl')
+        with open(out_fp, 'w') as f:
+            for smpl in smpls:
+                json.dump(smpl, f)
+                f.write('\n')
+
+
+def aggregate_numbers(root_dir):
     """ Aggregate evaluation results of n-fold cross-validation.
     """
 
@@ -76,4 +122,5 @@ def aggregate(root_dir):
 
 if __name__ == '__main__':
     root_dir = sys.argv[1]
-    aggregate(root_dir)
+    # aggregate_numbers(root_dir)
+    aggregate_predictions(root_dir)
