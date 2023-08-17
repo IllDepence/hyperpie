@@ -27,34 +27,83 @@ def error_analysis(root_dir):
             for line in f:
                 paras.append(json.loads(line))
         # iterate over paras
-        for para in paras:
+        for line_idx, para in enumerate(paras):
             para_ner_true = []
             para_ner_pred = []
-            para_delta = 0
-            # iterate over sentences
+            # iterate over sentences for NER analysis
             for sent_idx, sent in enumerate(para['sentences']):
                 ner_true = para['ner'][sent_idx]
-                re_true = para['relations'][sent_idx]
                 ner_pred = para['predicted_ner'][sent_idx]
-                re_pred = para['predicted_relations'][sent_idx]
                 # fill with “None” labels
                 for word_idx in range(len(sent)):
                     para_ner_true.append('-')
                     para_ner_pred.append('-')
                 # fill true labels
                 for (start, end, label) in ner_true:
-                    lbl_sent_start = start-para_delta
-                    lbl_sent_end = end-para_delta+1
+                    lbl_sent_start = start
+                    lbl_sent_end = end+1
                     for word_idx in range(lbl_sent_start, lbl_sent_end):
                         para_ner_true[word_idx] = label
                 # fill predicted labels
                 for (start, end, label) in ner_pred:
-                    lbl_sent_start = start-para_delta
-                    lbl_sent_end = end-para_delta+1
+                    lbl_sent_start = start
+                    lbl_sent_end = end+1
                     for word_idx in range(lbl_sent_start, lbl_sent_end):
                         para_ner_pred[word_idx] = label
-                ner_class_true .extend(para_ner_true)
+                ner_class_true.extend(para_ner_true)
                 ner_class_pred.extend(para_ner_pred)
+            # iterate over sentences for RE analysis
+            print(f'Processing {para["doc_key"]} (line {line_idx})')
+            para_delta = 0
+            for sent_idx, sent in enumerate(para['sentences']):
+                re_true = para['relations'][sent_idx]
+                re_pred = para['predicted_relations'][sent_idx]
+                # true relations
+                re_types = {
+                    'true': re_true,
+                    'pred': re_pred
+                }
+                if len(re_true) > 0 or len(re_pred) > 0:
+                    print('[' + '] ['.join(sent) + ']\n')
+                for typ, re in re_types.items():
+                    if len(re_true) > 0 or len(re_pred) > 0:
+                        print(f'>> {typ} relations <<')
+                    for (
+                        start_from, end_from, start_to, end_to, label
+                    ) in re:
+                        # get true NER labels
+                        ner_from_true = para_ner_true[
+                            start_from:end_from+1
+                        ]
+                        ner_to_true = para_ner_true[
+                            start_to:end_to+1
+                        ]
+                        # get predicted NER labels
+                        ner_from_pred = para_ner_pred[
+                            start_from:end_from+1
+                        ]
+                        ner_to_pred = para_ner_pred[
+                            start_to:end_to+1
+                        ]
+                        if typ == 'true':
+                            print(
+                                f'{ner_from_true} -- {label} -> {ner_to_true}'
+                            )
+                        else:
+                            print(
+                                f'{ner_from_true} ({ner_from_pred}) '
+                                f'-- {label} -> '
+                                f'{ner_to_true} ({ner_to_pred})'
+                            )
+                        # get tokens
+                        tokens_from = sent[
+                            start_from-para_delta:end_from-para_delta+1
+                        ]
+                        tokens_to = sent[
+                            start_to-para_delta:end_to-para_delta+1
+                        ]
+                        print(f'{tokens_from} -- {label} -> {tokens_to}')
+                        input()
                 para_delta += len(sent)
 
     # print confusion matrix
@@ -63,18 +112,24 @@ def error_analysis(root_dir):
     cm = confusion_matrix(
         ner_class_true,
         ner_class_pred,
-        labels=cm_labels,
-        normalize='true'
+        labels=cm_labels
     )
     print(cm)
     # plot confusion matrix with labels and legend, on a log scale
+    cm_norm = confusion_matrix(
+        ner_class_true,
+        ner_class_pred,
+        labels=cm_labels,
+        normalize='true'
+    )
     disp = ConfusionMatrixDisplay(
-        confusion_matrix=cm,
+        confusion_matrix=cm_norm,
         display_labels=cm_labels,
     )
     disp.plot()
     plt.tight_layout()
-    plt.show()
+    # save as PDF
+    plt.savefig('ner_confusion_matrix.pdf')
 
 
 def print_predictions(root_dir):
