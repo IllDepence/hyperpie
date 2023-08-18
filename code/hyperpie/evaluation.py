@@ -693,9 +693,17 @@ def full(y_true, y_pred, verbose=False):
     fn_types_exact = []
     fn_types_partial = []
 
-    relext_f1 = 0
+    eval_results = {
+        'exact': {},
+        'partial_overlap': {}
+    }
 
     for partial_overlap in [False, True]:
+        if partial_overlap:
+            res_dict = eval_results['partial_overlap']
+        else:
+            res_dict = eval_results['exact']
+
         report_tbl_lines.append(
             f'\n**Partial overlap: {partial_overlap}**\n'
         )
@@ -725,6 +733,17 @@ def full(y_true, y_pred, verbose=False):
             fn_types_exact = [
                 t[0] for t in fn_types
             ]
+        res_dict['entity_recognition'] = {
+            'tp': tp,
+            'fp': fp,
+            'fn': fn,
+            'tp_types': tp_types,
+            'fp_types': fp_types,
+            'fn_types': fn_types,
+            'p': p,
+            'r': r,
+            'f1': f1
+        }
 
         # entity recognition + classification
         ret = entity_recognition(
@@ -737,6 +756,17 @@ def full(y_true, y_pred, verbose=False):
         report_tbl_lines.append(
             markdown_table_line('ER + Clf', tp, fp, fn, p, r, f1)
         )
+        res_dict['entity_recognition_classification'] = {
+            'tp': tp,
+            'fp': fp,
+            'fn': fn,
+            'tp_types': tp_types,
+            'fp_types': fp_types,
+            'fn_types': fn_types,
+            'p': p,
+            'r': r,
+            'f1': f1
+        }
 
         # co-reference resolution
         tp, fp, fn, p, r, f1 = co_reference_resolution(
@@ -746,6 +776,14 @@ def full(y_true, y_pred, verbose=False):
         report_tbl_lines.append(
             markdown_table_line('Co-ref resol.', tp, fp, fn, p, r, f1)
         )
+        res_dict['co_reference_resolution'] = {
+            'tp': tp,
+            'fp': fp,
+            'fn': fn,
+            'p': p,
+            'r': r,
+            'f1': f1
+        }
 
         # relation extraction
         tp, fp, fn, p, r, f1 = relation_extraction(
@@ -755,8 +793,14 @@ def full(y_true, y_pred, verbose=False):
         report_tbl_lines.append(
             markdown_table_line('Rel. extr.', tp, fp, fn, p, r, f1)
         )
-        if not partial_overlap:
-            relext_f1 = f1
+        res_dict['relation_extraction'] = {
+            'tp': tp,
+            'fp': fp,
+            'fn': fn,
+            'p': p,
+            'r': r,
+            'f1': f1
+        }
 
     print('\n'.join(report_tbl_lines))
     print()
@@ -778,9 +822,7 @@ def full(y_true, y_pred, verbose=False):
     for t in sorted(set(fn_types_partial)):
         print(f'* {t}: {fn_types_partial.count(t)}')
 
-    # return f1 score of rel. extr w/o partial overlap as an indicator of
-    # whether or not the results have errors or not
-    return relext_f1
+    return eval_results
 
 
 if __name__ == '__main__':
