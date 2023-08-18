@@ -1,7 +1,8 @@
 openai
-ipython
-jupyter
 nltk
 tenacity
-pynvim
 matplotlib
+scikit-learn
+ipython
+jupyter
+pynvim

@@ -621,3 +621,39 @@ Evaluating: 100%|█████████████████████
 08/16/2023 13:37:52 - INFO - __main__ -   Result: {"f1": 0.2, "prec": 0.2857142857142857, "rec": 0.15384615384615385, "f1_with_ner": 0.2, "prec_w_ner": 0.2857142857142857, "rec_w_ner": 0.15384615384615385, "ner_f1": 0.7235387045813586}
 {'dev_best_f1': 0.28571428571428575, 'f1_': 0.2, 'prec_': 0.2857142857142857, 'rec_': 0.15384615384615385, 'f1_with_ner_': 0.2, 'prec_w_ner_': 0.2857142857142857, 'rec_w_ner_': 0.15384615384615385, 'ner_f1_': 0.7235387045813586}
 ```
+
+* try RE w/ LLM dist sup (NER unchanged)
+    * `Result: {"f1": 0.0, "prec": 0, "rec": 0.0,`
+
+
+## Apply to unannotated data
+
+### NER
+
+```
+CUDA_VISIBLE_DEVICES=0  python3 run_acener.py --model_type bertspanmarker --model_name_or_path ./bert_models/scibert_scivocab_uncased --do_lower_case --data_dir ./hyperpie --learning_rate 2e-5 --num_train_epochs 50 --per_gpu_train_batch_size 8  --per_gpu_eval_batch_size 16 --gradient_accumulation_steps 1 --max_seq_length 512  --save_steps 2000 --max_pair_length 256 --max_mention_ori_length 8 --do_train --do_eval --fp16 --seed 42 --onedropout --lminit --train_file all_444.jsonl --dev_file all_444.jsonl --test_file transformed_pprs_filtered_llm_annotated_plmarker_capped_200.jsonl --output_dir ./sciner-hyperpie_predict_pprs_filtered --output_results
+```
+
+errored b/c no model file found in output dir ?!
+
+```
+CUDA_VISIBLE_DEVICES=0  python3 run_acener.py --model_type bertspanmarker --model_name_or_path ./bert_models/scibert_scivocab_uncased --do_lower_case --data_dir ./hyperpie --learning_rate 2e-5 --num_train_epochs 50 --per_gpu_train_batch_size 8  --per_gpu_eval_batch_size 16 --gradient_accumulation_steps 1 --max_seq_length 512  --save_steps 2000 --max_pair_length 256 --max_mention_ori_length 8 --do_train --do_eval --evaluate_during_training --eval_all_checkpoints --fp16 --seed 42 --onedropout --lminit --train_file all_444.jsonl --dev_file all_444.jsonl --test_file transformed_pprs_filtered_llm_annotated_plmarker_capped_200.jsonl --output_dir ./sciner-hyperpie_predict_pprs_filtered --output_results
+```
+
+runs through
+
+* consider
+    * increasing `max_mention_ori_length` to be able to catch long chontexts
+
+
+## Play with RE params
+
+```
+CUDA_VISIBLE_DEVICES=0 python3 run_re.py --model_type bertsub --model_name_or_path ./bert_models/scibert_scivocab_uncased --do_lower_case --data_dir ./hyperpie/fold_9 --learning_rate 2e-5  --num_train_epochs 10 --per_gpu_train_batch_size 8 --per_gpu_eval_batch_size 16  --gradient_accumulation_steps 1 --max_seq_length 384 --max_pair_length 64 --save_steps 2500 --do_train --do_eval --evaluate_during_training --eval_all_checkpoints --eval_logsoftmax --fp16 --train_file train.jsonl --test_file ent_pred_test.json --dev_file ent_pred_dev.json --use_ner_results --output_dir ./scire-hyperpie_fold_9_use_typemarker_highmax --use_typemarker
+```
+
+worse results
+
+```
+CUDA_VISIBLE_DEVICES=0 python3 run_re.py --model_type bertsub --model_name_or_path ./bert_models/scibert_scivocab_uncased --do_lower_case --data_dir ./hyperpie/fold_9 --learning_rate 2e-5  --num_train_epochs 10 --per_gpu_train_batch_size 8 --per_gpu_eval_batch_size 16  --gradient_accumulation_steps 1 --max_seq_length 512 --max_pair_length 16 --save_steps 2500 --do_train --do_eval --evaluate_during_training --eval_all_checkpoints --eval_logsoftmax --fp16 --train_file train.jsonl --test_file ent_pred_test.json --dev_file ent_pred_dev.json --use_ner_results --output_dir ./scire-hyperpie_fold_9_use_typemarker_highmax --use_typemarker
+```

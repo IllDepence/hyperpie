@@ -4,16 +4,20 @@ import json
 import os
 import statistics
 import sys
+from collections import defaultdict
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 import matplotlib.pyplot as plt
 
 
-def error_analysis(root_dir):
+def error_analysis(root_dir, data_fn=None):
     """ Analyze errors.
     """
 
     ner_class_true = []
     ner_class_pred = []
+    tp_rel_types = defaultdict(int)
+    fp_rel_types = defaultdict(int)
+    fn_rel_types = defaultdict(int)
 
     for subdir in os.listdir(root_dir):
         subdir_path = os.path.join(root_dir, subdir)
@@ -21,7 +25,9 @@ def error_analysis(root_dir):
             continue
         print(f'Processing {subdir_path}')
         # lpad data
-        data_fp = os.path.join(subdir_path, 'merged_preds.jsonl')
+        if data_fn is None:
+            data_fn = 'merged_preds.jsonl'
+        data_fp = os.path.join(subdir_path, data_fn)
         paras = []
         with open(data_fp, 'r') as f:
             for line in f:
@@ -53,7 +59,7 @@ def error_analysis(root_dir):
                 ner_class_true.extend(para_ner_true)
                 ner_class_pred.extend(para_ner_pred)
             # iterate over sentences for RE analysis
-            print(f'Processing {para["doc_key"]} (line {line_idx})')
+            # print(f'Processing {para["doc_key"]} (line {line_idx})')
             para_delta = 0
             for sent_idx, sent in enumerate(para['sentences']):
                 re_true = para['relations'][sent_idx]
@@ -64,10 +70,12 @@ def error_analysis(root_dir):
                     'pred': re_pred
                 }
                 if len(re_true) > 0 or len(re_pred) > 0:
-                    print('[' + '] ['.join(sent) + ']\n')
+                    # print('[' + '] ['.join(sent) + ']\n')
+                    pass
                 for typ, re in re_types.items():
                     if len(re_true) > 0 or len(re_pred) > 0:
-                        print(f'>> {typ} relations <<')
+                        # print(f'>> {typ} relations <<')
+                        pass
                     for (
                         start_from, end_from, start_to, end_to, label
                     ) in re:
@@ -85,16 +93,41 @@ def error_analysis(root_dir):
                         ner_to_pred = para_ner_pred[
                             start_to:end_to+1
                         ]
+                        # generate simple relation keys
+                        rel_key_true = (
+                            set(ner_from_true).pop() +
+                            '->' +
+                            set(ner_to_true).pop()
+                        )
+                        rel_key_pred = (
+                            set(ner_from_pred).pop() +
+                            '->' +
+                            set(ner_to_pred).pop()
+                        )
                         if typ == 'true':
-                            print(
-                                f'{ner_from_true} -- {label} -> {ner_to_true}'
-                            )
+                            is_fn = [
+                                start_from, end_from, start_to, end_to, label
+                            ] not in re_pred
+                            if is_fn:
+                                fn_rel_types[rel_key_true] += 1
+                            # print(
+                            #     f'{ner_from_true} -- {label} -> {ner_to_true}'
+                            # )
                         else:
-                            print(
-                                f'{ner_from_true} ({ner_from_pred}) '
-                                f'-- {label} -> '
-                                f'{ner_to_true} ({ner_to_pred})'
-                            )
+                            is_tp = [
+                                start_from, end_from, start_to, end_to, label
+                            ] in re_true
+                            is_fp = not is_tp
+                            if is_tp:
+                                tp_rel_types[rel_key_pred] += 1
+                            if is_fp:
+                                fp_rel_types[rel_key_pred] += 1
+                            # print(rel_key_true, rel_key_pred)
+                            # print(
+                            #     f'{ner_from_true} ({ner_from_pred}) '
+                            #     f'-- {label} -> '
+                            #     f'{ner_to_true} ({ner_to_pred})'
+                            # )
                         # get tokens
                         tokens_from = sent[
                             start_from-para_delta:end_from-para_delta+1
@@ -102,9 +135,37 @@ def error_analysis(root_dir):
                         tokens_to = sent[
                             start_to-para_delta:end_to-para_delta+1
                         ]
-                        print(f'{tokens_from} -- {label} -> {tokens_to}')
-                        input()
+                        # print(f'{tokens_from} -- {label} -> {tokens_to}')
+                        # input()
                 para_delta += len(sent)
+
+    # sort relations by frequency and print results
+    for rel_type, rel_dict in [
+        ('TP', tp_rel_types),
+        ('FP', fp_rel_types),
+        ('FN', fn_rel_types),
+    ]:
+        print(f'>> {rel_type} relations <<')
+        for rel_key, rel_count in sorted(
+            rel_dict.items(),
+            key=lambda x: x[1],
+            reverse=True
+        ):
+            print(f'{rel_key}: {rel_count}')
+
+    # calculate precision, recall, and F1 per relation type
+    rel_type_keys = [
+        'p->a', 'v->p', 'c->v'
+    ]
+    for rel_type_key in rel_type_keys:
+        tp = tp_rel_types[rel_type_key]
+        fp = fp_rel_types[rel_type_key]
+        fn = fn_rel_types[rel_type_key]
+        p = tp / (tp + fp) if tp + fp > 0 else 0
+        r = tp / (tp + fn) if tp + fn > 0 else 0
+        f1 = 2 * (p * r) / (p + r) if p + r > 0 else 0
+        print(f'{rel_type_key}: P={p:.3f}, R={r:.3f}, F1={f1:.3f}')
+    return
 
     # print confusion matrix
     print('NER confusion matrix:')
@@ -132,7 +193,7 @@ def error_analysis(root_dir):
     plt.savefig('ner_confusion_matrix.pdf')
 
 
-def print_predictions(root_dir):
+def print_predictions(root_dir, data_fn=None):
     """ Print merged NER+RE predictions for inspection.
     """
 
@@ -142,7 +203,9 @@ def print_predictions(root_dir):
             continue
         print(f'Processing {subdir_path}')
         # lpad data
-        data_fp = os.path.join(subdir_path, 'merged_preds.jsonl')
+        if data_fn is None:
+            data_fn = 'merged_preds.jsonl'
+        data_fp = os.path.join(subdir_path, data_fn)
         paras = []
         with open(data_fp, 'r') as f:
             for line in f:
@@ -154,23 +217,26 @@ def print_predictions(root_dir):
             # iterate over sentences
             for sent_idx, sent in enumerate(para['sentences']):
                 print('[' + '] ['.join(sent) + ']')
-                ner_true = para['ner'][sent_idx]
-                re_true = para['relations'][sent_idx]
+                # ner_true = para['ner'][sent_idx]
+                # re_true = para['relations'][sent_idx]
                 ner_pred = para['predicted_ner'][sent_idx]
-                re_pred = para['predicted_relations'][sent_idx]
                 print('<<<NER>>>')
                 for (start, end, label) in ner_pred:
                     # print(start-para_delta, end-para_delta+1, label)
                     print(sent[start-para_delta:end-para_delta+1], label)
-                print('<<<RE>>>')
-                for (start_from, end_from, start_to, end_to, label) in re_pred:
-                    print(
-                        sent[start_from-para_delta:end_from-para_delta+1],
-                        '--',
-                        label,
-                        '->',
-                        sent[start_to-para_delta:end_to-para_delta+1]
-                    )
+                if 'predicted_relations' in para:
+                    re_pred = para['predicted_relations'][sent_idx]
+                    print('<<<RE>>>')
+                    for (
+                        start_from, end_from, start_to, end_to, label
+                    ) in re_pred:
+                        print(
+                            sent[start_from-para_delta:end_from-para_delta+1],
+                            '--',
+                            label,
+                            '->',
+                            sent[start_to-para_delta:end_to-para_delta+1]
+                        )
                 para_delta += len(sent)
                 input()
 
@@ -292,5 +358,5 @@ if __name__ == '__main__':
     root_dir = sys.argv[1]
     # aggregate_numbers(root_dir)
     # aggregate_predictions(root_dir)
-    # print_predictions(root_dir)
-    error_analysis(root_dir)
+    print_predictions(root_dir, 'ent_pred_test.json')
+    # error_analysis(root_dir)
