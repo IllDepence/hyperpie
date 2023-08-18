@@ -6,6 +6,7 @@
         * tsa\_processed\_onlyfull.json (see `code/hyperpie/data/filter_annots.py:require_parent_single()`)
     * converted variants:
         * PL-Marker format: tsa\_processed\_plmarker.jsonl
+        * PL-Marker format (10 fold cross eval data splits): tsa\_processed\_plmarker\_10foldXeval.tar.gz
 * **Pilot study data**
     * annot\_pilot
 * **Distant supervision**
