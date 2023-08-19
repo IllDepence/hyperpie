@@ -145,13 +145,21 @@ def _convert_single_para(para, loose_matching=False, cap_num_words=False):
         e_type = entity['type']
         for surf_form in entity['surface_forms']:
             if surf_form['id'] == '#c1840f52-7e45-4dea-9fbf-47a5607675e3':
-                # NOTE: known edge with the data where the conversion
+                # NOTE: known edge case with the data where the conversion
                 # method gets confused b/c a sentnce match is not unique
                 continue
             # determine global word offset of surface form
             output_offset_start = None
             output_offset_end = None
             for global_word_idx, word_offset in para_word_offsets.items():
+                # match character offsets to tokenized words
+                # (this can lead to
+                #  1. a loss in precision (e.g. if the surface form
+                #     starts in the middle of a token)
+                #  2. overlapping surface forms (e.g. if the surface
+                #     of one entity ends in the middle of a token and
+                #     the surface of another entity starts in the same
+                #     token — example: 40-fold w/ 40 as v and fold as p)
                 if (
                     surf_form['start'] >= word_offset[0] and
                     surf_form['start'] <= word_offset[1]
@@ -177,7 +185,7 @@ def _convert_single_para(para, loose_matching=False, cap_num_words=False):
                 continue
             assert output_offset_start is not None
             assert output_offset_end is not None
-            # NOTE: if "clusters" key turns out to be needed in
+            # NOTE: if “clusters” key turns out to be needed in
             # output, create here if start and end differ
             surf_id_to_global_word_offset[surf_form['id']] = (
                 output_offset_start,
