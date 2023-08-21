@@ -2,6 +2,7 @@
 """
 
 import json
+import os
 import sys
 import numpy as np
 from sklearn.metrics import classification_report
@@ -102,7 +103,7 @@ def prep_para_data(doc_key, sents, ner, rel):
     return X, y, sample_idx_to_entity_offset_pair
 
 
-def eval_model(train_fp, test_fp, verbose=False):
+def eval_model(train_fp, test_fp, output_fp, verbose=False):
     with open(train_fp, 'r') as f:
         train_paras = [json.loads(line) for line in f.readlines()]
     with open(test_fp, 'r') as f:
@@ -158,13 +159,29 @@ def eval_model(train_fp, test_fp, verbose=False):
     if verbose:
         print('evaluating model...')
     y_pred = clf.predict(X_test)
-    print(classification_report(y_test, y_pred))
+    print(classification_report(y_test, y_pred, zero_division=0.0))
+    res = classification_report(
+        y_test, y_pred, zero_division=0.0, output_dict=True
+    )
+    with open(output_fp, 'w') as f:
+        json.dump(res, f, indent=2)
+    print(f'wrote results to {output_fp}')
 
 
 if __name__ == '__main__':
-    if len(sys.argv) != 3:
-        print('Usage: python simple_re.py <train.jsonl> <test.jsonl>')
+    if len(sys.argv) not in [2, 4]:
+        print(
+            'Usage: python ffnn__re.py <train.jsonl> <test.jsonl>'
+            ' <output.jsonl>'
+        )
         sys.exit(1)
-    train_fp = sys.argv[1]
-    test_fp = sys.argv[2]
-    eval_model(train_fp, test_fp, verbose=True)
+    if len(sys.argv) == 2:
+        base_dir = sys.argv[1]
+        train_fp = os.path.join(base_dir, 'train.jsonl')
+        test_fp = os.path.join(base_dir, 'merged_preds.jsonl')
+        output_fp = os.path.join(base_dir, 'ffnn_re_results.jsonl')
+    elif len(sys.argv) == 4:
+        train_fp = sys.argv[1]
+        test_fp = sys.argv[2]
+        output_fp = sys.argv[3]
+    eval_model(train_fp, test_fp, output_fp, verbose=True)
