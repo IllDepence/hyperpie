@@ -5,11 +5,12 @@ import json
 import os
 import sys
 import numpy as np
+import torch
+from functools import lru_cache
 from tqdm import tqdm
 from sklearn.metrics import classification_report
 from sklearn.neural_network import MLPClassifier
 from transformers import AutoTokenizer, AutoModel
-import torch
 
 
 def emb_mean_pooling(model_output, attention_mask):
@@ -25,6 +26,7 @@ def emb_mean_pooling(model_output, attention_mask):
     return sum_embeddings / sum_mask
 
 
+@lru_cache(maxsize=1000)
 def get_token_embeddings(tokenizer, model, tokens):
     text = ' '.join(tokens)
     encoded_input = tokenizer(text, return_tensors='pt')
@@ -120,7 +122,7 @@ def prep_para_data(doc_key, sents, ner, rel, tokenizer, model):
         rel_dist_norm = np.interp(rel_dist_abs, ent_dist_range, [0, 1])
         # get token embeddings for entity pair
         pair_emb = get_token_embeddings(
-            tokenizer, model, ent_from['tokens'] + ent_to['tokens']
+            tokenizer, model, tuple(ent_from['tokens'] + ent_to['tokens'])
         )
         # flatten and de-emphasize
         pair_emb_flat = pair_emb.detach().numpy().flatten() * 0.01
@@ -141,10 +143,10 @@ def eval_model(train_fp, test_fp, output_fp, verbose=False):
         test_paras = [json.loads(line) for line in f.readlines()]
 
     tokenizer = AutoTokenizer.from_pretrained(
-        'allenai/scibert_scivocab_uncased'
+        'bert-base-uncased',
     )
     model = AutoModel.from_pretrained(
-        'allenai/scibert_scivocab_uncased'
+        'bert-base-uncased',
     )
 
     X_train = []
@@ -219,7 +221,7 @@ def eval_model(train_fp, test_fp, output_fp, verbose=False):
 if __name__ == '__main__':
     if len(sys.argv) not in [2, 4]:
         print(
-            'Usage: python ffnn__re.py <train.jsonl> <test.jsonl>'
+            'Usage: python ffnn_re.py <train.jsonl> <test.jsonl>'
             ' <output.jsonl>'
         )
         sys.exit(1)
@@ -227,7 +229,7 @@ if __name__ == '__main__':
         base_dir = sys.argv[1]
         train_fp = os.path.join(base_dir, 'train.jsonl')
         test_fp = os.path.join(base_dir, 'merged_preds.jsonl')
-        output_fp = os.path.join(base_dir, 'ffnn_re_results_fancy.jsonl')
+        output_fp = os.path.join(base_dir, 'ffnn_re_results.jsonl')
     elif len(sys.argv) == 4:
         train_fp = sys.argv[1]
         test_fp = sys.argv[2]
