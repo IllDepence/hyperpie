@@ -51,6 +51,10 @@ def _convert_single_para(para, loose_matching=False, cap_num_words=False):
     conv_para['ner'] = []
     conv_para['relations'] = []
 
+    # stats
+    tkn_ext_match = 0  # annotation boundaries match token boundaries
+    tkn_mid_match = 0  # annotation boundaries lie within token boundaries
+
     # tokenize text into sentences and words
     para_sentences = sent_tokenize(para['text'])
     # dertermine start and end offset of sentences in text
@@ -166,12 +170,20 @@ def _convert_single_para(para, loose_matching=False, cap_num_words=False):
                 ):
                     # surface form start within word, mark as start
                     output_offset_start = global_word_idx
+                    if surf_form['start'] == word_offset[0]:
+                        tkn_ext_match += 1
+                    else:
+                        tkn_mid_match += 1
                 if (
                     surf_form['end'] >= word_offset[0] and
                     surf_form['end'] <= word_offset[1]
                 ):
                     # surface form end within word, mark as end
                     output_offset_end = global_word_idx
+                    if surf_form['end'] == word_offset[1]:
+                        tkn_ext_match += 1
+                    else:
+                        tkn_mid_match += 1
                 if (
                     output_offset_start is not None and
                     output_offset_end is not None
@@ -235,7 +247,7 @@ def _convert_single_para(para, loose_matching=False, cap_num_words=False):
     for sent_idx, sent in enumerate(conv_para['sentences']):
         conv_para['sentences'][sent_idx] = _replace_brackets(sent)
 
-    return conv_para
+    return conv_para, tkn_ext_match, tkn_mid_match
 
 
 def convert(
@@ -259,9 +271,27 @@ def convert(
 
     # process annotations
     annots_processed = []
+    annot_boundary_exact_matches = 0
+    annot_boundary_mid_token = 0
     for para in annots:
-        para_proc = _convert_single_para(para, loose_matching, cap_num_words)
+        para_proc, xt_mtch, md_mtch = _convert_single_para(
+            para, loose_matching, cap_num_words
+        )
+        annot_boundary_exact_matches += xt_mtch
+        annot_boundary_mid_token += md_mtch
         annots_processed.append(para_proc)
+
+    tkn_boundary_matches = (
+        annot_boundary_exact_matches + annot_boundary_mid_token
+    )
+    print(
+        f'Exact token matches: {annot_boundary_exact_matches}'
+        f' ({annot_boundary_exact_matches / tkn_boundary_matches:.2f})'
+    )
+    print(
+        f'Mid token matches: {annot_boundary_mid_token}'
+        f' ({annot_boundary_mid_token / tkn_boundary_matches:.2f})'
+    )
 
     # save converted annotations
     with open(os.path.join(save_path, annots_processed_fn), 'w') as f:

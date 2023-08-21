@@ -1,4 +1,4 @@
-# PoC test runs
+# Test and Eval runs
 
 ## Cheat data splits (train=dev=test)
 

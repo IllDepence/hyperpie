@@ -5,11 +5,36 @@ import json
 import os
 import sys
 import numpy as np
+from tqdm import tqdm
 from sklearn.metrics import classification_report
 from sklearn.neural_network import MLPClassifier
+from transformers import AutoTokenizer, AutoModel
+import torch
 
 
-def prep_para_data(doc_key, sents, ner, rel):
+def emb_mean_pooling(model_output, attention_mask):
+    # First element of model_output contains all token embeddings
+    token_embeddings = model_output[0]
+
+    input_mask_expanded = attention_mask.unsqueeze(-1).expand(
+        token_embeddings.size()
+    ).float()
+    sum_embeddings = torch.sum(token_embeddings * input_mask_expanded, 1)
+    sum_mask = torch.clamp(input_mask_expanded.sum(1), min=1e-9)
+
+    return sum_embeddings / sum_mask
+
+
+def get_token_embeddings(tokenizer, model, tokens):
+    text = ' '.join(tokens)
+    encoded_input = tokenizer(text, return_tensors='pt')
+    model_output = model(**encoded_input)
+    mean_emb = emb_mean_pooling(model_output, encoded_input['attention_mask'])
+
+    return mean_emb
+
+
+def prep_para_data(doc_key, sents, ner, rel, tokenizer, model):
     """ Given a paragrapgh’s sentences w/ NER and REL info,
         generate X and y for training as well as a mapping
         from sample to entity offset pair.
@@ -93,10 +118,16 @@ def prep_para_data(doc_key, sents, ner, rel):
         # map entity distance to [0, 1]
         rel_dist_abs = ent_to['start'] - ent_from['end']
         rel_dist_norm = np.interp(rel_dist_abs, ent_dist_range, [0, 1])
+        # get token embeddings for entity pair
+        pair_emb = get_token_embeddings(
+            tokenizer, model, ent_from['tokens'] + ent_to['tokens']
+        )
+        # flatten and de-emphasize
+        pair_emb_flat = pair_emb.detach().numpy().flatten() * 0.01
+        sample = from_type_hot + to_type_hot + [rel_dist_norm] \
+            + pair_emb_flat.tolist()
         # map prediction label from True/False to 1/0
         label = int(have_rel[smpl_idx])
-        # NOTE: consider adding token embeddings or other features
-        sample = from_type_hot + to_type_hot + [rel_dist_norm]
         X.append(sample)
         y.append(label)
 
@@ -109,15 +140,24 @@ def eval_model(train_fp, test_fp, output_fp, verbose=False):
     with open(test_fp, 'r') as f:
         test_paras = [json.loads(line) for line in f.readlines()]
 
+    tokenizer = AutoTokenizer.from_pretrained(
+        'allenai/scibert_scivocab_uncased'
+    )
+    model = AutoModel.from_pretrained(
+        'allenai/scibert_scivocab_uncased'
+    )
+
     X_train = []
     y_train = []
     sample_idx_to_entity_offset_pair = {}
-    for para in train_paras:
+    for para in tqdm(train_paras, desc='preparing train data'):
         X, y, s2e_map = prep_para_data(
             para['doc_key'],
             para['sentences'],
             para['ner'],
-            para['relations']
+            para['relations'],
+            tokenizer,
+            model
         )
         X_train += X
         y_train += y
@@ -127,12 +167,14 @@ def eval_model(train_fp, test_fp, output_fp, verbose=False):
 
     X_test = []
     y_test = []
-    for para in test_paras:
+    for para in tqdm(test_paras, desc='preparing train data'):
         X, y, s2e_map = prep_para_data(
             para['doc_key'],
             para['sentences'],
             para['ner'],
-            para['relations']
+            para['relations'],
+            tokenizer,
+            model
         )
         X_test += X
         y_test += y
@@ -141,8 +183,14 @@ def eval_model(train_fp, test_fp, output_fp, verbose=False):
         print(f'loaded {len(X_test)} test samples')
 
     # train model
+
+    # dimensions
+    # type_from (one-hot): 4
+    # type_to (one-hot): 4
+    # rel_dist_norm: 1
+    # pair_emb: 768
     clf = MLPClassifier(
-        hidden_layer_sizes=(18, 4, 2),
+        hidden_layer_sizes=(300, 100, 25, 2),
         activation='relu',
         solver='adam',
         learning_rate_init=0.001,
@@ -179,7 +227,7 @@ if __name__ == '__main__':
         base_dir = sys.argv[1]
         train_fp = os.path.join(base_dir, 'train.jsonl')
         test_fp = os.path.join(base_dir, 'merged_preds.jsonl')
-        output_fp = os.path.join(base_dir, 'ffnn_re_results.jsonl')
+        output_fp = os.path.join(base_dir, 'ffnn_re_results_fancy.jsonl')
     elif len(sys.argv) == 4:
         train_fp = sys.argv[1]
         test_fp = sys.argv[2]

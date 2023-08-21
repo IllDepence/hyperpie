@@ -287,6 +287,62 @@ def aggregate_predictions(root_dir):
                 f.write('\n')
 
 
+def aggregate_ffnn_re_numbers(root_dir, with_nota=True, avg_type=None):
+    """ Aggregate evaluation results of n-fold cross-validation.
+    """
+
+    # Iterate over all subdirectories of root_dir
+    # - each subdirectory contains a filef fnn_re_results.jsonl
+    # - aggregate precision, recall, f1 and print to stdout
+    #   with standard deviation
+
+    re_precisions = []
+    re_recalls = []
+    re_f1s = []
+    if with_nota:
+        if avg_type is None:
+            avg_type = 'macro'
+        dict_key = f'{avg_type} avg'
+        print('Including NOTA')
+        print(f'Using {avg_type} average')
+    else:
+        if avg_type is not None:
+            raise ValueError('avg can\'t be used if with_nota is False')
+        dict_key = '1'
+        print('Excluding NOTA')
+
+    for subdir in os.listdir(root_dir):
+        subdir_path = os.path.join(root_dir, subdir)
+        if not os.path.isdir(subdir_path):
+            continue
+        print(f'Processing {subdir_path}')
+        re_fp = os.path.join(subdir_path, 'ffnn_re_results.jsonl')
+        if not os.path.isfile(re_fp):
+            print(f'No results.json found in {re_fp}')
+            continue
+        with open(re_fp, 'r') as f:
+            re_results = json.load(f)
+            if dict_key not in re_results:
+                print(f'Key {dict_key} not found in {re_fp}')
+                continue
+            re_precisions.append(re_results[dict_key]['precision'])
+            re_recalls.append(re_results[dict_key]['recall'])
+            re_f1s.append(re_results[dict_key]['f1-score'])
+
+    # Calculate mean and standard deviation in percentages
+    re_p_mean = statistics.mean(re_precisions) * 100
+    re_p_std = statistics.stdev(re_precisions) * 100
+    re_r_mean = statistics.mean(re_recalls) * 100
+    re_r_std = statistics.stdev(re_recalls) * 100
+    re_f1_mean = statistics.mean(re_f1s) * 100
+    re_f1_std = statistics.stdev(re_f1s) * 100
+    print(
+        f'RE precision: {re_p_mean:.1f} ± {re_p_std:.1f}\n'
+        f'RE recall: {re_r_mean:.1f} ± {re_r_std:.1f}\n'
+        f'RE f1: {re_f1_mean:.1f} ± {re_f1_std:.1f}\n'
+    )
+
+
 def aggregate_numbers(root_dir):
     """ Aggregate evaluation results of n-fold cross-validation.
     """
@@ -357,6 +413,9 @@ def aggregate_numbers(root_dir):
 if __name__ == '__main__':
     root_dir = sys.argv[1]
     # aggregate_numbers(root_dir)
+    aggregate_ffnn_re_numbers(root_dir, with_nota=False)
+    aggregate_ffnn_re_numbers(root_dir)
+    aggregate_ffnn_re_numbers(root_dir, avg_type='weighted')
     # aggregate_predictions(root_dir)
-    print_predictions(root_dir, 'ent_pred_test.json')
+    # print_predictions(root_dir, 'ent_pred_test.json')
     # error_analysis(root_dir)
