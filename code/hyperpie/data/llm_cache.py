@@ -26,6 +26,7 @@ import os
 import json
 from hashlib import md5
 from hyperpie import settings
+from functools import lru_cache
 
 
 def _param_str(param_dict):
@@ -51,10 +52,10 @@ def _param_str(param_dict):
 def llm_completion_cache_save(
     params, prompt, completion
 ):
-    """ Save LLM completions to cache.
+    """ Save LLM completions to cache and
+        clear cached version in memory.
     """
 
-    cache = {}
     model_key = md5(
         _param_str(params).encode('utf-8')
     ).hexdigest()
@@ -62,10 +63,8 @@ def llm_completion_cache_save(
         prompt.encode('utf-8')
     ).hexdigest()
 
-    # get existing cache if exists
-    if os.path.exists(settings.llm_cache_fp):
-        with open(settings.llm_cache_fp) as f:
-            cache = json.load(f)
+    # get existing cache
+    cache = _load_cache()
 
     # create entry for params if not exists
     if model_key not in cache:
@@ -78,6 +77,25 @@ def llm_completion_cache_save(
     with open(settings.llm_cache_fp, 'w') as f:
         json.dump(cache, f)
 
+    # clear cache in memory
+    _load_cache.cache_clear()
+
+
+@lru_cache(maxsize=1)
+def _load_cache():
+    """ Load LLM cache and keep in memory until new data
+        is saved.
+    """
+
+    cache = {}
+
+    # get existing cache if exists
+    if os.path.exists(settings.llm_cache_fp):
+        with open(settings.llm_cache_fp) as f:
+            cache = json.load(f)
+
+    return cache
+
 
 def llm_completion_cache_load(
     params, prompt
@@ -85,7 +103,6 @@ def llm_completion_cache_load(
     """ Load cached LLM completions if exists.
     """
 
-    cache = {}
     model_key = md5(
         _param_str(params).encode('utf-8')
     ).hexdigest()
@@ -94,9 +111,7 @@ def llm_completion_cache_load(
     ).hexdigest()
 
     # get existing cache if exists
-    if os.path.exists(settings.llm_cache_fp):
-        with open(settings.llm_cache_fp) as f:
-            cache = json.load(f)
+    cache = _load_cache()
 
     # return completion if exists
     if model_key in cache and prompt_key in cache[model_key]:
