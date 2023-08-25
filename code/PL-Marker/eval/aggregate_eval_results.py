@@ -224,12 +224,14 @@ def print_predictions(root_dir, data_fn=None):
                 for (start, end, label) in ner_pred:
                     # print(start-para_delta, end-para_delta+1, label)
                     print(sent[start-para_delta:end-para_delta+1], label)
+                has_rels = False
                 if 'predicted_relations' in para:
                     re_pred = para['predicted_relations'][sent_idx]
                     print('<<<RE>>>')
                     for (
                         start_from, end_from, start_to, end_to, label
                     ) in re_pred:
+                        has_rels = True
                         print(
                             sent[start_from-para_delta:end_from-para_delta+1],
                             '--',
@@ -238,7 +240,8 @@ def print_predictions(root_dir, data_fn=None):
                             sent[start_to-para_delta:end_to-para_delta+1]
                         )
                 para_delta += len(sent)
-                input()
+                if has_rels:
+                    input()
 
 
 def aggregate_predictions(root_dir):
@@ -413,9 +416,11 @@ def aggregate_numbers(root_dir):
 if __name__ == '__main__':
     root_dir = sys.argv[1]
     # aggregate_numbers(root_dir)
-    aggregate_ffnn_re_numbers(root_dir, with_nota=False)
-    aggregate_ffnn_re_numbers(root_dir)
-    aggregate_ffnn_re_numbers(root_dir, avg_type='weighted')
+
+    # aggregate_ffnn_re_numbers(root_dir, with_nota=False)
+    # aggregate_ffnn_re_numbers(root_dir)
+    # aggregate_ffnn_re_numbers(root_dir, avg_type='weighted')
+
     # aggregate_predictions(root_dir)
-    # print_predictions(root_dir, 'ent_pred_test.json')
+    print_predictions(root_dir)
     # error_analysis(root_dir)
