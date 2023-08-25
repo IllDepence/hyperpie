@@ -21,7 +21,7 @@ eval_result_fns = {
     'WizardLM (Y)': 'data/format_eval_WizardLM_WizardLM_13B_V1_1.json',
     'WizardLM (J)': 'data/format_eval_WizardLM_WizardLM_13B_V1_1_json.json',
     'GALACTICA (Y)': 'data/format_eval_facebook_galactica_120b.json',
-    'GALACTICA (j)★': 'data/format_eval_facebook_galactica_120b.json',
+    'GALACTICA (J)★': 'data/format_eval_facebook_galactica_120b_json-first105.json',  # noqa
     'Falcon (Y)': 'data/format_eval_tiiuae_falcon_40b_instruct.json',
     'Falcon (J)★': 'data/format_eval_tiiuae_falcon_40b_instruct.json',
 }
@@ -89,9 +89,9 @@ def plot_format_eval_content(eval_results, save_path):
         barcolors = [cmap(i) for i in range(len(eval_results))]
 
         # FIXME: add placeholders for evals not finished yet
-        barvals[7] = 100
+        # barvals[7] = 100
         barvals[9] = 100
-        barcolors[7] = 'lightgrey'
+        # barcolors[7] = 'lightgrey'
         barcolors[9] = 'lightgrey'
 
         # Horizontal lot bars for each model where the x-axis shows the
@@ -192,16 +192,19 @@ def plot_format_eval_parsing(eval_results, save_path):
         axs[i].set_xlim(0, 100)
 
         # Calculate values
-        barvals = [
-            100 * accsses_func(eval_results[model]) / 444
-            for model in eval_results
-        ]
+        barvals = []
+        for model in eval_results:
+            num_samples = 444
+            if model == 'GALACTICA (J)★':
+                num_samples = 105
+            bv = 100 * accsses_func(eval_results[model]) / num_samples
+            barvals.append(bv)
         barcolors = [cmap(i) for i in range(len(eval_results))]
 
         # FIXME: add placeholders for evals not finished yet
-        barvals[7] = 100
+        # barvals[7] = 100
         barvals[9] = 100
-        barcolors[7] = 'lightgrey'
+        # barcolors[7] = 'lightgrey'
         barcolors[9] = 'lightgrey'
 
         # Horizontal lot bars for each model

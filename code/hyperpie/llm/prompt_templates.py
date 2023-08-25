@@ -549,3 +549,57 @@ ASSISTANT:
 ```python
 {{{{
   "text_contains_entities": """  # noqa: E501
+
+
+text_e2e_fillin_twostep_1_galacitca_json = text_e2e_fillin_twostep_1_alpaca_style_nointro_json  # noqa: E501
+
+
+text_e2e_fillin_twostep_1_falcon_json = f"""User: I will give you instructions consisting of three parts. The three parts are called TASK, FORMAT and TEXT. You have to perform TASK based solely on information in TEXT, and in your output adhering to FORMAT.
+
+TASK:
+Your task is to extract information on the datasets, models, methods, loss functions, and regularization techniques mentioned in a text from machine learning and related fields, The information to extract are the aforementioned entities (datasets, models, methods, loss functions, and regularization techniques) as well as their parameters and values. Parameters are the aspects of an entity chosen or set by the authors of the text. Note that parameters are not entities. You have to output the extracted information in the JSON format described further down. Replace placeholders in format with actual values. For example, replace <entity name> with the name of an entity mentioned in the text. Only output information mentioned in the text.
+
+FORMAT:
+```python
+{{{{
+  "text_contains_entities": true/false,
+  "entities": [
+    {{{{
+      "entity<N>": {{{{
+        "id": "e<N>",
+        "name": "<entity name>",
+        "type": "dataset/model/method/loss function/regularization technique",
+        "has_parameters": true/false,
+        "parameters": [
+          {{{{
+            "parameter<M>": {{{{
+              "id": "p<N.M>",
+              "name": "<parameter name>",
+              "has_values": true/false,
+              "values": [
+                {{{{
+                  "value<O>": {{{{
+                    "value_id": "v<N.M.O>",
+                    "value": "<parameter value>",
+                    "context": "<value context>",
+                    "context_id": "c<N.M.O>"/null
+                  }}}}
+                }}}}
+              ]
+            }}}}
+          }}}}
+        ]
+      }}}}
+    }}}}
+  ]
+}}}}
+```
+
+TEXT:
+{{text}}
+
+
+Assistant:
+```python
+{{{{
+  "text_contains_entities": """  # noqa: E501

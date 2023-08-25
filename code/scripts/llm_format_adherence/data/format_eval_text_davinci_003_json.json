@@ -6,18 +6,15 @@
     "garbage_around_yaml": 0
   },
   "yaml2json": {
-    "parse_fail": 2,
+    "parse_fail": 1,
     "parsing_error_dict": {
       "general": {
-        "Expecting ',' delimiter: line 262 column 12 (char 7199)": 1,
         "Expecting property name enclosed in double quotes: line 58 column 19 (char 1590)": 1
       },
       "quotes+esc": {
-        "Expecting ',' delimiter: line 262 column 12 (char 7199)": 1,
         "Expecting property name enclosed in double quotes: line 58 column 19 (char 1590)": 1
       },
       "fixed": {
-        "Expecting ',' delimiter: line 261 column 15 (char 7188)": 1,
         "Expecting property name enclosed in double quotes: line 58 column 19 (char 1590)": 1
       }
     }
@@ -27,27 +24,27 @@
   },
   "json_content": {
     "num_ents_intext_notintext": [
-      890,
+      898,
       96
     ],
     "num_ent_types_valid_invalid": [
-      922,
+      930,
       64
     ],
     "num_aids_valid_invalid": [
-      986,
+      994,
       0
     ],
     "num_pids_valid_invalid": [
-      139,
+      145,
       56
     ],
     "num_vids_valid_invalid": [
-      112,
+      118,
       39
     ],
     "num_cids_valid_invalid": [
-      86,
+      92,
       65
     ]
   }

@@ -1067,6 +1067,50 @@ def gpt3_json_extract(llm_output_dict, verbose=False):
     return llm_output_dict, status_dict
 
 
+def galaxy_json_extract(llm_output_dict, verbose=False):
+    """ Preprocessor for GALAXY output.
+        Works the same as the Vicuna preprocessor but does not
+        need to add the JSON start.
+    """
+
+    llm_output_text = llm_output_dict['completion']['choices'][0]['text']
+
+    # try to extract JSON block
+    json_patt = re.compile(
+        r"(\s*['\"]?(true|false|1|0)['\"]?,\s*\n.*?^\}$)(\n```)?(.*)",
+        re.S | re.M
+    )
+    json_beginning_patt = re.compile(
+        r"\s*(['\"]?(true|false|1|0)['\"]?,\n\s+\"entities\":\s+\[\s*{.*})",
+        re.S | re.M
+    )
+
+    m = json_patt.search(llm_output_text)
+    json_found = True
+    if m is not None:
+        json_text = m.group(1)
+        garbage = m.group(4)
+    else:
+        m_beg = json_beginning_patt.search(llm_output_text)
+        if m_beg is not None:
+            json_text = m_beg.group(1)
+        else:
+            json_found = False
+            json_text = llm_output_text
+        garbage = ''  # unknown so leave empty
+
+    # add back beginning which was part of the prompt
+    if json_found:
+        json_text = '{"text_contains_entities": ' + json_text
+    status_dict = _preprocessor_status_dict(
+        not json_found, None, len(garbage) > 3
+    )
+
+    llm_output_dict['completion']['choices'][0]['text'] = json_text
+
+    return llm_output_dict, status_dict
+
+
 def vicuna_json_extract(llm_output_dict, verbose=False):
     """ Preprocessor for Vicuna output where the start of the JSON is part
         of the prompt and needs to be added back.
@@ -1279,37 +1323,27 @@ def parse_llm_json(llm_output_dict, verbose=False):
             parse_errors['quotes+esc'] = str(e_quotes)
             pass  # handle further down
         # 1. 2 try to fix (assume output is cut off)
-        # - remove last line
-        llm_output_json = '\n'.join(llm_output_json.split('\n')[:-1])
-        # - add necessary delimiters according to indent
-        last_line = llm_output_json.split('\n')[-1]
-        leading_spaces = leading_space_patt.match(last_line).group(0)
-        num_leading_spaces = len(leading_spaces)
-        if num_leading_spaces >= 18:
-            llm_output_json += '}}]}}]}}]}'
-        elif num_leading_spaces >= 16:
-            llm_output_json += '}]}}]}}]}'
-        elif num_leading_spaces >= 14:
-            llm_output_json += ']}}]}}]}'
-        elif num_leading_spaces >= 12:
-            llm_output_json += '}}]}}]}'
-        elif num_leading_spaces >= 10:
-            llm_output_json += '}]}}]}'
-        elif num_leading_spaces >= 8:
-            llm_output_json += ']}}]}'
-        elif num_leading_spaces >= 6:
-            llm_output_json += '}}]}'
-        elif num_leading_spaces >= 4:
-            llm_output_json += '}]}'
-        elif num_leading_spaces >= 2:
-            llm_output_json += ']}'
-        else:
-            llm_output_json += '}'
-        try:
-            llm_output = json.loads(llm_output_json)
-            parse_fail = False
-        except json.JSONDecodeError as e_cut_delim_fix:
-            parse_errors['fixed'] = str(e_cut_delim_fix)
+        # - try adding necessary delimiters at end of cut-off completion
+        delims = [
+            '}}]}}]}}]}',
+            '}]}}]}}]}',
+            ']}}]}}]}',
+            '}}]}}]}',
+            '}]}}]}',
+            ']}}]}',
+            '}}]}',
+            '}]}',
+            ']}',
+            '}'
+        ]
+        for delim in delims:
+            try:
+                llm_output = json.loads(llm_output_json + delim)
+                parse_fail = False
+                break
+            except json.JSONDecodeError as e_cut_delim_fix:
+                parse_errors['fixed'] = str(e_cut_delim_fix)
+                pass
         # if not fixed until here, give up
         if parse_fail:
             if verbose:

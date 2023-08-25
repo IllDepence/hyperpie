@@ -12,6 +12,7 @@ def print_stats():
     data_dir = 'data'
     fns = {
         'Falcon': 'eval_tiiuae_falcon_40b_instruct.json',
+        'GALACTICA_json': 'eval_facebook_galactica_120b_json-first105.json',
         'GALACTICA': 'eval_facebook_galactica_120b.json',
         'WizardLM_json': 'eval_WizardLM_WizardLM_13B_V1_1_json.json',
         'WizardLM': 'eval_WizardLM_WizardLM_13B_V1_1.json',
