@@ -3,6 +3,7 @@
 
 import json
 import os
+import pickle
 import sys
 import numpy as np
 import torch
@@ -36,7 +37,9 @@ def get_token_embeddings(tokenizer, model, tokens):
     return mean_emb
 
 
-def prep_para_data(doc_key, sents, ner, rel, tokenizer, model):
+def prep_para_data(
+    doc_key, sents, ner, rel, tokenizer, emb_map, model, smpl_offset=0
+):
     """ Given a paragrapgh’s sentences w/ NER and REL info,
         generate X and y for training as well as a mapping
         from sample to entity offset pair.
@@ -46,7 +49,7 @@ def prep_para_data(doc_key, sents, ner, rel, tokenizer, model):
     y = []
     pairs = []
     have_rel = []
-    sample_idx_to_entity_offset_pair = {}
+    s2e_map = {}
 
     # collect entity pairs
     sent_offset = 0
@@ -95,8 +98,8 @@ def prep_para_data(doc_key, sents, ner, rel, tokenizer, model):
                 # save mapping from sample index to entity offset pair
                 # (to be able to create prediction output when used on
                 #  unlabeled data)
-                curr_sample_idx = len(pairs)-1
-                sample_idx_to_entity_offset_pair[curr_sample_idx] = {
+                curr_sample_idx = len(pairs)-1+smpl_offset
+                s2e_map[curr_sample_idx] = {
                     'doc_key': doc_key,
                     'sent_idx': sent_idx,
                     'rel': rel_check,
@@ -121,9 +124,14 @@ def prep_para_data(doc_key, sents, ner, rel, tokenizer, model):
         rel_dist_abs = ent_to['start'] - ent_from['end']
         rel_dist_norm = np.interp(rel_dist_abs, ent_dist_range, [0, 1])
         # get token embeddings for entity pair
-        pair_emb = get_token_embeddings(
-            tokenizer, model, tuple(ent_from['tokens'] + ent_to['tokens'])
-        )
+        tup = tuple(ent_from['tokens'] + ent_to['tokens'])
+        if tup in emb_map:
+            pair_emb = emb_map[tup]
+        else:
+            pair_emb = get_token_embeddings(
+                tokenizer, model, tup
+            )
+            emb_map[tup] = pair_emb
         # flatten and de-emphasize
         pair_emb_flat = pair_emb.detach().numpy().flatten() * 0.01
         sample = from_type_hot + to_type_hot + [rel_dist_norm] \
@@ -133,7 +141,24 @@ def prep_para_data(doc_key, sents, ner, rel, tokenizer, model):
         X.append(sample)
         y.append(label)
 
-    return X, y, sample_idx_to_entity_offset_pair
+    return X, y, s2e_map
+
+
+@lru_cache(maxsize=1)
+def _get_saved_embeddings_map():
+    fn = 'ffnre_saved_embs.pkl'
+    emb_map = {}
+    if os.path.isfile(fn):
+        with open(fn, 'rb') as f:
+            emb_map = pickle.load(f)
+    return emb_map
+
+
+def _save_embeddings_map(emb_map):
+    fn = 'ffnre_saved_embs.pkl'
+    with open(fn, 'wb') as f:
+        pickle.dump(emb_map, f)
+    _get_saved_embeddings_map.cache_clear()
 
 
 def eval_model(train_fp, test_fp, output_fp, verbose=False):
@@ -142,16 +167,35 @@ def eval_model(train_fp, test_fp, output_fp, verbose=False):
     with open(test_fp, 'r') as f:
         test_paras = [json.loads(line) for line in f.readlines()]
 
+    # device = torch.device('cuda')
+
     tokenizer = AutoTokenizer.from_pretrained(
         'bert-base-uncased',
     )
+    emb_map = _get_saved_embeddings_map()
     model = AutoModel.from_pretrained(
         'bert-base-uncased',
     )
 
+    # model.to(device)
+
+    # train_fp_base = os.path.split(train_fp)[0]
+    # X_train_tkn_fp = os.path.join(train_fp_base, 'X_train.pkl')
+    # y_train_tkn_fp = os.path.join(train_fp_base, 'y_train.pkl')
+    # loaded_train_data = False
+    # loaded_test_data = False
+    # if (
+    #     os.path.isfile(X_train_tkn_fp) and
+    #     os.path.isfile(y_train_tkn_fp)
+    # ):
+    #     print(f'loading saved tokenized training data')
+    #     with open(X_train_tkn_fp, 'rb') as f:
+    #         X_train = pickle.load(f)
+    #     with open(y_train_tkn_fp, 'rb') as f:
+    #         y_train = pickle.load(f)
+    # else:
     X_train = []
     y_train = []
-    sample_idx_to_entity_offset_pair = {}
     for para in tqdm(train_paras, desc='preparing train data'):
         X, y, s2e_map = prep_para_data(
             para['doc_key'],
@@ -159,30 +203,69 @@ def eval_model(train_fp, test_fp, output_fp, verbose=False):
             para['ner'],
             para['relations'],
             tokenizer,
+            emb_map,
             model
         )
         X_train += X
         y_train += y
-        sample_idx_to_entity_offset_pair.update(s2e_map)
     if verbose:
         print(f'loaded {len(X_train)} training samples')
 
+    # test_fp_base = os.path.split(test_fp)[0]
+    # X_test_tkn_fp = os.path.join(test_fp_base, 'X_test.pkl')
+    # y_test_tkn_fp = os.path.join(test_fp_base, 'y_test.pkl')
+    # smpl2off_fp = os.path.join(train_fp_base, 'test_smpl2off.json')
+    # if (
+    #     os.path.isfile(X_test_tkn_fp) and
+    #     os.path.isfile(X_test_tkn_fp) and
+    #     os.path.isfile(smpl2off_fp)
+    # ):
+    #     print(f'loading saved tokenized test data')
+    #     with open(X_test_tkn_fp, 'rb') as f:
+    #         X_test = pickle.load(f)
+    #     with open(y_test_tkn_fp, 'rb') as f:
+    #         y_test = pickle.load(f)
+    #     with open(smpl2off_fp, 'r') as f:
+    #         sample_idx_to_entity_offset_pair = json.load(f)
+    # else:
     X_test = []
     y_test = []
-    for para in tqdm(test_paras, desc='preparing train data'):
+    sample_idx_to_entity_offset_pair = {}
+    for para in tqdm(test_paras, desc='preparing test data'):
+        global_smpl_offset = len(y_test)
         X, y, s2e_map = prep_para_data(
             para['doc_key'],
             para['sentences'],
-            para['ner'],
+            para['predicted_ner'],
             para['relations'],
             tokenizer,
-            model
+            emb_map,
+            model,
+            global_smpl_offset
         )
         X_test += X
         y_test += y
         sample_idx_to_entity_offset_pair.update(s2e_map)
     if verbose:
         print(f'loaded {len(X_test)} test samples')
+        print(f'noted {len(sample_idx_to_entity_offset_pair)} sample offsets')
+
+    _save_embeddings_map(emb_map)
+
+    # if not loaded_train_data:
+    #     print(f'saving tokenized training data')
+    #     with open(X_train_tkn_fp, 'wb') as f:
+    #         pickle.dump(X_train, f)
+    #     with open(y_train_tkn_fp, 'wb') as f:
+    #         pickle.dump(y_train, f)
+    # if not loaded_test_data:
+    #     print(f'saving tokenized test data')
+    #     with open(X_test_tkn_fp, 'wb') as f:
+    #         pickle.dump(X_test, f)
+    #     with open(y_test_tkn_fp, 'wb') as f:
+    #         pickle.dump(y_test, f)
+    #     with open(smpl2off_fp, 'w') as f:
+    #         json.dump(sample_idx_to_entity_offset_pair, f)
 
     # train model
 
@@ -216,6 +299,14 @@ def eval_model(train_fp, test_fp, output_fp, verbose=False):
     with open(output_fp, 'w') as f:
         json.dump(res, f, indent=2)
     print(f'wrote results to {output_fp}')
+
+    # with open('sample_idx_to_entity_offset_pair.json', 'w') as f:
+    #     json.dump(sample_idx_to_entity_offset_pair, f)
+    # with open('y_pred.pkl', 'wb') as f:
+    #     pickle.dump(y_pred, f)
+    # pred_out_fp = 'y_pred.json'
+    # with open(pred_out_fp, 'w') as f:
+    #     json.dump(y_pred.tolist(), f)
 
 
 if __name__ == '__main__':
