@@ -4,8 +4,14 @@ INFO: the model says "Han shot 1st"
 INFO: using model WizardLM/WizardLM-13B-V1.1 for LLM completion
 INFO: the model says "Han shot 1st"
 
+INFO: using model tiiuae/falcon-40b-instruct for LLM completion
+INFO: the model says "Han shot 1st"
+
 INFO: using model WizardLM/WizardLM-13B-V1.1 for LLM completion
 INFO: the model says "Han shot 3 times"
+
+INFO: using model tiiuae/falcon-40b-instruct for LLM completion
+INFO: the model says "Han shot 2 shots"
 
 INFO: using model facebook/galactica-120b for LLM completion
 INFO: the model says "Han shot 'em"
@@ -22,11 +28,11 @@ INFO: the model says "Han shot  Kerr "
 INFO: using model facebook/galactica-120b for LLM completion
 INFO: the model says "Han shot , Bee"
 
+INFO: using model tiiuae/falcon-40b-instruct for LLM completion
+INFO: the model says "Han shot [.."
+
 INFO: using model facebook/galactica-120b for LLM completion
 INFO: the model says "Han shot 99"
-
-INFO: using model tiiuae/falcon-40b-instruct for LLM completion
-INFO: the model says "Han shot 86 and"
 
 INFO: using model facebook/galactica-120b for LLM completion
 INFO: the model says "Han shot 57"
@@ -55,17 +61,38 @@ INFO: the model says "Han shot 10"
 INFO: using model lmsys/vicuna-13b-v1.3 for LLM completion
 INFO: the model says "Han shot 10"
 
+INFO: using model tiiuae/falcon-40b-instruct for LLM completion
+INFO: the model says "Han shot 3 fewer"
+
+INFO: using model tiiuae/falcon-40b-instruct for LLM completion
+INFO: the model says "Han shot 86 and"
+
 INFO: using model facebook/galactica-120b for LLM completion
-INFO: the model says "Han shot 1."
+INFO: the model says "Han shot 4 runs"
 
 INFO: using model facebook/galactica-120b for LLM completion
 INFO: the model says "Han shot 3 home"
 
+INFO: using model tiiuae/falcon-40b-instruct for LLM completion
+INFO: the model says "Han shot 69 at"
+
 INFO: using model facebook/galactica-120b for LLM completion
 INFO: the model says "Han shot 4 of"
 
+INFO: using model tiiuae/falcon-40b-instruct for LLM completion
+INFO: the model says "Han shot 590 to"
+
+INFO: using model tiiuae/falcon-40b-instruct for LLM completion
+INFO: the model says "Han shot +32"
+
+INFO: using model facebook/galactica-120b for LLM completion
+INFO: the model says "Han shot 1."
+
 INFO: using model facebook/galactica-120b for LLM completion
 INFO: the model says "Han shot 0-"
+
+INFO: using model tiiuae/falcon-40b-instruct for LLM completion
+INFO: the model says "Han shot 3'"
 
 INFO: using model facebook/galactica-120b for LLM completion
 INFO: the model says "Han shot .3"
@@ -75,6 +102,9 @@ INFO: the model says "Han shot .2"
 
 INFO: using model tiiuae/falcon-40b-instruct for LLM completion
 INFO: the model says "Han shot 4/"
+
+INFO: using model facebook/galactica-120b for LLM completion
+INFO: the model says "Han shot 5 II"
 
 INFO: using model facebook/galactica-120b for LLM completion
 INFO: the model says "Han shot [D"

@@ -973,6 +973,46 @@ def fix_indent(yaml):
     return fixed_yaml.rstrip()
 
 
+def falcon_json_extract(llm_output_dict, verbose=False):
+    """ Preprocessor for Falcon output where the start of the JSON is part
+        of the prompt.
+    """
+
+    llm_out = llm_output_dict['completion']['choices'][0]['text']
+
+    # look for Falcon specific garbage
+    garbage_patt = re.compile(
+        # usually fonud after JSON
+        r'^(Note that t|T)he (output|assistant|user|task)',
+        flags=re.I | re.M
+    )
+    if garbage_patt.search(llm_out):
+        falcon_garbage = True
+    else:
+        falcon_garbage = False
+
+    # fix Falcon specific bools w/ qoutes
+    qbool_patt = re.compile(
+        r'("|\')?(true|false)("|\')?',
+        flags=re.I | re.M
+    )
+    llm_out = qbool_patt.sub(r'\2', llm_out)
+
+    # fix Falcon specific missing space at the beginning
+    llm_out = ' ' + llm_out
+
+    llm_output_dict['completion']['choices'][0]['text'] = llm_out
+
+    # extract JSON
+    llm_output, stats = vicuna_json_extract(llm_output_dict)
+    # adjust preprocessor stats if necessary
+    stats['garbage_around_yaml'] = (
+        stats['garbage_around_yaml'] or falcon_garbage
+    )
+
+    return llm_output, stats
+
+
 def falcon_yaml_extract(llm_output_dict, verbose=False):
     """ Preprocessor for Falcon output where the start of the YAML is part
         of the prompt.
@@ -1002,7 +1042,7 @@ def falcon_yaml_extract(llm_output_dict, verbose=False):
 
     llm_output_dict['completion']['choices'][0]['text'] = llm_out
 
-    # parse YAML
+    # extract YAML
     llm_output, stats = vicuna_yaml_extract(llm_output_dict)
     # adjust preprocessor stats if necessary
     stats['garbage_around_yaml'] = (
