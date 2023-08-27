@@ -8,3 +8,4 @@ completion_cache.json
 *.ipynb
 code/distant_supervision
 code/PL-Marker/source/*.py
+code/PL-Marker/eval/pwc_data/links-between-papers-and-code.json
