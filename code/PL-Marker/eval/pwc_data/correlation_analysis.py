@@ -1,6 +1,7 @@
 import argparse
 import json
 import os
+import sys
 from collections import defaultdict
 
 
@@ -87,37 +88,80 @@ def _get_number_of_tups(pred_para):
     return num_vp_rels, num_pa_rels, num_vpa_trips
 
 
-def analyse(ppr_preds, ppr_data):
-    for arxiv_id, ppr_pred in ppr_preds.items():
+def _get_ppr_pred_hyperparam_digest(ppr_pred):
+    digest = defaultdict(int)
+    for pred_para in ppr_pred:
+        digest['n_ents'] += _get_number_of_entities(pred_para)
+        digest['n_rels'] += _get_number_of_relations(pred_para)
+        digest['n_v'] += _get_number_of_ent_type('v', pred_para)
+        digest['n_p'] += _get_number_of_ent_type('p', pred_para)
+        digest['n_a'] += _get_number_of_ent_type('a', pred_para)
+        vp, pa, vpa = _get_number_of_tups(pred_para)
+        digest['n_vp'] += vp
+        digest['n_pa'] += pa
+        digest['n_vpa'] += vpa
+    return digest
+
+
+def _get_ppr_data_digest(ppr_data):
+    gh_meta = ppr_data.get('github_metadata')
+    digest = {
+        'has_repo_url': ppr_data['repo_url'] is not None,
+        'mentioned_in_ppaer': ppr_data['mentioned_in_paper'],
+        'mentioned_in_github': ppr_data['mentioned_in_github'],
+        'has_repo_data':  gh_meta is not None,
+        'repo_has_hoomepage': False,
+        'repo_size': 0,
+        'repo_stars': 0,
+        'repo_watchers': 0,
+        'repo_has_issues': False,
+        'repo_has_projects': False,
+        'repo_has_downloads': False,
+        'repo_has_wiki': False,
+        'repo_has_pages': False,
+        'repo_forks': 0,
+        'repo_archived': False,
+        'repo_disabled': False,
+        'repo_open_issues': 0,
+        'repo_has_license': False
+    }
+    if gh_meta is not None:
+        digest['repo_has_homepage'] = gh_meta['homepage'] is not None
+        digest['repo_size'] = gh_meta['size']
+        digest['repo_stars'] = gh_meta['stargazers_count']
+        digest['repo_watchers'] = gh_meta['watchers_count']
+        digest['repo_has_issues'] = gh_meta['has_issues']
+        digest['repo_has_projects'] = gh_meta['has_projects']
+        digest['repo_has_downloads'] = gh_meta['has_downloads']
+        digest['repo_has_wiki'] = gh_meta['has_wiki']
+        digest['repo_has_pages'] = gh_meta['has_pages']
+        digest['repo_forks'] = gh_meta['forks_count']
+        digest['repo_archived'] = gh_meta['archived']
+        digest['repo_disabled'] = gh_meta['disabled']
+        digest['repo_open_issues'] = gh_meta['open_issues_count']
+        digest['repo_has_license'] = gh_meta['license'] is not None
+    return digest
+
+
+def analyse(ppr_preds, ppr_datas):
+    for arxiv_id in ppr_preds.keys():
         print(f'paper: {arxiv_id}')
+        ppr_pred = ppr_preds[arxiv_id]
+        ppr_data = ppr_datas.get(arxiv_id)
+        if ppr_data is None:
+            print(f'paper data not found')
+            x = input('press enter to skip, "q" to quit')
+            if x == 'q':
+                sys.exit()
+            continue
         print(f'num paras: {len(ppr_pred)}')
-        n_ents = 0
-        n_rels = 0
-        n_v = 0
-        n_p = 0
-        n_a = 0
-        n_vp = 0
-        n_pa = 0
-        n_vpa = 0
-        for pred_para in ppr_pred:
-            n_ents += _get_number_of_entities(pred_para)
-            n_rels += _get_number_of_relations(pred_para)
-            n_v += _get_number_of_ent_type('v', pred_para)
-            n_p += _get_number_of_ent_type('p', pred_para)
-            n_a += _get_number_of_ent_type('a', pred_para)
-            vp, pa, vpa = _get_number_of_tups(pred_para)
-            n_vp += vp
-            n_pa += pa
-            n_vpa += vpa
+        hyper_digest = _get_ppr_pred_hyperparam_digest(ppr_pred)
+        repro_digest = _get_ppr_data_digest(ppr_data)
         print(
-            f'num ents: {n_ents}\n'
-            f'num rels: {n_rels}\n'
-            f'num v: {n_v}\n'
-            f'num p: {n_p}\n'
-            f'num a: {n_a}\n'
-            f'num vp: {n_vp}\n'
-            f'num pa: {n_pa}\n'
-            f'num vpa: {n_vpa}\n'
+            f'- - - hyperr - - -\n'
+            f'{json.dumps(hyper_digest, indent=2)}\n'
+            f'- - - repro- - -\n'
+            f'{json.dumps(repro_digest, indent=2)}\n'
         )
         input()
 
