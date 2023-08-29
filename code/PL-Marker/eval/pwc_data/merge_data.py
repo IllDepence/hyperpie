@@ -96,6 +96,9 @@ def get_github_medatada(pwc_data_pred):
                 'X-GitHub-Api-Version': '2022-11-28'
             }
         )
+        if resp.status_code == 404:
+            print(f'got 404 for {arxiv_id}, skipping')
+            continue
         if resp.status_code != 200:
             print(f'response status code {resp.status_code} for {arxiv_id}')
             print(f'exiting...')

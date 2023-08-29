@@ -2,7 +2,10 @@ import argparse
 import json
 import os
 import sys
+import numpy as np
+import matplotlib.pyplot as plt
 from collections import defaultdict
+from scipy.stats import pearsonr
 
 
 def load_pediction_data(root_dir):
@@ -104,66 +107,177 @@ def _get_ppr_pred_hyperparam_digest(ppr_pred):
 
 
 def _get_ppr_data_digest(ppr_data):
-    gh_meta = ppr_data.get('github_metadata')
     digest = {
-        'has_repo_url': ppr_data['repo_url'] is not None,
-        'mentioned_in_ppaer': ppr_data['mentioned_in_paper'],
-        'mentioned_in_github': ppr_data['mentioned_in_github'],
-        'has_repo_data':  gh_meta is not None,
-        'repo_has_hoomepage': False,
-        'repo_size': 0,
-        'repo_stars': 0,
-        'repo_watchers': 0,
-        'repo_has_issues': False,
-        'repo_has_projects': False,
-        'repo_has_downloads': False,
-        'repo_has_wiki': False,
-        'repo_has_pages': False,
-        'repo_forks': 0,
-        'repo_archived': False,
-        'repo_disabled': False,
-        'repo_open_issues': 0,
-        'repo_has_license': False
+        'mentioned_in_paper': -1,
+        'mentioned_in_github': -1,
+        'has_repo_data': -1,
+        'repo_has_homepage': -1,
+        'repo_size': -1,
+        'repo_stars': -1,
+        'repo_watchers': -1,
+        'repo_has_issues': -1,
+        'repo_has_projects': -1,
+        'repo_has_downloads': -1,
+        'repo_has_wiki': -1,
+        'repo_has_pages': -1,
+        'repo_forks': -1,
+        'repo_archived': -1,
+        'repo_open_issues': -1,
+        'repo_has_license': -1
     }
+    if ppr_data is None:
+        return digest
+    gh_meta = ppr_data.get('github_metadata')
+    digest['mentioned_in_paper'] = int(ppr_data['mentioned_in_paper'])
+    digest['mentioned_in_github'] = int(ppr_data['mentioned_in_github'])
+    digest['has_repo_data'] = int(gh_meta is not None)
     if gh_meta is not None:
-        digest['repo_has_homepage'] = gh_meta['homepage'] is not None
+        digest['repo_has_homepage'] = int(gh_meta['homepage'] is not None)
         digest['repo_size'] = gh_meta['size']
         digest['repo_stars'] = gh_meta['stargazers_count']
         digest['repo_watchers'] = gh_meta['watchers_count']
-        digest['repo_has_issues'] = gh_meta['has_issues']
-        digest['repo_has_projects'] = gh_meta['has_projects']
-        digest['repo_has_downloads'] = gh_meta['has_downloads']
-        digest['repo_has_wiki'] = gh_meta['has_wiki']
-        digest['repo_has_pages'] = gh_meta['has_pages']
+        digest['repo_has_issues'] = int(gh_meta['has_issues'])
+        digest['repo_has_projects'] = int(gh_meta['has_projects'])
+        digest['repo_has_downloads'] = int(gh_meta['has_downloads'])
+        digest['repo_has_wiki'] = int(gh_meta['has_wiki'])
+        digest['repo_has_pages'] = int(gh_meta['has_pages'])
         digest['repo_forks'] = gh_meta['forks_count']
-        digest['repo_archived'] = gh_meta['archived']
-        digest['repo_disabled'] = gh_meta['disabled']
+        digest['repo_archived'] = int(gh_meta['archived'])
         digest['repo_open_issues'] = gh_meta['open_issues_count']
-        digest['repo_has_license'] = gh_meta['license'] is not None
+        digest['repo_has_license'] = int(gh_meta['license'] is not None)
     return digest
 
 
 def analyse(ppr_preds, ppr_datas):
+    # prep lists for overview corr matrix (all vars)
+    hyper_repro_data = []
+    hyper_repro_keys = []
+
+    # prep lists for selected eval
+    # (n_vpa <-> repo_stars / repo_watchers / repo_open_issues)
+    n_vpa_vals = []
+    repo_stars_vals = []
+    log_repo_stars_vals = []
+    repo_forks_vals = []
+    repo_open_issues_vals = []
+
     for arxiv_id in ppr_preds.keys():
-        print(f'paper: {arxiv_id}')
+        # print(f'paper: {arxiv_id}')
         ppr_pred = ppr_preds[arxiv_id]
         ppr_data = ppr_datas.get(arxiv_id)
         if ppr_data is None:
-            print(f'paper data not found')
-            x = input('press enter to skip, "q" to quit')
-            if x == 'q':
-                sys.exit()
+            # print(f'paper data not found')
+            # x = input('press enter to skip, "q" to quit')
+            # if x == 'q':
+            #     sys.exit()
             continue
-        print(f'num paras: {len(ppr_pred)}')
+        # print(f'num paras: {len(ppr_pred)}')
         hyper_digest = _get_ppr_pred_hyperparam_digest(ppr_pred)
         repro_digest = _get_ppr_data_digest(ppr_data)
-        print(
-            f'- - - hyperr - - -\n'
-            f'{json.dumps(hyper_digest, indent=2)}\n'
-            f'- - - repro- - -\n'
-            f'{json.dumps(repro_digest, indent=2)}\n'
+        # print(
+        #     f'- - - hyperr - - -\n'
+        #     f'{json.dumps(hyper_digest, indent=2)}\n'
+        #     f'- - - repro- - -\n'
+        #     f'{json.dumps(repro_digest, indent=2)}\n'
+        # )
+        # input()
+
+        # note general vals
+        hyper_repro_data.append(
+            list(hyper_digest.values()) +
+            list(repro_digest.values())
         )
-        input()
+        hyper_repro_keys = list(hyper_digest.keys()) \
+            + list(repro_digest.keys())
+
+        if repro_digest['repo_stars'] < 100:
+            continue
+
+        # note selected vals
+        repo_stars_vals.append(repro_digest['repo_stars'])
+        gt0log = lambda x: np.log2(x) if x > 0 else x  # noqa: E731
+        log_repo_stars_vals.append(gt0log(repro_digest['repo_watchers']))
+        repo_forks_vals.append(repro_digest['repo_forks'])
+        repo_open_issues_vals.append(repro_digest['repo_open_issues'])
+        n_vpa_vals.append(
+            hyper_digest['n_vpa'] +
+            hyper_digest['n_vp'] +
+            hyper_digest['n_pa']
+        )
+
+    # print(len(hyper_data))
+    # print(len(repro_data))
+    # repro_d_lens = set()
+    # for i, rd in enumerate(repro_data):
+    #     if len(rd) != 19:
+    #         print(i, rd)
+    #     repro_d_lens.add(len(rd))
+    # print(repro_d_lens)
+
+    # plot correlation matrix between hyper_data and repro_data
+    hyper_repro_data = np.array(hyper_repro_data)
+    print(hyper_repro_data.shape)
+    corr_mat = np.corrcoef(hyper_repro_data, rowvar=False)
+    # # make it log scale
+    # corr_mat = np.log(corr_mat)
+    print(corr_mat.shape)
+    fig, ax = plt.subplots(figsize=(20, 20))
+    ax.matshow(corr_mat)
+    ax.set_xticks(np.arange(len(hyper_repro_data[0])))
+    ax.set_yticks(np.arange(len(hyper_repro_data[0])))
+    ax.set_xticklabels(hyper_repro_keys)
+    ax.set_yticklabels(hyper_repro_keys)
+    # tilting the x axis labels
+    plt.setp(
+        ax.get_xticklabels(),
+        rotation=45,
+        ha="left",
+        rotation_mode="anchor"
+    )
+    plt.tight_layout()
+    plt.show()
+
+    # get Pearson correlation coefficient and p-value for
+    # selected eval
+
+    # n_vpa <-> repo_stars
+    cc, p = pearsonr(n_vpa_vals, repo_stars_vals)
+    print(
+        f'n_vpa <-> repo_stars\n'
+        f'Pearson correlation coefficient: {cc}\n'
+        f'p-value: {p}'
+    )
+    # n_vpa <-> log(repo_stars)
+    cc, p = pearsonr(n_vpa_vals, log_repo_stars_vals)
+    print(
+        f'n_vpa <-> log(repo_stars)\n'
+        f'Pearson correlation coefficient: {cc}\n'
+        f'p-value: {p}'
+    )
+    # n_vpa <-> repo_open_issues
+    cc, p = pearsonr(n_vpa_vals, repo_open_issues_vals)
+    print(
+        f'n_vpa <-> repo_open_issues\n'
+        f'Pearson correlation coefficient: {cc}\n'
+        f'p-value: {p}'
+    )
+    # n_vpa <-> repo_forks
+    cc, p = pearsonr(n_vpa_vals, repo_forks_vals)
+    print(
+        f'n_vpa <-> repo_forks\n'
+        f'Pearson correlation coefficient: {cc}\n'
+        f'p-value: {p}'
+    )
+
+    # scatter plot n_vpa_vals and repo_stars_vals
+    fig, ax = plt.subplots(figsize=(10, 10))
+    ax.scatter(
+        n_vpa_vals, repo_stars_vals,
+        alpha=0.5
+    )
+    ax.set_xlabel('n_vpa')
+    ax.set_ylabel('repo_stars')
+    plt.show()
 
 
 if __name__ == '__main__':
