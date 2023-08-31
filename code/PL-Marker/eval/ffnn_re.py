@@ -121,8 +121,8 @@ def prep_para_data(
         from_type_hot = ent_type_one_hot[ent_from['type']]
         to_type_hot = ent_type_one_hot[ent_to['type']]
         # map entity distance to [0, 1]
-        rel_dist_abs = ent_to['start'] - ent_from['end']
-        rel_dist_norm = np.interp(rel_dist_abs, ent_dist_range, [0, 1])
+        rel_dist = ent_to['start'] - ent_from['end']
+        rel_dist_norm = np.interp(rel_dist, ent_dist_range, [0, 1])
         # get token embeddings for entity pair
         tup = tuple(ent_from['tokens'] + ent_to['tokens'])
         if tup in emb_map:
@@ -161,11 +161,115 @@ def _save_embeddings_map(emb_map):
     _get_saved_embeddings_map.cache_clear()
 
 
+def _find_tokens(tokens, sentence):
+    matches = []
+    for i in range(len(sentence)):
+        if sentence[i] == tokens[0] and sentence[i:i+len(tokens)] == tokens:
+            matches.append([i, i+len(tokens)])
+    return matches
+
+
+def dist_supervision_ext(paras):
+    # collect entity mentions
+    artifacts = set()
+    params = set()
+    values = set()
+    contexts = set()
+    # print('searching for entities')
+    for para in paras:
+        para_delta = 0
+        # iterate over sentences
+        for sent_idx, sent in enumerate(para['sentences']):
+            ner_true = para['ner'][sent_idx]
+            for (start, end, label) in ner_true:
+                tkns = sent[start-para_delta:end-para_delta+1]
+                if label == 'a':
+                    artifacts.add(tuple(tkns))
+                elif label == 'p':
+                    params.add(tuple(tkns))
+                elif label == 'v':
+                    values.add(tuple(tkns))
+                elif label == 'c':
+                    contexts.add(tuple(tkns))
+            para_delta += len(sent)
+    # print(f'found artifacts: {artifacts}')
+    # input()
+    # apply distance supervision labels
+    new_paras = []
+    for para in paras:
+        # print('new para w/ #pred_ners:')
+        # print(sum([
+        #     len(s) for s in para['predicted_ner']
+        # ]))
+        # input()
+        para_delta = 0
+        # iterate over sentences
+        for sent_idx, sent in enumerate(para['sentences']):
+            # print(f'looking in sentence: {sent}')
+            # input()
+
+            # - - - arrf - - -
+
+            # find known artifacts
+            artf_matches = []
+            for artf_mention_tup in artifacts:
+                artf_mention = list(artf_mention_tup)
+                # print(f'looking for {artf_mention}')
+                artf_matches.extend(
+                    _find_tokens(artf_mention, sent)
+                )
+            # print(f'found {artf_matches}')
+            # input()
+            # add artifacts to entity list
+            ner_pred = para['predicted_ner'][sent_idx]
+            for artf_offset in artf_matches:
+                ner_entry = artf_offset + ['a']
+                if ner_entry not in ner_pred:
+                    # print(f'{ner_entry} is new, adding')
+                    ner_pred.append(ner_entry)
+
+            # - - - param - - -
+
+            # find known params
+            para_matches = []
+            for para_mention_tup in params:
+                para_mention = list(para_mention_tup)
+                # print(f'looking for {artf_mention}')
+                para_matches.extend(
+                    _find_tokens(para_mention, sent)
+                )
+            # print(f'found {artf_matches}')
+            # input()
+            # add artifacts to entity list
+            ner_pred = para['predicted_ner'][sent_idx]
+            for para_offset in para_matches:
+                par_entry = para_offset + ['a']
+                if par_entry not in ner_pred:
+                    # print(f'{ner_entry} is new, adding')
+                    ner_pred.append(par_entry)
+
+        new_paras.append(para)
+        # print('updated para w/ #pred_ners:')
+        # print(sum([
+        #     len(s) for s in para['predicted_ner']
+        # ]))
+    # input()
+    return new_paras
+
+
 def eval_model(train_fp, test_fp, output_fp, verbose=False):
+    if verbose:
+        print('loading data')
     with open(train_fp, 'r') as f:
         train_paras = [json.loads(line) for line in f.readlines()]
     with open(test_fp, 'r') as f:
         test_paras = [json.loads(line) for line in f.readlines()]
+
+    # if verbose:
+    #     print('distant supervision ...')
+    # test_paras = dist_supervision_ext(test_paras)
+    # if verbose:
+    #     print('done')
 
     # device = torch.device('cuda')
 
@@ -179,21 +283,6 @@ def eval_model(train_fp, test_fp, output_fp, verbose=False):
 
     # model.to(device)
 
-    # train_fp_base = os.path.split(train_fp)[0]
-    # X_train_tkn_fp = os.path.join(train_fp_base, 'X_train.pkl')
-    # y_train_tkn_fp = os.path.join(train_fp_base, 'y_train.pkl')
-    # loaded_train_data = False
-    # loaded_test_data = False
-    # if (
-    #     os.path.isfile(X_train_tkn_fp) and
-    #     os.path.isfile(y_train_tkn_fp)
-    # ):
-    #     print(f'loading saved tokenized training data')
-    #     with open(X_train_tkn_fp, 'rb') as f:
-    #         X_train = pickle.load(f)
-    #     with open(y_train_tkn_fp, 'rb') as f:
-    #         y_train = pickle.load(f)
-    # else:
     X_train = []
     y_train = []
     for para in tqdm(train_paras, desc='preparing train data'):
@@ -211,23 +300,6 @@ def eval_model(train_fp, test_fp, output_fp, verbose=False):
     if verbose:
         print(f'loaded {len(X_train)} training samples')
 
-    # test_fp_base = os.path.split(test_fp)[0]
-    # X_test_tkn_fp = os.path.join(test_fp_base, 'X_test.pkl')
-    # y_test_tkn_fp = os.path.join(test_fp_base, 'y_test.pkl')
-    # smpl2off_fp = os.path.join(train_fp_base, 'test_smpl2off.json')
-    # if (
-    #     os.path.isfile(X_test_tkn_fp) and
-    #     os.path.isfile(X_test_tkn_fp) and
-    #     os.path.isfile(smpl2off_fp)
-    # ):
-    #     print(f'loading saved tokenized test data')
-    #     with open(X_test_tkn_fp, 'rb') as f:
-    #         X_test = pickle.load(f)
-    #     with open(y_test_tkn_fp, 'rb') as f:
-    #         y_test = pickle.load(f)
-    #     with open(smpl2off_fp, 'r') as f:
-    #         sample_idx_to_entity_offset_pair = json.load(f)
-    # else:
     X_test = []
     y_test = []
     sample_idx_to_entity_offset_pair = {}
@@ -279,11 +351,21 @@ def eval_model(train_fp, test_fp, output_fp, verbose=False):
         activation='relu',
         solver='adam',
         learning_rate_init=0.001,
-        max_iter=10000,
+        max_iter=90,
         random_state=1,
         shuffle=True,
         verbose=verbose
     )
+    # clf = MLPClassifier(
+    #     hidden_layer_sizes=(300, 100, 25, 2),
+    #     activation='relu',
+    #     solver='adam',
+    #     learning_rate_init=0.001,
+    #     max_iter=90,
+    #     random_state=1,
+    #     shuffle=True,
+    #     verbose=verbose
+    # )
     if verbose:
         print('training model...')
     clf.fit(X_train, y_train)
@@ -292,6 +374,20 @@ def eval_model(train_fp, test_fp, output_fp, verbose=False):
     if verbose:
         print('evaluating model...')
     y_pred = clf.predict(X_test)
+    # # bit mask filter
+    # y_pred = [
+    #     int(
+    #         bool(y) and
+    #         (
+    #             X_test[i][:8] in [
+    #                 [0, 1, 0, 0, 1, 0, 0, 0],
+    #                 [0, 0, 1, 0, 0, 1, 0, 0],
+    #                 [0, 0, 0, 1, 0, 0, 1, 0]
+    #             ]
+    #         )
+    #     )
+    #     for i, y in enumerate(y_pred)
+    # ]
     print(classification_report(y_test, y_pred, zero_division=0.0))
     res = classification_report(
         y_test, y_pred, zero_division=0.0, output_dict=True
