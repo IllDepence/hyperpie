@@ -7,9 +7,10 @@ import sys
 from collections import defaultdict
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 import matplotlib.pyplot as plt
+import numpy as np
 
 
-def error_analysis(root_dir, data_fn=None):
+def error_analysis(root_dir, data_fn=None, filter_subdir=None):
     """ Analyze errors.
     """
 
@@ -18,10 +19,13 @@ def error_analysis(root_dir, data_fn=None):
     tp_rel_types = defaultdict(int)
     fp_rel_types = defaultdict(int)
     fn_rel_types = defaultdict(int)
+    per_fold_f1s = []
 
     for subdir in os.listdir(root_dir):
         subdir_path = os.path.join(root_dir, subdir)
         if not os.path.isdir(subdir_path):
+            continue
+        if filter_subdir is not None and subdir != filter_subdir:
             continue
         print(f'Processing {subdir_path}')
         # lpad data
@@ -138,33 +142,29 @@ def error_analysis(root_dir, data_fn=None):
                         # print(f'{tokens_from} -- {label} -> {tokens_to}')
                         # input()
                 para_delta += len(sent)
+        fold_f1s = evaluate_re(
+            tp_rel_types, fp_rel_types, fn_rel_types,
+        )
+        per_fold_f1s.append(fold_f1s)
 
-    # sort relations by frequency and print results
-    for rel_type, rel_dict in [
-        ('TP', tp_rel_types),
-        ('FP', fp_rel_types),
-        ('FN', fn_rel_types),
-    ]:
-        print(f'>> {rel_type} relations <<')
-        for rel_key, rel_count in sorted(
-            rel_dict.items(),
-            key=lambda x: x[1],
-            reverse=True
-        ):
-            print(f'{rel_key}: {rel_count}')
-
-    # calculate precision, recall, and F1 per relation type
     rel_type_keys = [
         'p->a', 'v->p', 'c->v'
     ]
-    for rel_type_key in rel_type_keys:
-        tp = tp_rel_types[rel_type_key]
-        fp = fp_rel_types[rel_type_key]
-        fn = fn_rel_types[rel_type_key]
-        p = tp / (tp + fp) if tp + fp > 0 else 0
-        r = tp / (tp + fn) if tp + fn > 0 else 0
-        f1 = 2 * (p * r) / (p + r) if p + r > 0 else 0
-        print(f'{rel_type_key}: P={p:.3f}, R={r:.3f}, F1={f1:.3f}')
+    # for each type of relation
+    for rel_type in rel_type_keys:
+        # go through folds and gather results
+        rtype_f1s = []
+        for fld in per_fold_f1s:
+            rtype_f1s.append(fld[rel_type])
+        print(
+            f'{rel_type}: {np.mean(rtype_f1s):.3f}'
+        )
+    return
+
+    evaluate_re(
+        tp_rel_types, fp_rel_types, fn_rel_types,
+        verbose=True
+    )
     return
 
     # print confusion matrix
@@ -189,8 +189,47 @@ def error_analysis(root_dir, data_fn=None):
     )
     disp.plot()
     plt.tight_layout()
-    # save as PDF
-    plt.savefig('ner_confusion_matrix.pdf')
+    # # save as PDF
+    # plt.savefig('ner_confusion_matrix.pdf')
+
+
+def evaluate_re(
+    tp_rel_types, fp_rel_types, fn_rel_types,
+    verbose=False
+):
+    # sort relations by frequency and print results
+    for rel_type, rel_dict in [
+        ('TP', tp_rel_types),
+        ('FP', fp_rel_types),
+        ('FN', fn_rel_types),
+    ]:
+        if verbose:
+            print(f'>> {rel_type} relations <<')
+        for rel_key, rel_count in sorted(
+            rel_dict.items(),
+            key=lambda x: x[1],
+            reverse=True
+        ):
+            if verbose:
+                print(f'{rel_key}: {rel_count}')
+
+    # calculate precision, recall, and F1 per relation type
+    rel_type_keys = [
+        'p->a', 'v->p', 'c->v'
+    ]
+    f1s = {}
+    for rel_type_key in rel_type_keys:
+        tp = tp_rel_types[rel_type_key]
+        fp = fp_rel_types[rel_type_key]
+        fn = fn_rel_types[rel_type_key]
+        p = tp / (tp + fp) if tp + fp > 0 else 0
+        r = tp / (tp + fn) if tp + fn > 0 else 0
+        f1 = 2 * (p * r) / (p + r) if p + r > 0 else 0
+        f1s[rel_type_key] = f1
+        if verbose:
+            print(f'{rel_type_key}: P={p:.3f}, R={r:.3f}, F1={f1:.3f}')
+
+    return f1s
 
 
 def print_predictions(root_dir, data_fn=None):
@@ -422,5 +461,7 @@ if __name__ == '__main__':
     # aggregate_ffnn_re_numbers(root_dir, avg_type='weighted')
 
     # aggregate_predictions(root_dir)
-    print_predictions(root_dir)
-    # error_analysis(root_dir)
+    # print_predictions(root_dir)
+    error_analysis(
+        root_dir,
+    )

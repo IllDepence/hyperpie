@@ -6,18 +6,27 @@ import json
 import os
 
 
-def merge(root_dir):
+def merge(root_dir, ffnn_re_version=False):
     """ Merge RE prediction output into NER prediction output.
     """
 
     # load data
     smpl2offs_fn = 'sample_idx_to_entity_offset_pair.json'
     pred_fn = 'y_pred.json'
-    ner_pred_fp = os.path.join(
-        'all',
-        'ent_pred_test.json'
-    )
-    merged_pred_fn = 'merged_preds.jsonl'
+    if ffnn_re_version:
+        out_fn_suff = 'ffnn_re'
+        ner_pred_fp = os.path.join(
+            'ner',
+            'ent_pred_test.json'
+        )
+    else:
+        out_fn_suff = ''
+        ner_pred_fp = os.path.join(
+            'all',
+            'ent_pred_test.json'
+        )
+
+    merged_pred_fn = f'merged_preds_{out_fn_suff}.jsonl'
     ner_pred = []
 
     with open(os.path.join(root_dir, smpl2offs_fn), 'r') as f:
@@ -130,5 +139,5 @@ if __name__ == '__main__':
     parser.add_argument('root_dir', type=str)
     args = parser.parse_args()
 
-    paras = merge(args.root_dir)
-    print_predictions(paras)
+    paras = merge(args.root_dir, ffnn_re_version=True)
+    # print_predictions(paras)
