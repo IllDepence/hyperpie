@@ -161,6 +161,8 @@ def analyse(ppr_preds, ppr_datas):
     repo_forks_vals = []
     repo_open_issues_vals = []
 
+    star_threshold = 50
+
     for arxiv_id in ppr_preds.keys():
         # print(f'paper: {arxiv_id}')
         ppr_pred = ppr_preds[arxiv_id]
@@ -190,7 +192,7 @@ def analyse(ppr_preds, ppr_datas):
         hyper_repro_keys = list(hyper_digest.keys()) \
             + list(repro_digest.keys())
 
-        if repro_digest['repo_stars'] < 100:
+        if repro_digest['repo_stars'] < star_threshold:
             continue
 
         # note selected vals
@@ -240,34 +242,46 @@ def analyse(ppr_preds, ppr_datas):
     # get Pearson correlation coefficient and p-value for
     # selected eval
 
+    print(f'---===[ star threshold: {star_threshold} ]===---')
+
     # n_vpa <-> repo_stars
     cc, p = pearsonr(n_vpa_vals, repo_stars_vals)
-    print(
-        f'n_vpa <-> repo_stars\n'
-        f'Pearson correlation coefficient: {cc}\n'
-        f'p-value: {p}'
-    )
+
+    # n_vpa <-> repo_stars, rounded to 3 decimal places without leading 0
+    print(f'n_vpa <-> repo_stars')
+    print(f'{cc:.3f} ({p:.3f})')
+
+    # print(
+    #     f'n_vpa <-> repo_stars\n'
+    #     f'Pearson correlation coefficient: {cc}\n'
+    #     f'p-value: {p}'
+    # )
     # n_vpa <-> log(repo_stars)
     cc, p = pearsonr(n_vpa_vals, log_repo_stars_vals)
-    print(
-        f'n_vpa <-> log(repo_stars)\n'
-        f'Pearson correlation coefficient: {cc}\n'
-        f'p-value: {p}'
-    )
+    # print(
+    #     f'n_vpa <-> log(repo_stars)\n'
+    #     f'Pearson correlation coefficient: {cc}\n'
+    #     f'p-value: {p}'
+    # )
     # n_vpa <-> repo_open_issues
     cc, p = pearsonr(n_vpa_vals, repo_open_issues_vals)
-    print(
-        f'n_vpa <-> repo_open_issues\n'
-        f'Pearson correlation coefficient: {cc}\n'
-        f'p-value: {p}'
-    )
+    # print(
+    #     f'n_vpa <-> repo_open_issues\n'
+    #     f'Pearson correlation coefficient: {cc}\n'
+    #     f'p-value: {p}'
+    # )
     # n_vpa <-> repo_forks
     cc, p = pearsonr(n_vpa_vals, repo_forks_vals)
-    print(
-        f'n_vpa <-> repo_forks\n'
-        f'Pearson correlation coefficient: {cc}\n'
-        f'p-value: {p}'
-    )
+
+    # n_vpa <-> repo_forks, rounded to 3 decimal places without leading 0
+    print(f'n_vpa <-> repo_forks')
+    print(f'{cc:.3f} ({p:.3f})')
+
+    # print(
+    #     f'n_vpa <-> repo_forks\n'
+    #     f'Pearson correlation coefficient: {cc}\n'
+    #     f'p-value: {p}'
+    # )
 
     # scatter plot n_vpa_vals and repo_stars_vals
     fig, ax = plt.subplots(figsize=(10, 10))
