@@ -1,11 +1,15 @@
+__pycache__
 *.swp
 .ipynb_checkpoints
-__pycache__
 venv
 api_key
 api_organization
 completion_cache.json
-*.ipynb
 code/distant_supervision
 code/PL-Marker/source/*.py
 code/PL-Marker/eval/pwc_data/links-between-papers-and-code.json
+code/PL-Marker/eval/predict/sample_idx_to_entity_offset_pair.json
+data/transformed_pprs_filtered.jsonl
+data/transformed_pprs_filtered_llm_annotated.jsonl
+data/transformed_pprs_filtered_llm_annotated_plmarker.jsonl
+
