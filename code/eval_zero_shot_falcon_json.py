@@ -21,10 +21,10 @@ paras_pred = []
 
 from_idx = 0
 to_idx = len(paras_true)
-params_2048 = hp.settings.gpt_default_params.copy()
-params_2048['max_tokens'] = 2048
+params_512 = hp.settings.gpt_default_params.copy()
+params_512['max_tokens'] = 512
 # # FIXME: ↓ temporary for cache access w/o API endpoint ↓
-# params_2048['model'] = 'tiiuae/falcon-40b-instruc'
+# params_512['model'] = 'tiiuae/falcon-40b-instruct'
 # # FIXME: ↑ temporary for cache access w/o API endpoint ↑
 stats_dicts = []
 for i, para in enumerate(paras_true[from_idx:to_idx]):
@@ -38,7 +38,7 @@ for i, para in enumerate(paras_true[from_idx:to_idx]):
     print(para['text'][0:300], '...')
 
     completion_dict, from_cache = hp.llm.predict.openai_api(
-        para, prompt, params=params_2048
+        para, prompt, params=params_512
     )
 
     print('COMPLETION')
@@ -49,7 +49,7 @@ for i, para in enumerate(paras_true[from_idx:to_idx]):
     #     completion_dict,
     #     llm_annotated_text='foo',
     #     matched_surface_forms=True,
-    #     preprocessor=hp.llm.convert.vicuna_json_extract,
+    #     preprocessor=hp.llm.convert.falcon_json_extract,
     #     output_format='json'
     # )
     # stats_dicts.append(stats_dict)
@@ -67,7 +67,7 @@ aggregate_stats = hp.llm.convert.aggregate_format_stats(stats_dicts)
 mode_fn_save = re.sub(
     r'[^\w]',
     '_',
-    params_2048['model']
+    params_512['model']
     )
 
 with open(f'format_eval_{mode_fn_save}_json.json', 'w') as f:

@@ -1,0 +1,93 @@
+{
+  "num_total": 444,
+  "preprocessor": {
+    "no_yaml_found": 9,
+    "empty_yaml": 0,
+    "garbage_around_yaml": 38
+  },
+  "yaml2json": {
+    "parse_fail": 22,
+    "parsing_error_dict": {
+      "general": {
+        "Expecting value: line 3 column 1 (char 2)": 2,
+        "Expecting ',' delimiter: line 1 column 29 (char 28)": 1,
+        "Expecting ',' delimiter: line 8 column 31 (char 241)": 2,
+        "Invalid \\escape: line 13 column 24 (char 298)": 1,
+        "Expecting value: line 3 column 2 (char 3)": 7,
+        "Invalid \\escape: line 30 column 37 (char 934)": 1,
+        "Invalid \\escape: line 37 column 33 (char 1245)": 1,
+        "Expecting property name enclosed in double quotes: line 43 column 11 (char 1263)": 1,
+        "Invalid \\escape: line 13 column 20 (char 272)": 1,
+        "Invalid \\escape: line 19 column 36 (char 558)": 1,
+        "Expecting property name enclosed in double quotes: line 56 column 5 (char 1516)": 1,
+        "Invalid \\escape: line 27 column 283 (char 937)": 1,
+        "Expecting property name enclosed in double quotes: line 56 column 5 (char 1264)": 1,
+        "Invalid \\escape: line 13 column 24 (char 297)": 1
+      },
+      "quotes+esc": {
+        "Expecting value: line 3 column 1 (char 2)": 2,
+        "Expecting ',' delimiter: line 1 column 29 (char 28)": 1,
+        "Expecting ',' delimiter: line 8 column 31 (char 241)": 2,
+        "Expecting ',' delimiter: line 56 column 6 (char 1497)": 1,
+        "Expecting value: line 3 column 2 (char 3)": 7,
+        "Expecting ',' delimiter: line 42 column 14 (char 1454)": 1,
+        "Invalid \\escape: line 37 column 33 (char 1245)": 1,
+        "Expecting property name enclosed in double quotes: line 43 column 11 (char 1263)": 1,
+        "Expecting ',' delimiter: line 52 column 8 (char 1163)": 1,
+        "Expecting ',' delimiter: line 26 column 12 (char 857)": 1,
+        "Expecting property name enclosed in double quotes: line 56 column 5 (char 1516)": 1,
+        "Expecting ',' delimiter: line 42 column 8 (char 1304)": 1,
+        "Expecting property name enclosed in double quotes: line 56 column 5 (char 1264)": 1,
+        "Expecting ',' delimiter: line 45 column 20 (char 1524)": 1
+      },
+      "fixed": {
+        "Expecting value: line 3 column 1 (char 2)": 2,
+        "Expecting ',' delimiter: line 1 column 29 (char 28)": 1,
+        "Expecting ',' delimiter: line 8 column 31 (char 241)": 2,
+        "Invalid \\escape: line 13 column 24 (char 298)": 1,
+        "Expecting value: line 3 column 2 (char 3)": 7,
+        "Invalid \\escape: line 30 column 37 (char 934)": 1,
+        "Invalid \\escape: line 37 column 33 (char 1245)": 1,
+        "Expecting property name enclosed in double quotes: line 43 column 11 (char 1263)": 1,
+        "Invalid \\escape: line 13 column 20 (char 272)": 1,
+        "Invalid \\escape: line 19 column 36 (char 558)": 1,
+        "Expecting property name enclosed in double quotes: line 56 column 5 (char 1516)": 1,
+        "Invalid \\escape: line 27 column 283 (char 937)": 1,
+        "Expecting property name enclosed in double quotes: line 56 column 5 (char 1264)": 1,
+        "Invalid \\escape: line 13 column 24 (char 297)": 1
+      },
+      "only_copy": {
+        "true": 4
+      }
+    }
+  },
+  "coarse_structure": {
+    "coarse_structure_error": 0
+  },
+  "json_content": {
+    "num_ents_intext_notintext": [
+      230,
+      379
+    ],
+    "num_ent_types_valid_invalid": [
+      573,
+      36
+    ],
+    "num_aids_valid_invalid": [
+      609,
+      0
+    ],
+    "num_pids_valid_invalid": [
+      0,
+      657
+    ],
+    "num_vids_valid_invalid": [
+      0,
+      744
+    ],
+    "num_cids_valid_invalid": [
+      0,
+      744
+    ]
+  }
+}

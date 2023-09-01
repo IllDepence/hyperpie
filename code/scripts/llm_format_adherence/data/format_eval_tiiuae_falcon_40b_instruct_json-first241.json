@@ -1,0 +1,117 @@
+{
+  "num_total": 241,
+  "preprocessor": {
+    "no_yaml_found": 0,
+    "empty_yaml": 0,
+    "garbage_around_yaml": 214
+  },
+  "yaml2json": {
+    "parse_fail": 23,
+    "parsing_error_dict": {
+      "general": {
+        "Unterminated string starting at: line 63 column 9 (char 1590)": 1,
+        "Unterminated string starting at: line 70 column 17 (char 1600)": 1,
+        "Expecting property name enclosed in double quotes: line 71 column 9 (char 1591)": 1,
+        "Expecting property name enclosed in double quotes: line 70 column 9 (char 1563)": 1,
+        "Unterminated string starting at: line 70 column 9 (char 1661)": 1,
+        "Unterminated string starting at: line 78 column 35 (char 2009)": 1,
+        "Unterminated string starting at: line 81 column 23 (char 2129)": 1,
+        "Expecting property name enclosed in double quotes: line 70 column 32 (char 1661)": 1,
+        "Unterminated string starting at: line 70 column 17 (char 1620)": 1,
+        "Unterminated string starting at: line 70 column 17 (char 1581)": 1,
+        "Expecting property name enclosed in double quotes: line 70 column 25 (char 1605)": 1,
+        "Unterminated string starting at: line 71 column 9 (char 1641)": 1,
+        "Unterminated string starting at: line 78 column 35 (char 1986)": 1,
+        "Expecting property name enclosed in double quotes: line 81 column 15 (char 2106)": 1,
+        "Unterminated string starting at: line 69 column 17 (char 1680)": 1,
+        "Expecting value: line 74 column 31 (char 1983)": 1,
+        "Expecting value: line 78 column 34 (char 1986)": 1,
+        "Unterminated string starting at: line 82 column 21 (char 2045)": 1,
+        "Expecting property name enclosed in double quotes: line 74 column 9 (char 1690)": 1,
+        "Unterminated string starting at: line 78 column 35 (char 1973)": 1,
+        "Unterminated string starting at: line 88 column 9 (char 2017)": 1,
+        "Expecting property name enclosed in double quotes: line 79 column 21 (char 2134)": 1,
+        "Unterminated string starting at: line 72 column 9 (char 1674)": 1
+      },
+      "quotes+esc": {
+        "Unterminated string starting at: line 63 column 9 (char 1590)": 1,
+        "Unterminated string starting at: line 70 column 17 (char 1600)": 1,
+        "Expecting property name enclosed in double quotes: line 71 column 9 (char 1591)": 1,
+        "Expecting property name enclosed in double quotes: line 70 column 9 (char 1563)": 1,
+        "Unterminated string starting at: line 70 column 9 (char 1661)": 1,
+        "Unterminated string starting at: line 78 column 35 (char 2009)": 1,
+        "Unterminated string starting at: line 81 column 23 (char 2129)": 1,
+        "Expecting property name enclosed in double quotes: line 70 column 32 (char 1661)": 1,
+        "Unterminated string starting at: line 70 column 17 (char 1620)": 1,
+        "Unterminated string starting at: line 70 column 17 (char 1581)": 1,
+        "Expecting property name enclosed in double quotes: line 70 column 25 (char 1605)": 1,
+        "Unterminated string starting at: line 71 column 9 (char 1641)": 1,
+        "Unterminated string starting at: line 78 column 35 (char 1986)": 1,
+        "Expecting property name enclosed in double quotes: line 81 column 15 (char 2106)": 1,
+        "Unterminated string starting at: line 69 column 17 (char 1680)": 1,
+        "Expecting value: line 74 column 31 (char 1983)": 1,
+        "Expecting value: line 78 column 34 (char 1986)": 1,
+        "Unterminated string starting at: line 82 column 21 (char 2045)": 1,
+        "Expecting property name enclosed in double quotes: line 74 column 9 (char 1690)": 1,
+        "Unterminated string starting at: line 78 column 35 (char 1973)": 1,
+        "Unterminated string starting at: line 88 column 9 (char 2017)": 1,
+        "Expecting property name enclosed in double quotes: line 79 column 21 (char 2134)": 1,
+        "Unterminated string starting at: line 72 column 9 (char 1674)": 1
+      },
+      "fixed": {
+        "Unterminated string starting at: line 63 column 9 (char 1590)": 1,
+        "Unterminated string starting at: line 70 column 17 (char 1600)": 1,
+        "Expecting property name enclosed in double quotes: line 71 column 9 (char 1591)": 1,
+        "Expecting property name enclosed in double quotes: line 70 column 9 (char 1563)": 1,
+        "Unterminated string starting at: line 70 column 9 (char 1661)": 1,
+        "Unterminated string starting at: line 78 column 35 (char 2009)": 1,
+        "Unterminated string starting at: line 81 column 23 (char 2129)": 1,
+        "Expecting property name enclosed in double quotes: line 70 column 32 (char 1661)": 1,
+        "Unterminated string starting at: line 70 column 17 (char 1620)": 1,
+        "Unterminated string starting at: line 70 column 17 (char 1581)": 1,
+        "Expecting property name enclosed in double quotes: line 70 column 25 (char 1605)": 1,
+        "Unterminated string starting at: line 71 column 9 (char 1641)": 1,
+        "Unterminated string starting at: line 78 column 35 (char 1986)": 1,
+        "Expecting property name enclosed in double quotes: line 81 column 15 (char 2106)": 1,
+        "Unterminated string starting at: line 69 column 17 (char 1680)": 1,
+        "Expecting value: line 74 column 31 (char 1983)": 1,
+        "Expecting value: line 78 column 34 (char 1986)": 1,
+        "Unterminated string starting at: line 82 column 21 (char 2045)": 1,
+        "Expecting property name enclosed in double quotes: line 74 column 9 (char 1690)": 1,
+        "Unterminated string starting at: line 78 column 35 (char 1973)": 1,
+        "Unterminated string starting at: line 88 column 9 (char 2017)": 1,
+        "Expecting property name enclosed in double quotes: line 79 column 21 (char 2134)": 1,
+        "Unterminated string starting at: line 72 column 9 (char 1674)": 1
+      }
+    }
+  },
+  "coarse_structure": {
+    "coarse_structure_error": 0
+  },
+  "json_content": {
+    "num_ents_intext_notintext": [
+      70,
+      173
+    ],
+    "num_ent_types_valid_invalid": [
+      231,
+      12
+    ],
+    "num_aids_valid_invalid": [
+      243,
+      0
+    ],
+    "num_pids_valid_invalid": [
+      0,
+      5
+    ],
+    "num_vids_valid_invalid": [
+      0,
+      5
+    ],
+    "num_cids_valid_invalid": [
+      0,
+      5
+    ]
+  }
+}

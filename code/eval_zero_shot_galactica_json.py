@@ -23,9 +23,9 @@ from_idx = 0
 to_idx = len(paras_true)
 params_512 = hp.settings.gpt_default_params.copy()
 params_512['max_tokens'] = 512
-# # FIXME: ↓ temporary for cache access w/o API endpoint ↓
-# params_512['model'] = 'facebook/galactica-120b'
-# # FIXME: ↑ temporary for cache access w/o API endpoint ↑
+# FIXME: ↓ temporary for cache access w/o API endpoint ↓
+params_512['model'] = 'facebook/galactica-120b'
+# FIXME: ↑ temporary for cache access w/o API endpoint ↑
 stats_dicts = []
 for i, para in enumerate(paras_true[from_idx:to_idx]):
     print(f'{i}/{len(paras_true)}')
@@ -45,22 +45,22 @@ for i, para in enumerate(paras_true[from_idx:to_idx]):
     print(completion_dict['completion']['choices'][0]['text']) # [:300], '...') # noqa
     print('\n\n')
 
-    # para_pred, stats_dict = hp.llm.convert.llm_output2eval_input(
-    #     completion_dict,
-    #     llm_annotated_text='foo',
-    #     matched_surface_forms=True,
-    #     preprocessor=hp.llm.convert.galaxy_json_extract,
-    #     output_format='json'
-    # )
-    # stats_dicts.append(stats_dict)
+    para_pred, stats_dict = hp.llm.convert.llm_output2eval_input(
+        completion_dict,
+        llm_annotated_text='foo',
+        matched_surface_forms=True,
+        preprocessor=hp.llm.convert.galaxy_json_extract,
+        output_format='json'
+    )
+    stats_dicts.append(stats_dict)
 
-    # # filter
-    # filtered_para, num_full_triples_para = \
-    #     hp.data.filter_annots.require_parent_single(para_pred)
-    # paras_pred.append(filtered_para)
+    # filter
+    filtered_para, num_full_triples_para = \
+        hp.data.filter_annots.require_parent_single(para_pred)
+    paras_pred.append(filtered_para)
 
-import sys
-sys.exit()
+# import sys
+# sys.exit()
 
 aggregate_stats = hp.llm.convert.aggregate_format_stats(stats_dicts)
 

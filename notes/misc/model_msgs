@@ -19,6 +19,9 @@ INFO: the model says "Han shot 'em"
 INFO: using model facebook/galactica-120b for LLM completion
 INFO: the model says "Han shot 8 lighting"
 
+INFO: using model tiiuae/falcon-40b-instruct for LLM completion
+INFO: the model says "Han shot 71%,"
+
 INFO: using model facebook/galactica-120b for LLM completion
 INFO: the model says "Han shot "Don"
 
