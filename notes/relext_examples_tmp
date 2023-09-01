@@ -1,0 +1,128 @@
+= = = 1602.08210-e1b829b4-26bb-43b1-baed-f20eca539f71 = = =
+For each experiment , we use Adam for optimization , and conduct a grid search on the learning rate in \ -LRB- \lbrace 10^ -LCB- -2 -RCB- , 10^ -LCB- -3 -RCB- ,10^ -LCB- -4 -RCB- ,10^ -LCB- -5 -RCB- \rbrace \ -RRB- .
+<<<NER>>>
+['Adam'] a
+['grid', 'search'] c
+['learning', 'rate'] p
+<<<RE>>>
+['learning', 'rate'] -- USED-FOR -> ['Adam'] (p -> a)
+
+
+
+
+
+Specifically , we used the RMSProp optimizer -LSB- 40 -RSB- with the learning rate of \ -LRB- 0.00005\ -RRB- .
+<<<NER>>>
+['RMSProp'] a
+['learning', 'rate'] p
+['0.00005\\'] v
+<<<RE>>>
+['learning', 'rate'] -- USED-FOR -> ['RMSProp', 'optimizer'] (p -> ?)
+['0.00005\\'] -- USED-FOR -> ['learning', 'rate'] (v -> p)
+
+
+
+
+
+
+
+= = = 1905.00921-338bd0ac-0072-4357-a832-2fb6b02b3c33 = = =
+For initial training , we train the model for 20 epochs with learning rate 0.001 , batch size 512 .
+<<<NER>>>
+['20'] v
+['epochs'] p
+['learning', 'rate'] p
+['0.001'] v
+['batch', 'size'] p
+['512'] v
+<<<RE>>>
+['0.001'] -- USED-FOR -> ['learning', 'rate'] (v -> p)
+['0.001'] -- USED-FOR -> ['0.001'] (v -> v)
+['initial', 'training'] -- USED-FOR -> ['0.001'] (? -> v)
+['initial', 'training'] -- USED-FOR -> ['512'] (? -> v)
+['512'] -- USED-FOR -> ['learning', 'rate'] (v -> p)
+['512'] -- USED-FOR -> ['batch', 'size'] (v -> p)
+['512'] -- USED-FOR -> ['512'] (v -> v)
+['initial', 'training'] -- USED-FOR -> ['0.001'] (? -> v)
+['initial', 'training'] -- USED-FOR -> ['512'] (? -> v)
+
+
+
+= = = 1912.04711-53689382-c4b3-4eb7-839a-eb49defb074e = = =
+On all training instances , we used a uniform distribution for weights initialization and Adam optimizer with a learning rate of 0.0001 for optimization .
+<<<NER>>>
+['Adam'] a
+['learning', 'rate'] p
+['0.0001'] v
+<<<RE>>>
+['learning', 'rate'] -- USED-FOR -> ['Adam', 'optimizer'] (p -> ?)
+['0.0001'] -- USED-FOR -> ['learning', 'rate'] (v -> p)
+
+
+
+
+
+
+
+= = = 1909.13302-538235d1-e6f6-4a4e-abdd-de10566f012f = = =
+The Loss function we use is the Edit-weighted MLE objective -LSB- 18 -RSB- and the factor \ -LRB- \Lambda \ -RRB- is set to 1.2 .
+<<<NER>>>
+['Edit-weighted', 'MLE', 'objective'] a
+['\\Lambda'] p
+['1.2'] v
+<<<RE>>>
+['\\Lambda'] -- USED-FOR -> ['Edit-weighted', 'MLE', 'objective'] (p -> a)
+['1.2'] -- USED-FOR -> ['\\Lambda'] (v -> p)
+
+
+
+
+
+= = = 1905.03721-1633c23a-a0b8-47ce-bac7-0fce3cf08b1b = = =
+Parameters of the models are optimised using Adam with the learning rate set to 1e-3 in first 20 epochs and then decayed to 1e-4 for another 320 epochs .
+<<<NER>>>
+['Adam'] a
+['learning', 'rate'] p
+['1e-3'] v
+['20'] v
+['epochs'] p
+['1e-4'] v
+['320'] v
+['epochs'] p
+<<<RE>>>
+['learning', 'rate'] -- USED-FOR -> ['Adam'] (p -> a)
+['1e-3'] -- USED-FOR -> ['learning', 'rate'] (v -> p)
+['in', 'first', '20', 'epochs'] -- USED-FOR -> ['1e-3'] (? -> v)
+['in', 'first', '20', 'epochs'] -- USED-FOR -> ['1e-4'] (? -> v)
+['for', 'another', '320', 'epochs'] -- USED-FOR -> ['1e-4'] (? -> v)
+
+
+
+
+= = = 1904.02306-398882ef-8c89-414a-a64a-91a3973b95c6 = = =
+The dimensions of character and tag embedding are 200 and 40 , respectively .
+<<<NER>>>
+['200'] v
+['40'] v
+<<<RE>>>
+['200'] -- USED-FOR -> ['tag', 'embedding'] (v -> ?)
+['40'] -- USED-FOR -> ['tag', 'embedding'] (v -> ?)
+
+
+
+
+
+
+
+= = = 1905.13164-23be2f6a-bebd-4dce-ab7f-e898f403399f = = =
+
+During decoding we use beam search with beam size 5 and length penalty with \ -LRB- \alpha = 0.4\ -RRB- -LSB- 38 -RSB- ; we decode until an end-of-sequence token is reached .
+<<<NER>>>
+['beam', 'search'] a
+['beam', 'size'] p
+['5'] v
+['\\alpha'] p
+['0.4\\'] v
+<<<RE>>>
+['beam', 'size'] -- USED-FOR -> ['beam', 'search'] (p -> a)
+['5'] -- USED-FOR -> ['beam', 'size'] (v -> p)
