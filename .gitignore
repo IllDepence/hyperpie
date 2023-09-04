@@ -5,6 +5,7 @@ venv
 api_key
 api_organization
 completion_cache.json
+completion_cache_backups
 code/distant_supervision
 code/PL-Marker/source/*.py
 code/PL-Marker/eval/pwc_data/links-between-papers-and-code.json
