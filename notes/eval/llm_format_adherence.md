@@ -1,5 +1,28 @@
 # LLM format adherence eval
 
+## LLM output postprocessing
+
+* `llm_output2eval_input()`
+    * preprocessor
+        * Falcon: `falcon_yaml_extract` / `falcon_json_extract`
+        * WizardLM: `wizard_lm_yaml_extract` / `vicuna_json_extract` (works for WizardLM as well)
+        * GPT3.5: (none needed) / `gpt3_json_extract`
+        * Vicuna: `vicuna_yaml_extract` / `vicuna_json_extract`
+        * GALACITCA: `galactica_yaml_extract` / `galactica_json_extract`
+    * YAML/JSON parser
+        * YAML: `parse_llm_yaml()`
+            * try: parse as is
+            * try: fix dict values (escape backslashes, fix quotes)
+            * try: cut-off fix (remove last, potentially incomplete line due to token limit)
+        * JSON: `parse_llm_json()`
+            * try: parse as is
+            * try: fix dict values (escape backslashes)
+            * try: cut-off fix (close brackets of cut-off output due to token limit)
+    * `get_coarse_structure_entries()`
+    * `llm_entities2eval_input()`
+
+## eval numbers (YAML)
+
 ### text-davinci-0003
 
 ##### Paragraph eval
