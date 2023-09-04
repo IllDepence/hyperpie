@@ -49,7 +49,7 @@ for i, para in enumerate(paras_true[from_idx:to_idx]):
         completion_dict,
         llm_annotated_text='foo',
         matched_surface_forms=True,
-        preprocessor=hp.llm.convert.galaxy_json_extract,
+        preprocessor=hp.llm.convert.galactica_json_extract,
         output_format='json'
     )
     stats_dicts.append(stats_dict)

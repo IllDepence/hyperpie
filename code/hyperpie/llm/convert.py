@@ -1109,8 +1109,8 @@ def gpt3_json_extract(llm_output_dict, verbose=False):
     return llm_output_dict, status_dict
 
 
-def galaxy_json_extract(llm_output_dict, verbose=False):
-    """ Preprocessor for GALAXY output.
+def galactica_json_extract(llm_output_dict, verbose=False):
+    """ Preprocessor for GALACTICA output.
         Works the same as the Vicuna preprocessor but does not
         need to add the JSON start.
     """
@@ -1316,7 +1316,6 @@ def parse_llm_json(llm_output_dict, verbose=False):
         'parse_fail': False,
         'parsing_error_dict': {},
     }
-    leading_space_patt = re.compile(r'^[ ]*')
 
     # predicted annotations in JSON
     llm_output_json = llm_output_dict['completion']['choices'][0]['text']
