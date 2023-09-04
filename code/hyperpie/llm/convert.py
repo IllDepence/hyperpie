@@ -194,18 +194,18 @@ def llm_output2eval_input(
         )
         status_dicts['preprocessor'] = preprocessor_status_dict
 
-    # convert YAML to JSON
+    # parse YAML/JSON
     if output_format == 'yaml':
-        llm_output, yaml2json_status_dict = parse_llm_yaml(
+        llm_output, parsestatus_dict = parse_llm_yaml(
             llm_output_dict, verbose=verbose
         )
     elif output_format == 'json':
-        llm_output, yaml2json_status_dict = parse_llm_json(
+        llm_output, parsestatus_dict = parse_llm_json(
             llm_output_dict, verbose=verbose
         )
     else:
         raise ValueError(f'Unknown output format {output_format}')
-    status_dicts['yaml2json'] = yaml2json_status_dict
+    status_dicts['parse_yaml_json'] = parsestatus_dict
 
     # input paragraph (used to determine text offsets)
     para = llm_output_dict['paragraph']
@@ -830,7 +830,7 @@ def aggregate_format_stats(stats_dicts):
         'preprocessor': {
             'no_yaml_found': 0, 'empty_yaml': 0, 'garbage_around_yaml': 0
         },
-        'yaml2json': {  # bit of a misnomer, these are YAML/JSON parsing stats
+        'parse_yaml_json': {
             'parse_fail': 0, 'parsing_error_dict': defaultdict(dict)
         },
         'coarse_structure': {'coarse_structure_error': 0},
@@ -851,16 +851,18 @@ def aggregate_format_stats(stats_dicts):
                 if value is not None:
                     aggregate_stats['preprocessor'][stat_name] += value
 
-        # Aggregate 'yaml2json' stats
+        # Aggregate 'parse_yaml_json' stats
         if (
-            'parse_fail' in stats_dict['yaml2json'] and
-            stats_dict['yaml2json']['parse_fail']
+            'parse_fail' in stats_dict['parse_yaml_json'] and
+            stats_dict['parse_yaml_json']['parse_fail']
         ):
-            aggregate_stats['yaml2json']['parse_fail'] += 1
-        if 'parsing_error_dict' in stats_dict['yaml2json']:
-            pe_dict = stats_dict['yaml2json']['parsing_error_dict']
+            aggregate_stats['parse_yaml_json']['parse_fail'] += 1
+        if 'parsing_error_dict' in stats_dict['parse_yaml_json']:
+            pe_dict = stats_dict['parse_yaml_json']['parsing_error_dict']
             for error_type, msg in pe_dict.items():
-                ag_pe_dict = aggregate_stats['yaml2json']['parsing_error_dict']
+                ag_pe_dict = aggregate_stats[
+                    'parse_yaml_json'
+                ]['parsing_error_dict']
                 if msg not in ag_pe_dict[error_type]:
                     ag_pe_dict[error_type][msg] = 0
                 ag_pe_dict[error_type][msg] += 1
@@ -913,7 +915,7 @@ def _format_eval_markdown_table(data):
 
     key_string = paragraph_eval_keys['parse_fail'].ljust(22)
     md += (
-        f"| {key_string} | {str(data['yaml2json']['parse_fail']).rjust(5)} |\n"
+        f"| {key_string} | {str(data['parse_yaml_json']['parse_fail']).rjust(5)} |\n"
     )
 
     key_string = paragraph_eval_keys['coarse_structure_error'].ljust(20)
