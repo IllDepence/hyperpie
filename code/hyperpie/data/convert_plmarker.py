@@ -6,6 +6,7 @@ import os
 import random
 import re
 import sys
+import numpy as np
 from collections import OrderedDict, defaultdict
 from nltk.tokenize import sent_tokenize, word_tokenize
 from uuid import uuid4
@@ -254,7 +255,8 @@ def convert(
     annots_path,
     generate_splits=False,
     loose_matching=False,
-    cap_num_words=False
+    cap_num_words=False,
+    rnd=0
 ):
     # load and pre-process annotated text segments
     save_path = '../data/'
@@ -270,6 +272,7 @@ def convert(
         print(f'WARNING: setting word cap to {cap_num_words}')
 
     # process annotations
+    random.seed(rnd)
     annots_processed = []
     annot_boundary_exact_matches = 0
     annot_boundary_mid_token = 0
@@ -299,33 +302,86 @@ def convert(
             f.write(json.dumps(annot) + '\n')
 
     if not generate_splits:
+        print('(not generating splits)')
         return
-    # safe train/dev/test splits for 10-fold cross-validation
-    # group samples by document (paragraph “doc ID” is
-    # <paper ID>-<para ID/uuid>)
-    ppr_groups_dict = defaultdict(list)
-    for annot in annots_processed:
-        ppr_id = annot['doc_key'].split('-', maxsplit=1)[0]
-        ppr_groups_dict[ppr_id].append(annot)
-    ppr_groups = list(ppr_groups_dict.values())
-    # shuffle groups
-    random.shuffle(ppr_groups)
-    n = len(ppr_groups)
-    num_folds = 10
-    # split data into <num_folds> folds (keep ppr groups for now)
-    fold_size = n // num_folds
-    ppr_group_folds = []
-    for i in range(num_folds):
-        if i == num_folds - 1:
-            # last fold, add remaining samples
-            ppr_group_folds.append(
-                ppr_groups[i * fold_size:]
-            )
-        else:
-            # not last fold, add <fold_size> samples
-            ppr_group_folds.append(
-                ppr_groups[i * fold_size:(i + 1) * fold_size]
-            )
+    # save train/dev/test splits for 10-fold cross-validation
+
+    grouped_folds = []
+    if generate_splits == 'doc':
+        # group samples by document (paragraph “doc ID” is
+        # <paper ID>-<para ID/uuid>)
+        print('generating splits by document')
+        ppr_groups_dict = defaultdict(list)
+        for annot in annots_processed:
+            ppr_id = annot['doc_key'].split('-', maxsplit=1)[0]
+            ppr_groups_dict[ppr_id].append(annot)
+        ppr_groups = list(ppr_groups_dict.values())
+        # shuffle groups
+        random.shuffle(ppr_groups)
+        n = len(ppr_groups)
+        num_folds = 10
+        # split data into <num_folds> folds (keep ppr groups for now)
+        fold_size = n // num_folds
+        for i in range(num_folds):
+            if i == num_folds - 1:
+                # last fold, add remaining samples
+                grouped_folds.append(
+                    ppr_groups[i * fold_size:]
+                )
+            else:
+                # not last fold, add <fold_size> samples
+                grouped_folds.append(
+                    ppr_groups[i * fold_size:(i + 1) * fold_size]
+                )
+    elif generate_splits == 'cls':
+        # group samples to optimize for class balance
+        # (i.e. number of relations per sample)
+        print('generating splits by class')
+        # shuffle samples
+        num_folds = 5
+        random.shuffle(annots_processed)
+        num_smpl_rels = []
+        smpl2numrels = {}
+        for i, annot in enumerate(annots_processed):
+            num_rels = 0
+            for sentence_rels in annot['relations']:
+                num_rels += len(sentence_rels)
+            num_smpl_rels.append(num_rels)
+            smpl2numrels[i] = num_rels
+        # split data into folds
+        for fld_i in range(num_folds):
+            grouped_folds.append([])  # filled later
+        fold_goal_rels = sum(num_smpl_rels) / num_folds
+        fold_curr_rels = defaultdict(int)
+        fold_total_rels = defaultdict(int)
+        for i, smpl in enumerate(annots_processed):
+            # determine in which fold to put sample
+            max_goal_dist = -1
+            alloc_fold_idx = None
+            if smpl2numrels[i] == 0:
+                # no relations, put in round-robin
+                alloc_fold_idx = i % num_folds
+            else:
+                for fld_i in range(num_folds):
+                    # dd based on number of relations in fold
+                    goal_dist = abs(fold_goal_rels - fold_curr_rels[fld_i])
+                    if goal_dist >= max_goal_dist:
+                        alloc_fold_idx = fld_i
+                        max_goal_dist = goal_dist
+            # add sample to fold
+            grouped_folds[alloc_fold_idx].append([smpl])
+            fold_curr_rels[alloc_fold_idx] += num_smpl_rels[i]
+            fold_total_rels[alloc_fold_idx] += num_smpl_rels[i]
+        # for i, fold in enumerate(grouped_folds):
+        #     print(
+        #         f'fold {i}: {len(fold)} samples, '
+        #         f'{fold_total_rels[i]} rels'
+        #     )
+    else:
+        raise ValueError(
+            f'Invalid value for generate_splits: {generate_splits}'
+        )
+
     for i in range(num_folds):
         # distribute samples to train/dev/test splits
         # (train and dev eaach one fold, test the remaining folds)
@@ -336,16 +392,21 @@ def convert(
         for j in range(num_folds):
             if j == i:
                 # current fold, add to dev
-                for ppr_paras in ppr_group_folds[j]:
+                for ppr_paras in grouped_folds[j]:
                     dev.extend(ppr_paras)
             elif j == (i + 1) % num_folds:
                 # next fold, add to test
-                for ppr_paras in ppr_group_folds[j]:
+                for ppr_paras in grouped_folds[j]:
                     test.extend(ppr_paras)
             else:
                 # other folds, add to train
-                for ppr_paras in ppr_group_folds[j]:
+                for ppr_paras in grouped_folds[j]:
                     train.extend(ppr_paras)
+        # print split stats
+        print(f'= = = = = fold {i} = = = = =')
+        print(f'train: {len(train)} samples')
+        print(f'dev: {len(dev)} samples')
+        print(f'test: {len(test)} samples')
         # save train/dev/test splits
         fold_name = f'fold_{i}'
         fold_save_path = os.path.join(save_path, fold_name)
@@ -368,15 +429,18 @@ if __name__ == '__main__':
     if len(sys.argv) not in [2, 3, 4]:
         print(
             'Usage: python hyperpie/data/convert_plmarker.py '
-            '/path/to/annots.jsonl [generate_splits|loose_matching]'
+            '/path/to/annots.jsonl '
+            '[generate_splits_doc|generate_splits_cls|loose_matching]'
         )
         sys.exit(1)
     annots_path = sys.argv[1]
     generate_splits = False
     loose_matching = False
     if len(sys.argv) >= 3:
-        if 'generate_splits' in sys.argv[2:]:
-            generate_splits = True
+        if 'generate_splits_doc' in sys.argv[2:]:
+            generate_splits = 'doc'
+        if 'generate_splits_cls' in sys.argv[2:]:
+            generate_splits = 'cls'
         if 'loose_matching' in sys.argv[2:]:
             loose_matching = True
     convert(annots_path, generate_splits, loose_matching, cap_num_words)
