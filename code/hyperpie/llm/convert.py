@@ -196,7 +196,7 @@ def llm_output2eval_input(
 
     # convert YAML to JSON
     if output_format == 'yaml':
-        llm_output, yaml2json_status_dict = yaml2json(
+        llm_output, yaml2json_status_dict = parse_llm_yaml(
             llm_output_dict, verbose=verbose
         )
     elif output_format == 'json':
@@ -830,7 +830,7 @@ def aggregate_format_stats(stats_dicts):
         'preprocessor': {
             'no_yaml_found': 0, 'empty_yaml': 0, 'garbage_around_yaml': 0
         },
-        'yaml2json': {
+        'yaml2json': {  # bit of a misnomer, these are YAML/JSON parsing stats
             'parse_fail': 0, 'parsing_error_dict': defaultdict(dict)
         },
         'coarse_structure': {'coarse_structure_error': 0},
@@ -1400,10 +1400,10 @@ def parse_llm_json(llm_output_dict, verbose=False):
     return llm_output, status_dict
 
 
-def yaml2json(llm_output_dict, verbose=False):
-    """ Try to parse LLM output YAML and convert it to JSON.
+def parse_llm_yaml(llm_output_dict, verbose=False):
+    """ Try to parse LLM output YAML,
 
-        Returns a tuple of the form (llm_output_JSON, status_dict)
+        Returns a tuple of the form (llm_output, status_dict)
     """
 
     status_dict = {
