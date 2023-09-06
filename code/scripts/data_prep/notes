@@ -1,0 +1,6 @@
+transforms papers from unarXive 2022
+in categories cs.CL, cs.LG, cs.CV, cs.DL, cs.CV
+
+result
+$ wc -l transformed_pprs.jsonl
+143203 transformed_pprs.jsonl
