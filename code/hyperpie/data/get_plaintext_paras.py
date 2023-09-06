@@ -1,7 +1,11 @@
-""" Filter unarXivw 2022 papers for categories
+""" Filter unarXive 2022 papers for categories
         cs.CL, cs.LG, cs.CV, cs.DL, cs.CV
     and generate paper derivates with plain text
     paragraphs usable for distant supervision.
+
+    result
+    $ wc -l transformed_pprs.jsonl
+    143203 transformed_pprs.jsonl
 """
 
 import json
