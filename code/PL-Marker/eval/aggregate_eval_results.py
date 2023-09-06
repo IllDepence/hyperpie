@@ -6,6 +6,7 @@ import statistics
 import sys
 from collections import defaultdict
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+from matplotlib import patches as mpatches
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -329,7 +330,7 @@ def aggregate_predictions(root_dir):
                 f.write('\n')
 
 
-def aggregate_ffnn_re_numbers(root_dir, with_nota=True, avg_type=None):
+def aggregate_ffnn_re_numbers(root_dir, with_nota=False, avg_type=None):
     """ Aggregate evaluation results of n-fold cross-validation.
     """
 
@@ -384,8 +385,14 @@ def aggregate_ffnn_re_numbers(root_dir, with_nota=True, avg_type=None):
         f'RE f1: {re_f1_mean:.1f} ± {re_f1_std:.1f}\n'
     )
 
+    return (
+        re_precisions,
+        re_recalls,
+        re_f1s,
+    )
 
-def aggregate_numbers(root_dir):
+
+def aggregate_plmarker_numbers(root_dir):
     """ Aggregate evaluation results of n-fold cross-validation.
     """
 
@@ -451,17 +458,132 @@ def aggregate_numbers(root_dir):
         f'RE f1: {re_f1_mean:.1f} ± {re_f1_std:.1f}\n'
     )
 
+    return (
+        ner_precisions,
+        ner_recalls,
+        ner_f1s,
+        re_precisions,
+        re_recalls,
+        re_f1s
+    )
+
+
+def aggregate_numbers(
+    pl_root_dir, ffnn_root_dir, ffnn_with_nota=False, avg_type=None
+):
+    pl_res = aggregate_plmarker_numbers(pl_root_dir)
+    ffnn_res = aggregate_ffnn_re_numbers(
+        ffnn_root_dir,
+        with_nota=ffnn_with_nota,
+        avg_type=avg_type
+    )
+    pl_ner_p, pl_ner_r, pl_ner_f1, pl_re_p, pl_re_r, pl_re_f1 = pl_res
+    fn_re_p, fn_re_r, fn_re_f1 = ffnn_res
+
+    # plot precision, recall, f1 means with error bars
+    # for ner and both sets of re
+    pl_ner_p_mean = statistics.mean(pl_ner_p) * 100
+    pl_ner_p_err = statistics.stdev(pl_ner_p) * 100
+    pl_ner_r_mean = statistics.mean(pl_ner_r) * 100
+    pl_ner_r_err = statistics.stdev(pl_ner_r) * 100
+    pl_ner_f1_mean = statistics.mean(pl_ner_f1) * 100
+    pl_ner_f1_err = statistics.stdev(pl_ner_f1) * 100
+    pl_re_p_mean = statistics.mean(pl_re_p) * 100
+    pl_re_p_err = statistics.stdev(pl_re_p) * 100
+    pl_re_r_mean = statistics.mean(pl_re_r) * 100
+    pl_re_r_err = statistics.stdev(pl_re_r) * 100
+    pl_re_f1_mean = statistics.mean(pl_re_f1) * 100
+    pl_re_f1_err = statistics.stdev(pl_re_f1) * 100
+    fn_re_p_mean = statistics.mean(fn_re_p) * 100
+    fn_re_p_err = statistics.stdev(fn_re_p) * 100
+    fn_re_r_mean = statistics.mean(fn_re_r) * 100
+    fn_re_r_err = statistics.stdev(fn_re_r) * 100
+    fn_re_f1_mean = statistics.mean(fn_re_f1) * 100
+    fn_re_f1_err = statistics.stdev(fn_re_f1) * 100
+
+    pl_color = '#1f77b4'
+    fn_color = '#ff7f0e'
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, width_ratios=[1, 2])
+    fig.set_size_inches(7, 2.5)
+    # ner
+    ax1.errorbar(
+        ['P', 'R', 'F1'],
+        [pl_ner_p_mean, pl_ner_r_mean, pl_ner_f1_mean],
+        yerr=[pl_ner_p_err, pl_ner_r_err, pl_ner_f1_err],
+        fmt='o',
+        color=pl_color,
+        # capsize=5,
+    )
+    ax1.set_title('Entity Recognition')
+    ax1.set_ylim(0, 100)
+    # re
+    labels = ['P', 'P​', 'R', 'R​', 'F1', 'F1​']
+    means = [
+        pl_re_p_mean, fn_re_p_mean,
+        pl_re_r_mean, fn_re_r_mean,
+        pl_re_f1_mean, fn_re_f1_mean
+    ]
+    errors = [
+        pl_re_p_err, fn_re_p_err,
+        pl_re_r_err, fn_re_r_err,
+        pl_re_f1_err, fn_re_f1_err
+    ]
+    colors = [pl_color, fn_color, pl_color, fn_color, pl_color, fn_color]
+
+    for label, mean, error, color in zip(labels, means, errors, colors):
+        ax2.errorbar(label, mean, yerr=error, fmt='o', color=color)
+
+    ax2.set_title('Relation Extraction')
+    ax2.set_ylim(0, 100)
+
+    # add global legend with "PL-Marker" (pl_color) and "Ours" (fn_color)
+    handles = [
+        mpatches.Patch(color=pl_color, label='PL-Marker'),
+        mpatches.Patch(color=fn_color, label='Ours')
+    ]
+    fig.legend(handles=handles, loc='upper right')
+
+    plt.savefig('fine_tuned_eval.pdf', bbox_inches='tight')
+
+    # # plot precision, recall, f1 for ner and both sets of re using a boxplot
+    # fig = plt.figure(figsize=(8, 6))
+    # # ner
+    # ax1 = fig.add_subplot(121)
+    # ax1.boxplot(
+    #     [pl_ner_p, pl_ner_r, pl_ner_f1],
+    #     labels=['P', 'R', 'F1'],
+    #     showmeans=True,
+    # )
+    # ax1.set_title('NER')
+    # ax1.set_ylim(0, 1)
+    # # re
+    # ax2 = fig.add_subplot(122)
+    # ax2.boxplot(
+    #     [pl_re_p, fn_re_p, pl_re_r, fn_re_r, pl_re_f1, fn_re_f1],
+    #     labels=['P (p)', 'P (f)', 'R (p)', 'R (f)', 'F1 (p)', 'F1 (f)'],
+    # )
+    # ax2.set_title('RE')
+    # ax2.set_ylim(0, 1)
+    # plt.show()
+
 
 if __name__ == '__main__':
-    root_dir = sys.argv[1]
-    # aggregate_numbers(root_dir)
+    if len(sys.argv) == 2:
+        root_dir = sys.argv[1]
 
-    # aggregate_ffnn_re_numbers(root_dir, with_nota=False)
-    # aggregate_ffnn_re_numbers(root_dir)
-    # aggregate_ffnn_re_numbers(root_dir, avg_type='weighted')
+        # aggregate_predictions(root_dir)
+        # print_predictions(root_dir)
+        # error_analysis(
+        #     root_dir,
+        # )
+    elif len(sys.argv) == 3:
+        pl_root_dir = sys.argv[1]
+        ffnn_root_dir = sys.argv[2]
 
-    # aggregate_predictions(root_dir)
-    # print_predictions(root_dir)
-    error_analysis(
-        root_dir,
-    )
+        aggregate_numbers(
+            pl_root_dir,
+            ffnn_root_dir,
+            ffnn_with_nota=False,
+            avg_type=None
+        )
