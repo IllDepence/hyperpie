@@ -11,7 +11,7 @@ def print_stats():
     decimals = 1
     data_dir = 'data'
     fns = {
-        'Falcon_json': 'eval_tiiuae_falcon_40b_instruct_json-first241.json',
+        'Falcon_json': 'eval_tiiuae_falcon_40b_instruct_json.json',
         'Falcon': 'eval_tiiuae_falcon_40b_instruct.json',
         'GALACTICA_json': 'eval_facebook_galactica_120b_json.json',
         'GALACTICA': 'eval_facebook_galactica_120b.json',

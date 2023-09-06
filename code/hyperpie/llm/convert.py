@@ -450,7 +450,7 @@ def _twostage_llm_parse_yaml(annotation_info, para_text):
         'num_cids_valid_invalid': [0, 0],
     }
     for artf_dict in annotation_info['entities']:
-        if artf_dict is None:
+        if artf_dict is None or len(artf_dict) == 0:
             continue
         # parse artifact
         if 'parameters' in artf_dict.keys():

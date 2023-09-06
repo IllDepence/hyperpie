@@ -23,7 +23,7 @@ eval_result_fns = {
     'GALACTICA (Y)': 'data/format_eval_facebook_galactica_120b.json',
     'GALACTICA (J)': 'data/format_eval_facebook_galactica_120b_json.json',
     'Falcon (Y)': 'data/format_eval_tiiuae_falcon_40b_instruct.json',
-    'Falcon (J)': 'data/format_eval_tiiuae_falcon_40b_instruct_json-first241.json',  # noqa
+    'Falcon (J)': 'data/format_eval_tiiuae_falcon_40b_instruct_json.json',
 }
 
 
@@ -159,7 +159,7 @@ def plot_format_eval_parsing(eval_results, save_path):
 
     error_eval_types = {
         'J/Y parse error':
-            lambda x: x['yaml2json']['parse_fail'],
+            lambda x: x['parse_yaml_json']['parse_fail'] if 'parse_yaml_json' in x else x['yaml2json']['parse_fail'],  # noqa (support confusing legacy dict key)
         'Empty J/Y':
             lambda x: x['preprocessor']['empty_yaml'],
         'Text around J/Y':
@@ -189,8 +189,6 @@ def plot_format_eval_parsing(eval_results, save_path):
         barvals = []
         for model in eval_results:
             num_samples = 444
-            if model == 'Falcon (J)':
-                num_samples = 241
             bv = 100 * accsses_func(eval_results[model]) / num_samples
             barvals.append(bv)
         barcolors = [cmap(i) for i in range(len(eval_results))]
