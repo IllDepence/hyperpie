@@ -17,7 +17,9 @@ from hyperpie.util.annot import (
 def annotate(
     ground_truth_fp=None,
     target_para_fp=None,
-    lim=None
+    lim=None,
+    only_non_empty=False,
+    verbose=False
 ):
     """ Annotate unannotated data based on ground truth data.
 
@@ -26,17 +28,21 @@ def annotate(
         default to
             settings.annot_prep_fp, settings.filtered_unannot_fp
         respectively.
+
+        lim: int
+            limit number of paragraphs to annotate
+        only_non_empty: bool
+            only return non-empty annotations
     """
 
     if ground_truth_fp is None:
         ground_truth_fp = settings.annot_prep_fp
     if target_para_fp is None:
-        target_para_fp = settings.filtered_unannot_fp
+        target_para_fp = settings.unannot_fp
 
     artif_param_pairs = get_artifact_param_surface_form_pairs(
         paras_fp=ground_truth_fp
     )
-    target_para_fp = settings.filtered_unannot_fp  # FIXME: set to unfiltered
     target_paras = load_unannotated(
         transformed_pprs_fp=target_para_fp
     )
@@ -55,7 +61,10 @@ def annotate(
         r'\b(zero|one|two|three|four|five|six|seven|eight|nine)\b'
     )
     # go though paras and annotate
-    for para in target_paras[:lim]:
+    n_all = len(target_paras[:lim])
+    for i, para in enumerate(target_paras[:lim]):
+        if i % 100 == 0 and verbose:
+            print(f'{i}/{n_all}')
         text = para['text']
         doc_id = para['document_id']
         # annotate any of
@@ -160,15 +169,16 @@ def annotate(
                     val_dict['surface_forms'], p_dict['surface_forms']
                 )
                 rels[rel_pv_id] = rel_dict
-        if len(entities) > 0:
-            annot_dict = empty_para_annotation(
-                'distant supervision',
-                doc_id,
-                None,
-                text
-            )
-            annot_dict['annotation']['entities'] = entities
-            annot_dict['annotation']['relations'] = rels
-            annotated_paras.append(annot_dict)
+        if only_non_empty and len(entities) == 0:
+            continue
+        annot_dict = empty_para_annotation(
+            'distant supervision',
+            doc_id,
+            None,
+            text
+        )
+        annot_dict['annotation']['entities'] = entities
+        annot_dict['annotation']['relations'] = rels
+        annotated_paras.append(annot_dict)
 
     return annotated_paras
