@@ -6,7 +6,7 @@ import statistics
 import sys
 from collections import defaultdict
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
-from matplotlib import patches as mpatches
+from matplotlib import lines as mlines
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -529,20 +529,27 @@ def aggregate_numbers(
         pl_re_r_err, fn_re_r_err,
         pl_re_f1_err, fn_re_f1_err
     ]
+    markers = ['o', 'D', 'o', 'D', 'o', 'D']
     colors = [pl_color, fn_color, pl_color, fn_color, pl_color, fn_color]
 
-    for label, mean, error, color in zip(labels, means, errors, colors):
-        ax2.errorbar(label, mean, yerr=error, fmt='o', color=color)
+    for label, mean, error, marker, color in zip(
+        labels, means, errors, markers, colors
+    ):
+        ax2.errorbar(label, mean, yerr=error, fmt=marker, color=color)
 
     ax2.set_title('Relation Extraction')
     ax2.set_ylim(0, 100)
 
     # add global legend with "PL-Marker" (pl_color) and "Ours" (fn_color)
     handles = [
-        mpatches.Patch(color=pl_color, label='PL-Marker'),
-        mpatches.Patch(color=fn_color, label='Ours')
+        mlines.Line2D([], [], color=pl_color, marker='o', label='PL-Marker'),
+        mlines.Line2D([], [], color=fn_color, marker='D', label='Ours')
     ]
-    fig.legend(handles=handles, loc='upper right')
+    fig.legend(
+        handles=handles,
+        loc='upper right',
+        bbox_to_anchor=(1.1, 0.95),
+    )
 
     plt.savefig('fine_tuned_eval.pdf', bbox_inches='tight')
 
@@ -573,6 +580,12 @@ if __name__ == '__main__':
         root_dir = sys.argv[1]
 
         # aggregate_predictions(root_dir)
+        # aggregate_plmarker_numbers(root_dir)
+        # aggregate_ffnn_re_numbers(
+        #     root_dir,
+        #     with_nota=False,
+        #     avg_type=None
+        # )
         # print_predictions(root_dir)
         # error_analysis(
         #     root_dir,
