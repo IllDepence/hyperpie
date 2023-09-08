@@ -542,8 +542,14 @@ def aggregate_numbers(
 
     # add global legend with "PL-Marker" (pl_color) and "Ours" (fn_color)
     handles = [
-        mlines.Line2D([], [], color=pl_color, marker='o', label='PL-Marker'),
-        mlines.Line2D([], [], color=fn_color, marker='D', label='Ours')
+        mlines.Line2D(
+            [], [], color=pl_color, marker='o',
+            linestyle='None', label='PL-Marker'
+        ),
+        mlines.Line2D(
+            [], [], color=fn_color, marker='D',
+            linestyle='None', label='Ours'
+        )
     ]
     fig.legend(
         handles=handles,
