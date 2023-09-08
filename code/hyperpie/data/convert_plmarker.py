@@ -264,9 +264,20 @@ def convert(
     annots_fn_base, ext = os.path.splitext(annots_fn)
     annots_processed_fn = f'{annots_fn_base}_plmarker.jsonl'
 
+    # determine format
+    is_jsonl = False
+    with open(annots_path, 'r') as f:
+        for i, line in enumerate(f):
+            if i > 0:
+                is_jsonl = True
+                break
+
     # load annotations
     with open(annots_path, 'r') as f:
-        annots = json.load(f)
+        if is_jsonl:
+            annots = [json.loads(line) for line in f]
+        else:
+            annots = json.load(f)
 
     if type(cap_num_words) == int:
         print(f'WARNING: setting word cap to {cap_num_words}')
