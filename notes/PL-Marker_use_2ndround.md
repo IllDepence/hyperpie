@@ -1,5 +1,19 @@
 NER+RE eval on 5-fold cross validation w/ folds as stratified samples based on number of relations (= class balance @RE step)
 
+## Numbers
+
+```
+NER precision: 81.5 ± 2.9
+NER recall: 76.8 ± 2.2
+NER f1: 79.0 ± 1.6
+RE precision: 33.5 ± 19.3
+RE recall: 5.9 ± 3.7
+RE f1: 9.9 ± 6.0
+```
+
+
+## Eval
+
 ### fold 0
 
 #### NER
@@ -200,4 +214,20 @@ Evaluating: 100%|█████████████████████
 09/05/2023 16:50:39 - INFO - __main__ -     Evaluation done in total 1.243338 secs (349.060259 example per second)
 09/05/2023 16:50:39 - INFO - __main__ -   Result: {"f1": 0.14285714285714285, "prec": 0.75, "rec": 0.07894736842105263, "f1_with_ner": 0.09523809523809525, "prec_w_ner": 0.5, "rec_w_ner": 0.05263157894736842, "ner_f1": 0.814111261872456}
 {'dev_best_f1': 0.12, 'f1_': 0.14285714285714285, 'prec_': 0.75, 'rec_': 0.07894736842105263, 'f1_with_ner_': 0.09523809523809525, 'prec_w_ner_': 0.5, 'rec_w_ner_': 0.05263157894736842, 'ner_f1_': 0.814111261872456}
+```
+
+## Apply to unannotated data
+
+* start w/ `transformed_pprs.jsonl`
+    * take sample
+    * `$ cat transformed_pprs.jsonl | shuf | head -n 15000 > transformed_pprs_15k_sample.jsonl`
+* do dist sup (to get paras) ✔
+    * `$ python3 distant_supervision.py` (w/ paths set accordinly)
+* transform to PL-Marker format (also dues crutial cap at 200 tokens) ✔
+    * `$ python3 hyperpie/data/convert_plmarker.py ../data/transformed_pprs_15k_sample_dist_annot.jsonl loose_matching` (Exact token matches: 4743951 (0.64), Mid token matches: 2703921 (0.36))
+* apply model
+
+```
+$ CUDA_VISIBLE_DEVICES=0  python3 run_acener.py --
+model_type bertspanmarker --model_name_or_path ./bert_models/scibert_scivocab_uncased --do_lower_case --data_dir ./hyperpie --learning_rate 2e-5 --num_train_epochs 50 --per_gpu_train_batch_size 8  --per_gpu_eval_batch_size 16 --gradient_accumulation_steps 1 --max_seq_length 512  --save_steps 2000 --max_pair_length 256 --max_mention_ori_length 8 --do_train --do_eval --evaluate_during_training --eval_all_checkpoints --fp16 --seed 42 --onedropout --lminit --train_file all_444.jsonl --dev_file all_444.jsonl --test_file transformed_pprs_15k_sample_dist_annot_plmarker.jsonl --output_dir ./sciner-hyperpie_predict_pprs_15_sample --output_results
 ```
