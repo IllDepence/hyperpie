@@ -228,6 +228,31 @@ Evaluating: 100%|█████████████████████
 * apply model
 
 ```
-$ CUDA_VISIBLE_DEVICES=0  python3 run_acener.py --
-model_type bertspanmarker --model_name_or_path ./bert_models/scibert_scivocab_uncased --do_lower_case --data_dir ./hyperpie --learning_rate 2e-5 --num_train_epochs 50 --per_gpu_train_batch_size 8  --per_gpu_eval_batch_size 16 --gradient_accumulation_steps 1 --max_seq_length 512  --save_steps 2000 --max_pair_length 256 --max_mention_ori_length 8 --do_train --do_eval --evaluate_during_training --eval_all_checkpoints --fp16 --seed 42 --onedropout --lminit --train_file all_444.jsonl --dev_file all_444.jsonl --test_file transformed_pprs_15k_sample_dist_annot_plmarker.jsonl --output_dir ./sciner-hyperpie_predict_pprs_15_sample --output_results
+$ CUDA_VISIBLE_DEVICES=0  python3 run_acener.py --model_type bertspanmarker --model_name_or_path ./bert_models/scibert_scivocab_uncased --do_lower_case --data_dir ./hyperpie --learning_rate 2e-5 --num_train_epochs 50 --per_gpu_train_batch_size 8  --per_gpu_eval_batch_size 16 --gradient_accumulation_steps 1 --max_seq_length 512  --save_steps 2000 --max_pair_length 256 --max_mention_ori_length 8 --do_train --do_eval --evaluate_during_training --eval_all_checkpoints --fp16 --seed 42 --onedropout --lminit --train_file all_444.jsonl --dev_file all_444.jsonl --test_file transformed_pprs_15k_sample_dist_annot_plmarker.jsonl --output_dir ./sciner-hyperpie_predict_pprs_15_sample --output_results
 ```
+
+failed w/
+```
+/pytorch/aten/src/ATen/native/cuda/Indexing.cu:699: indexSelectLargeIndex: block: [95,0,0], thread: [31,0,0] Assertion `srcIndex < srcSelectDimSize` failed.
+Evaluating:   3%|█▏                                  | 11769/349869 [54:30<26:05:54,  3.60it/s]
+Traceback (most recent call last):
+  File "run_acener.py", line 1085, in <module>
+    main()
+  File "run_acener.py", line 1074, in main
+    result = evaluate(args, model, tokenizer, prefix=global_step, do_test=not args.no_test)
+  File "run_acener.py", line 682, in evaluate
+    outputs = model(**inputs)
+  File "/home/ws/ys8950/dev/PL-Marker/venv/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1102, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/ws/ys8950/dev/PL-Marker/transformers/src/transformers/modeling_bert.py", line 3265, in forward
+    m1_start_states = hidden_states[torch.arange(bsz).unsqueeze(-1), mention_pos[:, :, 0]]
+RuntimeError: CUDA error: device-side assert triggered
+CUDA kernel errors might be asynchronously reported at some other API call,so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1.
+```
+
+* based on manual analysis figured out that a few papers (~1k) have very long tokens (manily URLs and a few cases of Chinese text) probably causing above issue
+    * adjust `convert_plmarker.py` script to also keep word length reasonable
+* transform to PL-Marker format (now dues crutial cap at 200 tokens and 50 char word length)
+    * `$ python3 hyperpie/data/convert_plmarker.py ../data/transformed_pprs_15k_sample_dist_annot.jsonl loose_matching` (TODO)
+* apply model

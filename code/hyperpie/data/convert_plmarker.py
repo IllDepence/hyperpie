@@ -35,7 +35,10 @@ def _replace_brackets(sentence):
     return new_sentence
 
 
-def _convert_single_para(para, loose_matching=False, cap_num_words=False):
+def _convert_single_para(
+    para, loose_matching=False,
+    cap_num_words=False, cap_word_len=False
+):
     """ Convert single paragraph to PL-Marker format.
     """
 
@@ -113,6 +116,10 @@ def _convert_single_para(para, loose_matching=False, cap_num_words=False):
         for word_idx, word, in enumerate(sent_words):
             if type(cap_num_words) == int and word_idx > cap_num_words:
                 # cap sentence length to ensure compatibility with
+                # PL-Marker model
+                break
+            if type(cap_word_len) == int and len(word) > cap_word_len:
+                # cap word length to ensure compatibility with
                 # PL-Marker model
                 break
             # generate conversion output
@@ -256,6 +263,7 @@ def convert(
     generate_splits=False,
     loose_matching=False,
     cap_num_words=False,
+    cap_word_len=False,
     rnd=0
 ):
     # load and pre-process annotated text segments
@@ -280,7 +288,10 @@ def convert(
             annots = json.load(f)
 
     if type(cap_num_words) == int:
-        print(f'WARNING: setting word cap to {cap_num_words}')
+        print(f'WARNING: setting word count cap to {cap_num_words}')
+
+    if type(cap_word_len) == int:
+        print(f'WARNING: setting word length cap to {cap_word_len}')
 
     # process annotations
     random.seed(rnd)
@@ -289,7 +300,7 @@ def convert(
     annot_boundary_mid_token = 0
     for para in annots:
         para_proc, xt_mtch, md_mtch = _convert_single_para(
-            para, loose_matching, cap_num_words
+            para, loose_matching, cap_num_words, cap_word_len
         )
         annot_boundary_exact_matches += xt_mtch
         annot_boundary_mid_token += md_mtch
@@ -434,8 +445,9 @@ def convert(
 
 
 if __name__ == '__main__':
-    # set word limit (optional)
+    # set word count/len limit (optional)
     cap_num_words = False
+    cap_word_len = False
     # check command line arguments
     if len(sys.argv) not in [2, 3, 4]:
         print(
@@ -454,4 +466,7 @@ if __name__ == '__main__':
             generate_splits = 'cls'
         if 'loose_matching' in sys.argv[2:]:
             loose_matching = True
-    convert(annots_path, generate_splits, loose_matching, cap_num_words)
+    convert(
+        annots_path, generate_splits, loose_matching,
+        cap_num_words, cap_word_len
+    )
