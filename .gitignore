@@ -4,6 +4,7 @@ __pycache__
 venv
 api_key
 api_organization
+gh_token
 completion_cache.json
 completion_cache_backups
 code/distant_supervision

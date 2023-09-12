@@ -10,6 +10,8 @@ import os
 import requests
 import time
 import sys
+from functools import lru_cache
+from github import Github, Auth, GithubException
 
 
 def get_pediction_arxiv_ids(root_dir):
@@ -57,9 +59,102 @@ def get_pwc_data(pred_arxiv_ids):
     return pwc_data_pred
 
 
-def get_github_medatada(pwc_data_pred):
+@lru_cache(maxsize=1)
+def _get_cached_github_metadata():
+    if not os.path.exists('gh_cache.json'):
+        return dict()
+    with open('gh_cache.json', 'r') as f:
+        gh_cache = json.load(f)
+    return gh_cache
+
+
+def _save_cached_github_metadata(gh_cache):
+    with open('gh_cache.json', 'w') as f:
+        json.dump(gh_cache, f)
+    _get_cached_github_metadata.cache_clear()
+
+
+def _get_github_medatada(repo_url, gh_api):
+    cache = _get_cached_github_metadata()
+
+    assert repo_url.startswith('https://github.com/')
+    repo_name = repo_url.replace(
+        'https://github.com/',
+        ''
+    )
+
+    # return from cache if available
+    if repo_url in cache:
+        return cache[repo_name]
+
+    # get from Github API
+    try:
+        repo = gh_api.get_repo(repo_name)
+        # get all metadata that is publicly available
+        # through the Github API’s repo object
+        repo_metadata = {
+            'name': repo.name,
+            'full_name': repo.full_name,
+            'description': repo.description,
+            'created_at': repo.created_at.timestamp(),
+            'updated_at': repo.updated_at.timestamp(),
+            'pushed_at': repo.pushed_at.timestamp(),
+            'homepage': repo.homepage,
+            'size': repo.size,
+            'stargazers_count': repo.stargazers_count,
+            'watchers_count': repo.watchers_count,
+            'language': repo.language,
+            'forks_count': repo.forks_count,
+            'open_issues_count': repo.open_issues_count,
+            'default_branch': repo.default_branch,
+            'network_count': repo.network_count,
+            'subscribers_count': repo.subscribers_count,
+            'archived': repo.archived,
+            'forks': repo.forks,
+            'open_issues': repo.open_issues,
+            'watchers': repo.watchers,
+            'has_issues': repo.has_issues,
+            'has_projects': repo.has_projects,
+            'has_downloads': repo.has_downloads,
+            'has_wiki': repo.has_wiki,
+            'has_pages': repo.has_pages,
+        }
+        # additionally get
+        # - number closed of issues
+        repo_metadata[
+            'closed_issues_count'
+        ] = repo.get_issues(state='closed').totalCount
+        # - total number of pull requests
+        repo_metadata['pulls_count'] = repo.get_pulls().totalCount
+        # - total number of commits
+        repo_metadata['commits_count'] = repo.get_commits().totalCount
+        # - total number of contributors
+        repo_metadata[
+            'contributors_count'
+        ] = repo.get_contributors().totalCount
+        # - total number of releases
+        repo_metadata['releases_count'] = repo.get_releases().totalCount
+        # - text of the README file
+        repo_metadata[
+            'readme'
+        ] = repo.get_readme().decoded_content.decode('utf-8')
+        repo_metadata['readme_len'] = len(repo_metadata['readme'])
+    except GithubException as e:
+        print(f'GithubException: {e}')
+        repo_metadata = None
+
+    return repo_metadata
+
+
+def add_github_medatada(pwc_data_pred, access_token):
     """ Get repo data from Github API.
     """
+
+    gh_auth = Auth(access_token)
+    gh_api = Github(auth=gh_auth)
+
+    # TODO
+    # continue here w/ adapting function to use GH API
 
     ext_data = {}
 
@@ -129,7 +224,10 @@ if __name__ == '__main__':
         f'{len([d for d in pwc_data_pred.values() if d is not None])} '
         f'papers'
     )
-    ext_data = get_github_medatada(pwc_data_pred)
+
+    with open('gh_token', 'r') as f:
+        access_token = f.read().strip()
+    ext_data = add_github_medatada(pwc_data_pred, access_token)
 
     with open(f'merged_data_final.json', 'w') as f:
         json.dump(ext_data, f)
