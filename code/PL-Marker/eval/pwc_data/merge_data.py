@@ -7,25 +7,20 @@
 import argparse
 import json
 import os
-import requests
 import time
 import sys
 from functools import lru_cache
 from github import Github, Auth, GithubException
 
 
-def get_pediction_arxiv_ids(root_dir):
+def get_pediction_arxiv_ids(pred_fp):
     """ Get arxiv ids of papers for which we extracted
         hyperparameter info.
     """
 
     arxiv_ids = set()
 
-    ner_pred_fp = os.path.join(
-        'all',
-        'ent_pred_test.json'
-    )
-    with open(os.path.join(root_dir, ner_pred_fp), 'r') as f:
+    with open(pred_fp, 'r') as f:
         for line in f.readlines():
             para = json.loads(line)
             doc_key = para['doc_key']
@@ -75,7 +70,6 @@ def _save_cached_github_metadata(gh_cache):
 
 
 def _get_github_medatada(repo_url, gh_api):
-    cache = _get_cached_github_metadata()
 
     assert repo_url.startswith('https://github.com/')
     repo_name = repo_url.replace(
@@ -84,7 +78,9 @@ def _get_github_medatada(repo_url, gh_api):
     )
 
     # return from cache if available
-    if repo_url in cache:
+    cache = _get_cached_github_metadata()
+    if repo_name in cache:
+        print('using cached Github metadata for {}'.format(repo_name))
         return cache[repo_name]
 
     # get from Github API
@@ -112,7 +108,6 @@ def _get_github_medatada(repo_url, gh_api):
             'archived': repo.archived,
             'forks': repo.forks,
             'open_issues': repo.open_issues,
-            'watchers': repo.watchers,
             'has_issues': repo.has_issues,
             'has_projects': repo.has_projects,
             'has_downloads': repo.has_downloads,
@@ -140,8 +135,22 @@ def _get_github_medatada(repo_url, gh_api):
         ] = repo.get_readme().decoded_content.decode('utf-8')
         repo_metadata['readme_len'] = len(repo_metadata['readme'])
     except GithubException as e:
-        print(f'GithubException: {e}')
-        repo_metadata = None
+        if e.status == 404:
+            print('GithubException: 404 (not found), skipping')
+            return None
+        elif e.status == 409:
+            print('GithubException: 409 (repo empty), skipping')
+            return None
+        else:
+            print(f'GithubException: {e}')
+            sys.exit()
+
+    # save cache with new entry
+    cache[repo_name] = repo_metadata
+    _save_cached_github_metadata(cache)
+
+    print(f'waiting 4 seconds...')
+    time.sleep(4)
 
     return repo_metadata
 
@@ -150,28 +159,15 @@ def add_github_medatada(pwc_data_pred, access_token):
     """ Get repo data from Github API.
     """
 
-    gh_auth = Auth(access_token)
+    gh_auth = Auth.Token(access_token)
     gh_api = Github(auth=gh_auth)
 
-    # TODO
-    # continue here w/ adapting function to use GH API
-
     ext_data = {}
-
-    ext_data_tmp_fp = 'merged_data.json'
-    if os.path.exists(ext_data_tmp_fp):
-        with open(ext_data_tmp_fp, 'r') as f:
-            ext_data_prev = json.load(f)
-        print(f'loaded {len(ext_data_prev)} already crawled entries')
 
     for i, (arxiv_id, ppr) in enumerate(pwc_data_pred.items()):
         print(f'{i+1}/{len(pwc_data_pred)}')
         ext_data[arxiv_id] = None
         if ppr is None:
-            continue
-        if arxiv_id in ext_data_prev:
-            print(f'already have data for {arxiv_id}, skipping')
-            ext_data[arxiv_id] = ext_data_prev[arxiv_id]
             continue
         ext_data[arxiv_id] = ppr
         ext_data[arxiv_id]['github_metadata'] = None
@@ -179,44 +175,23 @@ def add_github_medatada(pwc_data_pred, access_token):
         if repo_url is None:
             print(f'no repo url for {arxiv_id}, skipping')
             continue
-        assert repo_url.startswith('https://github.com/')
-        repo_api_url = repo_url.replace(
-            'https://github.com/',
-            'https://api.github.com/repos/'
-        )
-        resp = requests.get(
-            repo_api_url,
-            headers={
-                'Accept': 'application/json',
-                'X-GitHub-Api-Version': '2022-11-28'
-            }
-        )
-        if resp.status_code == 404:
-            print(f'got 404 for {arxiv_id}, skipping')
+        if not repo_url.startswith('https://github.com/'):
+            print(f'invalid repo url {repo_url} for {arxiv_id}, skipping')
             continue
-        if resp.status_code != 200:
-            print(f'response status code {resp.status_code} for {arxiv_id}')
-            print(f'exiting...')
-            sys.exit()
-        else:
-            repo_data = resp.json()
-            ext_data[arxiv_id]['github_metadata'] = repo_data
 
-            with open(ext_data_tmp_fp, 'w') as f:
-                json.dump(ext_data, f)
+        gh_metadata = _get_github_medatada(repo_url, gh_api)
 
-        print(f'waiting 30 seconds...')
-        time.sleep(30)
+        ext_data[arxiv_id]['github_metadata'] = gh_metadata
 
     return ext_data
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('prediction_data_root_dir', type=str)
+    parser.add_argument('prediction_json_fp', type=str)
     args = parser.parse_args()
 
-    arxiv_ids = get_pediction_arxiv_ids(args.prediction_data_root_dir)
+    arxiv_ids = get_pediction_arxiv_ids(args.prediction_json_fp)
     print(f'loaded {len(arxiv_ids)} arxiv ids')
     pwc_data_pred = get_pwc_data(arxiv_ids)
     print(
