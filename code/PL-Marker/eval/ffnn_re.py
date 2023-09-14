@@ -257,7 +257,10 @@ def dist_supervision_ext(paras):
     return new_paras
 
 
-def eval_model(train_fp, test_fp, output_fp, verbose=False):
+def eval_model(
+        train_fp, test_fp, output_fp, base_dir=None,
+        verbose=False
+):
     if verbose:
         print('loading data')
     with open(train_fp, 'r') as f:
@@ -396,13 +399,23 @@ def eval_model(train_fp, test_fp, output_fp, verbose=False):
         json.dump(res, f, indent=2)
     print(f'wrote results to {output_fp}')
 
-    # with open('sample_idx_to_entity_offset_pair.json', 'w') as f:
-    #     json.dump(sample_idx_to_entity_offset_pair, f)
-    # with open('y_pred.pkl', 'wb') as f:
-    #     pickle.dump(y_pred, f)
-    # pred_out_fp = 'y_pred.json'
-    # with open(pred_out_fp, 'w') as f:
-    #     json.dump(y_pred.tolist(), f)
+    if base_dir is not None:
+        print(
+            f'writing sample_idx_to_entity_offset_pair.json'
+            f' and y_pred.json into {base_dir}'
+        )
+        smpl2idx_fp = os.path.join(
+            base_dir,
+            'sample_idx_to_entity_offset_pair.json'
+        )
+        with open(smpl2idx_fp, 'w') as f:
+            json.dump(sample_idx_to_entity_offset_pair, f)
+        pred_out_fp = os.path.join(
+            base_dir,
+            'y_pred.json'
+        )
+        with open(pred_out_fp, 'w') as f:
+            json.dump(y_pred.tolist(), f)
 
 
 if __name__ == '__main__':
@@ -421,4 +434,5 @@ if __name__ == '__main__':
         train_fp = sys.argv[1]
         test_fp = sys.argv[2]
         output_fp = sys.argv[3]
-    eval_model(train_fp, test_fp, output_fp, verbose=True)
+        base_dir = None
+    eval_model(train_fp, test_fp, output_fp, base_dir=base_dir, verbose=True)
