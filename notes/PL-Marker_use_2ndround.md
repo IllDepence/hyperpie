@@ -254,5 +254,93 @@ For debugging consider passing CUDA_LAUNCH_BLOCKING=1.
 * based on manual analysis figured out that a few papers (~1k) have very long tokens (manily URLs and a few cases of Chinese text) probably causing above issue
     * adjust `convert_plmarker.py` script to also keep word length reasonable
 * transform to PL-Marker format (now dues crutial cap at 200 tokens and 50 char word length)
-    * `$ python3 hyperpie/data/convert_plmarker.py ../data/transformed_pprs_15k_sample_dist_annot.jsonl loose_matching` (TODO)
+    * `$ python3 hyperpie/data/convert_plmarker.py ../data/transformed_pprs_15k_sample_dist_annot.jsonl loose_matching` (Exact token matches: 4740953 (0.64), Mid token matches: 2702097 (0.36))
 * apply model
+
+```
+CUDA_VISIBLE_DEVICES=0  python3 run_acener.py --model_type bertspanmarker --model_name_or_path ./bert_models/scibert_scivocab_uncased --do_lower_case --data_dir ./hyperpie --learning_rate 2e-5 --num_train_epochs 50 --per_gpu_train_batch_size 8  --per_gpu_eval_batch_size 16 --gradient_accumulation_steps 1 --max_seq_length 512  --save_steps 2000 --max_pair_length 256 --max_mention_ori_length 8 --do_train --do_eval --evaluate_during_training --eval_all_checkpoints --fp16 --seed 42 --onedropout --lminit --train_file all_444.jsonl --dev_file all_444.jsonl --test_file transformed_pprs_15k_sample_dist_annot_plmarker.jsonl --output_dir ./sciner-hyperpie_predict_pprs_15_sample_2ndtry --output_results
+```
+
+failed again a ~3%
+
+* try to do in chunks
+* `$ split -a 3 -d -l 10000 transformed_pprs_15k_sample_dist_annot_plmarker.jsonl trpp_15k_`
+
+```
+CUDA_VISIBLE_DEVICES=1  python3 run_acener.py --model_type bertspanmarker --model_name_or_path ./bert_models/scibert_scivocab_uncased --do_lower_case --data_dir ./hyperpie --learning_rate 2e-5 --num_train_epochs 50 --per_gpu_train_batch_size 8  --per_gpu_eval_batch_size 16 --gradient_accumulation_steps 1 --max_seq_length 512  --save_steps 2000 --max_pair_length 256 --max_mention_ori_length 8 --do_train --do_eval --evaluate_during_training --eval_all_checkpoints --fp16 --seed 42 --onedropout --lminit --train_file all_444.jsonl --dev_file all_444.jsonl --test_file trpp_15k_000 --output_dir ./sciner-hyperpie_predict_pprs_15_sample_000 --output_results
+```
+
+* ran though :)
+
+```
+09/14/2023 10:10:49 - INFO - __main__ -   ***** Running evaluation  *****
+09/14/2023 10:10:49 - INFO - __main__ -     Num examples = 54635
+09/14/2023 10:10:49 - INFO - __main__ -     Batch size = 16
+Evaluating: 100%|██████████████████████████████████████████| 3415/3415 [15:21<00:00,  3.71it/s]
+09/14/2023 10:26:11 - INFO - __main__ -     Evaluation done in total 921.281760 secs (59.303247
+ example per second)
+09/14/2023 10:26:11 - INFO - __main__ -   Result: {"f1": 0.06213599648647101, "f1_overlap": 0.0
+6174551998200495, "precision": 0.05968670897685168, "recall": 0.06479490242931103}
+09/14/2023 10:26:12 - INFO - __main__ -   Result: {"dev_best_f1": 0.9863648057627991, "f1_": 0.
+06213599648647101, "f1_overlap_": 0.06174551998200495, "precision_": 0.05968670897685168, "reca
+ll_": 0.06479490242931103}
+```
+
+**copy ER results**  
+`$ cp sciner-hyperpie_predict_pprs_15_sample_000/ent_pred_dev.json hyperpie/ent_pred_dev_15k_000.json`
+`$ cp sciner-hyperpie_predict_pprs_15_sample_000/ent_pred_test.json hyperpie/ent_pred_test_15k_000.json`
+
+**run RE**
+
+```
+$ CUDA_VISIBLE_DEVICES=0 python3 run_re.py --model_type bertsub --model_name_or_path ./bert_models/scibert_scivocab_uncased --do_lower_case --data_dir ./hyperpie --learning_rate 2e-5  --num_train_epochs 10 --per_gpu_train_batch_size 8 --per_gpu_eval_batch_size 16  --gradient_accumulation_steps 1 --max_seq_length 256 --max_pair_length 16 --save_steps 2500 --do_train --do_eval --evaluate_during_training --eval_all_checkpoints --eval_logsoftmax --fp16 --train_file all_444.jsonl --test_file ent_pred_test_15k_000.json --dev_file ent_pred_dev_15k_000.json --use_ner_results --output_dir ./scire-hyperpie_predict_pprs_15_sample_000 --use_typemarker
+```
+
+```
+09/14/2023 10:47:11 - INFO - __main__ -   ***** Running evaluation  *****
+09/14/2023 10:47:11 - INFO - __main__ -     Batch size = 16
+09/14/2023 10:47:11 - INFO - __main__ -     Num examples = 27164
+Evaluating: 100%|██████████████████████████████████████████| 1698/1698 [01:12<00:00, 23.52it/s]
+09/14/2023 10:48:23 - INFO - __main__ -     Evaluation done in total 72.645406 secs (551.418215 example per second)
+Traceback (most recent call last):
+  File "run_re.py", line 1357, in <module>
+    main()
+  File "run_re.py", line 1339, in main
+    result = evaluate(args, model, tokenizer, prefix=global_step, do_test=not args.no_test)
+  File "run_re.py", line 1022, in evaluate
+    assert(tot_recall==len(golden_labels))
+AssertionError
+```
+
+* → we don’t care about eval b/c it’s not an evaluation on a labeled data set
+* `pred_results.json` gets created
+* ... aaand we don’t actually want to use the PL-Marker RE but rather our own model, duh
+
+* end of ER run as show below (interpret as final model is `checkpoint-8000`; source code indicates that model checkpoint is only updated if f1 on test set improves)
+
+```
+09/14/2023 10:09:49 - INFO - __main__ -   Evaluate on test set
+09/14/2023 10:09:49 - INFO - __main__ -   Evaluate the following checkpoints: ['./sciner-hyperp
+ie_predict_pprs_15_sample_000/checkpoint-8000']
+09/14/2023 10:09:49 - INFO - transformers.modeling_utils -   loading weights file ./sciner-hype
+rpie_predict_pprs_15_sample_000/checkpoint-8000/pytorch_model.bin
+09/14/2023 10:09:51 - INFO - __main__ -   [hyperpie] setting ner_label_list to NIL + a, p, v, c
+09/14/2023 10:10:49 - INFO - __main__ -   maxL: 5310
+09/14/2023 10:10:49 - INFO - __main__ -   maxR: 1572
+09/14/2023 10:10:49 - INFO - __main__ -   ***** Running evaluation  *****
+```
+
+* test run w/ pre-trained HyperPIE er model from checkpoint
+```
+$ CUDA_VISIBLE_DEVICES=1  python3 run_acener.py --model_type bertspanmarker --model_name_or_path ./sciner-hyperpie_predict_pprs_15_sample_000/checkpoint-8000 --do_lower_case --data_dir ./hyperpie  --per_gpu_eval_batch_size 16 --gradient_accumulation_steps 1 --max_seq_length 512 --max_pair_length 256 --max_mention_ori_length 8 --do_eval --fp16 --seed 42 --onedropout --lminit --test_file trpp_15k_001 --output_dir ./sciner-hyperpie_predict_pprs_15_sample_001 --output_results
+```
+
+* fails b/c there’s no vocab.txt
+* create dedicated directory with output dir contents and checkpoint dir contents
+
+```
+$ CUDA_VISIBLE_DEVICES=1  python3 run_acener.py --model_type bertspanmarker --model_name_or_path ./sciner-hyperpie_trainedonall444 --do_lower_case --data_dir ./hyperpie  --per_gpu_eval_batch_size 16 --gradient_accumulation_steps 1 --max_seq_length 512 --max_pair_length 256 --max_mention_ori_length 8 --do_eval --fp16 --seed 42 --onedropout --lminit --test_file trpp_15k_001 --output_dir ./sciner-hyperpie_predict_pprs_15_sample_001 --output_results
+```
+
+* fails w/ `Unable to load weights from pytorch checkpoint file. If you tried to load a PyTorch model from a TF 2.0 checkpoint, please set from_tf=True`
+* [ask devs](https://github.com/thunlp/PL-Marker/issues/61)
