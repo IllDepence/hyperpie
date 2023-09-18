@@ -6,27 +6,32 @@ import json
 import os
 
 
-def merge(root_dir, ffnn_re_version=False):
+def merge(root_dir, file_suffix='', ffnn_re_version=False):
     """ Merge RE prediction output into NER prediction output.
+
+        ffnn_re_version used for distinction when processing data
+        in output directory where *BOTH* PL-Marker RE and FFNN RE
+        results are saved. *NOT* used in case of predictions on
+        unlabeled data, regardless of RE model used.
     """
 
     # load data
-    smpl2offs_fn = 'sample_idx_to_entity_offset_pair.json'
-    pred_fn = 'y_pred.json'
+    smpl2offs_fn = f'sample_idx_to_entity_offset_pair{file_suffix}.json'
+    pred_fn = f'y_pred{file_suffix}.json'
     if ffnn_re_version:
-        out_fn_suff = 'ffnn_re'
+        out_fn_suff = '_ffnn_re'
         ner_pred_fp = os.path.join(
             'ner',
-            'ent_pred_test.json'
+            f'ent_pred_test.json{file_suffix}'
         )
     else:
         out_fn_suff = ''
         ner_pred_fp = os.path.join(
             'all',
-            'ent_pred_test.json'
+            f'ent_pred_test{file_suffix}.json'
         )
 
-    merged_pred_fn = f'merged_preds_{out_fn_suff}.jsonl'
+    merged_pred_fn = f'merged_preds{out_fn_suff}{file_suffix}.jsonl'
     ner_pred = []
 
     with open(os.path.join(root_dir, smpl2offs_fn), 'r') as f:
@@ -137,7 +142,12 @@ def print_predictions(paras):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('root_dir', type=str)
+    parser.add_argument('file_suffix', type=str)
     args = parser.parse_args()
 
-    paras = merge(args.root_dir, ffnn_re_version=True)
-    # print_predictions(paras)
+    paras = merge(
+        args.root_dir,
+        args.file_suffix,
+        ffnn_re_version=False
+    )
+    print_predictions(paras)  # uncomment for manual inspection
