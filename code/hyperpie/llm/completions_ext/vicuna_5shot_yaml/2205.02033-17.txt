@@ -1,0 +1,10 @@
+has_entities: true
+entities:
+  - entity23:
+      id: a23
+      name: "bioRxiv"
+      has_parameters: false
+  - entity24:
+      id: a24
+      name: "Unpaywall"
+      has_parameters: false

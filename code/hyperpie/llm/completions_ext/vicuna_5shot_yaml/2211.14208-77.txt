@@ -1,0 +1,10 @@
+has_entities: true
+entities:
+  - entity10:
+      id: a10
+      name: "SA"
+      has_parameters: false
+  - entity9:
+      id: a9
+      name: "OA"
+      has_parameters: false

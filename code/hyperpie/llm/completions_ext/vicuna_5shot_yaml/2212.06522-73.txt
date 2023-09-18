@@ -1,0 +1,7 @@
+has_entities: true
+entities:
+  - entity3:
+      id: a3
+      name: "National Natural Science Foundation of China (NSFC)"
+      type: regularization technique
+      has_parameters: false

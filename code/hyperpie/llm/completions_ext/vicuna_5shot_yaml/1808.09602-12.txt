@@ -1,0 +1,43 @@
+has_entities: true
+entities:
+  - entity1:
+      id: a1
+      name: "dataset"
+      type: dataset
+      has_parameters: false
+  - entity2:
+      id: a2
+      name: "kappa score"
+      type: loss function
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p1
+            name: "entity annotation agreement"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v1
+                  value: "76.9%"
+                  context: "annotating entities"
+                  context_id: c1
+        - parameter2:
+            id: p2
+            name: "relation extraction agreement"
+            has_values: true
+            values:
+              - value2:
+                  value_id: v2
+                  value: "67.8%"
+                  context: "relation extraction"
+                  context_id: c2
+        - parameter3:
+            id: p3
+            name: "coreference agreement"
+            has_values: true
+            values:
+              - value3:
+                  value_id: v3
+                  value: "63.8%"
+                  context: "coreference"
+                  context_id: c3

@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity1:
+      id: a1
+      name: "Semantic Scholar Open Research Corpus (S2ORC)"
+      has_parameters: false

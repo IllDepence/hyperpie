@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity16:
+      id: a16
+      name: "Consistent Prediction"
+      has_parameters: false

@@ -1,0 +1,61 @@
+has_entities: true
+entities:
+  - entity17:
+      id: a17
+      name: "SciBERT-base"
+      has_parameters: false
+  - entity20:
+      id: a20
+      name: "BiLSTM"
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p1
+            name: "hidden state"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v1
+                  value: "128-d"
+                  context: null
+
+                  context_id: null
+  - entity14:
+      id: a14
+      name: "gelu activation"
+      has_parameters: false
+  - entity16:
+      id: a16
+      name: "softmax"
+      has_parameters: false
+  - entity18:
+      id: a18
+      name: "Adam optimizer"
+      has_parameters: true
+      parameters:
+        - parameter2:
+            id: p2
+            name: "learning rate"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v2
+                  value: "1e-3"
+                  context: null
+
+                  context_id: null
+        - parameter3:
+            id: p3
+            name: "learning rate"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v3
+                  value: "2e-5"
+                  context: null
+
+                  context_id: null
+  - entity17:
+      id: a17
+      name: "relation extraction F1 score"
+      has_parameters: false

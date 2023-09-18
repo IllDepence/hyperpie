@@ -1,0 +1,7 @@
+has_entities: true
+entities:
+  - entity12:
+      id: a12
+      name: "model loss function"
+      type: loss function
+      has_parameters: false

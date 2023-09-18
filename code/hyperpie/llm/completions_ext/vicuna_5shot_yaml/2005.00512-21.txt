@@ -1,0 +1,14 @@
+has_entities: true
+entities:
+  - entity10:
+      id: a10
+      name: "arXiv"
+      has_parameters: false
+  - entity26:
+      id: a26
+      name: "GROBID"
+      has_parameters: false
+  - entity5:
+      id: a5
+      name: "SciBERT"
+      has_parameters: false

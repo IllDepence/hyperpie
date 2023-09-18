@@ -1,0 +1,69 @@
+has_entities: true
+entities:
+  - entity20:
+      id: a20
+      name: "SciBERT"
+      has_parameters: false
+  - entity13:
+      id: a13
+      name: "Huggingface's Transformers library"
+      has_parameters: false
+  - entity7:
+      id: a7
+      name: "Pylatexenchttps://github.com/phfaist/pylatexenc"
+      has_parameters: false
+  - entity6:
+      id: a6
+      name: "AdamW"
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p6
+            name: "learning rates"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v6
+                  value: "[3e-5, 5e-5, 7e-5]"
+                  context: "in [3e-5, 5e-5, 7e-5],"
+                  context_id: c6
+        - parameter2:
+            id: p7
+            name: "linear warmup"
+            has_values: true
+            values:
+              - value2:
+                  value_id: v7
+                  value: "1 epoch"
+                  context: "a linear warmup of 1 epoch followed by a linear decay to zero,"
+                  context_id: c7
+        - parameter3:
+            id: p8
+            name: "total number of epochs"
+            has_values: true
+            values:
+              - value3:
+                  value_id: v8
+                  value: "60"
+                  context: "for a total of 60 epochs"
+                  context_id: c8
+        - parameter4:
+            id: p9
+            name: "batch size"
+            has_values: true
+            values:
+              - value4:
+                  value_id: v9
+                  value: "4"
+                  context: "a batch size of 4,"
+                  context_id: c9
+        - parameter5:
+            id: p10
+            name: "gradient clipping max norm"
+            has_values: true
+            values:
+              - value5:
+                  value_id: v10
+                  value: "1"
+                  context: "and apply gradient clipping with a max norm of 1."
+                  context_id: c10

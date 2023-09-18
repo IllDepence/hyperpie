@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity9:
+      id: a9
+      name: "fourth-order Runge–Kutta (RK4) method"
+      has_parameters: false

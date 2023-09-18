@@ -1,0 +1,7 @@
+has_entities: true
+entities:
+  - entity1:
+      id: a1
+      name: "mention classification"
+      type: method
+      has_parameters: false

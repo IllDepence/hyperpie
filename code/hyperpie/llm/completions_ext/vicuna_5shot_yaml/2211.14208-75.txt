@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity17:
+      id: a17
+      name: "W&B Sweeps"
+      has_parameters: false

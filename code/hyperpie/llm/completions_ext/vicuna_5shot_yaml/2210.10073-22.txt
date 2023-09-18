@@ -1,0 +1,10 @@
+has_entities: true
+entities:
+  - entity3:
+      id: a3
+      name: "S2ORC"
+      has_parameters: false
+  - entity4:
+      id: a4
+      name: "English Word Frequency dataset"
+      has_parameters: false

@@ -1,0 +1,22 @@
+has_entities: true
+entities:
+  - entity8:
+      id: a8
+      name: "DATA2"
+      has_parameters: false
+  - entity9:
+      id: a9
+      name: "Librispeech"
+      has_parameters: false
+  - entity10:
+      id: a10
+      name: "CommonVoice"
+      has_parameters: false
+  - entity11:
+      id: a11
+      name: "Tedlium"
+      has_parameters: false
+  - entity12:
+      id: a12
+      name: "Voxforge"
+      has_parameters: false

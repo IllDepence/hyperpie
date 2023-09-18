@@ -1,0 +1,96 @@
+has_entities: true
+entities:
+  - entity19:
+      id: a19
+      name: "Lee2017EndtoendNC"
+      has_parameters: false
+  - entity6:
+      id: a6
+      name: "BiLSTM"
+      has_parameters: true
+      parameters:
+        - parameter6:
+            id: p6
+            name: "hidden layers"
+            has_values: true
+            values:
+              - value6:
+                  value_id: v6
+                  value: "200-dimensional"
+                  context: "We use a 1 layer BiLSTM with 200-dimensional hidden layers."
+                  context_id: c2
+  - entity7:
+      id: a7
+      name: "FFNNs"
+      has_parameters: true
+      parameters:
+        - parameter7:
+            id: p7
+            name: "hidden layers"
+            has_values: true
+            values:
+              - value7:
+                  value_id: v7
+                  value: "2 hidden layers of 150 dimensions each"
+                  context: "All the FFNNs have 2 hidden layers of 150 dimensions each."
+                  context_id: c3
+  - entity8:
+      id: a8
+      name: "variational dropout"
+      has_parameters: true
+      parameters:
+        - parameter8:
+            id: p8
+            name: "dropout for LSTMs"
+            has_values: true
+            values:
+              - value8:
+                  value_id: v8
+                  value: "0.4"
+                  context: "We use 0.4 variational dropout [15] for the LSTMs,"
+                  context_id: c4
+        - parameter9:
+            id: p9
+            name: "dropout for FFNNs"
+            has_values: true
+            values:
+              - value9:
+                  value_id: v9
+                  value: "0.4"
+                  context: "We use 0.4 dropout for the FFNNs,"
+                  context_id: c5
+        - parameter10:
+            id: p10
+            name: "dropout for input embeddings"
+            has_values: true
+            values:
+              - value10:
+                  value_id: v10
+                  value: "0.5"
+                  context: "and 0.5 dropout for the input embeddings."
+                  context_id: c6
+  - entity9:
+      id: a9
+      name: "beam pruning"
+      has_parameters: true
+      parameters:
+        - parameter11:
+            id: p11
+            name: "lambda for coreference resolution"
+            has_values: true
+            values:
+              - value11:
+                  value_id: v11
+                  value: "0.3"
+                  context: "We use \(\lambda _{\text{C}}=0.3\) for coreference resolution"
+                  context_id: c7
+        - parameter12:
+            id: p12
+            name: "lambda for relation extraction"
+            has_values: true
+            values:
+              - value12:
+                  value_id: v12
+                  value: "0.4"
+                  context: "and \(\lambda _{\text{R}}=0.4\) for relation extraction."
+                  context_id: c8

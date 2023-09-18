@@ -1,0 +1,61 @@
+has_entities: true
+entities:
+  - entity35:
+      id: a35
+      name: "dataset"
+      has_parameters: false
+  - entity21:
+      id: a21
+      name: "baseline"
+      has_parameters: true
+      parameters:
+        - parameter6:
+            id: p6
+            name: "batch size"
+            has_values: true
+            values:
+              - value6:
+                  value_id: v6
+                  value: "64"
+                  context: null
+                  context_id: null
+        - parameter7:
+            id: p7
+            name: "learning rates"
+            has_values: true
+            values:
+              - value9:
+                  value_id: v9
+                  value: "[1e-5, 2e-5, 3e-5]"
+                  context: null
+                  context_id: null
+        - parameter8:
+            id: p8
+            name: "epochs"
+            has_values: true
+            values:
+              - value10:
+                  value_id: v10
+                  value: "[8,16,64,128]"
+                  context: null
+                  context_id: null
+        - parameter9:
+            id: p9
+            name: "linear warmup"
+            has_values: true
+            values:
+              - value11:
+                  value_id: v11
+                  value: "6%"
+                  context: null
+                  context_id: null
+        - parameter10:
+            id: p10
+            name: "weight decay coefficient"
+            has_values: true
+            values:
+              - value12:
+                  value_id: v12
+                  value: "0.01"
+                  context: null
+                  context_id: null

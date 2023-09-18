@@ -1,0 +1,21 @@
+has_entities: true
+entities:
+  - entity20:
+      id: a20
+      name: "proxy-based DML methods"
+      has_parameters: false
+  - entity19:
+      id: a19
+      name: "logits"
+      has_parameters: true
+      parameters:
+        - parameter3:
+            id: p3
+            name: "β"
+            has_values: true
+            values:
+              - value2:
+                  value_id: v2
+                  value: "<value context>"
+                  context: "<parameter value>"
+                  context_id: c2

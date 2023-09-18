@@ -1,0 +1,22 @@
+has_entities: true
+entities:
+  - entity24:
+      id: a24
+      name: "VGG-19"
+      has_parameters: false
+  - entity25:
+      id: a25
+      name: "Inception-V3"
+      has_parameters: false
+  - entity26:
+      id: a26
+      name: "ResNet152-V2"
+      has_parameters: false
+  - entity27:
+      id: a27
+      name: "XceptionNet"
+      has_parameters: false
+  - entity28:
+      id: a28
+      name: "EfficientNet-V2L"
+      has_parameters: false

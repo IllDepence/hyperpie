@@ -1,0 +1,10 @@
+has_entities: true
+entities:
+  - entity1:
+      id: a1
+      name: "citation bias"
+      has_parameters: false
+  - entity2:
+      id: a2
+      name: "author affiliation"
+      has_parameters: false

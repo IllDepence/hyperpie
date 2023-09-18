@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity23:
+      id: a23
+      name: "SupCon loss"
+      has_parameters: false

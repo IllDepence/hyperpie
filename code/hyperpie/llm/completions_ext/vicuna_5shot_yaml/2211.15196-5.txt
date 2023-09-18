@@ -1,0 +1,67 @@
+has_entities: true
+entities:
+  - entity23:
+      id: a23
+      name: "XceptionNet"
+      has_parameters: false
+  - entity24:
+      id: a24
+      name: "Inception-V3"
+      has_parameters: false
+  - entity25:
+      id: a25
+      name: "depth-wise separable convolutions"
+      has_parameters: false
+  - entity26:
+      id: a26
+      name: "global average pooling"
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p1
+            name: "dimension"
+            has_values: true
+            values:
+              - value9:
+                  value_id: v9
+                  value: "2-dimensional"
+                  context: null
+                  context_id: null
+  - entity27:
+      id: a27
+      name: "ReLU activation function"
+      has_parameters: false
+  - entity28:
+      id: a28
+      name: "softmax activation function"
+      has_parameters: false
+  - entity29:
+      id: a29
+      name: "binary cross-entropy"
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p1
+            name: "loss function"
+            has_values: true
+            values:
+              - value10:
+                  value_id: v10
+                  value: "binary cross-entropy"
+                  context: null
+                  context_id: null
+  - entity30:
+      id: a30
+      name: "Adam"
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p1
+            name: "loss optimizer"
+            has_values: true
+            values:
+              - value11:
+                  value_id: v11
+                  value: "Adam"
+                  context: null
+                  context_id: null

@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity4:
+      id: a4
+      name: "SciBERT"
+      has_parameters: false

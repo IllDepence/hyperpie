@@ -1,0 +1,23 @@
+has_entities: true
+entities:
+  - entity3:
+      id: a3
+      name: "dataset"
+      type: dataset
+      has_parameters: false
+  - entity4:
+      id: a4
+      name: "method"
+      type: method
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p3
+            name: "baselines"
+            has_values: true
+            values:
+              - value2:
+                  value_id: v3
+                  value: "17"
+                  context: "number of baselines"
+                  context_id: c3

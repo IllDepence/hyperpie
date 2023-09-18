@@ -1,0 +1,11 @@
+has_entities: true
+entities:
+  - entity6:
+      id: a6
+      name: "cross-entropy loss"
+      has_parameters: false
+  - entity7:
+      id: a7
+      name: "feed-forward neural networks"
+      type: model
+      has_parameters: false

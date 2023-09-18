@@ -1,0 +1,14 @@
+has_entities: true
+entities:
+  - entity13:
+      id: a13
+      name: "PageRank"
+      has_parameters: false
+  - entity43:
+      id: a43
+      name: "TensorFlow"
+      has_parameters: false
+  - entity56:
+      id: a56
+      name: "Transformer"
+      has_parameters: false

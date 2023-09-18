@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity16:
+      id: a16
+      name: "high-pass graph convolutional filtering"
+      has_parameters: false

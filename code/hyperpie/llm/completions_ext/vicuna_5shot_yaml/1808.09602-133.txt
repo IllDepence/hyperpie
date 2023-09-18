@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity3:
+      id: a3
+      name: "phrase neural network"
+      has_parameters: false

@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity24:
+      id: a24
+      name: "cSBM"
+      has_parameters: false

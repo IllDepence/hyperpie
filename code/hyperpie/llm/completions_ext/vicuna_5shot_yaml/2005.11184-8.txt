@@ -1,0 +1,18 @@
+has_entities: true
+entities:
+  - entity4:
+      id: a4
+      name: "NER tagger"
+      has_parameters: false
+  - entity10:
+      id: a10
+      name: "Flair tagger"
+      has_parameters: false
+  - entity21:
+      id: a21
+      name: "CoNLL-2003"
+      has_parameters: false
+  - entity25:
+      id: a25
+      name: "Doccano"
+      has_parameters: false

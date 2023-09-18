@@ -1,0 +1,14 @@
+has_entities: true
+entities:
+  - entity2:
+      id: a2
+      name: "NER"
+      has_parameters: false
+  - entity3:
+      id: a3
+      name: "SOTA NER systems"
+      has_parameters: false
+  - entity4:
+      id: a4
+      name: "word and/or character-level embedding"
+      has_parameters: false

@@ -1,0 +1,25 @@
+has_entities: true
+entities:
+  - entity10:
+      id: a10
+      name: "ATSEN"
+      has_parameters: false
+  - entity6:
+      id: a6
+      name: "teacher networks"
+      has_parameters: false
+  - entity7:
+      id: a7
+      name: "cross-entropy loss"
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p1
+            name: "loss function"
+            has_values: true
+            values:
+              - value3:
+                  value_id: v3
+                  value: "cross-entropy loss"
+                  context: null
+                  context_id: null

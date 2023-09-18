@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity21:
+      id: a21
+      name: "GREAD"
+      has_parameters: false

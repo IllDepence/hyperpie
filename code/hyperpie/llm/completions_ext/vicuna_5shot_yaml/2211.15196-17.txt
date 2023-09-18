@@ -1,0 +1,18 @@
+has_entities: true
+entities:
+  - entity16:
+      id: a16
+      name: "CASIA ITDE v.2"
+      has_parameters: false
+  - entity17:
+      id: a17
+      name: "image forgery"
+      has_parameters: false
+  - entity18:
+      id: a18
+      name: "deep learning image classification models"
+      has_parameters: false
+  - entity19:
+      id: a19
+      name: "transfer learning"
+      has_parameters: false

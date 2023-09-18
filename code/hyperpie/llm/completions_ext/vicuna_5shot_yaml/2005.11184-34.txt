@@ -1,0 +1,26 @@
+has_entities: true
+entities:
+  - entity12:
+      id: a12
+      name: "English speech dataset"
+      has_parameters: false
+  - entity37:
+      id: a37
+      name: "E2E approach"
+      has_parameters: false
+  - entity38:
+      id: a38
+      name: "two-step approach"
+      has_parameters: false
+  - entity19:
+      id: a19
+      name: "LM"
+      has_parameters: false
+  - entity20:
+      id: a20
+      name: "NE-WER"
+      has_parameters: false
+  - entity39:
+      id: a39
+      name: "ATENE"
+      has_parameters: false

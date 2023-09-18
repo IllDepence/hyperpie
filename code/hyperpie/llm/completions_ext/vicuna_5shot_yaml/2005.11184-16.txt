@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity27:
+      id: a27
+      name: "prefix beam search decoding"
+      has_parameters: false

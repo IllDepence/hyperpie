@@ -1,0 +1,16 @@
+has_entities: true
+entities:
+  - entity7:
+      id: a7
+      name: "mention embedding"
+      has_parameters: false
+  - entity8:
+      id: a8
+      name: "additive attention layer"
+      type: method
+      has_parameters: true
+      parameters:
+        - parameter6:
+            id: p6
+            name: "\alpha _{j_k}"
+            has_values: false

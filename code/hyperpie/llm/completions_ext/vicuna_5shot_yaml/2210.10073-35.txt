@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity14:
+      id: a14
+      name: "scispaCy"
+      has_parameters: false

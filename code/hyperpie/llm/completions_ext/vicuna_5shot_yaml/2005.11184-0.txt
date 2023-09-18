@@ -1,0 +1,17 @@
+has_entities: true
+entities:
+  - entity1:
+      id: a1
+      name: "ORG"
+      type: regularization technique
+      has_parameters: false
+  - entity2:
+      id: a2
+      name: "PER"
+      type: dataset
+      has_parameters: false
+  - entity3:
+      id: a3
+      name: "LOC"
+      type: model
+      has_parameters: false

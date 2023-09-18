@@ -1,0 +1,15 @@
+has_entities: true
+entities:
+  - entity10:
+      id: a10
+      name: "reaction-diffusion layer"
+      has_parameters: false
+  - entity12:
+      id: a12
+      name: "GNN method"
+      has_parameters: true
+      parameters:
+        - parameter6:
+            id: p6
+            name: "soft adjacency matrix generating method"
+            has_values: false

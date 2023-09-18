@@ -1,0 +1,10 @@
+has_entities: true
+entities:
+  - entity16:
+      id: a16
+      name: "RoBERTa"
+      has_parameters: false
+  - entity17:
+      id: a17
+      name: "DistilRoBERTa"
+      has_parameters: false

@@ -1,0 +1,7 @@
+has_entities: true
+entities:
+  - entity24:
+      id: a24
+      name: "scaled dot product method"
+      type: method
+      has_parameters: false

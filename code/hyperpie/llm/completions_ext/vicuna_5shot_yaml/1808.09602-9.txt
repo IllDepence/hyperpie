@@ -1,0 +1,14 @@
+has_entities: true
+entities:
+  - entity10:
+      id: a10
+      name: "SciERC"
+      has_parameters: false
+  - entity7:
+      id: a7
+      name: "SemEval 2017 Task 10 (SemEval 17)"
+      has_parameters: false
+  - entity8:
+      id: a8
+      name: "SemEval 2018 Task 7 (SemEval 18)"
+      has_parameters: false

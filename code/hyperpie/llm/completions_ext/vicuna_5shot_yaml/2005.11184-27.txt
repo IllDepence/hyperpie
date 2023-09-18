@@ -1,0 +1,10 @@
+has_entities: true
+entities:
+  - entity2:
+      id: a2
+      name: "E2E approach"
+      has_parameters: false
+  - entity4:
+      id: a4
+      name: "two-step approach"
+      has_parameters: false

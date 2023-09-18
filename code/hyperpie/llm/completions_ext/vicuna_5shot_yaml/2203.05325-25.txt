@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity19:
+      id: a19
+      name: "relation extraction performance"
+      has_parameters: false

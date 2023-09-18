@@ -1,0 +1,18 @@
+has_entities: true
+entities:
+  - entity16:
+      id: a16
+      name: "adaptive teacher learning"
+      has_parameters: false
+  - entity20:
+      id: a20
+      name: "LIBSVM"
+      has_parameters: false
+  - entity5:
+      id: a5
+      name: "Roberta"
+      has_parameters: false
+  - entity14:
+      id: a14
+      name: "DistilRoBERTa"
+      has_parameters: false

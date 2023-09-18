@@ -1,0 +1,26 @@
+has_entities: true
+entities:
+  - entity23:
+      id: a23
+      name: "model"
+      has_parameters: false
+  - entity8:
+      id: a8
+      name: "mention identification component"
+      has_parameters: false
+  - entity9:
+      id: a9
+      name: "relation identification component"
+      has_parameters: false
+  - entity13:
+      id: a13
+      name: "pairwise coreference resolution component"
+      has_parameters: false
+  - entity20:
+      id: a20
+      name: "salient mentions identification component"
+      has_parameters: false
+  - entity24:
+      id: a24
+      name: "Salient Entity Clusters"
+      has_parameters: false

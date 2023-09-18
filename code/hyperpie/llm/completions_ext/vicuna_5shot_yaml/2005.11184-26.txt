@@ -1,0 +1,44 @@
+has_entities: true
+entities:
+  - entity12:
+      id: a12
+      name: "DATA2"
+      has_parameters: false
+  - entity37:
+      id: a37
+      name: "batch normalization"
+      has_parameters: false
+  - entity38:
+      id: a38
+      name: "weight decay"
+      has_parameters: false
+  - entity16:
+      id: a16
+      name: "precision"
+      type: loss function
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p1
+            name: "value"
+            has_values: false
+  - entity23:
+      id: a23
+      name: "recall"
+      type: loss function
+      has_parameters: true
+      parameters:
+        - parameter2:
+            id: p2
+            name: "value"
+            has_values: false
+  - entity17:
+      id: a17
+      name: "F1 score"
+      type: loss function
+      has_parameters: true
+      parameters:
+        - parameter3:
+            id: p3
+            name: "value"
+            has_values: false

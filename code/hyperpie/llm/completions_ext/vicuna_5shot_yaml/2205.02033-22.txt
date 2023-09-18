@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity20:
+      id: a20
+      name: "Research Organization Registry (ROR)"
+      has_parameters: false

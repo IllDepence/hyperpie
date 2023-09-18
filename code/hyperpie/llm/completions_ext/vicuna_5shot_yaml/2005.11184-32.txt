@@ -1,0 +1,19 @@
+has_entities: true
+entities:
+  - entity19:
+      id: a19
+      name: "E2E model"
+      has_parameters: false
+  - entity20:
+      id: a20
+      name: "LM"
+      has_parameters: false
+  - entity21:
+      id: a21
+      name: "S-LM"
+      has_parameters: true
+      parameters:
+        - parameter11:
+            id: p11
+            name: "semantic LM"
+            has_values: false

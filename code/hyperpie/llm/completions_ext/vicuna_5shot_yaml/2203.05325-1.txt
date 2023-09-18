@@ -1,0 +1,18 @@
+has_entities: true
+entities:
+  - entity7:
+      id: a7
+      name: "joint model"
+      has_parameters: false
+  - entity8:
+      id: a8
+      name: "Bi-LSTMs"
+      has_parameters: false
+  - entity9:
+      id: a9
+      name: "transformer-based language models"
+      has_parameters: false
+  - entity10:
+      id: a10
+      name: "BERT"
+      has_parameters: false

@@ -1,0 +1,7 @@
+has_entities: true
+entities:
+  - entity2:
+      id: a2
+      name: "SciREX"
+      type: dataset
+      has_parameters: false

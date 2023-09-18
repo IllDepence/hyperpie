@@ -1,0 +1,14 @@
+has_entities: true
+entities:
+  - entity14:
+      id: a14
+      name: "bioRxiv"
+      has_parameters: false
+  - entity15:
+      id: a15
+      name: "COCI (OpenCitations Index of Crossref open DOI-to-DOI references)"
+      has_parameters: false
+  - entity16:
+      id: a16
+      name: "Gini coefficients"
+      has_parameters: false

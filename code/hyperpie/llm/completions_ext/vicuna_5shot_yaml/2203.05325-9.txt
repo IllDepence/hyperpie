@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity6:
+      id: a6
+      name: "transformer-based language model"
+      has_parameters: false

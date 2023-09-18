@@ -1,0 +1,10 @@
+has_entities: true
+entities:
+  - entity25:
+      id: a25
+      name: "graph"
+      has_parameters: false
+  - entity19:
+      id: a19
+      name: "GNNs"
+      has_parameters: false

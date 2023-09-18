@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity30:
+      id: a30
+      name: "Exponential Moving Average (EMA)"
+      has_parameters: false

@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity1:
+      id: a1
+      name: "end-to-end joint entity and relation extraction approach"
+      has_parameters: false

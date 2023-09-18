@@ -1,0 +1,7 @@
+has_entities: true
+entities:
+  - entity1:
+      id: a1
+      name: "E2E approach"
+      type: model
+      has_parameters: false

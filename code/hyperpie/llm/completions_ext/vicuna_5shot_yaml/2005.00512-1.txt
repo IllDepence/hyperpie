@@ -1,0 +1,42 @@
+has_entities: true
+entities:
+  - entity1:
+      id: a1
+      name: "dataset"
+      type: dataset
+      has_parameters: false
+  - entity2:
+      id: a2
+      name: "SQuAD"
+      type: dataset
+      has_parameters: false
+  - entity3:
+      id: a3
+      name: "metric"
+      type: loss function
+      has_parameters: false
+  - entity4:
+      id: a4
+      name: "EM"
+      type: loss function
+      has_parameters: false
+  - entity5:
+      id: a5
+      name: "method"
+      type: method
+      has_parameters: false
+  - entity6:
+      id: a6
+      name: "BiDAF"
+      type: model
+      has_parameters: false
+  - entity7:
+      id: a7
+      name: "task"
+      type: method
+      has_parameters: false
+  - entity8:
+      id: a8
+      name: "machine comprehension"
+      type: method
+      has_parameters: false

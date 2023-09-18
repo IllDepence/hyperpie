@@ -1,0 +1,12 @@
+has_entities: true
+entities:
+  - entity1:
+      id: a1
+      name: "large-scale published scientific entity-papers mapping dataset"
+      type: dataset
+      has_parameters: false
+  - entity2:
+      id: a2
+      name: "Citation Recommendation for Published Scientific Entity (CRPSE)"
+      type: method
+      has_parameters: false

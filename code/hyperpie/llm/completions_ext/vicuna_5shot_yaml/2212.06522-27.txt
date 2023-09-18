@@ -1,0 +1,46 @@
+has_entities: true
+entities:
+  - entity34:
+      id: a34
+      name: "student model"
+      has_parameters: false
+  - entity29:
+      id: a29
+      name: "cross-entropy loss"
+      type: loss function
+      has_parameters: true
+      parameters:
+        - parameter10:
+            id: p29
+            name: "Lce"
+            has_values: false
+  - entity35:
+      id: a35
+      name: "KD loss t1"
+      type: loss function
+      has_parameters: true
+      parameters:
+        - parameter11:
+            id: p35
+            name: "Lkd^t1"
+            has_values: false
+  - entity36:
+      id: a36
+      name: "KD loss t2"
+      type: loss function
+      has_parameters: true
+      parameters:
+        - parameter12:
+            id: p36
+            name: "Lkd^t2"
+            has_values: false
+  - entity37:
+      id: a37
+      name: "alpha"
+      type: regularization technique
+      has_parameters: true
+      parameters:
+        - parameter13:
+            id: p37
+            name: "alpha"
+            has_values: false

@@ -1,0 +1,15 @@
+has_entities: true
+entities:
+  - entity24:
+      id: a24
+      name: "Equation (REF)"
+      has_parameters: false
+  - entity25:
+      id: a25
+      name: "marginalized loss"
+      has_parameters: true
+      parameters:
+        - parameter6:
+            id: p6
+            name: "Lee2017EndtoendNC"
+            has_values: false

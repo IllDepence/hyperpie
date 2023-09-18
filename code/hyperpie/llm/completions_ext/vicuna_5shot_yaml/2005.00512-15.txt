@@ -1,0 +1,12 @@
+has_entities: true
+entities:
+  - entity1:
+      id: a1
+      name: "Salient Entity Identification"
+      type: method
+      has_parameters: false
+  - entity2:
+      id: a2
+      name: "Result Relation Tuple"
+      type: dataset
+      has_parameters: false

@@ -1,0 +1,23 @@
+has_entities: true
+entities:
+  - entity23:
+      id: a23
+      name: "symmetric normalized adjacency matrix"
+      type: method
+      has_parameters: false
+  - entity24:
+      id: a24
+      name: "soft adjacency matrix"
+      type: method
+      has_parameters: true
+      parameters:
+        - parameter6:
+            id: p6
+            name: "range"
+            has_values: true
+            values:
+              - value9:
+                  value_id: v9
+                  value: "[0,1]"
+                  context: null
+                  context_id: null

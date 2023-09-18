@@ -1,0 +1,22 @@
+has_entities: true
+entities:
+  - entity10:
+      id: a10
+      name: "SciIE"
+      has_parameters: false
+  - entity2:
+      id: a2
+      name: "E2E Rel"
+      has_parameters: false
+  - entity3:
+      id: a3
+      name: "ELMo"
+      has_parameters: false
+  - entity4:
+      id: a4
+      name: "LSTM+CRF"
+      has_parameters: false
+  - entity5:
+      id: a5
+      name: "E2E Coref"
+      has_parameters: false

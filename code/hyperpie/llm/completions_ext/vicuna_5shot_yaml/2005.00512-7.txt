@@ -1,0 +1,17 @@
+has_entities: true
+entities:
+  - entity3:
+      id: a3
+      name: "citation analysis"
+      type: method
+      has_parameters: false
+  - entity4:
+      id: a4
+      name: "identifying entities and relations"
+      type: method
+      has_parameters: false
+  - entity5:
+      id: a5
+      name: "unsupervised detection of entities and their coreference information"
+      type: method
+      has_parameters: false

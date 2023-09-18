@@ -1,0 +1,14 @@
+has_entities: true
+entities:
+  - entity15:
+      id: a15
+      name: "ATSEN"
+      has_parameters: false
+  - entity3:
+      id: a3
+      name: "BOND"
+      has_parameters: false
+  - entity4:
+      id: a4
+      name: "SCDL"
+      has_parameters: false

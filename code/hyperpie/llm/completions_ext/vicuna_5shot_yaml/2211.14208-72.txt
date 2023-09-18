@@ -1,0 +1,17 @@
+has_entities: true
+entities:
+  - entity7:
+      id: a7
+      name: "cSBM"
+      type: dataset
+      has_parameters: false
+  - entity8:
+      id: a8
+      name: "GREAD"
+      type: model
+      has_parameters: true
+      parameters:
+        - parameter10:
+            id: p8
+            name: "hyperparameter list"
+            has_values: false

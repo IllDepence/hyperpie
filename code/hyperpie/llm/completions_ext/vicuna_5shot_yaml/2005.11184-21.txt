@@ -1,0 +1,63 @@
+has_entities: true
+entities:
+  - entity1:
+      id: a1
+      name: "E2E"
+      has_parameters: false
+  - entity3:
+      id: a3
+      name: "model"
+      has_parameters: false
+  - entity4:
+      id: a4
+      name: "Section REF"
+      has_parameters: false
+  - entity5:
+      id: a5
+      name: "Prefix beam search decoding"
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p1
+            name: "beam-width"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v1
+                  value: "1024"
+                  context: null
+                  context_id: c1
+        - parameter2:
+            id: p2
+            name: "4-gram LM"
+            has_values: true
+            values:
+              - value2:
+                  value_id: v2
+                  value: "trained on DATA2"
+                  context: null
+                  context_id: c2
+  - entity6:
+      id: a6
+      name: "classical two-step approach"
+      has_parameters: false
+  - entity7:
+      id: a7
+      name: "Baidu's DS2"
+      has_parameters: false
+  - entity8:
+      id: a8
+      name: "ASR component"
+      has_parameters: false
+  - entity9:
+      id: a9
+      name: "Flair"
+      has_parameters: false
+  - entity10:
+      id: a10
+      name: "NER tagger component"
+      has_parameters: false
+  - entity11:
+      id: a11
+      name: "Section REF"
+      has_parameters: false

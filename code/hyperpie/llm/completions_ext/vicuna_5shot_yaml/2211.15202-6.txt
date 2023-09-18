@@ -1,0 +1,37 @@
+has_entities: true
+entities:
+  - entity10:
+      id: a10
+      name: "DML methods"
+      type: method
+      has_parameters: false
+  - entity12:
+      id: a12
+      name: "generalization of DML in training"
+      type: method
+      has_parameters: true
+      parameters:
+        - parameter13:
+            id: p13
+            name: "<parameter name>"
+            has_values: false
+  - entity14:
+      id: a14
+      name: "modifications in inference"
+      type: method
+      has_parameters: true
+      parameters:
+        - parameter15:
+            id: p15
+            name: "<parameter name>"
+            has_values: false
+  - entity16:
+      id: a16
+      name: "experimental procedure"
+      type: method
+      has_parameters: true
+      parameters:
+        - parameter17:
+            id: p17
+            name: "<parameter name>"
+            has_values: false

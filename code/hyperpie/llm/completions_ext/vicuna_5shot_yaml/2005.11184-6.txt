@@ -1,0 +1,11 @@
+has_entities: true
+entities:
+  - entity10:
+      id: a10
+      name: "English speech dataset"
+      has_parameters: false
+  - entity23:
+      id: a23
+      name: "E2E NER"
+      type: method
+      has_parameters: false

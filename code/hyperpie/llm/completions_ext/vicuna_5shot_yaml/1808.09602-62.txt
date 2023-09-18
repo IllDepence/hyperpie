@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity20:
+      id: a20
+      name: "multi-task learning"
+      has_parameters: false

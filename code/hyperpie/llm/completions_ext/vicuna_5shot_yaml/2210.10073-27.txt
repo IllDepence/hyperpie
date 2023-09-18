@@ -1,0 +1,10 @@
+has_entities: true
+entities:
+  - entity20:
+      id: a20
+      name: "cooccurrence count-based sorting criterion"
+      has_parameters: false
+  - entity19:
+      id: a19
+      name: "weighted context embedding-based sorting criterion"
+      has_parameters: false

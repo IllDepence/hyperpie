@@ -1,0 +1,17 @@
+has_entities: true
+entities:
+  - entity2:
+      id: a2
+      name: "SciIE"
+      type: model
+      has_parameters: false
+  - entity3:
+      id: a3
+      name: "SciERC"
+      type: dataset
+      has_parameters: false
+  - entity4:
+      id: a4
+      name: "SemEval 17"
+      type: dataset
+      has_parameters: false

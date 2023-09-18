@@ -1,0 +1,17 @@
+has_entities: true
+entities:
+  - entity2:
+      id: a2
+      name: "sequence labeling task"
+      type: method
+      has_parameters: false
+  - entity3:
+      id: a3
+      name: "macro average F1 score"
+      type: loss function
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p2
+            name: "exact matches of all mention types"
+            has_values: false

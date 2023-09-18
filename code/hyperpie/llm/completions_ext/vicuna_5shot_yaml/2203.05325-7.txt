@@ -1,0 +1,12 @@
+has_entities: true
+entities:
+  - entity11:
+      id: a11
+      name: "end-to-end entity and relation extraction system"
+      type: model
+      has_parameters: false
+  - entity12:
+      id: a12
+      name: "transformer-based language model"
+      type: model
+      has_parameters: false

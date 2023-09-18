@@ -1,0 +1,21 @@
+has_entities: true
+entities:
+  - entity21:
+      id: a21
+      name: "One-class SVM"
+      has_parameters: false
+  - entity22:
+      id: a22
+      name: "LIBSVM"
+      has_parameters: true
+      parameters:
+        - parameter6:
+            id: p6
+            name: "loss weights"
+            has_values: true
+            values:
+              - value9:
+                  value_id: v9
+                  value: "C"
+                  context: null
+                  context_id: null

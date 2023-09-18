@@ -1,0 +1,15 @@
+has_entities: true
+entities:
+  - entity19:
+      id: a19
+      name: "Supervised Contrastive Learning (SupCon)"
+      has_parameters: false
+  - entity20:
+      id: a20
+      name: "temperature regularization"
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p1
+            name: "temperature"
+            has_values: false

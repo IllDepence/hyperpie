@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity20:
+      id: a20
+      name: "model"
+      has_parameters: false

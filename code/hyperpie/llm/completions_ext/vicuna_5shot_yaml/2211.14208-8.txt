@@ -1,0 +1,18 @@
+has_entities: true
+entities:
+  - entity24:
+      id: a24
+      name: "GCN"
+      has_parameters: false
+  - entity25:
+      id: a25
+      name: "GAT"
+      has_parameters: false
+  - entity26:
+      id: a26
+      name: "GraphSAGE"
+      has_parameters: false
+  - entity27:
+      id: a27
+      name: "FastGCN"
+      has_parameters: false

@@ -1,0 +1,31 @@
+has_entities: true
+entities:
+  - entity18:
+      id: a18
+      name: "train/valid/test splits"
+      has_parameters: false
+  - entity20:
+      id: a20
+      name: "evaluation protocol"
+      has_parameters: false
+  - entity23:
+      id: a23
+      name: "LCC"
+      has_parameters: false
+  - entity19:
+      id: a19
+      name: "Citeseer"
+      has_parameters: false
+  - entity24:
+      id: a24
+      name: "dropout"
+      has_parameters: true
+      parameters:
+        - parameter13:
+            id: p13
+            name: "input dropout"
+            has_values: false
+        - parameter15:
+            id: p15
+            name: "dropout"
+            has_values: false

@@ -1,0 +1,14 @@
+has_entities: true
+entities:
+  - entity32:
+      id: a32
+      name: "loss function"
+      has_parameters: false
+  - entity33:
+      id: a33
+      name: "categorical cross-entropy loss"
+      has_parameters: false
+  - entity34:
+      id: a34
+      name: "DML"
+      has_parameters: false

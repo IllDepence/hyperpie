@@ -1,0 +1,17 @@
+has_entities: true
+entities:
+  - entity1:
+      id: a1
+      name: "k-means"
+      type: model
+      has_parameters: false
+  - entity2:
+      id: a2
+      name: "Penn Treebank"
+      type: dataset
+      has_parameters: false
+  - entity3:
+      id: a3
+      name: "LibriSpeech"
+      type: dataset
+      has_parameters: false

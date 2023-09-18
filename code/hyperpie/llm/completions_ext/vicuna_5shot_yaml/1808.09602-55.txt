@@ -1,0 +1,33 @@
+has_entities: true
+entities:
+  - entity1:
+      id: a1
+      name: "SciIE"
+      type: model
+      has_parameters: false
+  - entity2:
+      id: a2
+      name: "SciERC"
+      type: dataset
+      has_parameters: false
+  - entity3:
+      id: a3
+      name: "SemEval 17"
+      type: dataset
+      has_parameters: false
+  - entity4:
+      id: a4
+      name: "Semantic Scholar Corpus"
+      type: dataset
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p1
+            name: "Number of abstracts"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v1
+                  value: "110k"
+                  context: "in total"
+                  context_id: c1

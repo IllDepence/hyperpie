@@ -1,0 +1,22 @@
+has_entities: true
+entities:
+  - entity12:
+      id: a12
+      name: "GREAD"
+      has_parameters: false
+  - entity13:
+      id: a13
+      name: "Fisher"
+      has_parameters: false
+  - entity14:
+      id: a14
+      name: "Allen-Cahn"
+      has_parameters: false
+  - entity15:
+      id: a15
+      name: "Zeldovich"
+      has_parameters: false
+  - entity16:
+      id: a16
+      name: "Blurring-sharpening"
+      has_parameters: false

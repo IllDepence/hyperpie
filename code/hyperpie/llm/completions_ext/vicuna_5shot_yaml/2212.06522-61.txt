@@ -1,0 +1,17 @@
+has_entities: true
+entities:
+  - entity2:
+      id: a2
+      name: "ATSEN"
+      type: model
+      has_parameters: false
+  - entity3:
+      id: a3
+      name: "DS-NER methods"
+      type: method
+      has_parameters: false
+  - entity4:
+      id: a4
+      name: "supervised methods"
+      type: method
+      has_parameters: false

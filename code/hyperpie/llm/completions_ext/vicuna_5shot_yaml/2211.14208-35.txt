@@ -1,0 +1,47 @@
+has_entities: true
+entities:
+  - entity1:
+      id: a1
+      name: "GREAD"
+      type: method
+      has_parameters: false
+  - entity2:
+      id: a2
+      name: "Training data"
+      type: dataset
+      has_parameters: true
+      parameters:
+        - parameter3:
+            id: p3
+            name: "\(D_{train}\) (context)"
+            has_values: false
+  - entity4:
+      id: a4
+      name: "Validating data"
+      type: dataset
+      has_parameters: true
+      parameters:
+        - parameter6:
+            id: p6
+            name: "\(D_{val}\) (context)"
+            has_values: false
+  - entity5:
+      id: a5
+      name: "Maximum iteration number"
+      type: dataset
+      has_parameters: true
+      parameters:
+        - parameter7:
+            id: p7
+            name: "\(max\_iter\) (context)"
+            has_values: false
+  - entity6:
+      id: a6
+      name: "Initialize model parameters"
+      type: method
+      has_parameters: true
+      parameters:
+        - parameter8:
+            id: p8
+            name: "\(\mathbf {\theta }\) (context)"
+            has_values: false

@@ -1,0 +1,10 @@
+has_entities: true
+entities:
+  - entity30:
+      id: a30
+      name: "softmax operation"
+      has_parameters: false
+  - entity31:
+      id: a31
+      name: "cross-entropy loss"
+      has_parameters: false

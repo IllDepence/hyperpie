@@ -1,0 +1,10 @@
+has_entities: true
+entities:
+  - entity23:
+      id: a23
+      name: "S2ORC"
+      has_parameters: false
+  - entity16:
+      id: a16
+      name: "scispaCy"
+      has_parameters: false

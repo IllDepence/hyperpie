@@ -1,0 +1,10 @@
+has_entities: true
+entities:
+  - entity30:
+      id: a30
+      name: "NER models"
+      has_parameters: false
+  - entity31:
+      id: a31
+      name: "teacher networks"
+      has_parameters: false

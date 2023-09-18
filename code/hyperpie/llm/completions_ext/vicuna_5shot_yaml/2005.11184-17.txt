@@ -1,0 +1,36 @@
+has_entities: true
+entities:
+  - entity23:
+      id: a23
+      name: "word count in the predicted transcript \(wc(y)\)"
+      has_parameters: false
+  - entity24:
+      id: a24
+      name: "\alpha"
+      has_parameters: true
+      parameters:
+        - parameter6:
+            id: p6
+            name: "value of \alpha"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v1
+                  value: "1.96"
+                  context: null
+                  context_id: c1
+  - entity25:
+      id: a25
+      name: "\beta"
+      has_parameters: true
+      parameters:
+        - parameter7:
+            id: p7
+            name: "value of \beta"
+            has_values: true
+            values:
+              - value2:
+                  value_id: v2
+                  value: "6.0"
+                  context: null
+                  context_id: c2

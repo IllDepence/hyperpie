@@ -1,0 +1,22 @@
+has_entities: true
+entities:
+  - entity14:
+      id: a14
+      name: "LSTM+CRF"
+      has_parameters: false
+  - entity15:
+      id: a15
+      name: "ELMo"
+      has_parameters: false
+  - entity16:
+      id: a16
+      name: "E2E Rel"
+      has_parameters: false
+  - entity17:
+      id: a17
+      name: "E2E Rel(Pipeline)"
+      has_parameters: false
+  - entity18:
+      id: a18
+      name: "E2E Coref"
+      has_parameters: false

@@ -1,0 +1,28 @@
+has_entities: true
+entities:
+  - entity1:
+      id: a1
+      name: "Homophily ratio"
+      type: dataset
+      has_parameters: false
+  - entity2:
+      id: a2
+      name: "Table REF"
+      type: dataset
+      has_parameters: false
+  - entity3:
+      id: a3
+      name: "9 real-world datasets"
+      type: dataset
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p1
+            name: "Datasets"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v1
+                  value: "9 real-world datasets"
+                  context: null
+                  context_id: c1

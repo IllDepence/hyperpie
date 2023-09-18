@@ -1,0 +1,31 @@
+has_entities: true
+entities:
+  - entity1:
+      id: a1
+      name: "BERT coreference model"
+      type: model
+      has_parameters: false
+  - entity2:
+      id: a2
+      name: "SciBERT-base embeddings"
+      type: dataset
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p1
+            name: "mention 1"
+            has_values: false
+        - parameter2:
+            id: p2
+            name: "mention 2"
+            has_values: false
+  - entity3:
+      id: a3
+      name: "AllenNLP library"
+      type: method
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p3
+            name: "linear layer"
+            has_values: false

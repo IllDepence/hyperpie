@@ -1,0 +1,21 @@
+has_entities: true
+entities:
+  - entity17:
+      id: a17
+      name: "RoBERTa"
+      has_parameters: false
+  - entity18:
+      id: a18
+      name: "BiLSTM-CRF"
+      has_parameters: true
+      parameters:
+        - parameter12:
+            id: p12
+            name: "layer"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v1
+                  value: "1"
+                  context: null
+                  context_id: null

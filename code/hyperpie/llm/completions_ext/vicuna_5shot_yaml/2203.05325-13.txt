@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity19:
+      id: a19
+      name: "triplet_loss"
+      has_parameters: false

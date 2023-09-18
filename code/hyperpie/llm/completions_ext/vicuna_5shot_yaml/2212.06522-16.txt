@@ -1,0 +1,10 @@
+has_entities: true
+entities:
+  - entity4:
+      id: a4
+      name: "cross-entropy loss"
+      has_parameters: false
+  - entity5:
+      id: a5
+      name: "adaptive knowledge distillation loss"
+      has_parameters: false

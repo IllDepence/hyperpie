@@ -1,0 +1,14 @@
+has_entities: true
+entities:
+  - entity36:
+      id: a36
+      name: "Neural multi-task learning"
+      has_parameters: false
+  - entity27:
+      id: a27
+      name: "word-level representations"
+      has_parameters: false
+  - entity35:
+      id: a35
+      name: "span representations"
+      has_parameters: false

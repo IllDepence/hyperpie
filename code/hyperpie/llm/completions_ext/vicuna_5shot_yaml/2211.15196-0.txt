@@ -1,0 +1,42 @@
+has_entities: true
+entities:
+  - entity14:
+      id: a14
+      name: "computer vision"
+      has_parameters: false
+  - entity15:
+      id: a15
+      name: "Deep Learning"
+      has_parameters: false
+  - entity16:
+      id: a16
+      name: "object detection"
+      has_parameters: false
+  - entity17:
+      id: a17
+      name: "object counting"
+      has_parameters: false
+  - entity18:
+      id: a18
+      name: "image segmentation"
+      has_parameters: false
+  - entity24:
+      id: a24
+      name: "classification"
+      has_parameters: false
+  - entity25:
+      id: a25
+      name: "Convolutional Neural Networks (CNN)"
+      has_parameters: false
+  - entity26:
+      id: a26
+      name: "ImageNet"
+      has_parameters: false
+  - entity27:
+      id: a27
+      name: "ILSVRC"
+      has_parameters: false
+  - entity28:
+      id: a28
+      name: "image forgery"
+      has_parameters: false

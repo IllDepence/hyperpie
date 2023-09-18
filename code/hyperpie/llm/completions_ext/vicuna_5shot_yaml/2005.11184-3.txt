@@ -1,0 +1,10 @@
+has_entities: true
+entities:
+  - entity10:
+      id: a10
+      name: "E2E NER"
+      has_parameters: false
+  - entity8:
+      id: a8
+      name: "dataset"
+      has_parameters: false

@@ -1,0 +1,10 @@
+has_entities: true
+entities:
+  - entity24:
+      id: a24
+      name: "Coreference resolution"
+      has_parameters: false
+  - entity25:
+      id: a25
+      name: "mention-ranking model"
+      has_parameters: false

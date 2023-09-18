@@ -1,0 +1,10 @@
+has_entities: true
+entities:
+  - entity18:
+      id: a18
+      name: "random forests"
+      has_parameters: false
+  - entity4:
+      id: a4
+      name: "F1-score"
+      has_parameters: false

@@ -1,0 +1,20 @@
+has_entities: true
+entities:
+  - entity30:
+      id: a30
+      name: "Pareto solution"
+      has_parameters: false
+  - entity26:
+      id: a26
+      name: "method"
+      type: method
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p1
+            name: "α1"
+            has_values: false
+        - parameter2:
+            id: p2
+            name: "α2"
+            has_values: false

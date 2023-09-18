@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity27:
+      id: a27
+      name: "graph neural networks (GNNs)"
+      has_parameters: false

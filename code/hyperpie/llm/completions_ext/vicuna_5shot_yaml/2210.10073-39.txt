@@ -1,0 +1,12 @@
+has_entities: true
+entities:
+  - entity23:
+      id: a23
+      name: "DS"
+      type: dataset
+      has_parameters: false
+  - entity24:
+      id: a24
+      name: "DMC"
+      type: method
+      has_parameters: false

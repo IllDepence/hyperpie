@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity25:
+      id: a25
+      name: "threshold-based strategy"
+      has_parameters: false

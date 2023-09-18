@@ -1,0 +1,12 @@
+has_entities: true
+entities:
+  - entity14:
+      id: a14
+      name: "NER"
+      type: method
+      has_parameters: false
+  - entity23:
+      id: a23
+      name: "Flair tagger"
+      type: model
+      has_parameters: false

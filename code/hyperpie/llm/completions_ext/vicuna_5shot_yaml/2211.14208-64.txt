@@ -1,0 +1,7 @@
+has_entities: true
+entities:
+  - entity19:
+      id: a19
+      name: "GREAD"
+      type: model
+      has_parameters: false

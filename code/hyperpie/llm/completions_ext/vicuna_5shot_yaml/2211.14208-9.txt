@@ -1,0 +1,26 @@
+has_entities: true
+entities:
+  - entity23:
+      id: a23
+      name: "Balcilar et al."
+      has_parameters: false
+  - entity15:
+      id: a15
+      name: "ChebNet"
+      has_parameters: false
+  - entity4:
+      id: a4
+      name: "GraphHeat"
+      has_parameters: false
+  - entity20:
+      id: a20
+      name: "APPNP"
+      has_parameters: false
+  - entity19:
+      id: a19
+      name: "FA-GCN"
+      has_parameters: false
+  - entity21:
+      id: a21
+      name: "GPR-GNN"
+      has_parameters: false

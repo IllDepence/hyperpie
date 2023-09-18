@@ -1,0 +1,32 @@
+has_entities: true
+entities:
+  - entity10:
+      id: a10
+      name: "teacher-student framework"
+      has_parameters: false
+  - entity23:
+      id: a23
+      name: "self-training teacher-student strategy"
+      has_parameters: true
+      parameters:
+        - parameter6:
+            id: p6
+            name: "pseudo labels"
+            has_values: false
+  - entity24:
+      id: a24
+      name: "BOND"
+      has_parameters: false
+  - entity25:
+      id: a25
+      name: "SCDL"
+      has_parameters: false
+  - entity26:
+      id: a26
+      name: "exponential moving average (EMA)"
+      has_parameters: true
+      parameters:
+        - parameter7:
+            id: p7
+            name: "teacher update"
+            has_values: false

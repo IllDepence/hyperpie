@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity37:
+      id: a37
+      name: "recommender systems"
+      has_parameters: false

@@ -1,0 +1,7 @@
+has_entities: true
+entities:
+  - entity7:
+      id: a7
+      name: "JSPS KAKENHI Grant Number"
+      type: dataset
+      has_parameters: false

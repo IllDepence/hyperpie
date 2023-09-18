@@ -1,0 +1,7 @@
+has_entities: true
+entities:
+  - entity3:
+      id: a3
+      name: "OntoNotes 5.0"
+      type: dataset
+      has_parameters: false

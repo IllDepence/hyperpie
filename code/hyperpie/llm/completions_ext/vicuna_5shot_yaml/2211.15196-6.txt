@@ -1,0 +1,60 @@
+has_entities: true
+entities:
+  - entity15:
+      id: a15
+      name: "EfficientNet"
+      has_parameters: false
+  - entity23:
+      id: a23
+      name: "EfficientNet-V2L"
+      has_parameters: true
+      parameters:
+        - parameter6:
+            id: p6
+            name: "number of parameters"
+            has_values: true
+            values:
+              - value9:
+                  value_id: v9
+                  value: "119,060,642"
+                  context: null
+                  context_id: null
+        - parameter7:
+            id: p7
+            name: "non-trainable parameters"
+            has_values: true
+            values:
+              - value10:
+                  value_id: v10
+                  value: "500k"
+                  context: null
+                  context_id: null
+        - parameter8:
+            id: p8
+            name: "trainable parameters"
+            has_values: true
+            values:
+              - value11:
+                  value_id: v11
+                  value: "117,746,848"
+                  context: null
+                  context_id: null
+  - entity25:
+      id: a25
+      name: "binary cross-entropy"
+      has_parameters: false
+  - entity37:
+      id: a37
+      name: "adam loss optimizer"
+      has_parameters: true
+      parameters:
+        - parameter9:
+            id: p9
+            name: "loss optimization"
+            has_values: true
+            values:
+              - value12:
+                  value_id: v12
+                  value: "true"
+                  context: null
+                  context_id:

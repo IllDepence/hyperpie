@@ -1,0 +1,7 @@
+has_entities: true
+entities:
+  - entity10:
+      id: a10
+      name: "Gini coefficients"
+      type: regularization technique
+      has_parameters: false

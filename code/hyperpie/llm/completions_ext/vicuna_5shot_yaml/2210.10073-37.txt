@@ -1,0 +1,72 @@
+has_entities: true
+entities:
+  - entity1:
+      id: a1
+      name: "AAAI Conference on Artificial Intelligence"
+      type: dataset
+      has_parameters: false
+  - entity2:
+      id: a2
+      name: "ACL Annual Meeting of the Association for Computational Linguistics"
+      type: model
+      has_parameters: false
+  - entity3:
+      id: a3
+      name: "COLING International Conference on Computational Linguistics"
+      type: method
+      has_parameters: false
+  - entity4:
+      id: a4
+      name: "COLT Annual Conference on Learning Theory"
+      type: loss function
+      has_parameters: false
+  - entity5:
+      id: a5
+      name: "CVPR IEEE Conference on Computer Vision and Pattern Recognition"
+      type: regularization technique
+      has_parameters: false
+  - entity6:
+      id: a6
+      name: "ECCV European Conference on Computer Vision"
+      type: dataset
+      has_parameters: false
+  - entity7:
+      id: a7
+      name: "EMNLP Conference on Empirical Methods in Natural Language Processing"
+      type: model
+      has_parameters: false
+  - entity8:
+      id: a8
+      name: "ICLR International Conference on Learning Representations"
+      type: method
+      has_parameters: false
+  - entity9:
+      id: a9
+      name: "ICML International Conference on Machine Learning"
+      type: loss function
+      has_parameters: false
+  - entity10:
+      id: a10
+      name: "IJCAI International Joint Conference on Artificial Intelligence"
+      type: regularization technique
+      has_parameters: false
+  - entity11:
+      id: a11
+      name: "INTERSPEECH Conference of the International Speech Communication Association"
+      type: dataset
+      has_parameters: false
+  - entity12:
+      id: a12
+      name: "NeurIPS Annual Conference on Neural Information Processing Systems"
+      type: model
+      has_parameters: false
+  - entity13:
+      id: a13
+      name: "RSS Robotics: Science and Systems conference"
+      type: method
+      has_parameters: false
+  - entity14:
+      id: a14
+      name: "USS USENIX Security Symposium"
+      type: loss function
+      has_parameters: false

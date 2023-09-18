@@ -1,0 +1,7 @@
+has_entities: true
+entities:
+  - entity3:
+      id: a3
+      name: "cSBMs"
+      type: dataset
+      has_parameters: false

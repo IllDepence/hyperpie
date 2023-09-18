@@ -1,0 +1,10 @@
+has_entities: true
+entities:
+  - entity34:
+      id: a34
+      name: "Gini coefficients"
+      has_parameters: false
+  - entity20:
+      id: a20
+      name: "S2ORC"
+      has_parameters: false

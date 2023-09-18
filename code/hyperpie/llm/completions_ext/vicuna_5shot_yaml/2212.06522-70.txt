@@ -1,0 +1,35 @@
+has_entities: true
+entities:
+  - entity13:
+      id: a13
+      name: "Twitter"
+      has_parameters: false
+  - entity14:
+      id: a14
+      name: "CoNLL03"
+      has_parameters: false
+  - entity25:
+      id: a25
+      name: "ATSEN"
+      has_parameters: true
+      parameters:
+        - parameter6:
+            id: p6
+            name: "m"
+            has_values: true
+            values:
+              - value9:
+                  value_id: v9
+                  value: "0.995"
+                  context: null
+                  context_id: null
+        - parameter7:
+            id: p7
+            name: "\(\sigma _2\)"
+            has_values: true
+            values:
+              - value10:
+                  value_id: v10
+                  value: "0.75"
+                  context: null
+                  context_id: null

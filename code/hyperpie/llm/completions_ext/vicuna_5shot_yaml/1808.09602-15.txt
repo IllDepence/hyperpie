@@ -1,0 +1,42 @@
+has_entities: true
+entities:
+  - entity16:
+      id: a16
+      name: "document"
+      type: dataset
+      has_parameters: false
+  - entity17:
+      id: a17
+      name: "set of all possible within-sentence word sequence spans"
+      type: dataset
+      has_parameters: false
+  - entity18:
+      id: a18
+      name: "entity types"
+      type: model
+      has_parameters: true
+      parameters:
+        - parameter15:
+            id: p15
+            name: "E"
+            has_values: false
+  - entity19:
+      id: a19
+      name: "relations"
+      type: model
+      has_parameters: true
+      parameters:
+        - parameter16:
+            id: p16
+            name: "R"
+            has_values: false
+  - entity20:
+      id: a20
+      name: "coreference links"
+      type: model
+      has_parameters: true
+      parameters:
+        - parameter17:
+            id: p17
+            name: "C"
+            has_values: false

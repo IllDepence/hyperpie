@@ -1,0 +1,7 @@
+has_entities: true
+entities:
+  - entity22:
+      id: a22
+      name: "DyGIE++"
+      type: model
+      has_parameters: false

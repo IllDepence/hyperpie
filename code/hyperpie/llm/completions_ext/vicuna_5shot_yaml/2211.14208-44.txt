@@ -1,0 +1,18 @@
+has_entities: true
+entities:
+  - entity27:
+      id: a27
+      name: "node classification tasks"
+      has_parameters: false
+  - entity30:
+      id: a30
+      name: "synthetic graph"
+      has_parameters: false
+  - entity31:
+      id: a31
+      name: "heterophily levels"
+      has_parameters: false
+  - entity32:
+      id: a32
+      name: "other synthetic graphs"
+      has_parameters: false

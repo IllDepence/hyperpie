@@ -1,0 +1,10 @@
+has_entities: true
+entities:
+  - entity7:
+      id: a7
+      name: "cross-entropy learning"
+      has_parameters: false
+  - entity8:
+      id: a8
+      name: "adaptive distillation"
+      has_parameters: false

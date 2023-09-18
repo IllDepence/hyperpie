@@ -1,0 +1,17 @@
+has_entities: true
+entities:
+  - entity7:
+      id: a7
+      name: "Cora network"
+      type: dataset
+      has_parameters: false
+  - entity8:
+      id: a8
+      name: "Table REF"
+      type: dataset
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p1
+            name: "hyperparameter range"
+            has_values: false

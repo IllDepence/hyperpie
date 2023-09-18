@@ -1,0 +1,12 @@
+has_entities: true
+entities:
+  - entity24:
+      id: a24
+      name: "span-based models for coreference resolution"
+      type: model
+      has_parameters: false
+  - entity17:
+      id: a17
+      name: "semantic role labeling"
+      type: method
+      has_parameters: false

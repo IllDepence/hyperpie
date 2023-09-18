@@ -1,0 +1,18 @@
+has_entities: true
+entities:
+  - entity12:
+      id: a12
+      name: "BiLSTM"
+      has_parameters: false
+  - entity13:
+      id: a13
+      name: "CRF"
+      has_parameters: false
+  - entity14:
+      id: a14
+      name: "ELMo"
+      has_parameters: false
+  - entity15:
+      id: a15
+      name: "BERT"
+      has_parameters: false

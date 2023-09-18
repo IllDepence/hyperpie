@@ -1,0 +1,10 @@
+has_entities: true
+entities:
+  - entity14:
+      id: a14
+      name: "ASR system"
+      has_parameters: false
+  - entity7:
+      id: a7
+      name: "NER tagger"
+      has_parameters: false

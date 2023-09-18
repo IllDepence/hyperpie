@@ -1,0 +1,10 @@
+has_entities: true
+entities:
+  - entity25:
+      id: a25
+      name: "DML losses"
+      has_parameters: false
+  - entity13:
+      id: a13
+      name: "ProxyAnchor + inf"
+      has_parameters: false

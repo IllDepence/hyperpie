@@ -1,0 +1,7 @@
+has_entities: true
+entities:
+  - entity36:
+      id: a36
+      name: "Table REF"
+      type: dataset
+      has_parameters: false

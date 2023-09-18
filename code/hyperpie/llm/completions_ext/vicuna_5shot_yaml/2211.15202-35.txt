@@ -1,0 +1,14 @@
+has_entities: true
+entities:
+  - entity12:
+      id: a12
+      name: "Triplet Loss"
+      has_parameters: false
+  - entity13:
+      id: a13
+      name: "N-Pairs Loss"
+      has_parameters: false
+  - entity14:
+      id: a14
+      name: "SupCon Loss"
+      has_parameters: false

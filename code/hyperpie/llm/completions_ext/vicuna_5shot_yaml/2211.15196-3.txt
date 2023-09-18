@@ -1,0 +1,90 @@
+has_entities: true
+entities:
+  - entity9:
+      id: a9
+      name: "InceptionNet"
+      has_parameters: false
+  - entity10:
+      id: a10
+      name: "Inception-V2"
+      has_parameters: false
+  - entity11:
+      id: a11
+      name: "Inception-V3"
+      has_parameters: false
+  - entity12:
+      id: a12
+      name: "batch normalization layers"
+      has_parameters: true
+      parameters:
+        - parameter6:
+            id: p6
+            name: "layers"
+            has_values: true
+            values:
+              - value9:
+                  value_id: v9
+                  value: "22"
+                  context: null
+                  context_id: null
+        - parameter7:
+            id: p7
+            name: "layers"
+            has_values: true
+            values:
+              - value10:
+                  value_id: v10
+                  value: "42"
+                  context: null
+                  context_id: null
+  - entity13:
+      id: a13
+      name: "2-dimensional global average pooling"
+      has_parameters: false
+  - entity14:
+      id: a14
+      name: "ReLU"
+      has_parameters: true
+      parameters:
+        - parameter8:
+            id: p8
+            name: "hidden neuron"
+            has_values: true
+            values:
+              - value11:
+                  value_id: v11
+                  value: "1024"
+                  context: null
+                  context_id: null
+        - parameter9:
+            id: p9
+            name: "hidden neuron"
+            has_values: true
+            values:
+              - value12:
+                  value_id: v12
+                  value: "2"
+                  context: null
+                  context_id: null
+  - entity15:
+      id: a15
+      name: "softmax"
+      has_parameters: false
+  - entity16:
+      id: a16
+      name: "binary cross-entropy"
+      has_parameters: true
+      parameters:
+        - parameter10:
+            id: p10
+            name: "loss function"
+            has_values: false
+  - entity17:
+      id: a17
+      name: "Adam"
+      has_parameters: true
+      parameters:
+        - parameter11:
+            id: p11
+            name: "loss optimizer"
+            has_values: false

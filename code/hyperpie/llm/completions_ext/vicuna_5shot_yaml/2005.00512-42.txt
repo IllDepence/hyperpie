@@ -1,0 +1,36 @@
+has_entities: true
+entities:
+  - entity10:
+      id: a10
+      name: "BERT + BiLSTM"
+      has_parameters: false
+  - entity25:
+      id: a25
+      name: "mention identification"
+      type: method
+      has_parameters: true
+      parameters:
+        - parameter10:
+            id: p10
+            name: "negative log-likelihood loss function"
+            has_values: false
+  - entity26:
+      id: a26
+      name: "span saliency classification"
+      type: method
+      has_parameters: true
+      parameters:
+        - parameter11:
+            id: p11
+            name: "binary cross-entropy loss function"
+            has_values: false
+  - entity27:
+      id: a27
+      name: "relation extraction"
+      type: method
+      has_parameters: true
+      parameters:
+        - parameter12:
+            id: p12
+            name: "binary cross-entropy loss function"
+            has_values: false

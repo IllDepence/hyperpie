@@ -1,0 +1,50 @@
+has_entities: true
+entities:
+  - entity14:
+      id: a14
+      name: "image forgery"
+      has_parameters: false
+  - entity15:
+      id: a15
+      name: "image forensics"
+      has_parameters: false
+  - entity16:
+      id: a16
+      name: "Error Level Analysis"
+      has_parameters: false
+  - entity24:
+      id: a24
+      name: "CASIA dataset"
+      has_parameters: false
+  - entity25:
+      id: a25
+      name: "CASIA ground-truth"
+      has_parameters: false
+  - entity26:
+      id: a26
+      name: "CASIA ITDE v.2 dataset"
+      has_parameters: false
+  - entity17:
+      id: a17
+      name: "state-of-the-art models"
+      has_parameters: false
+  - entity18:
+      id: a18
+      name: "VGG"
+      has_parameters: false
+  - entity19:
+      id: a19
+      name: "ResNet"
+      has_parameters: false
+  - entity20:
+      id: a20
+      name: "InceptionNet"
+      has_parameters: false
+  - entity21:
+      id: a21
+      name: "XceptionNet"
+      has_parameters: false
+  - entity22:
+      id: a22
+      name: "EfficientNet"
+      has_parameters: false

@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity12:
+      id: a12
+      name: "FFN"
+      has_parameters: false

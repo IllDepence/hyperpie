@@ -1,0 +1,27 @@
+has_entities: true
+entities:
+  - entity4:
+      id: a4
+      name: "span representations"
+      type: dataset
+      has_parameters: false
+  - entity31:
+      id: a31
+      name: "bi-directional LSTMs"
+      type: model
+      has_parameters: true
+      parameters:
+        - parameter42:
+            id: p42
+            name: "word embeddings"
+            has_values: false
+  - entity32:
+      id: a32
+      name: "character embeddings"
+      type: model
+      has_parameters: true
+      parameters:
+        - parameter43:
+            id: p43
+            name: "ELMo embeddings"
+            has_values: false

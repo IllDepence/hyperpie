@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity17:
+      id: a17
+      name: "cross-entropy loss"
+      has_parameters: false

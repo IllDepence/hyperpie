@@ -1,0 +1,14 @@
+has_entities: true
+entities:
+  - entity12:
+      id: a12
+      name: "beam pruning"
+      has_parameters: false
+  - entity34:
+      id: a34
+      name: "coreference resolution task"
+      has_parameters: false
+  - entity35:
+      id: a35
+      name: "relation extraction"
+      has_parameters: false

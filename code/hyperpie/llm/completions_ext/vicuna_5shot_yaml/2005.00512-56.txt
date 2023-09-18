@@ -1,0 +1,14 @@
+has_entities: true
+entities:
+  - entity12:
+      id: a12
+      name: "SciERC dataset"
+      has_parameters: false
+  - entity8:
+      id: a8
+      name: "model"
+      has_parameters: false
+  - entity9:
+      id: a9
+      name: "DyGIE++"
+      has_parameters: false

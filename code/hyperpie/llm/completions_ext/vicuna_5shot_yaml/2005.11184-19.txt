@@ -1,0 +1,12 @@
+has_entities: true
+entities:
+  - entity3:
+      id: a3
+      name: "E2E"
+      type: model
+      has_parameters: false
+  - entity4:
+      id: a4
+      name: "two-step approaches for NER from speech"
+      type: method
+      has_parameters: false

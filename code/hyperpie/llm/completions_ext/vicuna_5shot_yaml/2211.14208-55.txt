@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity13:
+      id: a13
+      name: "oversmoothing"
+      has_parameters: false

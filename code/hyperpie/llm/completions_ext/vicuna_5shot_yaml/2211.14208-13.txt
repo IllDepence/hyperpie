@@ -1,0 +1,14 @@
+has_entities: true
+entities:
+  - entity19:
+      id: a19
+      name: "Euler method"
+      has_parameters: false
+  - entity20:
+      id: a20
+      name: "Runge–Kutta (RK4) method"
+      has_parameters: false
+  - entity21:
+      id: a21
+      name: "Dormand–Prince (DOPRI) method"
+      has_parameters: false

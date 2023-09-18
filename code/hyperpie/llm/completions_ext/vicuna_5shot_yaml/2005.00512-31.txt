@@ -1,0 +1,7 @@
+has_entities: true
+entities:
+  - entity7:
+      id: a7
+      name: "neural model"
+      type: model
+      has_parameters: false

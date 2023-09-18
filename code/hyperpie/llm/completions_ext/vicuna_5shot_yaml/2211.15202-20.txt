@@ -1,0 +1,10 @@
+has_entities: true
+entities:
+  - entity25:
+      id: a25
+      name: "ProxyAnchor Loss"
+      has_parameters: false
+  - entity26:
+      id: a26
+      name: "ProxyNCA loss"
+      has_parameters: false

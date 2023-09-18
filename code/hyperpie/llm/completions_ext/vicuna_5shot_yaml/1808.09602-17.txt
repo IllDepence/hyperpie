@@ -1,0 +1,16 @@
+has_entities: true
+entities:
+  - entity2:
+      id: a2
+      name: "relation extraction"
+      has_parameters: false
+  - entity3:
+      id: a3
+      name: "L_R"
+      type: dataset
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p1
+            name: "set of all possible relation types"
+            has_values: false

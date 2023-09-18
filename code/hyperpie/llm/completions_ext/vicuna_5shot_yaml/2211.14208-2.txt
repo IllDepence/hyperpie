@@ -1,0 +1,12 @@
+has_entities: true
+entities:
+  - entity10:
+      id: a10
+      name: "FA-GCN"
+      type: method
+      has_parameters: false
+  - entity11:
+      id: a11
+      name: "GPR-GNN"
+      type: method
+      has_parameters: false

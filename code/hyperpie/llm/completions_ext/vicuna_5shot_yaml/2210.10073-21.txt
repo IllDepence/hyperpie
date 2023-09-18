@@ -1,0 +1,26 @@
+has_entities: true
+entities:
+  - entity1:
+      id: a1
+      name: "raw dataset"
+      has_parameters: false
+  - entity2:
+      id: a2
+      name: "ScispaCy"
+      type: model
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p1
+            name: "entity detection"
+            has_values: false
+  - entity3:
+      id: a3
+      name: "binary classification model"
+      type: model
+      has_parameters: true
+      parameters:
+        - parameter2:
+            id: p2
+            name: "outlier separation"
+            has_values: false

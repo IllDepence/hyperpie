@@ -1,0 +1,12 @@
+has_entities: true
+entities:
+  - entity8:
+      id: a8
+      name: "annotation guidelines"
+      type: dataset
+      has_parameters: false
+  - entity9:
+      id: a9
+      name: "BRAT interface"
+      type: model
+      has_parameters: false

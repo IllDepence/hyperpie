@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity22:
+      id: a22
+      name: "CoNLL-2003"
+      has_parameters: false

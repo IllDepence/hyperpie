@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity17:
+      id: a17
+      name: "CRPSE"
+      has_parameters: false

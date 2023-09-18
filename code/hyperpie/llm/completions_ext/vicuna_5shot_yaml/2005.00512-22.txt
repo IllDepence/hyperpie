@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity6:
+      id: a6
+      name: "method"
+      has_parameters: false

@@ -1,0 +1,55 @@
+has_entities: true
+entities:
+  - entity16:
+      id: a16
+      name: "RoBERTa-base"
+      has_parameters: false
+  - entity20:
+      id: a20
+      name: "RoBERTa-large"
+      has_parameters: false
+  - entity37:
+      id: a37
+      name: "CCE loss"
+      has_parameters: true
+      parameters:
+        - parameter6:
+            id: p6
+            name: "loss function"
+            has_values: true
+            values:
+              - value9:
+                  value_id: v9
+                  value: "CCE loss"
+                  context: null
+                  context_id: null
+  - entity38:
+      id: a38
+      name: "DML losses"
+      has_parameters: true
+      parameters:
+        - parameter6:
+            id: p6
+            name: "loss function"
+            has_values: true
+            values:
+              - value9:
+                  value_id: v9
+                  value: "DML losses"
+                  context: null
+                  context_id: null
+  - entity39:
+      id: a39
+      name: "modified inference process"
+      has_parameters: true
+      parameters:
+        - parameter6:
+            id: p6
+            name: "inference process"
+            has_values: true
+            values:
+              - value10:
+                  value_id: v10
+                  value: "modified inference process"
+                  context: null
+                  context_id: null

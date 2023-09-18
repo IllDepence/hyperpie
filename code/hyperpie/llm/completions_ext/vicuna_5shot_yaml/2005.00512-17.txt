@@ -1,0 +1,32 @@
+has_entities: true
+entities:
+  - entity1:
+      id: a1
+      name: "extracting N-ary relations"
+      type: method
+      has_parameters: false
+  - entity2:
+      id: a2
+      name: "binary, 3-ary, and 4-ary relations"
+      type: method
+      has_parameters: false
+  - entity3:
+      id: a3
+      name: "Dataset"
+      type: dataset
+      has_parameters: false
+  - entity4:
+      id: a4
+      name: "Method"
+      type: model
+      has_parameters: false
+  - entity5:
+      id: a5
+      name: "Metric"
+      type: method
+      has_parameters: false
+  - entity6:
+      id: a6
+      name: "Task"
+      type: dataset
+      has_parameters: false

@@ -1,0 +1,32 @@
+has_entities: true
+entities:
+  - entity12:
+      id: a12
+      name: "Task"
+      type: dataset
+      has_parameters: false
+  - entity13:
+      id: a13
+      name: "Method"
+      type: dataset
+      has_parameters: false
+  - entity14:
+      id: a14
+      name: "Metric"
+      type: dataset
+      has_parameters: false
+  - entity15:
+      id: a15
+      name: "Material"
+      type: dataset
+      has_parameters: false
+  - entity16:
+      id: a16
+      name: "Other-ScientificTerm"
+      type: dataset
+      has_parameters: false
+  - entity17:
+      id: a17
+      name: "Generic"
+      type: dataset
+      has_parameters: false

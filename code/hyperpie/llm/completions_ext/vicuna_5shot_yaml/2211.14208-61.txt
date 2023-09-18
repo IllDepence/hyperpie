@@ -1,0 +1,26 @@
+has_entities: true
+entities:
+  - entity19:
+      id: a19
+      name: "MLP"
+      has_parameters: false
+  - entity20:
+      id: a20
+      name: "GCN"
+      has_parameters: false
+  - entity21:
+      id: a21
+      name: "GAT"
+      has_parameters: false
+  - entity22:
+      id: a22
+      name: "GRAND"
+      has_parameters: false
+  - entity23:
+      id: a23
+      name: "H2GCN"
+      has_parameters: false
+  - entity24:
+      id: a24
+      name: "GREAD"
+      has_parameters: false

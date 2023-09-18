@@ -1,0 +1,10 @@
+has_entities: true
+entities:
+  - entity14:
+      id: a14
+      name: "Dirichlet energy"
+      has_parameters: false
+  - entity25:
+      id: a25
+      name: "cSBM"
+      has_parameters: false

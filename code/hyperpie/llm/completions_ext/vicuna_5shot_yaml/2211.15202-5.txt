@@ -1,0 +1,18 @@
+has_entities: true
+entities:
+  - entity16:
+      id: a16
+      name: "DML loss functions"
+      has_parameters: false
+  - entity23:
+      id: a23
+      name: "proxy-based DML losses"
+      has_parameters: false
+  - entity30:
+      id: a30
+      name: "RoBERTa-base"
+      has_parameters: false
+  - entity32:
+      id: a32
+      name: "RoBERTa-large"
+      has_parameters: false

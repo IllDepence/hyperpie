@@ -1,0 +1,33 @@
+has_entities: true
+entities:
+  - entity12:
+      id: a12
+      name: "sequence labeling task"
+      has_parameters: false
+  - entity13:
+      id: a13
+      name: "RNN based Baidu's DeepSpeech2 (DS2)"
+      has_parameters: true
+      parameters:
+        - parameter14:
+            id: p14
+            name: "Convolution Neural Network (CNN) layers"
+            has_values: false
+  - entity15:
+      id: a15
+      name: "Recurrent Neural Network (RNN) layers"
+      has_parameters: true
+      parameters:
+        - parameter16:
+            id: p16
+            name: "fully connected layer"
+            has_values: false
+  - entity17:
+      id: a17
+      name: "softmax layer"
+      has_parameters: true
+      parameters:
+        - parameter18:
+            id: p18
+            name: "outputs the probabilities of the sequence of characters"
+            has_values: false

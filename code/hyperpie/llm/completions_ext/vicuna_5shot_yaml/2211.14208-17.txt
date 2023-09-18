@@ -1,0 +1,21 @@
+has_entities: true
+entities:
+  - entity21:
+      id: a21
+      name: "fixed-step ODE solver"
+      has_parameters: false
+  - entity22:
+      id: a22
+      name: "DOPRI method"
+      has_parameters: true
+      parameters:
+        - parameter6:
+            id: p6
+            name: "step size"
+            has_values: true
+            values:
+              - value9:
+                  value_id: v9
+                  value: "dynamic"
+                  context: null
+                  context_id: null

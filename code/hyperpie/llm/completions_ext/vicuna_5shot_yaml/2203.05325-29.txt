@@ -1,0 +1,7 @@
+has_entities: true
+entities:
+  - entity3:
+      id: a3
+      name: "classification map"
+      type: method
+      has_parameters: false

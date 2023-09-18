@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity15:
+      id: a15
+      name: "intersection-over-union (IOU) scores"
+      has_parameters: false

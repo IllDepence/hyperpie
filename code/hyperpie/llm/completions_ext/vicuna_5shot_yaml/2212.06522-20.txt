@@ -1,0 +1,12 @@
+has_entities: true
+entities:
+  - entity8:
+      id: a8
+      name: "multi-objective optimization (MOO)"
+      type: method
+      has_parameters: false
+  - entity9:
+      id: a9
+      name: "multiple gradient descent algorithms (MGDA)"
+      type: method
+      has_parameters: false

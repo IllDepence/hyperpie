@@ -1,0 +1,37 @@
+has_entities: true
+entities:
+  - entity21:
+      id: a21
+      name: "Adam"
+      has_parameters: true
+      parameters:
+        - parameter6:
+            id: p6
+            name: "epochs"
+            has_values: true
+            values:
+              - value3:
+                  value_id: v3
+                  value: "200"
+                  context: null
+                  context_id: null
+        - parameter7:
+            id: p7
+            name: "learning rate"
+            has_values: true
+            values:
+              - value5:
+                  value_id: v5
+                  value: "[1e-4, 2e-2]"
+                  context: null
+                  context_id: null
+        - parameter8:
+            id: p8
+            name: "weight decay"
+            has_values: true
+            values:
+              - value6:
+                  value_id: v6
+                  value: "[0, 0.01]"
+                  context: null
+                  context_id: null

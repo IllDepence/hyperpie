@@ -1,0 +1,18 @@
+has_entities: true
+entities:
+  - entity13:
+      id: a13
+      name: "GREAD-BS"
+      has_parameters: false
+  - entity24:
+      id: a24
+      name: "GREAD-AC"
+      has_parameters: false
+  - entity25:
+      id: a25
+      name: "GREAD-Z"
+      has_parameters: false
+  - entity26:
+      id: a26
+      name: "GREAD-F"
+      has_parameters: false

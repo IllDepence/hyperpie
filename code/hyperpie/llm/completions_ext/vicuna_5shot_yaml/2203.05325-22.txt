@@ -1,0 +1,7 @@
+has_entities: true
+entities:
+  - entity10:
+      id: a10
+      name: "SciBERT"
+      type: model
+      has_parameters: false

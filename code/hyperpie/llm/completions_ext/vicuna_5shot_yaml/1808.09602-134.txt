@@ -1,0 +1,64 @@
+has_entities: true
+entities:
+  - entity12:
+      id: a12
+      name: "knowledge graph"
+      type: dataset
+      has_parameters: false
+  - entity13:
+      id: a13
+      name: "system with coreference links"
+      type: model
+      has_parameters: true
+      parameters:
+        - parameter6:
+            id: p6
+            name: "precision"
+            has_values: true
+            values:
+              - value5:
+                  value_id: v5
+                  value: "84%"
+                  context: null
+
+                  context_id: null
+              - value9:
+                  value_id: v9
+                  value: "high"
+                  context: null
+
+                  context_id: null
+        - parameter7:
+            id: p7
+            name: "recall"
+            has_values: true
+            values:
+              - value6:
+                  value_id: v6
+                  value: "significantly higher"
+                  context: null
+
+                  context_id: null
+  - entity14:
+      id: a14
+      name: "system without coreference linking"
+      type: model
+      has_parameters: true
+      parameters:
+        - parameter6:
+            id: p6
+            name: "precision"
+            has_values: true
+            values:
+              - value5:
+                  value_id: v5
+                  value: "84%"
+                  context: null
+
+                  context_id: null
+              - value9:
+                  value_id: v9
+                  value: "high"
+                  context: null
+
+                  context_id: null

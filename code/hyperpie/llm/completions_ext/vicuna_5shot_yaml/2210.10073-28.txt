@@ -1,0 +1,10 @@
+has_entities: true
+entities:
+  - entity6:
+      id: a6
+      name: "CRPSE"
+      has_parameters: false
+  - entity7:
+      id: a7
+      name: "scispaCy"
+      has_parameters: false

@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity2:
+      id: a2
+      name: "dataset"
+      has_parameters: false

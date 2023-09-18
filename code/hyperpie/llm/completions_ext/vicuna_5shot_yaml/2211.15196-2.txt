@@ -1,0 +1,113 @@
+has_entities: true
+entities:
+  - entity8:
+      id: a8
+      name: "VGG"
+      has_parameters: false
+  - entity13:
+      id: a13
+      name: "VGG-16"
+      has_parameters: false
+  - entity12:
+      id: a12
+      name: "VGG-19"
+      has_parameters: false
+  - entity4:
+      id: a4
+      name: "imagenet"
+      has_parameters: false
+  - entity5:
+      id: a5
+      name: "2-dimensional convolutional layers"
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p1
+            name: "number of blocks"
+            has_values: true
+            values:
+              - value3:
+                  value_id: v3
+                  value: "5"
+                  context: null
+                  context_id: null
+        - parameter2:
+            id: p2
+            name: "convolutional layers per block"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v1
+                  value: "2"
+                  context: null
+                  context_id: null
+              - value5:
+                  value_id: v5
+                  value: "4"
+                  context: null
+                  context_id: null
+  - entity6:
+      id: a6
+      name: "2-dimensional max-pooling layers"
+      has_parameters: true
+      parameters:
+        - parameter1:
+            id: p1
+            name: "number of blocks"
+            has_values: true
+            values:
+              - value3:
+                  value_id: v3
+                  value: "5"
+                  context: null
+                  context_id: null
+        - parameter2:
+            id: p2
+            name: "max-pooling layers per block"
+            has_values: true
+            values:
+              - value1:
+                  value_id: v1
+                  value: "1"
+                  context: null
+                  context_id: null
+              - value5:
+                  value_id: v5
+                  value: "1"
+                  context: null
+                  context_id: null
+  - entity7:
+      id: a7
+      name: "global average pooling"
+      has_parameters: false
+  - entity9:
+      id: a9
+      name: "ReLU"
+      has_parameters: false
+  - entity10:
+      id: a10
+      name: "softmax"
+      has_parameters: false
+  - entity11:
+      id: a11
+      name: "sigmoid"
+      has_parameters: false
+  - entity2:
+      id: a2
+      name: "binary cross-entropy loss function"
+      has_parameters: true
+      parameters:
+        - parameter6:
+            id: p6
+            name: "number of classes"
+            has_values: true
+            values:
+              - value9:
+                  value_id: v9
+                  value: "2"
+                  context: null
+                  context_id: null
+  - entity3:
+      id: a3
+      name: "Adam"
+      has_parameters: false

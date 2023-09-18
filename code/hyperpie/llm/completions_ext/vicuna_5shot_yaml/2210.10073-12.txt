@@ -1,0 +1,7 @@
+has_entities: true
+entities:
+  - entity17:
+      id: a17
+      name: "CRPSE"
+      type: method
+      has_parameters: false

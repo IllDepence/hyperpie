@@ -1,0 +1,21 @@
+has_entities: true
+entities:
+  - entity15:
+      id: a15
+      name: "RoBERTa"
+      has_parameters: false
+  - entity20:
+      id: a20
+      name: "Supervised Contrast Learning"
+      has_parameters: true
+      parameters:
+        - parameter3:
+            id: p3
+            name: "loss"
+            has_values: true
+            values:
+              - value4:
+                  value_id: v4
+                  value: "Cross-Entropy"
+                  context: null
+                  context_id: null

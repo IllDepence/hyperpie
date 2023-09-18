@@ -1,0 +1,14 @@
+has_entities: true
+entities:
+  - entity24:
+      id: a24
+      name: "Singh2013JointIO"
+      has_parameters: false
+  - entity9:
+      id: a9
+      name: "CRF sequence tagger"
+      has_parameters: false
+  - entity6:
+      id: a6
+      name: "model"
+      has_parameters: false

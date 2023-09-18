@@ -1,0 +1,26 @@
+has_entities: true
+entities:
+  - entity24:
+      id: a24
+      name: "citation recommendation"
+      has_parameters: false
+  - entity30:
+      id: a30
+      name: "CIRec"
+      has_parameters: false
+  - entity16:
+      id: a16
+      name: "Neural Citation Network (NCN)"
+      has_parameters: false
+  - entity4:
+      id: a4
+      name: "CNN"
+      has_parameters: false
+  - entity26:
+      id: a26
+      name: "LSTM"
+      has_parameters: false
+  - entity31:
+      id: a31
+      name: "GCN"
+      has_parameters: false

@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity18:
+      id: a18
+      name: "language model"
+      has_parameters: false

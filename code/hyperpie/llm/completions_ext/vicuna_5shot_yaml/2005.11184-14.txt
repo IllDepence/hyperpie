@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity19:
+      id: a19
+      name: "DS2 architecture"
+      has_parameters: false

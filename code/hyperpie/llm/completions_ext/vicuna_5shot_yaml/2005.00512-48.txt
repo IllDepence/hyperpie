@@ -1,0 +1,7 @@
+has_entities: true
+entities:
+  - entity23:
+      id: a23
+      name: "F1 score"
+      type: loss function
+      has_parameters: false

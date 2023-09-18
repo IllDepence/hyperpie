@@ -1,0 +1,14 @@
+has_entities: true
+entities:
+  - entity4:
+      id: a4
+      name: "SoftTriple Loss"
+      has_parameters: false
+  - entity5:
+      id: a5
+      name: "ProxyNCA Loss"
+      has_parameters: false
+  - entity6:
+      id: a6
+      name: "ProxyAnchor Loss"
+      has_parameters: false

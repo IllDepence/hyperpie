@@ -1,0 +1,16 @@
+has_entities: true
+entities:
+  - entity6:
+      id: a6
+      name: "CRPSE"
+      has_parameters: false
+  - entity7:
+      id: a7
+      name: "Lorenz curves"
+      type: method
+      has_parameters: false
+  - entity8:
+      id: a8
+      name: "Gini coefficients"
+      type: loss function
+      has_parameters: false

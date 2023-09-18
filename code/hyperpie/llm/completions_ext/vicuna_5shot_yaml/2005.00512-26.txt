@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity8:
+      id: a8
+      name: "annotations"
+      has_parameters: false

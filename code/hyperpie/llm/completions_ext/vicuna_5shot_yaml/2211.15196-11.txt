@@ -1,0 +1,7 @@
+has_entities: true
+entities:
+  - entity5:
+      id: a5
+      name: "recall"
+      type: loss function
+      has_parameters: false

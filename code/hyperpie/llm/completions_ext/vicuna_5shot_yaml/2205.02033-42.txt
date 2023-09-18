@@ -1,0 +1,10 @@
+has_entities: true
+entities:
+  - entity18:
+      id: a18
+      name: "Klein et al."
+      has_parameters: false
+  - entity27:
+      id: a27
+      name: "Oikonomidi et al."
+      has_parameters: false

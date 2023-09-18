@@ -1,0 +1,10 @@
+has_entities: true
+entities:
+  - entity36:
+      id: a36
+      name: "Scientific knowledge graph"
+      has_parameters: false
+  - entity37:
+      id: a37
+      name: "SciIE model"
+      has_parameters: false

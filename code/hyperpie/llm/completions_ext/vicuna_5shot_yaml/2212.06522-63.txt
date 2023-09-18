@@ -1,0 +1,26 @@
+has_entities: true
+entities:
+  - entity1:
+      id: a1
+      name: "AutoNER"
+      has_parameters: false
+  - entity2:
+      id: a2
+      name: "LRNT"
+      has_parameters: false
+  - entity3:
+      id: a3
+      name: "Co-teaching+"
+      has_parameters: false
+  - entity4:
+      id: a4
+      name: "NegSampling"
+      has_parameters: false
+  - entity5:
+      id: a5
+      name: "BOND"
+      has_parameters: false
+  - entity6:
+      id: a6
+      name: "SCDL"
+      has_parameters: false

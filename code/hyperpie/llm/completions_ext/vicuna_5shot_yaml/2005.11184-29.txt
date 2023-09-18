@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity19:
+      id: a19
+      name: "Table REF"
+      has_parameters: false

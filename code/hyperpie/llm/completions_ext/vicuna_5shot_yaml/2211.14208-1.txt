@@ -1,0 +1,7 @@
+has_entities: true
+entities:
+  - entity6:
+      id: a6
+      name: "GNN methods"
+      type: method
+      has_parameters: false

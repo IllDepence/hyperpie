@@ -1,0 +1,12 @@
+has_entities: true
+entities:
+  - entity7:
+      id: a7
+      name: "DML loss function"
+      type: loss function
+      has_parameters: false
+  - entity8:
+      id: a8
+      name: "categorical cross-entropy (CCE) loss"
+      type: loss function
+      has_parameters: false

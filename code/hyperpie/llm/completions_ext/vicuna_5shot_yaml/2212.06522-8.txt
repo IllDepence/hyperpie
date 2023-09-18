@@ -1,0 +1,22 @@
+has_entities: true
+entities:
+  - entity17:
+      id: a17
+      name: "AutoNER"
+      has_parameters: false
+  - entity21:
+      id: a21
+      name: "AdaPU"
+      has_parameters: false
+  - entity33:
+      id: a33
+      name: "Conf-MPU"
+      has_parameters: false
+  - entity17:
+      id: a17
+      name: "BOND"
+      has_parameters: false
+  - entity32:
+      id: a32
+      name: "SCDL"
+      has_parameters: false

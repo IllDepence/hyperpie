@@ -1,0 +1,6 @@
+has_entities: true
+entities:
+  - entity26:
+      id: a26
+      name: "Connectionist temporal classification (CTC)"
+      has_parameters: false

@@ -1,0 +1,10 @@
+has_entities: true
+entities:
+  - entity19:
+      id: a19
+      name: "Dimensions database"
+      has_parameters: false
+  - entity20:
+      id: a20
+      name: "arXiv"
+      has_parameters: false

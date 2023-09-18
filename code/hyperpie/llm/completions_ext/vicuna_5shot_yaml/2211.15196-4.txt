@@ -1,0 +1,34 @@
+has_entities: true
+entities:
+  - entity21:
+      id: a21
+      name: "ResNet"
+      has_parameters: false
+  - entity22:
+      id: a22
+      name: "residual block"
+      has_parameters: false
+  - entity23:
+      id: a23
+      name: "skip connection"
+      has_parameters: false
+  - entity24:
+      id: a24
+      name: "back-propagation"
+      has_parameters: false
+  - entity25:
+      id: a25
+      name: "ResNet 152 v2"
+      has_parameters: false
+  - entity26:
+      id: a26
+      name: "2-dimensional global average pooling"
+      has_parameters: false
+  - entity27:
+      id: a27
+      name: "ReLU"
+      has_parameters: false
+  - entity28:
+      id: a28
+      name: "softmax"
+      has_parameters: false

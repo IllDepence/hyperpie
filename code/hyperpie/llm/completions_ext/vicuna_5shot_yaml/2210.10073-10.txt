@@ -1,0 +1,7 @@
+has_entities: true
+entities:
+  - entity5:
+      id: a5
+      name: "Citation Recommendation for Published Scientific Entity (CRPSE)"
+      type: method
+      has_parameters: false

@@ -1,0 +1,14 @@
+has_entities: true
+entities:
+  - entity20:
+      id: a20
+      name: "relation extraction"
+      has_parameters: false
+  - entity19:
+      id: a19
+      name: "MNAV model"
+      has_parameters: false
+  - entity21:
+      id: a21
+      name: "adaptive thresholding loss"
+      has_parameters: false

@@ -1,0 +1,63 @@
+has_entities: true
+entities:
+  - entity14:
+      id: a14
+      name: "DML loss functions"
+      has_parameters: false
+  - entity25:
+      id: a25
+      name: "RoBERTa-base"
+      has_parameters: false
+  - entity26:
+      id: a26
+      name: "RoBERTa-large"
+      has_parameters: false
+  - entity30:
+      id: a30
+      name: "CCE loss"
+      has_parameters: false
+  - entity1:
+      id: a1
+      name: "SupCon Loss"
+      has_parameters: true
+      parameters:
+        - parameter7:
+            id: p7
+            name: "increase in performance"
+            has_values: true
+            values:
+              - value9:
+                  value_id: v9
+                  value: "1.58 percentage points"
+                  context: null
+                  context_id: null
+  - entity2:
+      id: a2
+      name: "SoftTriple Loss"
+      has_parameters: true
+      parameters:
+        - parameter7:
+            id: p7
+            name: "increase in performance"
+            has_values: true
+            values:
+              - value10:
+                  value_id: v10
+                  value: "2.24 percentage points"
+                  context: null
+                  context_id: null
+  - entity3:
+      id: a3
+      name: "ProxyAnchor + inf"
+      has_parameters: true
+      parameters:
+        - parameter7:
+            id: p7
+            name: "increase in performance"
+            has_values: true
+            values:
+              - value11:
+                  value_id: v11
+                  value: "3.27 percentage points"
+                  context: null
+                  context_id: null
