@@ -21,11 +21,11 @@ paras_pred = []
 
 from_idx = 0
 to_idx = len(paras_true)
-params_512 = hp.settings.gpt_default_params.copy()
-params_512['max_tokens'] = 512
-# FIXME: ↓ temporary for cache access w/o API endpoint ↓
-params_512['model'] = 'lmsys/vicuna-13b-v1.3'
-# FIXME: ↑ temporary for cache access w/o API endpoint ↑
+params_2048 = hp.settings.gpt_default_params.copy()
+params_2048['max_tokens'] = 2048
+# # FIXME: ↓ temporary for cache access w/o API endpoint ↓
+# params_2048['model'] = 'lmsys/vicuna-13b-v1.3'
+# # FIXME: ↑ temporary for cache access w/o API endpoint ↑
 stats_dicts = []
 for i, para in enumerate(paras_true[from_idx:to_idx]):
     print(f'{i}/{len(paras_true)}')
@@ -34,7 +34,7 @@ for i, para in enumerate(paras_true[from_idx:to_idx]):
         text=para['text']
     )
     completion_dict, from_cache = hp.llm.predict.openai_api(
-        para, prompt, params=params_512
+        para, prompt, params=params_2048
     )
 
     para_pred, stats_dict = hp.llm.convert.llm_output2eval_input(
@@ -55,7 +55,7 @@ aggregate_stats = hp.llm.convert.aggregate_format_stats(stats_dicts)
 mode_fn_save = re.sub(
     r'[^\w]',
     '_',
-    params_512['model']
+    params_2048['model']
     )
 
 with open(f'format_eval_{mode_fn_save}.json', 'w') as f:
