@@ -212,6 +212,116 @@ def plot_format_eval_parsing(eval_results, save_path):
     plt.savefig(os.path.join(save_path, 'format_eval_json_yaml.pdf'))
 
 
+def plot_format_eval_mix(eval_results, save_path):
+    """ Create horizontal bar plots for format eval results.
+
+        All subplots have the same y-axis, which is the model name.
+    """
+
+    # Prepare color map
+    cmap = plt.get_cmap('tab20')
+
+    # - - - 1. Number of errors (1 by 4) - - -
+
+    error_eval_types = {
+        'J/Y parse error':
+            lambda x: x['parse_yaml_json']['parse_fail'] if 'parse_yaml_json' in x else x['yaml2json']['parse_fail'],  # noqa (support confusing legacy dict key)
+        'Text around J/Y':
+            lambda x: x['preprocessor']['garbage_around_yaml'],
+    }
+    val_ent_eval_types = {
+        'Entity not in text':
+            lambda x: x['json_content']['num_ents_intext_notintext'],
+        'Entity type out of scope':
+            lambda x: x['json_content']['num_ent_types_valid_invalid'],
+    }
+
+    # Create figure and axes with shared y-axis
+    fig, axs = plt.subplots(
+        1, 4,
+        figsize=(10, 2.6),
+        sharey=True,
+        sharex=True,
+        layout='constrained'
+    )
+
+    # Plot relative error counts for each model
+    for i, eval_type in enumerate(error_eval_types):
+        eval_type_name, accsses_func = eval_type, error_eval_types[eval_type]
+        axs[i].set_title(eval_type_name)
+
+        # Set y limit
+        axs[i].set_xlim(0, 100)
+
+        # Calculate values
+        barvals = []
+        for model in eval_results:
+            num_samples = 444
+            bv = 100 * accsses_func(eval_results[model]) / num_samples
+            barvals.append(bv)
+        barcolors = [cmap(i) for i in range(len(eval_results))]
+
+        # Horizontal lot bars for each model
+        bars = axs[i].barh(
+            list(eval_results.keys()),
+            barvals,
+            align='center',
+            color=barcolors
+        )
+        axs[i].bar_label(bars, fmt=bar_lbl_fmt, color='grey')
+
+    # Plot relative distribution of valid/invalid entities for each model
+    for i, eval_type in enumerate(val_ent_eval_types):
+        j = i + 2
+        eval_type_name, accsses_func = eval_type, val_ent_eval_types[eval_type]
+        axs[j].set_title(eval_type_name)
+
+        # Set y limit
+        axs[j].set_xlim(0, 100)
+
+        # Calculate values
+        barvals = [
+            100*(
+                accsses_func(eval_results[model])[1] / (
+                    accsses_func(eval_results[model])[0] +
+                    accsses_func(eval_results[model])[1]
+                )
+            )
+            for model in eval_results
+        ]
+        barcolors = [cmap(i) for i in range(len(eval_results))]
+
+        # Horizontal lot bars for each model where the x-axis shows the
+        # percentage of invalid entities
+        bars = axs[j].barh(
+            list(eval_results.keys()),
+            barvals,
+            align='center',
+            color=barcolors
+        )
+        axs[j].bar_label(bars, fmt=bar_lbl_fmt, color='grey')
+
+    # Add empty x-axis label to force padding
+    fig.supxlabel(
+        ' '
+    )
+    # Add joint x-axis labels
+    fig.text(
+        0.33, 0.035,
+        'Percentage of samples',
+        ha='center'
+    )
+    fig.text(
+        0.77, 0.035,
+        'Percentage of predicted entities',
+        ha='center'
+    )
+
+    # Save figure
+    # plt.savefig(save_path + 'format_eval.pgf')
+    plt.savefig(os.path.join(save_path, 'format_eval_mix.pdf'))
+
+
 if __name__ == '__main__':
     # Load format eval results
     eval_results = {}
@@ -219,5 +329,6 @@ if __name__ == '__main__':
         with open(eval_result_fns[model], 'r') as f:
             eval_results[model] = json.load(f)
     # Plot and save results
-    plot_format_eval_parsing(eval_results, 'figures')
-    plot_format_eval_content(eval_results, 'figures')
+    # plot_format_eval_parsing(eval_results, 'figures')
+    # plot_format_eval_content(eval_results, 'figures')
+    plot_format_eval_mix(eval_results, 'figures')
