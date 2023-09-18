@@ -1193,6 +1193,28 @@ def vicuna_json_extract(llm_output_dict, verbose=False):
     return llm_output_dict, status_dict
 
 
+def vicuna_few_shot_yaml_extract(llm_output_dict, verbose=False):
+    """ Preprocessor for Vicuna 1.5 output in few shot scenario
+        Detects garbage text output after the YAML block.
+    """
+
+    yaml_with_garbage_patt = re.compile(
+        r"^(\s*['\"]?(true|false)['\"]?\n.*)\n\.\.\.\n.{7,}$",
+        flags=re.S
+    )
+
+    llm_out = llm_output_dict['completion']['choices'][0]['text']
+    status_dict = _preprocessor_status_dict(None, None, None)
+
+    # take stats
+    m_garbage = yaml_with_garbage_patt.match(llm_out)
+    if m_garbage:
+        llm_out = m_garbage.group(1)
+        status_dict['garbage_around_yaml'] = True
+
+    return llm_output_dict, status_dict
+
+
 def vicuna_yaml_extract(llm_output_dict, verbose=False):
     """ Preprocessor for Vicuna output where the start of the YAML is part
         of the prompt and needs to be added back.

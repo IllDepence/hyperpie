@@ -24,6 +24,7 @@
 
 import os
 import json
+import re
 from hashlib import md5
 from hyperpie import settings
 from functools import lru_cache
@@ -119,3 +120,35 @@ def llm_completion_cache_load(
 
     # otherwise return None
     return None
+
+
+def load_external(subdir, doc_id, para_idx):
+    """ Load external LLM completion from file.
+
+        (Used to evaluation models where completions
+         were generated  using code outside of this
+         package.)
+    """
+
+    fp = os.path.join(
+        settings.ext_cache_dir,
+        subdir,
+        f'{doc_id}-{para_idx}.txt'
+    )
+    with open(fp) as f:
+        completion = f.read()
+
+    # excape backslashes
+    completion = completion.replace('\\', '\\\\')
+
+    # fix entity existence key
+    wrong_key_patt = re.compile(
+        r'has_entities:\s+(true|false)$',
+        re.M
+    )
+    completion = wrong_key_patt.sub(
+        r'text_contains_entities: \1',
+        completion
+    )
+
+    return completion
