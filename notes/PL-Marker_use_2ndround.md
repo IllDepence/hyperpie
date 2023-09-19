@@ -344,3 +344,85 @@ $ CUDA_VISIBLE_DEVICES=1  python3 run_acener.py --model_type bertspanmarker --mo
 
 * fails w/ `Unable to load weights from pytorch checkpoint file. If you tried to load a PyTorch model from a TF 2.0 checkpoint, please set from_tf=True`
 * [ask devs](https://github.com/thunlp/PL-Marker/issues/61)
+
+* do RE w/ own model
+
+```
+$ python3 ffnn_re.py predict_15k_000/all/train_dev_test.jsonl predict_15k_000/all/ent_pred_test.json predict_15k_000/all/ffnn_re_results.jsonl
+```
+
+```
+Iteration 77, loss = 0.01934180
+Iteration 78, loss = 0.01847402
+Training loss did not improve more than tol=0.000100 for 10 consecutive epochs. Stopping.
+evaluating model...
+              precision    recall  f1-score   support
+
+           0       1.00      0.98      0.99     47086
+           1       0.19      0.47      0.27       438
+
+    accuracy                           0.98     47524
+   macro avg       0.59      0.73      0.63     47524
+weighted avg       0.99      0.98      0.98     47524
+
+wrote results to predict_15k_000/all/ffnn_re_results.jsonl
+writing sample_idx_to_entity_offset_pair.json and y_pred.json into predict_15k_000/all
+```
+
+* postprocessing
+    * (below script requires moving `sample_idx_to_entity_offset_pair.json` and `y_pred.json` one directory level down)
+
+```
+$ python3 postprocess_unlabeled_data_prediction.py predict_15k_000/
+```
+
+* PoC corr analysis
+
+```
+$ python3 correlation_analysis.py ../predict_15k_000/ merged_data_nopred_15k_sample.jsonl
+```
+
+* works ✔
+* do ineffective NER until PL-Marker author replies
+
+```
+$ for i in $(seq -f "%03g" 1 15); do CUDA_VISIBLE_DEVICES=1 python3 run_acener.py --model_type bertspanmarker --model_name_or_path ./bert_models/scibert_scivocab_uncased --do_lower_case --data_dir ./hyperpie --learning_rate 2e-5 --num_train_epochs 50 --per_gpu_train_batch_size 8  --per_gpu_eval_batch_size 16 --gradient_accumulation_steps 1 --max_seq_length 512  --save_steps 2000 --max_pair_length 256 --max_mention_ori_length 8 --do_train --do_eval --evaluate_during_training --eval_all_checkpoints --fp16 --seed 42 --onedropout --lminit --train_file all_444.jsonl --dev_file all_444.jsonl --test_file "trpp_15k_$i" --output_dir "./sciner-hyperpie_predict_pprs_15_sample_$i" --output_results; done
+```
+
+* RE on larger data
+
+```
+$ python3 ffnn_re.py predict_15k/all/train_dev_test.jsonl predict_15k/all/ent_pred_test_000-008.json predict_15k/all/ff
+nn_re_results_000-008.jsonl
+loading data
+preparing train data: 100%|████████████████████████████████| 444/444 [00:00<00:00, 2290.19it/s]
+loaded 4348 training samples
+preparing test data:  44%|█████████████▋                 | 35165/80000 [27:01<12:17, 60.77it/s]
+Killed
+```
+
+* -> memory problem?
+* run on 30k for now
+
+```
+$ python3 ffnn_re.py predict_15k/all/train_dev_test.jsonl predict_15k/all/ent_pred_test_000-002.json predict_15k/all/ffnn_re_results_000-002.json
+```
+
+```
+Iteration 77, loss = 0.01934180
+Iteration 78, loss = 0.01847402
+Training loss did not improve more than tol=0.000100 for 10 consecutive epochs. Stopping.
+evaluating model...
+              precision    recall  f1-score   support
+
+           0       0.99      0.98      0.99    140550
+           1       0.19      0.47      0.27      1350
+
+    accuracy                           0.98    141900
+   macro avg       0.59      0.73      0.63    141900
+weighted avg       0.99      0.98      0.98    141900
+```
+
+```
+$ python3 postprocess_unlabeled_data_prediction.py predict_15k/ _000-002
+```
