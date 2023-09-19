@@ -26,7 +26,7 @@
 * `$ python ffnn_re.py /pfs/work7/workspace/scratch/ys8950-general/hyperpie_PL-Marker_ER_15ksample/train_dev_test.jsonl /pfs/work7/workspace/scratch/ys8950-general/hyperpie_PL-Marker_ER_15ksample/ent_pred_test_000-041.json /pfs/work7/workspace/scratch/ys8950-general/hyperpie_PL-Marker_ER_15ksample/ffnn_re_results_000-041.json`
 
 
-# batch job
+## batch job
 
 * `$ sbatch -p gpu_8 hyperpie_ffnn_re/ffnn_re_pred.sh`
 
@@ -123,4 +123,24 @@ do
     # sleep 0.2
     # rm ffnn_re_pred_chunk_${yyy}.sh
 done
+```
+
+# analysis
+
+**cluster**  
+```
+~]$ ./hyperpie_ffnn_re_run_batches.sh
+~]$ sbatch ffnn_re_pred_chunk_000.sh
+~]$ sbatch ffnn_re_pred_chunk_001.sh
+...
+hyperpie_ffnn_re]$ python postprocess_unlabeled_data_prediction.py /pfs/work7/workspace/scratch/ys8950-general/hyperpie_PL-Marker_ER_15ksample/sciner-hyperpie_predict_pprs_15_sample_000/
+...
+~]$ ./hyperpie_ffnn_re_copy_results.sh
+```
+
+**local**  
+```
+code/PL-Marker/eval/predict_15k$ scp 'ys8950@bwunicluster.scc.kit.edu:/home/kit/aifb/ys8950/hyperpie_ffnn_re/results/merged_preds_*.jsonl' .
+code/PL-Marker/eval/predict_15k$ cat merged_preds_000.jsonl merged_preds_001.jsonl merged_preds_004.jsonl merged_preds_005.jsonl merged_preds_006.jsonl >> merged_preds_000-006.jsonl
+code/PL-Marker/eval/pwc_data$ python3 correlation_analysis.py ../predict_15k/merged_preds_000-006.jsonl merged_data_nopred_15k_sample.json
 ```
