@@ -459,11 +459,15 @@ def _twostage_llm_parse_yaml(annotation_info, para_text):
         else:
             artf = next(iter(artf_dict.values()))
         if (
+            'type' not in artf.keys() and
+            'name' in artf.keys()
+        ):
+            artf['type'] = artf['name']
+        if (
             artf is None or
             type(artf) != dict or
             'id' not in artf.keys() or
-            'name' not in artf.keys() or
-            'type' not in artf.keys()
+            'name' not in artf.keys()
         ):
             continue
         # set 'e' type entities to 'a' type (prompt uses 'e', eval 'a')

@@ -8,6 +8,9 @@ INFO: using model tiiuae/falcon-40b-instruct for LLM completion
 INFO: the model says "Han shot 1st"
 
 INFO: using model WizardLM/WizardLM-13B-V1.1 for LLM completion
+INFO: the model says "Han shot 6 people"
+
+INFO: using model WizardLM/WizardLM-13B-V1.1 for LLM completion
 INFO: the model says "Han shot 3 times"
 
 INFO: using model tiiuae/falcon-40b-instruct for LLM completion
