@@ -1,0 +1,91 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy12": {
+        "id": "a12",
+        "name": "DML losses",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy7": {
+        "id": "a7",
+        "name": "ProxyAnchor + inf",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter12": {
+              "id": "p12",
+              "name": "dataset size",
+              "has_values": true,
+              "values": [
+                {
+                  "value8": {
+                    "value_id": "v8",
+                    "value": "1,000",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter9": {
+              "id": "p9",
+              "name": "dataset size",
+              "has_values": true,
+              "values": [
+                {
+                  "value10": {
+                    "value_id": "v10",
+                    "value": "20",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter8": {
+              "id": "p8",
+              "name": "dataset size",
+              "has_values": true,
+              "values": [
+                {
+                  "value11": {
+                    "value_id": "v11",
+                    "value": "200",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "dataset size",
+              "has_values": true,
+              "values": [
+                {
+                  "value12": {
+                    "value_id": "v12",
+                    "value": "100",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy12": {
+        "id": "a12",
+        "name": "DML loss functions",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy37": {
+        "id": "a37",
+        "name": "proxy-based DML losses",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy14": {
+        "id": "a14",
+        "name": "RoBERTa-base",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy38": {
+        "id": "a38",
+        "name": "RoBERTa-large",
+        "type": "model",
+        "has_parameters": false
+      }
+    }
+  ]
+}

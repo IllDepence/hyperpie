@@ -1,0 +1,37 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "citation bias",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "preprints",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy3": {
+        "id": "a3",
+        "name": "publisher versions",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy4": {
+        "id": "a4",
+        "name": "peer-review process",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

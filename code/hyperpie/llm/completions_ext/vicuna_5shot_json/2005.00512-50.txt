@@ -1,0 +1,13 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy23": {
+        "id": "a23",
+        "name": "DyGIE++",
+        "type": "model",
+        "has_parameters": false
+      }
+    }
+  ]
+}

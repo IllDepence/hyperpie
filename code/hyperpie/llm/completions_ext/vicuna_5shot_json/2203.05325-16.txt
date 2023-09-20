@@ -1,0 +1,30 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy12": {
+        "id": "a12",
+        "name": "relation classification",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy13": {
+        "id": "a13",
+        "name": "span scores",
+        "type": "loss function",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "k",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

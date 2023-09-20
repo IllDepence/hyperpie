@@ -1,0 +1,94 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "teacher-student framework",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy13": {
+        "id": "a13",
+        "name": "semi-supervised learning",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy14": {
+        "id": "a14",
+        "name": "self-supervised learning",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy15": {
+        "id": "a15",
+        "name": "knowledge distillation",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy16": {
+        "id": "a16",
+        "name": "computer vision",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy17": {
+        "id": "a17",
+        "name": "natural language processing",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy20": {
+        "id": "a20",
+        "name": "BOND",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy21": {
+        "id": "a21",
+        "name": "SCDL",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy23": {
+        "id": "a23",
+        "name": "exponential moving average (EMA)",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "alpha",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy24": {
+        "id": "a24",
+        "name": "self-training framework",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

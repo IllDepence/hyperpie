@@ -1,0 +1,303 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy4": {
+        "id": "a4",
+        "name": "SciBERT-base",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy5": {
+        "id": "a5",
+        "name": "BiLSTM",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "hidden state",
+              "has_values": true,
+              "values": [
+                {
+                  "value3": {
+                    "value_id": "v3",
+                    "value": "128-d",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy6": {
+        "id": "a6",
+        "name": "dropout",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "value",
+              "has_values": true,
+              "values": [
+                {
+                  "value3": {
+                    "value_id": "v3",
+                    "value": "0.2",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy7": {
+        "id": "a7",
+        "name": "feedforward networks",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "hidden layers",
+              "has_values": true,
+              "values": [
+                {
+                  "value3": {
+                    "value_id": "v3",
+                    "value": "2",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "hidden state",
+              "has_values": true,
+              "values": [
+                {
+                  "value3": {
+                    "value_id": "v3",
+                    "value": "128-d",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "dropout",
+              "has_values": true,
+              "values": [
+                {
+                  "value3": {
+                    "value_id": "v3",
+                    "value": "0.2",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "activation function",
+              "has_values": true,
+              "values": [
+                {
+                  "value3": {
+                    "value_id": "v3",
+                    "value": "gelu",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy8": {
+        "id": "a8",
+        "name": "additive attention layer",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "feedforward layer",
+              "has_values": true,
+              "values": [
+                {
+                  "value3": {
+                    "value_id": "v3",
+                    "value": "128-d hidden state",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "softmax",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy9": {
+        "id": "a9",
+        "name": "Adam optimizer",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "learning rate (non BERT weights)",
+              "has_values": true,
+              "values": [
+                {
+                  "value3": {
+                    "value_id": "v3",
+                    "value": "1e-3",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "learning rate (BERT weights)",
+              "has_values": true,
+              "values": [
+                {
+                  "value3": {
+                    "value_id": "v3",
+                    "value": "2e-5",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "early stopping",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "patience value",
+              "has_values": true,
+              "values": [
+                {
+                  "value3": {
+                    "value_id": "v3",
+                    "value": "7",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "metric",
+              "has_values": true,
+              "values": [
+                {
+                  "value3": {
+                    "value_id": "v3",
+                    "value": "relation extraction F1 score",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy11": {
+        "id": "a11",
+        "name": "multitask model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "training time (approximate)",
+              "has_values": true,
+              "values": [
+                {
+                  "value3": {
+                    "value_id": "v3",
+                    "value": "3 hrs",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "training GPU",
+              "has_values": true,
+              "values": [
+                {
+                  "value3": {
+                    "value_id": "v3",
+                    "value": "48Gb Quadro RTX 8000",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

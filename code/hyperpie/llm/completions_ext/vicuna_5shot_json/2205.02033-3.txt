@@ -1,0 +1,35 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy13": {
+        "id": "a13",
+        "name": "COCI (OpenCitations Index of Crossref open DOI-to-DOI references)",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy24": {
+        "id": "a24",
+        "name": "Gini coefficients",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter13": {
+              "id": "p13",
+              "name": "citation inequality",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy25": {
+        "id": "a25",
+        "name": "mega-journals",
+        "has_parameters": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy25": {
+        "id": "a25",
+        "name": "SciBERT",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy26": {
+        "id": "a26",
+        "name": "Huggingface's Transformers library",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy27": {
+        "id": "a27",
+        "name": "Pylatexenchttps://github.com/phfaist/pylatexenc",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy28": {
+        "id": "a28",
+        "name": "AdamW",
+        "type": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "learning rates",
+              "has_values": true,
+              "values": [
+                {
+                  "value1": {
+                    "value_id": "v1",
+                    "value": "3e-5",
+                    "context": null,
+                    "context_id": "c1"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

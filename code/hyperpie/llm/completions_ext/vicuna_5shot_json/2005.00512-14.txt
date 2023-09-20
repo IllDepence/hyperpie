@@ -1,0 +1,45 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "entity recognition task",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "Method",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy3": {
+        "id": "a3",
+        "name": "Task",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy4": {
+        "id": "a4",
+        "name": "Metric",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy5": {
+        "id": "a5",
+        "name": "Dataset",
+        "type": "regularization technique",
+        "has_parameters": false
+      }
+    }
+  ]
+}

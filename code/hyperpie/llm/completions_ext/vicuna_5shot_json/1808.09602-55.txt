@@ -1,0 +1,37 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy7": {
+        "id": "a7",
+        "name": "SciIE",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy8": {
+        "id": "a8",
+        "name": "SciERC",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy9": {
+        "id": "a9",
+        "name": "SemEval 17",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "Semantic Scholar Corpus",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    }
+  ]
+}

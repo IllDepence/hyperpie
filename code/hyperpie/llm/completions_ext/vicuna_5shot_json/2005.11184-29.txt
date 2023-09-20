@@ -1,0 +1,19 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy13": {
+        "id": "a13",
+        "name": "E2E approach",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy14": {
+        "id": "a14",
+        "name": "ASR component",
+        "has_parameters": false
+      }
+    }
+  ]
+}

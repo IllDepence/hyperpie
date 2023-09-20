@@ -1,0 +1,40 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy15": {
+        "id": "a15",
+        "name": "ChebNet",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy32": {
+        "id": "a32",
+        "name": "APPNP",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy4": {
+        "id": "a4",
+        "name": "FA-GCN",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy11": {
+        "id": "a11",
+        "name": "GPR-GNN",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy53": {
+        "id": "a53",
+        "name": "GraphHeat",
+        "has_parameters": false
+      }
+    }
+  ]
+}

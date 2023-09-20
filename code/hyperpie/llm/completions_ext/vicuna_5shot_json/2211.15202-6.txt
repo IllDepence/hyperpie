@@ -1,0 +1,44 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "DML methods",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy12": {
+        "id": "a12",
+        "name": "approach",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter13": {
+              "id": "p13",
+              "name": "generalization of DML in training",
+              "has_values": false
+            }
+          },
+          {
+            "parameter14": {
+              "id": "p14",
+              "name": "modifications in inference",
+              "has_values": false
+            }
+          },
+          {
+            "parameter15": {
+              "id": "p15",
+              "name": "experimental procedure",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

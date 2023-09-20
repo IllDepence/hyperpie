@@ -1,0 +1,55 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "SciERC",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "scientific knowledge graph",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "coreference propagation",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy3": {
+        "id": "a3",
+        "name": "unified model",
+        "type": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "span boundary prediction",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy4": {
+        "id": "a4",
+        "name": "state-of-the-art scientific IE systems",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

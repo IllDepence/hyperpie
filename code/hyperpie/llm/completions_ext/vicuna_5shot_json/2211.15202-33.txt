@@ -1,0 +1,29 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "SentEval Transfer Task datasets",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "classification task dataset",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy3": {
+        "id": "a3",
+        "name": "textual entailment task dataset",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    }
+  ]
+}

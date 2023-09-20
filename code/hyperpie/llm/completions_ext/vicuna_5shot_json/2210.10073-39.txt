@@ -1,0 +1,54 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy8": {
+        "id": "a8",
+        "name": "DS",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy9": {
+        "id": "a9",
+        "name": "DMC",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "e_j",
+              "has_values": false
+            }
+          },
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "rec_{j_1}",
+              "has_values": true,
+              "values": [
+                {
+                  "value1": {
+                    "value_id": "v1",
+                    "value": "top 1 candidate source paper of e_j with the highest weighted context embedding score recommended through CRPSE",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter3": {
+              "id": "p3",
+              "name": "REF",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

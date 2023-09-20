@@ -1,0 +1,30 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy14": {
+        "id": "a14",
+        "name": "scispaCy",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy15": {
+        "id": "a15",
+        "name": "S2ORC",
+        "type": "dataset",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter16": {
+              "id": "p16",
+              "name": "cooccurrence count threshold",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy16": {
+        "id": "a16",
+        "name": "adaptive distillation",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy17": {
+        "id": "a17",
+        "name": "LIBSVM",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy18": {
+        "id": "a18",
+        "name": "Roberta",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy19": {
+        "id": "a19",
+        "name": "DistilRoBERTa",
+        "type": "model",
+        "has_parameters": false
+      }
+    }
+  ]
+}

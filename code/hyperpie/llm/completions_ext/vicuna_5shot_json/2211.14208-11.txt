@@ -1,0 +1,19 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy14": {
+        "id": "a14",
+        "name": "GRAND",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy15": {
+        "id": "a15",
+        "name": "BLEND",
+        "has_parameters": false
+      }
+    }
+  ]
+}

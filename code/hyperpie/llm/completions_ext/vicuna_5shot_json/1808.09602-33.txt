@@ -1,0 +1,46 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "scientific knowledge graph",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy25": {
+        "id": "a25",
+        "name": "SciIE model",
+        "type": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter10": {
+              "id": "p10",
+              "name": "value",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy26": {
+        "id": "a26",
+        "name": "Statistical Machine Translation (SMT)",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy27": {
+        "id": "a27",
+        "name": "grammatical error correction",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    }
+  ]
+}

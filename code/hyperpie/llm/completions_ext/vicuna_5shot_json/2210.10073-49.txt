@@ -1,0 +1,19 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy21": {
+        "id": "a21",
+        "name": "Brooks' theorem",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy22": {
+        "id": "a22",
+        "name": "SpecAugment",
+        "has_parameters": false
+      }
+    }
+  ]
+}

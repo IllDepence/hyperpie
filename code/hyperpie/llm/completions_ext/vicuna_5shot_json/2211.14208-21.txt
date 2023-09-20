@@ -1,0 +1,37 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "encoder",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "ReLU",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy3": {
+        "id": "a3",
+        "name": "output layer",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy4": {
+        "id": "a4",
+        "name": "softmax activation",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

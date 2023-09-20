@@ -1,0 +1,37 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy11": {
+        "id": "a11",
+        "name": "GREAD-BS",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy12": {
+        "id": "a12",
+        "name": "GREAD-F",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy13": {
+        "id": "a13",
+        "name": "GREAD-AC",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy14": {
+        "id": "a14",
+        "name": "GREAD-Z",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

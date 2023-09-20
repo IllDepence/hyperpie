@@ -1,0 +1,65 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy19": {
+        "id": "a19",
+        "name": "FFNNs",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy21": {
+        "id": "a21",
+        "name": "span scores",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "e",
+              "has_values": false
+            }
+          },
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "mc",
+              "has_values": false
+            }
+          },
+          {
+            "parameter3": {
+              "id": "p3",
+              "name": "mr",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy22": {
+        "id": "a22",
+        "name": "pairwise span scores",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter4": {
+              "id": "p4",
+              "name": "r",
+              "has_values": false
+            }
+          },
+          {
+            "parameter5": {
+              "id": "p5",
+              "name": "c",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

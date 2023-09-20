@@ -450,7 +450,11 @@ def _twostage_llm_parse_yaml(annotation_info, para_text):
         'num_cids_valid_invalid': [0, 0],
     }
     for artf_dict in annotation_info['entities']:
-        if artf_dict is None or len(artf_dict) == 0:
+        if (
+            artf_dict is None or
+            type(artf_dict) != dict or
+            len(artf_dict) == 0
+        ):
             continue
         # parse artifact
         if 'parameters' in artf_dict.keys():
@@ -459,17 +463,16 @@ def _twostage_llm_parse_yaml(annotation_info, para_text):
         else:
             artf = next(iter(artf_dict.values()))
         if (
-            'type' not in artf.keys() and
-            'name' in artf.keys()
-        ):
-            artf['type'] = artf['name']
-        if (
             artf is None or
             type(artf) != dict or
             'id' not in artf.keys() or
             'name' not in artf.keys()
         ):
             continue
+        if (
+            'type' not in artf.keys()
+        ):
+            artf['type'] = artf['name']
         # set 'e' type entities to 'a' type (prompt uses 'e', eval 'a')
         artf['id'] = re.sub(
             r'[a-z]([0-9\.]+)',
@@ -504,7 +507,10 @@ def _twostage_llm_parse_yaml(annotation_info, para_text):
         if 'parameters' not in artf or artf['parameters'] is None:
             continue
         for param_dict in artf['parameters']:
-            if param_dict is None:
+            if (
+                param_dict is None or
+                type(param_dict) != dict
+            ):
                 continue
             # parse parameter
             if 'values' in param_dict.keys():

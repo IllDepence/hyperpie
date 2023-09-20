@@ -1,0 +1,19 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy21": {
+        "id": "a21",
+        "name": "CoNLL-2003",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy22": {
+        "id": "a22",
+        "name": "named entities",
+        "has_parameters": false
+      }
+    }
+  ]
+}

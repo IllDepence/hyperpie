@@ -1,0 +1,19 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy12": {
+        "id": "a12",
+        "name": "IE datasets annotated at the document level",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy13": {
+        "id": "a13",
+        "name": "binary classification approach",
+        "has_parameters": false
+      }
+    }
+  ]
+}

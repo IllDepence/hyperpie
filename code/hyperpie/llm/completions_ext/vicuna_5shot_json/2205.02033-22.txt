@@ -1,0 +1,21 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy20": {
+        "id": "a20",
+        "name": "Research Organization Registry (ROR)",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy21": {
+        "id": "a21",
+        "name": "ROR API",
+        "type": "model",
+        "has_parameters": false
+      }
+    }
+  ]
+}

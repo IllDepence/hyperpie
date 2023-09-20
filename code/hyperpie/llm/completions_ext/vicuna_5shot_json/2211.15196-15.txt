@@ -1,0 +1,29 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "VGG-19",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "EfficientNet-V2L",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy3": {
+        "id": "a3",
+        "name": "F Measure",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy17": {
+        "id": "a17",
+        "name": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy18": {
+        "id": "a18",
+        "name": "Loss function",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter17": {
+              "id": "p17",
+              "name": "C",
+              "has_values": false
+            }
+          },
+          {
+            "parameter18": {
+              "id": "p18",
+              "name": "M",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy19": {
+        "id": "a19",
+        "name": "Loss function",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter19": {
+              "id": "p19",
+              "name": "\theta ^\tau",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy20": {
+        "id": "a20",
+        "name": "Loss function",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter20": {
+              "id": "p20",
+              "name": "\alpha _m",
+              "has_values": false
+            }
+          },
+          {
+            "parameter21": {
+              "id": "p21",
+              "name": "L_m (\theta ^\tau)",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

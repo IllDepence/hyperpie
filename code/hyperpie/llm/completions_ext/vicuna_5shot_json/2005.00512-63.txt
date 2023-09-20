@@ -1,0 +1,21 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy4": {
+        "id": "a4",
+        "name": "transformer-based models",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy5": {
+        "id": "a5",
+        "name": "N-ary relation extraction",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

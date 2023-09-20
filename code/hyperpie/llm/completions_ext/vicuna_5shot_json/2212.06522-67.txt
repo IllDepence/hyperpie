@@ -1,0 +1,29 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy71": {
+        "id": "a71",
+        "name": "cross-entropy learning",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy72": {
+        "id": "a72",
+        "name": "adaptive distillation",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy73": {
+        "id": "a73",
+        "name": "cross-entropy loss",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    }
+  ]
+}

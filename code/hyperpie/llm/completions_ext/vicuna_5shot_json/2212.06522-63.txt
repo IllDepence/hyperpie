@@ -1,0 +1,85 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "KB-Matching",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "Distant BiLSTM-CRF",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy3": {
+        "id": "a3",
+        "name": "Distant DistilRoBERTa",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy4": {
+        "id": "a4",
+        "name": "Distant RoBERTa",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy5": {
+        "id": "a5",
+        "name": "AutoNER",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy6": {
+        "id": "a6",
+        "name": "LRNT",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy7": {
+        "id": "a7",
+        "name": "Co-teaching+",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy8": {
+        "id": "a8",
+        "name": "NegSampling",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy9": {
+        "id": "a9",
+        "name": "BOND",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "SCDL",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

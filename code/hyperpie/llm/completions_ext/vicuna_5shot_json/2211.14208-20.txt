@@ -1,0 +1,108 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy12": {
+        "id": "a12",
+        "name": "reaction-diffusion form",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy13": {
+        "id": "a13",
+        "name": "trainable parameters",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "alpha",
+              "has_values": false
+            }
+          },
+          {
+            "parameter7": {
+              "id": "p7",
+              "name": "beta",
+              "has_values": true,
+              "values": [
+                {
+                  "value9": {
+                    "value_id": "v9",
+                    "value": "scalar",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy14": {
+        "id": "a14",
+        "name": "reaction term",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy15": {
+        "id": "a15",
+        "name": "encoder embeds",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter8": {
+              "id": "p8",
+              "name": "node feature matrix",
+              "has_values": false
+            }
+          },
+          {
+            "parameter9": {
+              "id": "p9",
+              "name": "initial hidden state",
+              "has_values": true,
+              "values": [
+                {
+                  "value10": {
+                    "value_id": "v10",
+                    "value": "H(0)",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy16": {
+        "id": "a16",
+        "name": "output layer",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy17": {
+        "id": "a17",
+        "name": "node classification",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter10": {
+              "id": "p10",
+              "name": "downstream task",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

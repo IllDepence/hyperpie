@@ -1,0 +1,53 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "MLP",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "GCN",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy3": {
+        "id": "a3",
+        "name": "GAT",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy4": {
+        "id": "a4",
+        "name": "GRAND",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy5": {
+        "id": "a5",
+        "name": "H2GCN",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy6": {
+        "id": "a6",
+        "name": "GREAD",
+        "type": "model",
+        "has_parameters": false
+      }
+    }
+  ]
+}

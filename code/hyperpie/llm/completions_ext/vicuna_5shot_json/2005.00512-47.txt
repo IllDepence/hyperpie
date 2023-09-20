@@ -1,0 +1,38 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy25": {
+        "id": "a25",
+        "name": "Salient Entity Clustering evaluation",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy26": {
+        "id": "a26",
+        "name": "F1 score",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "threshold",
+              "has_values": true,
+              "values": [
+                {
+                  "value9": {
+                    "value_id": "v9",
+                    "value": "0.5",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

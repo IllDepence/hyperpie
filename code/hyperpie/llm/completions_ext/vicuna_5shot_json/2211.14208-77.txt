@@ -1,0 +1,63 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "SA",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy12": {
+        "id": "a12",
+        "name": "OA",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy14": {
+        "id": "a14",
+        "name": "SC",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter20": {
+              "id": "p20",
+              "name": "scalar parameter",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy16": {
+        "id": "a16",
+        "name": "VC",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter22": {
+              "id": "p22",
+              "name": "learnable vector parameter",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy18": {
+        "id": "a18",
+        "name": "dataset",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    }
+  ]
+}

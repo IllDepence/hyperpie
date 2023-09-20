@@ -1,0 +1,13 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy15": {
+        "id": "a15",
+        "name": "F1 score",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    }
+  ]
+}

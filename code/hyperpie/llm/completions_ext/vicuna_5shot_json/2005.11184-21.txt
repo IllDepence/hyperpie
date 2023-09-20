@@ -1,0 +1,76 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy15": {
+        "id": "a15",
+        "name": "E2E approach",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy16": {
+        "id": "a16",
+        "name": "Prefix beam search decoding",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "beam-width",
+              "has_values": true,
+              "values": [
+                {
+                  "value1": {
+                    "value_id": "v1",
+                    "value": "1024",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter3": {
+              "id": "p3",
+              "name": "4-gram LM",
+              "has_values": true,
+              "values": [
+                {
+                  "value2": {
+                    "value_id": "v2",
+                    "value": "trained on DATA2",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy17": {
+        "id": "a17",
+        "name": "classical two-step approach",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy18": {
+        "id": "a18",
+        "name": "Baidu's DS2",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy19": {
+        "id": "a19",
+        "name": "Flair tagger",
+        "has_parameters": false
+      }
+    }
+  ]
+}

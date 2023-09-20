@@ -1,0 +1,38 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy12": {
+        "id": "a12",
+        "name": "One-class SVM",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy13": {
+        "id": "a13",
+        "name": "LIBSVM",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "loss weights",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy14": {
+        "id": "a14",
+        "name": "back-propagation algorithm",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

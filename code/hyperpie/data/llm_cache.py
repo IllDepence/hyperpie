@@ -142,13 +142,23 @@ def load_external(subdir, doc_id, para_idx):
     completion = completion.replace('\\', '\\\\')
 
     # fix entity existence key
-    wrong_key_patt = re.compile(
-        r'has_entities:\s+(true|false)$',
-        re.M
-    )
-    completion = wrong_key_patt.sub(
-        r'text_contains_entities: \1',
-        completion
-    )
+    if '_json' in subdir:
+        wrong_key_patt = re.compile(
+            r'"has_entities":\s+(true|false),$',
+            re.M
+        )
+        completion = wrong_key_patt.sub(
+            r'"text_contains_entities": \1,',
+            completion
+        )
+    elif '_yaml' in subdir:
+        wrong_key_patt = re.compile(
+            r'has_entities:\s+(true|false)$',
+            re.M
+        )
+        completion = wrong_key_patt.sub(
+            r'text_contains_entities: \1',
+            completion
+        )
 
     return completion

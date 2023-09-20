@@ -1,0 +1,29 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy19": {
+        "id": "a19",
+        "name": "\Phi _{\text{E}}",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy20": {
+        "id": "a20",
+        "name": "\Phi _{\text{R}}",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy21": {
+        "id": "a21",
+        "name": "\Phi _{\text{C}}",
+        "type": "model",
+        "has_parameters": false
+      }
+    }
+  ]
+}

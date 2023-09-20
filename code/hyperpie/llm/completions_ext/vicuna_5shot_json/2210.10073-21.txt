@@ -1,0 +1,21 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "ScispaCy",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy20": {
+        "id": "a20",
+        "name": "binary classification model",
+        "type": "model",
+        "has_parameters": false
+      }
+    }
+  ]
+}

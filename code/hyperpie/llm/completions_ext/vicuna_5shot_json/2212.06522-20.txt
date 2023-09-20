@@ -1,0 +1,21 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "multi-objective optimization (MOO)",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy11": {
+        "id": "a11",
+        "name": "multiple gradient descent algorithms (MGDA)",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

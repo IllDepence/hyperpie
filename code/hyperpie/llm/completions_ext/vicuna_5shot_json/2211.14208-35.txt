@@ -1,0 +1,81 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "GREAD",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "Training data",
+        "type": "dataset",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "D_{train}",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy3": {
+        "id": "a3",
+        "name": "Validating data",
+        "type": "dataset",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "D_{val}",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy4": {
+        "id": "a4",
+        "name": "Maximum iteration number",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter3": {
+              "id": "p3",
+              "name": "max\_iter",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy5": {
+        "id": "a5",
+        "name": "Initialize model parameters",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter4": {
+              "id": "p4",
+              "name": "\(\mathbf {\theta }\)",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

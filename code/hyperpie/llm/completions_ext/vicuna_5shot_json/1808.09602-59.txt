@@ -1,0 +1,416 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy16": {
+        "id": "a16",
+        "name": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter7": {
+              "id": "p7",
+              "name": "hidden layers",
+              "has_values": true,
+              "values": [
+                {
+                  "value10": {
+                    "value_id": "v10",
+                    "value": "200",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter9": {
+              "id": "p9",
+              "name": "FFNNs",
+              "has_values": true,
+              "values": [
+                {
+                  "value16": {
+                    "value_id": "v16",
+                    "value": "2 hidden layers",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter9": {
+              "id": "p9",
+              "name": "FFNNs",
+              "has_values": true,
+              "values": [
+                {
+                  "value17": {
+                    "value_id": "v17",
+                    "value": "150 dimensions",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "dropout",
+              "has_values": true,
+              "values": [
+                {
+                  "value18": {
+                    "value_id": "v18",
+                    "value": "0.4 variational dropout",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "dropout",
+              "has_values": true,
+              "values": [
+                {
+                  "value19": {
+                    "value_id": "v19",
+                    "value": "0.4 dropout",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "dropout",
+              "has_values": true,
+              "values": [
+                {
+                  "value20": {
+                    "value_id": "v20",
+                    "value": "0.5 dropout",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter13": {
+              "id": "p13",
+              "name": "beam pruning",
+              "has_values": true,
+              "values": [
+                {
+                  "value24": {
+                    "value_id": "v24",
+                    "value": "0.3",
+                    "context": null,
+                    "context_id": null
+                  }
+                },
+                {
+                  "value25": {
+                    "value_id": "v25",
+                    "value": "0.4",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter13": {
+              "id": "p13",
+              "name": "beam pruning",
+              "has_values": true,
+              "values": [
+                {
+                  "value26": {
+                    "value_id": "v26",
+                    "value": "coreference resolution",
+                    "context": null,
+                    "context_id": null
+                  }
+                },
+                {
+                  "value27": {
+                    "value_id": "v27",
+                    "value": "relation extraction",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter14": {
+              "id": "p14",
+              "name": "normalize entity phrases",
+              "has_parameters": true,
+              "parameters": [
+                {
+                  "parameter28": {
+                    "id": "p28",
+                    "name": "replace acronyms",
+                    "has_values": false
+                  }
+                },
+                {
+                  "parameter29": {
+                    "id": "p29",
+                    "name": "normalize plural terms",
+                    "has_values": false
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entity16": {
+        "id": "a16",
+        "name": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter7": {
+              "id": "p7",
+              "name": "hidden layers",
+              "has_values": true,
+              "values": [
+                {
+                  "value10": {
+                    "value_id": "v10",
+                    "value": "200",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter9": {
+              "id": "p9",
+              "name": "FFNNs",
+              "has_values": true,
+              "values": [
+                {
+                  "value16": {
+                    "value_id": "v16",
+                    "value": "2 hidden layers",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter9": {
+              "id": "p9",
+              "name": "FFNNs",
+              "has_values": true,
+              "values": [
+                {
+                  "value17": {
+                    "value_id": "v17",
+                    "value": "150 dimensions",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "dropout",
+              "has_values": true,
+              "values": [
+                {
+                  "value18": {
+                    "value_id": "v18",
+                    "value": "0.4 variational dropout",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "dropout",
+              "has_values": true,
+              "values": [
+                {
+                  "value19": {
+                    "value_id": "v19",
+                    "value": "0.4 dropout",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "dropout",
+              "has_values": true,
+              "values": [
+                {
+                  "value20": {
+                    "value_id": "v20",
+                    "value": "0.5 dropout",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter13": {
+              "id": "p13",
+              "name": "beam pruning",
+              "has_values": true,
+              "values": [
+                {
+                  "value24": {
+                    "value_id": "v24",
+                    "value": "0.3",
+                    "context": null,
+                    "context_id": null
+                  }
+                },
+                {
+                  "value25": {
+                    "value_id": "v25",
+                    "value": "0.4",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter13": {
+              "id": "p13",
+              "name": "beam pruning",
+              "has_values": true,
+              "values": [
+                {
+                  "value26": {
+                    "value_id": "v26",
+                    "value": "coreference resolution",
+                    "context": null,
+                    "context_id": null
+                  }
+                },
+                {
+                  "value27": {
+                    "value_id": "v27",
+                    "value": "relation extraction",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter14": {
+              "id": "p14",
+              "name": "normalize entity phrases",
+              "has_parameters": true,
+              "parameters": [
+                {
+                  "parameter28": {
+                    "id": "p28",
+                    "name": "replace acronyms",
+                    "has_values": false
+                  }
+                },
+                {
+                  "parameter29": {
+                    "id": "p29",
+                    "name": "normalize plural terms",
+                    "has_values": false
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entity16": {
+        "id": "a16",
+        "name": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter7": {
+              "id": "p7",
+              "name": "hidden layers",
+              "has_values": true,
+              "values": [
+                {
+                  "value10": {
+                    "value_id": "v10",
+                    "value": "200",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter9": {
+              "id": "p9",
+              "name": "FFNNs",
+              "has_values": true,
+              "values": [
+                {
+                  "value16": {
+                    "value_id": "v16",
+                    "value": "2 hidden layers",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

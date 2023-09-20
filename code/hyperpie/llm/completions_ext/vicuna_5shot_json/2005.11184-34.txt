@@ -1,0 +1,152 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "English speech dataset with named entities",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "E2E approach",
+        "type": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "F1 score",
+              "has_values": true,
+              "values": [
+                {
+                  "value1": {
+                    "value_id": "v1",
+                    "value": "0.906",
+                    "context": "E2E approach F1 score",
+                    "context_id": "c1"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy3": {
+        "id": "a3",
+        "name": "two-step approach",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "F1 score",
+              "has_values": true,
+              "values": [
+                {
+                  "value2": {
+                    "value_id": "v2",
+                    "value": "0.803",
+                    "context": "two-step approach F1 score",
+                    "context_id": "c2"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy4": {
+        "id": "a4",
+        "name": "LM",
+        "type": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter3": {
+              "id": "p3",
+              "name": "role in achieving results",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy5": {
+        "id": "a5",
+        "name": "NE-WER",
+        "type": "loss function",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter4": {
+              "id": "p4",
+              "name": "Named Entity Word Error Rate",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy6": {
+        "id": "a6",
+        "name": "ATENE",
+        "type": "loss function",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter5": {
+              "id": "p5",
+              "name": "Automatic Transcription Evaluation for Named Entity",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy7": {
+        "id": "a7",
+        "name": "WER",
+        "type": "loss function",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "Word Error Rate",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy8": {
+        "id": "a8",
+        "name": "OOV words in an ASR system",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter7": {
+              "id": "p7",
+              "name": "handling OOV words",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

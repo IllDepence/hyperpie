@@ -1,0 +1,21 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "SoftTriple",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy3": {
+        "id": "a3",
+        "name": "ProxyNCA Loss",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    }
+  ]
+}

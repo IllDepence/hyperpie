@@ -1,0 +1,21 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "E2E approach",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "two-step approach",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

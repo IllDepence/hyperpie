@@ -1,0 +1,78 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy34": {
+        "id": "a34",
+        "name": "student model",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy35": {
+        "id": "a35",
+        "name": "total training loss",
+        "type": "loss function",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "Lce",
+              "has_values": false
+            }
+          },
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "alpha",
+              "has_values": true,
+              "values": [
+                {
+                  "value1": {
+                    "value_id": "v1",
+                    "value": "alpha",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter3": {
+              "id": "p3",
+              "name": "Lkd^t1",
+              "has_values": false
+            }
+          },
+          {
+            "parameter4": {
+              "id": "p4",
+              "name": "(1-alpha)",
+              "has_values": true,
+              "values": [
+                {
+                  "value2": {
+                    "value_id": "v2",
+                    "value": "1 - alpha",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter5": {
+              "id": "p5",
+              "name": "Lkd^t2",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

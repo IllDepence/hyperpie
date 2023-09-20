@@ -1,0 +1,61 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "NER",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "SOTA NER systems",
+        "type": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "word-level embedding",
+              "has_values": false
+            }
+          },
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "character-level embedding",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy3": {
+        "id": "a3",
+        "name": "audio de-identification task",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "OOV information",
+              "has_values": false
+            }
+          },
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "NER tagger robustness",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

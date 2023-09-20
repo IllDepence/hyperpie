@@ -1,0 +1,38 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "cross-entropy loss",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "feed-forward neural networks",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy3": {
+        "id": "a3",
+        "name": "linear similarity based approach",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "prototype embeddings",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

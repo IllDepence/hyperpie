@@ -1,0 +1,99 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "end-to-end joint entity and relation extraction approach",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "macro \(F_1\) scores",
+        "type": "loss function",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "physics content",
+              "has_values": true,
+              "values": [
+                {
+                  "value1": {
+                    "value_id": "v1",
+                    "value": "95.43%",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "math content",
+              "has_values": true,
+              "values": [
+                {
+                  "value2": {
+                    "value_id": "v2",
+                    "value": "79.17%",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter3": {
+              "id": "p3",
+              "name": "computer science content",
+              "has_values": true,
+              "values": [
+                {
+                  "value3": {
+                    "value_id": "v3",
+                    "value": "19.23%",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter4": {
+              "id": "p4",
+              "name": "economics content",
+              "has_values": true,
+              "values": [
+                {
+                  "value4": {
+                    "value_id": "v4",
+                    "value": "13.84%",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy3": {
+        "id": "a3",
+        "name": "cross-domain generalization",
+        "type": "regularization technique",
+        "has_parameters": false
+      }
+    }
+  ]
+}

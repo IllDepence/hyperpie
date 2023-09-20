@@ -1,0 +1,21 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy7": {
+        "id": "a7",
+        "name": "Semantic Scholar team at AI2",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy8": {
+        "id": "a8",
+        "name": "Papers With Code team",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    }
+  ]
+}

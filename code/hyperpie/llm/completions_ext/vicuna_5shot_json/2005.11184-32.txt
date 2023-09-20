@@ -1,0 +1,54 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "E2E model",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy11": {
+        "id": "a11",
+        "name": "LM",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy12": {
+        "id": "a12",
+        "name": "S-LM",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy13": {
+        "id": "a13",
+        "name": "modified prefix beam search decoding",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "n-paths",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy14": {
+        "id": "a14",
+        "name": "pre-defined dictionary of names",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    }
+  ]
+}

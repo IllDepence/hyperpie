@@ -1,0 +1,61 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy15": {
+        "id": "a15",
+        "name": "SciIE",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy23": {
+        "id": "a23",
+        "name": "LSTM+CRF",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy24": {
+        "id": "a24",
+        "name": "E2E Rel",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy25": {
+        "id": "a25",
+        "name": "E2E Coref",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy34": {
+        "id": "a34",
+        "name": "entity recognition",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy35": {
+        "id": "a35",
+        "name": "relation extraction",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy36": {
+        "id": "a36",
+        "name": "coreference resolution",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    }
+  ]
+}

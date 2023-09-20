@@ -1,0 +1,13 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy16": {
+        "id": "a16",
+        "name": "Consistent Prediction",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

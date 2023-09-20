@@ -1,0 +1,12 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy17": {
+        "id": "a17",
+        "name": "homophily ratio",
+        "has_parameters": false
+      }
+    }
+  ]
+}

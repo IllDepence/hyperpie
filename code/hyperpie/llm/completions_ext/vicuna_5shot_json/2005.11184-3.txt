@@ -1,0 +1,21 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "French datasets",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy23": {
+        "id": "a23",
+        "name": "English speech dataset",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    }
+  ]
+}

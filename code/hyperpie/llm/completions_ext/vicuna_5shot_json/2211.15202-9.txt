@@ -1,0 +1,21 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "Triplet Loss",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy11": {
+        "id": "a11",
+        "name": "Contrastive Loss",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    }
+  ]
+}

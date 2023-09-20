@@ -1,0 +1,63 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "entity pair",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "relation type",
+        "type": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "frequency",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy3": {
+        "id": "a3",
+        "name": "corpus",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy4": {
+        "id": "a4",
+        "name": "edge",
+        "type": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "relation type",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy5": {
+        "id": "a5",
+        "name": "Figure REF",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    }
+  ]
+}

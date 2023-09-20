@@ -1,0 +1,64 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy3": {
+        "id": "a3",
+        "name": "RoBERTa models",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy4": {
+        "id": "a4",
+        "name": "proxy-based DML methods",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "entire output of RoBERTa models",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy5": {
+        "id": "a5",
+        "name": "non-proxy-based methods",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "embeddings associated with the token [CLS]",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy6": {
+        "id": "a6",
+        "name": "paper [10]",
+        "type": "dataset",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter3": {
+              "id": "p3",
+              "name": "value",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

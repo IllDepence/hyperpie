@@ -1,0 +1,29 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy15": {
+        "id": "a15",
+        "name": "ATSEN",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy16": {
+        "id": "a16",
+        "name": "BOND",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy17": {
+        "id": "a17",
+        "name": "SCDL",
+        "type": "model",
+        "has_parameters": false
+      }
+    }
+  ]
+}

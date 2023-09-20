@@ -1,0 +1,13 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy7": {
+        "id": "a7",
+        "name": "SciBERT",
+        "type": "model",
+        "has_parameters": false
+      }
+    }
+  ]
+}

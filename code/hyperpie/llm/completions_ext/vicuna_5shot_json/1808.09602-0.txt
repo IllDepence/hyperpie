@@ -1,0 +1,53 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "task",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "method",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy3": {
+        "id": "a3",
+        "name": "dataset",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy4": {
+        "id": "a4",
+        "name": "algorithm",
+        "type": "regularization technique",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "intelligence",
+              "has_values": false
+            }
+          },
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "organization",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

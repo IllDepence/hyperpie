@@ -1,0 +1,12 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy17": {
+        "id": "a17",
+        "name": "Dropout",
+        "has_parameters": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy17": {
+        "id": "a17",
+        "name": "soft adjacency matrix",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy18": {
+        "id": "a18",
+        "name": "original symmetric normalized adjacency matrix",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

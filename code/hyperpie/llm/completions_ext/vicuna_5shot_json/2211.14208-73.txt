@@ -1,0 +1,30 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "Cora network",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "Table REF",
+        "type": "dataset",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "hyperparameter range",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy11": {
+        "id": "a11",
+        "name": "dataset",
+        "has_parameters": false
+      }
+    }
+  ]
+}

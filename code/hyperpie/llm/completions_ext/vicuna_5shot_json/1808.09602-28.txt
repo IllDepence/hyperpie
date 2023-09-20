@@ -1,0 +1,29 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy15": {
+        "id": "a15",
+        "name": "\Phi_{\text{E}}",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy23": {
+        "id": "a23",
+        "name": "\Phi_{\text{R}}",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy16": {
+        "id": "a16",
+        "name": "\Phi_{\text{C}}",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

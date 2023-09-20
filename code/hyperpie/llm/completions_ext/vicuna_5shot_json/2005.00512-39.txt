@@ -1,0 +1,13 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "[10] methodology",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

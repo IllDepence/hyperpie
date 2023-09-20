@@ -1,0 +1,21 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy12": {
+        "id": "a12",
+        "name": "cross-entropy loss",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy13": {
+        "id": "a13",
+        "name": "supervised fine-tuning language models",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

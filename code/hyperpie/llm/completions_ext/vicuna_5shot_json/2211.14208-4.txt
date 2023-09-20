@@ -1,0 +1,124 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy21": {
+        "id": "a21",
+        "name": "GREAD",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy22": {
+        "id": "a22",
+        "name": "encoder",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "reaction-diffusion layer",
+              "has_values": false
+            }
+          },
+          {
+            "parameter7": {
+              "id": "p7",
+              "name": "output layer",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy23": {
+        "id": "a23",
+        "name": "reaction-diffusion layer",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter8": {
+              "id": "p8",
+              "name": "Fisher (F)",
+              "has_values": false
+            }
+          },
+          {
+            "parameter9": {
+              "id": "p9",
+              "name": "Allen-Cahn (AC)",
+              "has_values": false
+            }
+          },
+          {
+            "parameter10": {
+              "id": "p10",
+              "name": "Zeldovich (Z)",
+              "has_values": false
+            }
+          },
+          {
+            "parameter11": {
+              "id": "p11",
+              "name": "Blurring-sharpening (BS)",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy24": {
+        "id": "a24",
+        "name": "output layer",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter12": {
+              "id": "p12",
+              "name": "Eqs. (REF ) to ()",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy25": {
+        "id": "a25",
+        "name": "Fisher (F)",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy26": {
+        "id": "a26",
+        "name": "Allen-Cahn (AC)",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy27": {
+        "id": "a27",
+        "name": "Zeldovich (Z)",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy28": {
+        "id": "a28",
+        "name": "Blurring-sharpening (BS)",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

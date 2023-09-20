@@ -1,0 +1,29 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy13": {
+        "id": "a13",
+        "name": "Triplet Loss",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy14": {
+        "id": "a14",
+        "name": "N-Pairs Loss",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy25": {
+        "id": "a25",
+        "name": "SupCon Loss",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    }
+  ]
+}

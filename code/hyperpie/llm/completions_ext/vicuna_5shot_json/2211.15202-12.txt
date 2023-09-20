@@ -1,0 +1,71 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "Supervised Contrastive Learning (SupCon)",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "Triplet Loss",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy3": {
+        "id": "a3",
+        "name": "Contrastive Loss",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy4": {
+        "id": "a4",
+        "name": "temperature regularization",
+        "type": "regularization technique",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "temperature parameter",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy5": {
+        "id": "a5",
+        "name": "batch processing",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "batch size",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy6": {
+        "id": "a6",
+        "name": "label information",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    }
+  ]
+}

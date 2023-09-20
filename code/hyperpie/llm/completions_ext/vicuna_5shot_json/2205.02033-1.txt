@@ -1,0 +1,37 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy6": {
+        "id": "a6",
+        "name": "arXiv",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy7": {
+        "id": "a7",
+        "name": "bioRxiv",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy8": {
+        "id": "a8",
+        "name": "medRxiv",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy9": {
+        "id": "a9",
+        "name": "SSRN",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    }
+  ]
+}

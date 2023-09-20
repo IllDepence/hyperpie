@@ -1,0 +1,13 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy14": {
+        "id": "a14",
+        "name": "h-index",
+        "type": "regularization technique",
+        "has_parameters": false
+      }
+    }
+  ]
+}

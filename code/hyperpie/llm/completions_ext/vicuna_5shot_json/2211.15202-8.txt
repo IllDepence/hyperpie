@@ -1,0 +1,21 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy8": {
+        "id": "a8",
+        "name": "observations",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy9": {
+        "id": "a9",
+        "name": "embeddings",
+        "type": "model",
+        "has_parameters": false
+      }
+    }
+  ]
+}

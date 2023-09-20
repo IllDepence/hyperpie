@@ -1,0 +1,29 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy12": {
+        "id": "a12",
+        "name": "k-means",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy13": {
+        "id": "a13",
+        "name": "Penn Treebank",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy14": {
+        "id": "a14",
+        "name": "LibriSpeech",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    }
+  ]
+}

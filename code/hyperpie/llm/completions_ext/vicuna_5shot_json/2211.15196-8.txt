@@ -1,0 +1,45 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy16": {
+        "id": "a16",
+        "name": "VGG-19",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy17": {
+        "id": "a17",
+        "name": "Inception-V3",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy18": {
+        "id": "a18",
+        "name": "ResNet-152V2",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy19": {
+        "id": "a19",
+        "name": "XceptionNet",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy20": {
+        "id": "a20",
+        "name": "EfficientNet-V2L",
+        "type": "model",
+        "has_parameters": false
+      }
+    }
+  ]
+}

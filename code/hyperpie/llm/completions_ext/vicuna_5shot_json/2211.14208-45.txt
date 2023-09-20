@@ -1,0 +1,93 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy24": {
+        "id": "a24",
+        "name": "GREAD",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy25": {
+        "id": "a25",
+        "name": "existing GNNs",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy26": {
+        "id": "a26",
+        "name": "Chameleon",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy27": {
+        "id": "a27",
+        "name": "Squirrel",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy28": {
+        "id": "a28",
+        "name": "Film",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy29": {
+        "id": "a29",
+        "name": "Texas",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy30": {
+        "id": "a30",
+        "name": "Wisconsin",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy31": {
+        "id": "a31",
+        "name": "Cornell",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy32": {
+        "id": "a32",
+        "name": "Cora",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy33": {
+        "id": "a33",
+        "name": "CiteSeer",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy34": {
+        "id": "a34",
+        "name": "PubMed",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    }
+  ]
+}

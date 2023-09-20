@@ -1,0 +1,21 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy21": {
+        "id": "a21",
+        "name": "Dimensions database",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy19": {
+        "id": "a19",
+        "name": "arXiv",
+        "type": "model",
+        "has_parameters": false
+      }
+    }
+  ]
+}

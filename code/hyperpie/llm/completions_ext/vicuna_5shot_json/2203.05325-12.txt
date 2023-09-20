@@ -1,0 +1,13 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy19": {
+        "id": "a19",
+        "name": "dot product similarity",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

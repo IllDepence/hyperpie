@@ -1,0 +1,53 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy19": {
+        "id": "a19",
+        "name": "ATSEN",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy20": {
+        "id": "a20",
+        "name": "consistent prediction",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy21": {
+        "id": "a21",
+        "name": "threshold prediction",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy22": {
+        "id": "a22",
+        "name": "cross-entropy loss",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy23": {
+        "id": "a23",
+        "name": "adaptive distillation",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy24": {
+        "id": "a24",
+        "name": "fine-grained ensemble",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

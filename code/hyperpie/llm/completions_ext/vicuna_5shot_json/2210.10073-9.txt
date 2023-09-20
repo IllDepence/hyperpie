@@ -1,0 +1,62 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "Citation data analysis",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "Self-citation",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy3": {
+        "id": "a3",
+        "name": "Missing citation recommendation method for new patents",
+        "type": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "Patent citation network utilization",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy4": {
+        "id": "a4",
+        "name": "Bibliography-based recommendation method",
+        "type": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "Article similarity quantification",
+              "has_values": false
+            }
+          },
+          {
+            "parameter3": {
+              "id": "p3",
+              "name": "Scientific result dissemination facilitation",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

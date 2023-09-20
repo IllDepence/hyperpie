@@ -1,0 +1,12 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "additive attention layer",
+        "has_parameters": false
+      }
+    }
+  ]
+}

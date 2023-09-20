@@ -1,0 +1,36 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "SciERCdataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy3": {
+        "id": "a3",
+        "name": "BERT+CRF sequence labeling model",
+        "type": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "training dataset",
+              "has_values": false
+            }
+          },
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "sequence labeling task",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

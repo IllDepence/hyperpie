@@ -1,0 +1,21 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy12": {
+        "id": "a12",
+        "name": "DML methods",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy13": {
+        "id": "a13",
+        "name": "CE loss",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    }
+  ]
+}

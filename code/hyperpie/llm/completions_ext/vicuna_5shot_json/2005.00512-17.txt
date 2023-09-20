@@ -1,0 +1,21 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy4": {
+        "id": "a4",
+        "name": "\(N\)-ary relations extraction task",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy5": {
+        "id": "a5",
+        "name": "4-ary relation",
+        "type": "model",
+        "has_parameters": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy14": {
+        "id": "a14",
+        "name": "Distantly-Supervised Named Entity Recognition (DS-NER)",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

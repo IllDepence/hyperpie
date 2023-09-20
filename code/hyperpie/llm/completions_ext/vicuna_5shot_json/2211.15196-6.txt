@@ -1,0 +1,125 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy21": {
+        "id": "a21",
+        "name": "EfficientNet-V2L",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy22": {
+        "id": "a22",
+        "name": "binary cross-entropy",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "loss function",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy23": {
+        "id": "a23",
+        "name": "adam loss optimizer",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter7": {
+              "id": "p7",
+              "name": "loss optimization",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy24": {
+        "id": "a24",
+        "name": "ReLU activation function",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter8": {
+              "id": "p8",
+              "name": "activation function",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy25": {
+        "id": "a25",
+        "name": "softmax activation function",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter9": {
+              "id": "p9",
+              "name": "activation function",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy26": {
+        "id": "a26",
+        "name": "2-dimensional global average pooling",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter10": {
+              "id": "p10",
+              "name": "pooling method",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy27": {
+        "id": "a27",
+        "name": "dense layer",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter11": {
+              "id": "p11",
+              "name": "hidden neurons",
+              "has_values": true,
+              "values": [
+                {
+                  "value9": {
+                    "value_id": "v9",
+                    "value": "1024",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy28": {
+        "id": "a28",
+        "name": "last layer replacement",
+        "has_parameters": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy14": {
+        "id": "a14",
+        "name": "mega-journals",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy15": {
+        "id": "a15",
+        "name": "PLOS ONE",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy16": {
+        "id": "a16",
+        "name": "Scientific Reports",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy17": {
+        "id": "a17",
+        "name": "eLife",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy18": {
+        "id": "a18",
+        "name": "Nature Communications",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    }
+  ]
+}

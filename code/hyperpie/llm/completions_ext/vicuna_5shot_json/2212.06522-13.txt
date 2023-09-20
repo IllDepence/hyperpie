@@ -1,0 +1,21 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy34": {
+        "id": "a34",
+        "name": "NER models",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy35": {
+        "id": "a35",
+        "name": "teacher networks",
+        "type": "model",
+        "has_parameters": false
+      }
+    }
+  ]
+}

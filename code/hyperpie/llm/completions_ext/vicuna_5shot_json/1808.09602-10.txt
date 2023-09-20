@@ -1,0 +1,189 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "Task",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "Method",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy3": {
+        "id": "a3",
+        "name": "Metric",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy4": {
+        "id": "a4",
+        "name": "Material",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy5": {
+        "id": "a5",
+        "name": "Other-ScientificTerm",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy6": {
+        "id": "a6",
+        "name": "Generic",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy7": {
+        "id": "a7",
+        "name": "Compare",
+        "type": "loss function",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "directionality",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy8": {
+        "id": "a8",
+        "name": "Part-of",
+        "type": "regularization technique",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "directionality",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy9": {
+        "id": "a9",
+        "name": "Conjunction",
+        "type": "loss function",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter3": {
+              "id": "p3",
+              "name": "directionality",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "Evaluate-for",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter4": {
+              "id": "p4",
+              "name": "directionality",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy11": {
+        "id": "a11",
+        "name": "Feature-of",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter5": {
+              "id": "p5",
+              "name": "directionality",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy12": {
+        "id": "a12",
+        "name": "Used-for",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "directionality",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy13": {
+        "id": "a13",
+        "name": "Hyponym-Of",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter7": {
+              "id": "p7",
+              "name": "directionality",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy14": {
+        "id": "a14",
+        "name": "Coreference",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter8": {
+              "id": "p8",
+              "name": "directionality",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

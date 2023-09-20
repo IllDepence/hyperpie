@@ -1,0 +1,179 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy12": {
+        "id": "a12",
+        "name": "arXiv IDs",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy13": {
+        "id": "a13",
+        "name": "LaTeXML",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "source format",
+              "has_values": true,
+              "values": [
+                {
+                  "value9": {
+                    "value_id": "v9",
+                    "value": "latex",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter7": {
+              "id": "p7",
+              "name": "document text extraction",
+              "has_values": true,
+              "values": [
+                {
+                  "value10": {
+                    "value_id": "v10",
+                    "value": "clean",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter8": {
+              "id": "p8",
+              "name": "structured fields extraction",
+              "has_values": true,
+              "values": [
+                {
+                  "value11": {
+                    "value_id": "v11",
+                    "value": "figures / tables / equations",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy14": {
+        "id": "a14",
+        "name": "Grobid",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "source format",
+              "has_values": true,
+              "values": [
+                {
+                  "value9": {
+                    "value_id": "v9",
+                    "value": "PDF",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter7": {
+              "id": "p7",
+              "name": "document text extraction",
+              "has_values": true,
+              "values": [
+                {
+                  "value10": {
+                    "value_id": "v10",
+                    "value": "clean",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter8": {
+              "id": "p8",
+              "name": "structured fields extraction",
+              "has_values": true,
+              "values": [
+                {
+                  "value11": {
+                    "value_id": "v11",
+                    "value": "figures / tables / equations",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy15": {
+        "id": "a15",
+        "name": "SpaCy",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter9": {
+              "id": "p9",
+              "name": "token extraction",
+              "has_values": true,
+              "values": [
+                {
+                  "value12": {
+                    "value_id": "v12",
+                    "value": "clean",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter10": {
+              "id": "p10",
+              "name": "sentence extraction",
+              "has_values": true,
+              "values": [
+                {
+                  "value13": {
+                    "value_id": "v13",
+                    "value": "clean",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

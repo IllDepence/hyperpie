@@ -1,0 +1,45 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy7": {
+        "id": "a7",
+        "name": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy8": {
+        "id": "a8",
+        "name": "DS2 architecture",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "fully connected layer shape",
+              "has_values": true,
+              "values": [
+                {
+                  "value9": {
+                    "value_id": "v9",
+                    "value": "+4",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "named entity tagging capabilities",
+        "has_parameters": false
+      }
+    }
+  ]
+}

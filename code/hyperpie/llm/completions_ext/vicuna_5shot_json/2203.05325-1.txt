@@ -1,0 +1,78 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "task",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "earlier work",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy3": {
+        "id": "a3",
+        "name": "joint model",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy4": {
+        "id": "a4",
+        "name": "Bi-LSTMs",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy5": {
+        "id": "a5",
+        "name": "transformer-based language models",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy6": {
+        "id": "a6",
+        "name": "BERT",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy7": {
+        "id": "a7",
+        "name": "span scoring mechanism",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "feed forward neural network",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy8": {
+        "id": "a8",
+        "name": "DocRED",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "dataset",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "model",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy3": {
+        "id": "a3",
+        "name": "task",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "Entity recognition",
+              "has_values": false
+            }
+          },
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "Coreference resolution",
+              "has_values": false
+            }
+          },
+          {
+            "parameter3": {
+              "id": "p3",
+              "name": "Relation extraction",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

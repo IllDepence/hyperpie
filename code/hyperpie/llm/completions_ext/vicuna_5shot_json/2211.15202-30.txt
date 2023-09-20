@@ -1,0 +1,21 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "40-fold cross-validation settings",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy23": {
+        "id": "a23",
+        "name": "paper [10]",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    }
+  ]
+}

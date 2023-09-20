@@ -1,0 +1,56 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy6": {
+        "id": "a6",
+        "name": "DS2 weights",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy5": {
+        "id": "a5",
+        "name": "E2E model",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy16": {
+        "id": "a16",
+        "name": "4-gram LM",
+        "type": "loss function",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter12": {
+              "id": "p12",
+              "name": "beam-width",
+              "has_values": true,
+              "values": [
+                {
+                  "value6": {
+                    "value_id": "v6",
+                    "value": "1024",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy17": {
+        "id": "a17",
+        "name": "WER",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    }
+  ]
+}

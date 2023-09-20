@@ -1,0 +1,12 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy24": {
+        "id": "a24",
+        "name": "knowledge distillation loss",
+        "has_parameters": false
+      }
+    }
+  ]
+}

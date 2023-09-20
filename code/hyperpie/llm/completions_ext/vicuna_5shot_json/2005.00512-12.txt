@@ -1,0 +1,21 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy16": {
+        "id": "a16",
+        "name": "DyGIE++",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy23": {
+        "id": "a23",
+        "name": "CRF sequence tagger",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

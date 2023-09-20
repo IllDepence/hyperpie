@@ -1,0 +1,13 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy6": {
+        "id": "a6",
+        "name": "SciERC",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    }
+  ]
+}

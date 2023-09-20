@@ -1,0 +1,53 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy25": {
+        "id": "a25",
+        "name": "GCNII",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy26": {
+        "id": "a26",
+        "name": "H2GCN",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy27": {
+        "id": "a27",
+        "name": "GREAD-BS",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy28": {
+        "id": "a28",
+        "name": "GREAD-F",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy29": {
+        "id": "a29",
+        "name": "GREAD-AC",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy30": {
+        "id": "a30",
+        "name": "BLEND",
+        "type": "model",
+        "has_parameters": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy32": {
+        "id": "a32",
+        "name": "log-transformed number of citations",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy33": {
+        "id": "a33",
+        "name": "arithmetic mean",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

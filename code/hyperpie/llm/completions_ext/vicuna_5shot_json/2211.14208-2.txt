@@ -1,0 +1,21 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy12": {
+        "id": "a12",
+        "name": "FA-GCN",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy13": {
+        "id": "a13",
+        "name": "GPR-GNN",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

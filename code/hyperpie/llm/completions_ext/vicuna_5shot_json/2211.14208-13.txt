@@ -1,0 +1,26 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy12": {
+        "id": "a12",
+        "name": "Euler method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy13": {
+        "id": "a13",
+        "name": "4th order Runge–Kutta (RK4) method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy14": {
+        "id": "a14",
+        "name": "Dormand–Prince (DOPRI) method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

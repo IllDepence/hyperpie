@@ -1,0 +1,255 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy16": {
+        "id": "a16",
+        "name": "citation recommendation",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy24": {
+        "id": "a24",
+        "name": "automatic in-text citations localization method",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy30": {
+        "id": "a30",
+        "name": "neural probability model",
+        "type": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "multi-layer neural network",
+              "has_values": false
+            }
+          },
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "semantic distance",
+              "has_values": true,
+              "values": [
+                {
+                  "value1": {
+                    "value_id": "v1",
+                    "value": "grounds of semantic distance",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter3": {
+              "id": "p3",
+              "name": "citation probability prediction",
+              "has_values": true,
+              "values": [
+                {
+                  "value2": {
+                    "value_id": "v2",
+                    "value": "papers",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy9": {
+        "id": "a9",
+        "name": "CIRec",
+        "type": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter4": {
+              "id": "p4",
+              "name": "citation tendency",
+              "has_values": false
+            }
+          },
+          {
+            "parameter5": {
+              "id": "p5",
+              "name": "weighted heterogeneous network",
+              "has_values": true,
+              "values": [
+                {
+                  "value3": {
+                    "value_id": "v3",
+                    "value": "incorporates",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "biased random walk procedure",
+              "has_values": true,
+              "values": [
+                {
+                  "value4": {
+                    "value_id": "v4",
+                    "value": "incorporates",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter7": {
+              "id": "p7",
+              "name": "skip-gram model",
+              "has_values": true,
+              "values": [
+                {
+                  "value5": {
+                    "value_id": "v5",
+                    "value": "incorporates",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy16": {
+        "id": "a16",
+        "name": "Neural Citation Network (NCN)",
+        "type": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter8": {
+              "id": "p8",
+              "name": "encoder-decoder architecture",
+              "has_values": false
+            }
+          },
+          {
+            "parameter9": {
+              "id": "p9",
+              "name": "local citation recommendation",
+              "has_values": true,
+              "values": [
+                {
+                  "value6": {
+                    "value_id": "v6",
+                    "value": "constructed on",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy34": {
+        "id": "a34",
+        "name": "Convolutional Neural Networks (CNN)",
+        "type": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter10": {
+              "id": "p10",
+              "name": "local citation recommendation",
+              "has_values": true,
+              "values": [
+                {
+                  "value7": {
+                    "value_id": "v7",
+                    "value": "used in",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy26": {
+        "id": "a26",
+        "name": "Long Short-Term Memory (LSTM)",
+        "type": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter12": {
+              "id": "p12",
+              "name": "local citation recommendation",
+              "has_values": true,
+              "values": [
+                {
+                  "value9": {
+                    "value_id": "v9",
+                    "value": "used in",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy33": {
+        "id": "a33",
+        "name": "Graph Convolutional Networks (GCN)",
+        "type": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter14": {
+              "id": "p14",
+              "name": "local citation recommendation",
+              "has_values": true,
+              "values": [
+                {
+                  "value11": {
+                    "value_id": "v11",
+                    "value": "used in",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

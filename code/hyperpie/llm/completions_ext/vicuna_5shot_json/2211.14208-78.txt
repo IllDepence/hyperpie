@@ -1,0 +1,21 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy7": {
+        "id": "a7",
+        "name": "GREAD-BS",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy8": {
+        "id": "a8",
+        "name": "GREAD-Z",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    }
+  ]
+}

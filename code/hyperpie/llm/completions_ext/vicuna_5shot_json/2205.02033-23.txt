@@ -1,0 +1,12 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy6": {
+        "id": "a6",
+        "name": "COCI (OpenCitations Index of Crossref open DOI-to-DOI references)",
+        "has_parameters": false
+      }
+    }
+  ]
+}

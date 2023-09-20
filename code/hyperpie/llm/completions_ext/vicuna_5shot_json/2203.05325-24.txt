@@ -1,0 +1,166 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "model",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "relation extraction \(F_1\) scores",
+        "type": "loss function",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "macro \(F_1\) score",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy3": {
+        "id": "a3",
+        "name": "math domain",
+        "type": "dataset",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "macro \(F_1\) score",
+              "has_values": false
+            }
+          },
+          {
+            "parameter3": {
+              "id": "p3",
+              "name": "training examples distribution",
+              "has_values": true,
+              "values": [
+                {
+                  "value1": {
+                    "value_id": "v1",
+                    "value": "<distribution value>",
+                    "context": "math domain",
+                    "context_id": "c1"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy4": {
+        "id": "a4",
+        "name": "physics domain",
+        "type": "dataset",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter4": {
+              "id": "p4",
+              "name": "macro \(F_1\) score",
+              "has_values": false
+            }
+          },
+          {
+            "parameter5": {
+              "id": "p5",
+              "name": "training examples distribution",
+              "has_values": true,
+              "values": [
+                {
+                  "value2": {
+                    "value_id": "v2",
+                    "value": "<distribution value>",
+                    "context": "physics domain",
+                    "context_id": "c2"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy5": {
+        "id": "a5",
+        "name": "computer science domain",
+        "type": "dataset",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "macro \(F_1\) score",
+              "has_values": false
+            }
+          },
+          {
+            "parameter7": {
+              "id": "p7",
+              "name": "training examples distribution",
+              "has_values": true,
+              "values": [
+                {
+                  "value3": {
+                    "value_id": "v3",
+                    "value": "<distribution value>",
+                    "context": "computer science domain",
+                    "context_id": "c3"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy6": {
+        "id": "a6",
+        "name": "economics domain",
+        "type": "dataset",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter8": {
+              "id": "p8",
+              "name": "macro \(F_1\) score",
+              "has_values": false
+            }
+          },
+          {
+            "parameter9": {
+              "id": "p9",
+              "name": "training examples distribution",
+              "has_values": true,
+              "values": [
+                {
+                  "value4": {
+                    "value_id": "v4",
+                    "value": "<distribution value>",
+                    "context": "economics domain",
+                    "context_id": "c4"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

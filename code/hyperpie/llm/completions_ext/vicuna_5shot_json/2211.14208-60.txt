@@ -1,0 +1,30 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy7": {
+        "id": "a7",
+        "name": "Cora generator",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy8": {
+        "id": "a8",
+        "name": "GNNs",
+        "type": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "homophily ratio",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

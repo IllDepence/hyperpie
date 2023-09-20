@@ -1,0 +1,26 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy14": {
+        "id": "a14",
+        "name": "Convolutional Neural Networks (CNN)",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy15": {
+        "id": "a15",
+        "name": "ImageNet Large Scale Visual Recognition Challenge (ILSVRC)",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy16": {
+        "id": "a16",
+        "name": "binary classification",
+        "has_parameters": false
+      }
+    }
+  ]
+}

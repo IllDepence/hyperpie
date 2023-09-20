@@ -1,0 +1,19 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy37": {
+        "id": "a37",
+        "name": "GROBID",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy38": {
+        "id": "a38",
+        "name": "scispaCy",
+        "has_parameters": false
+      }
+    }
+  ]
+}

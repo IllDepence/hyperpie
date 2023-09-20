@@ -1,0 +1,496 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy12": {
+        "id": "a12",
+        "name": "RoBERTa",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy13": {
+        "id": "a13",
+        "name": "DistilRoBERTa",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy14": {
+        "id": "a14",
+        "name": "CoNLL03",
+        "type": "dataset",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "max training epoch",
+              "has_values": true,
+              "values": [
+                {
+                  "value3": {
+                    "value_id": "v3",
+                    "value": "50",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter7": {
+              "id": "p7",
+              "name": "training batch size",
+              "has_values": true,
+              "values": [
+                {
+                  "value4": {
+                    "value_id": "v4",
+                    "value": "16",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter8": {
+              "id": "p8",
+              "name": "learning rate",
+              "has_values": true,
+              "values": [
+                {
+                  "value5": {
+                    "value_id": "v5",
+                    "value": "1e-5",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter9": {
+              "id": "p9",
+              "name": "pretraining epochs with noisy labels",
+              "has_values": true,
+              "values": [
+                {
+                  "value6": {
+                    "value_id": "v6",
+                    "value": "1",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy15": {
+        "id": "a15",
+        "name": "OntoNotes 5.0",
+        "type": "dataset",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "max training epoch",
+              "has_values": true,
+              "values": [
+                {
+                  "value3": {
+                    "value_id": "v3",
+                    "value": "50",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter7": {
+              "id": "p7",
+              "name": "training batch size",
+              "has_values": true,
+              "values": [
+                {
+                  "value4": {
+                    "value_id": "v4",
+                    "value": "32",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter8": {
+              "id": "p8",
+              "name": "learning rate",
+              "has_values": true,
+              "values": [
+                {
+                  "value5": {
+                    "value_id": "v5",
+                    "value": "2e-5",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter9": {
+              "id": "p9",
+              "name": "pretraining epochs with noisy labels",
+              "has_values": true,
+              "values": [
+                {
+                  "value6": {
+                    "value_id": "v6",
+                    "value": "2",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy16": {
+        "id": "a16",
+        "name": "Webpage",
+        "type": "dataset",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "max training epoch",
+              "has_values": true,
+              "values": [
+                {
+                  "value3": {
+                    "value_id": "v3",
+                    "value": "50",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter7": {
+              "id": "p7",
+              "name": "training batch size",
+              "has_values": true,
+              "values": [
+                {
+                  "value4": {
+                    "value_id": "v4",
+                    "value": "16",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter8": {
+              "id": "p8",
+              "name": "learning rate",
+              "has_values": true,
+              "values": [
+                {
+                  "value5": {
+                    "value_id": "v5",
+                    "value": "1e-5",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter9": {
+              "id": "p9",
+              "name": "pretraining epochs with noisy labels",
+              "has_values": true,
+              "values": [
+                {
+                  "value6": {
+                    "value_id": "v6",
+                    "value": "12",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy17": {
+        "id": "a17",
+        "name": "Twitter",
+        "type": "dataset",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "max training epoch",
+              "has_values": true,
+              "values": [
+                {
+                  "value3": {
+                    "value_id": "v3",
+                    "value": "50",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter7": {
+              "id": "p7",
+              "name": "training batch size",
+              "has_values": true,
+              "values": [
+                {
+                  "value4": {
+                    "value_id": "v4",
+                    "value": "16",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter8": {
+              "id": "p8",
+              "name": "learning rate",
+              "has_values": true,
+              "values": [
+                {
+                  "value5": {
+                    "value_id": "v5",
+                    "value": "2e-5",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter9": {
+              "id": "p9",
+              "name": "pretraining epochs with noisy labels",
+              "has_values": true,
+              "values": [
+                {
+                  "value6": {
+                    "value_id": "v6",
+                    "value": "6",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy18": {
+        "id": "a18",
+        "name": "adaptive teacher learning",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter10": {
+              "id": "p10",
+              "name": "confidence threshold σ1",
+              "has_values": true,
+              "values": [
+                {
+                  "value7": {
+                    "value_id": "v7",
+                    "value": "0.9",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy19": {
+        "id": "a19",
+        "name": "fine-grained student ensemble",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter11": {
+              "id": "p11",
+              "name": "m",
+              "has_values": true,
+              "values": [
+                {
+                  "value8": {
+                    "value_id": "v8",
+                    "value": "0.995",
+                    "context": null,
+                    "context_id": null
+                  }
+                },
+                {
+                  "value9": {
+                    "value_id": "v9",
+                    "value": "0.995",
+                    "context": null,
+                    "context_id": null
+                  }
+                },
+                {
+                  "value10": {
+                    "value_id": "v10",
+                    "value": "0.99",
+                    "context": null,
+                    "context_id": null
+                  }
+                },
+                {
+                  "value11": {
+                    "value_id": "v11",
+                    "value": "0.995",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter12": {
+              "id": "p12",
+              "name": "σ2",
+              "has_values": true,
+              "values": [
+                {
+                  "value12": {
+                    "value_id": "v12",
+                    "value": "0.8",
+                    "context": null,
+                    "context_id": null
+                  }
+                },
+                {
+                  "value13": {
+                    "value_id": "v13",
+                    "value": "0.995",
+                    "context": null,
+                    "context_id": null
+                  }
+                },
+                {
+                  "value14": {
+                    "value_id": "v14",
+                    "value": "0.8",
+                    "context": null,
+                    "context_id": null
+                  }
+                },
+                {
+                  "value15": {
+                    "value_id": "v15",
+                    "value": "0.75",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy20": {
+        "id": "a20",
+        "name": "CoNLL03",
+        "type": "dataset",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter16": {
+              "id": "p16",
+              "name": "m",
+              "has_values": true,
+              "values": [
+                {
+                  "value8": {
+                    "value_id": "v8",
+                    "value": "0.995",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter17": {
+              "id": "p17",
+              "name": "σ2",
+              "has_values": true,
+              "values": [
+                {
+                  "value12": {
+                    "value_id": "v12",
+                    "value": "0.8",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

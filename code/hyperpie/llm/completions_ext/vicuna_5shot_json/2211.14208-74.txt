@@ -1,0 +1,58 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy18": {
+        "id": "a18",
+        "name": "train/valid/test splits",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy20": {
+        "id": "a20",
+        "name": "LCC",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy19": {
+        "id": "a19",
+        "name": "Citeseer",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy21": {
+        "id": "a21",
+        "name": "encoder network",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter13": {
+              "id": "p13",
+              "name": "input dropout",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy22": {
+        "id": "a22",
+        "name": "output layer",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter14": {
+              "id": "p14",
+              "name": "dropout",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

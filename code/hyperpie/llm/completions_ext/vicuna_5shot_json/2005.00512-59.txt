@@ -1,0 +1,45 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy13": {
+        "id": "a13",
+        "name": "salient clusters identification",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy14": {
+        "id": "a14",
+        "name": "mention identification",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy15": {
+        "id": "a15",
+        "name": "pairwise coreference",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy16": {
+        "id": "a16",
+        "name": "mention clustering",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy17": {
+        "id": "a17",
+        "name": "relation extraction",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

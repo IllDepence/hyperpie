@@ -1,0 +1,195 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "NER tagger",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "Flair tagger",
+        "type": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "threshold probability",
+              "has_values": true,
+              "values": [
+                {
+                  "value3": {
+                    "value_id": "v3",
+                    "value": "0.95",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy3": {
+        "id": "a3",
+        "name": "CoNLL-2003",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy4": {
+        "id": "a4",
+        "name": "DATA1",
+        "type": "dataset",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "files",
+              "has_values": true,
+              "values": [
+                {
+                  "value5": {
+                    "value_id": "v5",
+                    "value": "600,000",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter7": {
+              "id": "p7",
+              "name": "hours",
+              "has_values": true,
+              "values": [
+                {
+                  "value6": {
+                    "value_id": "v6",
+                    "value": "1,000",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy5": {
+        "id": "a5",
+        "name": "DATA2",
+        "type": "dataset",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter8": {
+              "id": "p8",
+              "name": "files",
+              "has_values": true,
+              "values": [
+                {
+                  "value9": {
+                    "value_id": "v9",
+                    "value": "70,769",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter9": {
+              "id": "p9",
+              "name": "hours",
+              "has_values": true,
+              "values": [
+                {
+                  "value10": {
+                    "value_id": "v10",
+                    "value": "150",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter10": {
+              "id": "p10",
+              "name": "unique sentences",
+              "has_values": true,
+              "values": [
+                {
+                  "value11": {
+                    "value_id": "v11",
+                    "value": "31,000",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter11": {
+              "id": "p11",
+              "name": "repetition sentences",
+              "has_values": true,
+              "values": [
+                {
+                  "value12": {
+                    "value_id": "v12",
+                    "value": "39,769",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter12": {
+              "id": "p12",
+              "name": "repetition sentences from unique sentences",
+              "has_values": true,
+              "values": [
+                {
+                  "value13": {
+                    "value_id": "v13",
+                    "value": "1238",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy6": {
+        "id": "a6",
+        "name": "Doccano",
+        "type": "model",
+        "has_parameters": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy19": {
+        "id": "a19",
+        "name": "model",
+        "has_parameters": false
+      }
+    }
+  ]
+}

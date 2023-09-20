@@ -1,0 +1,21 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "ASR system",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy9": {
+        "id": "a9",
+        "name": "NER tagger",
+        "type": "model",
+        "has_parameters": false
+      }
+    }
+  ]
+}

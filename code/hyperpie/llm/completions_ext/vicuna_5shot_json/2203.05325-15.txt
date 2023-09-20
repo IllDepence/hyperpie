@@ -1,0 +1,29 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy13": {
+        "id": "a13",
+        "name": "relation extraction method",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy14": {
+        "id": "a14",
+        "name": "MNAV model",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy15": {
+        "id": "a15",
+        "name": "adaptive thresholding loss",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    }
+  ]
+}

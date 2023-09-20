@@ -1,0 +1,228 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy18": {
+        "id": "a18",
+        "name": "VGG-16",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy19": {
+        "id": "a19",
+        "name": "VGG-19",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy26": {
+        "id": "a26",
+        "name": "2-dimensional max-pooling",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "blocks",
+              "has_values": true,
+              "values": [
+                {
+                  "value3": {
+                    "value_id": "v3",
+                    "value": "5",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "convolutional layers per block",
+              "has_values": true,
+              "values": [
+                {
+                  "value5": {
+                    "value_id": "v5",
+                    "value": "[2, 4, 4, 4]",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter3": {
+              "id": "p3",
+              "name": "max-pooling layers per block",
+              "has_values": true,
+              "values": [
+                {
+                  "value6": {
+                    "value_id": "v6",
+                    "value": "[1, 1, 1, 1]",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy8": {
+        "id": "a8",
+        "name": "imagenet",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy27": {
+        "id": "a27",
+        "name": "2-dimensional global average pooling",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "hidden neurons",
+              "has_values": true,
+              "values": [
+                {
+                  "value4": {
+                    "value_id": "v4",
+                    "value": "1024",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "activation function",
+              "has_values": true,
+              "values": [
+                {
+                  "value7": {
+                    "value_id": "v7",
+                    "value": "ReLU",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter3": {
+              "id": "p3",
+              "name": "output layer neurons",
+              "has_values": true,
+              "values": [
+                {
+                  "value8": {
+                    "value_id": "v8",
+                    "value": "2",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter4": {
+              "id": "p4",
+              "name": "activation function",
+              "has_values": true,
+              "values": [
+                {
+                  "value9": {
+                    "value_id": "v9",
+                    "value": "softmax",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy31": {
+        "id": "a31",
+        "name": "backward propagation",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter5": {
+              "id": "p5",
+              "name": "loss function",
+              "has_values": true,
+              "values": [
+                {
+                  "value10": {
+                    "value_id": "v10",
+                    "value": "binary cross-entropy",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "optimizer",
+              "has_values": true,
+              "values": [
+                {
+                  "value11": {
+                    "value_id": "v11",
+                    "value": "Adam",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy32": {
+        "id": "a32",
+        "name": "binary cross-entropy loss function",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy33": {
+        "id": "a33",
+        "name": "Adam optimizer",
+        "type": "optimizer",
+        "has_parameters": false
+      }
+    }
+  ]
+}

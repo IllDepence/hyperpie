@@ -1,0 +1,53 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy6": {
+        "id": "a6",
+        "name": "citation bias",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy7": {
+        "id": "a7",
+        "name": "recommender systems' exposure problem",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy20": {
+        "id": "a20",
+        "name": "gender and racial biases",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy21": {
+        "id": "a21",
+        "name": "location-based biases",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy22": {
+        "id": "a22",
+        "name": "information bubbles",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy23": {
+        "id": "a23",
+        "name": "popularity bias of recommending scientific articles",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

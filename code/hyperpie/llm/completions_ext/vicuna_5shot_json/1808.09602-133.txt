@@ -1,0 +1,53 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy100": {
+        "id": "a100",
+        "name": "Language Modeling",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy101": {
+        "id": "a101",
+        "name": "POS Tagging",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy102": {
+        "id": "a102",
+        "name": "Machine Translation",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy103": {
+        "id": "a103",
+        "name": "Object Recognition",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy104": {
+        "id": "a104",
+        "name": "Object Detection",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy105": {
+        "id": "a105",
+        "name": "Image Segmentation",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

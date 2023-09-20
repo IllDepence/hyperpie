@@ -1,0 +1,29 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy13": {
+        "id": "a13",
+        "name": "LSTM+CRF",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy14": {
+        "id": "a14",
+        "name": "E2E Rel",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy15": {
+        "id": "a15",
+        "name": "E2E Coref",
+        "type": "model",
+        "has_parameters": false
+      }
+    }
+  ]
+}

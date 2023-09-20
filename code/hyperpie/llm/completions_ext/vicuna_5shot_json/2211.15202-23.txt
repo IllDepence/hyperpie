@@ -1,0 +1,29 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "loss function",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy24": {
+        "id": "a24",
+        "name": "categorical cross-entropy loss",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy30": {
+        "id": "a30",
+        "name": "DML",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    }
+  ]
+}

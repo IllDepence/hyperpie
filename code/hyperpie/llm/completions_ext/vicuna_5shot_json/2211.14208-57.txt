@@ -1,0 +1,30 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "oversmoothing phenomenon",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "Dirichlet energy",
+        "type": "loss function",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "E(H, A)",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

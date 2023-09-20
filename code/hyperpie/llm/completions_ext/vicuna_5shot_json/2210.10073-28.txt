@@ -1,0 +1,21 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy6": {
+        "id": "a6",
+        "name": "scispaCy",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy7": {
+        "id": "a7",
+        "name": "CRPSE",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

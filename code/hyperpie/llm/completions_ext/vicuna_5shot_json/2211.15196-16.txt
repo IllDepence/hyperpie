@@ -1,0 +1,40 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy36": {
+        "id": "a36",
+        "name": "F measure",
+        "type": "loss function",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter37": {
+              "id": "p37",
+              "name": "\(\beta\) value",
+              "has_values": true,
+              "values": [
+                {
+                  "value1": {
+                    "value_id": "v1",
+                    "value": "0.5",
+                    "context": "inclines towards precision",
+                    "context_id": "c1"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy38": {
+        "id": "a38",
+        "name": "XceptionNet",
+        "type": "model",
+        "has_parameters": false
+      }
+    }
+  ]
+}

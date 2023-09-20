@@ -1,0 +1,12 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy17": {
+        "id": "a17",
+        "name": "negative log-likelihood loss",
+        "has_parameters": false
+      }
+    }
+  ]
+}

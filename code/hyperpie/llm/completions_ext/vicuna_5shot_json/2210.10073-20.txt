@@ -1,0 +1,21 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "S2ORC",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy3": {
+        "id": "a3",
+        "name": "raw published scientific entity-papers mapping dataset",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    }
+  ]
+}

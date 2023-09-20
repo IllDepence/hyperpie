@@ -1,0 +1,29 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy23": {
+        "id": "a23",
+        "name": "SoftTriple Loss",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy24": {
+        "id": "a24",
+        "name": "ProxyNCA Loss",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy25": {
+        "id": "a25",
+        "name": "ProxyAnchor Loss",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy18": {
+        "id": "a18",
+        "name": "Pareto solution",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy26": {
+        "id": "a26",
+        "name": "linear scalarization of tasks with adaptive weight assignment",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "α1",
+              "has_values": false
+            }
+          },
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "α2",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

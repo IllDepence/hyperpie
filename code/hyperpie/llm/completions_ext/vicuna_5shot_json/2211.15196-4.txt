@@ -1,0 +1,76 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy27": {
+        "id": "a27",
+        "name": "global average pooling",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy28": {
+        "id": "a28",
+        "name": "ReLU",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy29": {
+        "id": "a29",
+        "name": "softmax",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy30": {
+        "id": "a30",
+        "name": "ResNet 152 v2",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "layers",
+              "has_values": true,
+              "values": [
+                {
+                  "value9": {
+                    "value_id": "v9",
+                    "value": "152",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter7": {
+              "id": "p7",
+              "name": "version",
+              "has_values": true,
+              "values": [
+                {
+                  "value10": {
+                    "value_id": "v10",
+                    "value": "2",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy31": {
+        "id": "a31",
+        "name": "back-propagation",
+        "has_parameters": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "published scientific entity-papers mapping dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "S2ORC",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy3": {
+        "id": "a3",
+        "name": "English Word Frequency dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy4": {
+        "id": "a4",
+        "name": "AllenNLP: A Deep Semantic Natural Language Processing Platform",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy5": {
+        "id": "a5",
+        "name": "VoxCeleb2: Deep Speaker Recognition",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy6": {
+        "id": "a6",
+        "name": "Computing Research Repository (CoRR)",
+        "has_parameters": false
+      }
+    }
+  ]
+}

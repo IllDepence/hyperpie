@@ -1,0 +1,29 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy20": {
+        "id": "a20",
+        "name": "SciERC",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy17": {
+        "id": "a17",
+        "name": "SemEval 17",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy18": {
+        "id": "a18",
+        "name": "SemEval 18",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy17": {
+        "id": "a17",
+        "name": "RoBERTa",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy18": {
+        "id": "a18",
+        "name": "BiLSTM-CRF",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter11": {
+              "id": "p11",
+              "name": "BiLSTM",
+              "has_values": false
+            }
+          },
+          {
+            "parameter12": {
+              "id": "p12",
+              "name": "CRF layer",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

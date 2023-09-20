@@ -1,0 +1,29 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy21": {
+        "id": "a21",
+        "name": "DeepLabv3+",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy22": {
+        "id": "a22",
+        "name": "VQAv2",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy23": {
+        "id": "a23",
+        "name": "EPIC-KITCHENS",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    }
+  ]
+}

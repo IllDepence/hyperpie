@@ -1,0 +1,38 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "random forests",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy9": {
+        "id": "a9",
+        "name": "F1-score",
+        "type": "loss function",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter10": {
+              "id": "p10",
+              "name": "value",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy8": {
+        "id": "a8",
+        "name": "dataset",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    }
+  ]
+}

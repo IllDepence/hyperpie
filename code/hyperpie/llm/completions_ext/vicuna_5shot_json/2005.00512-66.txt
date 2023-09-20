@@ -1,0 +1,21 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy5": {
+        "id": "a5",
+        "name": "BERT coreference model",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy7": {
+        "id": "a7",
+        "name": "AllenNLP library",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

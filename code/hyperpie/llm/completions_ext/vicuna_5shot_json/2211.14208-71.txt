@@ -1,0 +1,52 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy24": {
+        "id": "a24",
+        "name": "cSBM",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy19": {
+        "id": "a19",
+        "name": "Gaussian random vectors",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter20": {
+              "id": "p20",
+              "name": "σ",
+              "has_values": false
+            }
+          },
+          {
+            "parameter19": {
+              "id": "p19",
+              "name": "μ1",
+              "has_values": false
+            }
+          },
+          {
+            "parameter21": {
+              "id": "p21",
+              "name": "μ2",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy25": {
+        "id": "a25",
+        "name": "SBM",
+        "type": "model",
+        "has_parameters": false
+      }
+    }
+  ]
+}

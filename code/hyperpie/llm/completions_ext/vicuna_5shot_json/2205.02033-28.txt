@@ -1,0 +1,19 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy25": {
+        "id": "a25",
+        "name": "Lorenz curve",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy26": {
+        "id": "a26",
+        "name": "Gini coefficient",
+        "has_parameters": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy25": {
+        "id": "a25",
+        "name": "adaptive weighting method",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy26": {
+        "id": "a26",
+        "name": "Knowledge Distillation (KD)",
+        "type": "model",
+        "has_parameters": false
+      }
+    }
+  ]
+}

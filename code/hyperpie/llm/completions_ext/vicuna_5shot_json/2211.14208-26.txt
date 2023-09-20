@@ -1,0 +1,38 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy14": {
+        "id": "a14",
+        "name": "reaction-diffusion layer",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy23": {
+        "id": "a23",
+        "name": "heat equation",
+        "type": "loss function",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "diffusion term",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy24": {
+        "id": "a24",
+        "name": "oversmoothing problem",
+        "type": "regularization technique",
+        "has_parameters": false
+      }
+    }
+  ]
+}

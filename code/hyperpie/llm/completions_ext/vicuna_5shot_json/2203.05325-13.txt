@@ -1,0 +1,13 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy15": {
+        "id": "a15",
+        "name": "triplet loss function",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    }
+  ]
+}

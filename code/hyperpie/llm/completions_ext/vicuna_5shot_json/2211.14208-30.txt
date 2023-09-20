@@ -1,0 +1,29 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy17": {
+        "id": "a17",
+        "name": "blurring-sharpening process",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy18": {
+        "id": "a18",
+        "name": "reaction-diffusion process",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy19": {
+        "id": "a19",
+        "name": "low-pass graph convolutional filtering",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

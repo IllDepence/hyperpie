@@ -1,0 +1,124 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy21": {
+        "id": "a21",
+        "name": "Adam optimizer",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "epochs",
+              "has_values": true,
+              "values": [
+                {
+                  "value3": {
+                    "value_id": "v3",
+                    "value": "200",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter7": {
+              "id": "p7",
+              "name": "learning rate",
+              "has_values": true,
+              "values": [
+                {
+                  "value5": {
+                    "value_id": "v5",
+                    "value": "[1e-4, 2e-2]",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter8": {
+              "id": "p8",
+              "name": "weight decay",
+              "has_values": true,
+              "values": [
+                {
+                  "value6": {
+                    "value_id": "v6",
+                    "value": "[0, 0.01]",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy22": {
+        "id": "a22",
+        "name": "dimensionality of H",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter9": {
+              "id": "p9",
+              "name": "dim (H)",
+              "has_values": true,
+              "values": [
+                {
+                  "value10": {
+                    "value_id": "v10",
+                    "value": "{32, 64, 128, 256}",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy23": {
+        "id": "a23",
+        "name": "T in Eq.",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter10": {
+              "id": "p10",
+              "name": "T",
+              "has_values": true,
+              "values": [
+                {
+                  "value9": {
+                    "value_id": "v9",
+                    "value": "[1.0, 4.0]",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy24": {
+        "id": "a24",
+        "name": "baseline's accuracy",
+        "has_parameters": false
+      }
+    }
+  ]
+}

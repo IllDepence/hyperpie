@@ -1,0 +1,37 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy30": {
+        "id": "a30",
+        "name": "N-gram LM",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy29": {
+        "id": "a29",
+        "name": "L",
+        "type": "loss function",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter5": {
+              "id": "p5",
+              "name": "\alpha",
+              "has_values": false
+            }
+          },
+          {
+            "parameter7": {
+              "id": "p7",
+              "name": "\beta",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy24": {
+        "id": "a24",
+        "name": "EMA strategy",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

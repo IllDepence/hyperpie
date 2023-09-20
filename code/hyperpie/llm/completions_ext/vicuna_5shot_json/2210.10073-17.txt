@@ -1,0 +1,13 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "Semantic Scholar Open Research Corpus (S2ORC)",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    }
+  ]
+}

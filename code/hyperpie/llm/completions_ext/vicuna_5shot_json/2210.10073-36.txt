@@ -1,0 +1,54 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy12": {
+        "id": "a12",
+        "name": "CRPSE",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy13": {
+        "id": "a13",
+        "name": "Open access papers",
+        "type": "dataset",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter14": {
+              "id": "p14",
+              "name": "Number of conferences",
+              "has_values": false
+            }
+          },
+          {
+            "parameter15": {
+              "id": "p15",
+              "name": "Year",
+              "has_values": true,
+              "values": [
+                {
+                  "value16": {
+                    "value_id": "v16",
+                    "value": "2020",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter17": {
+              "id": "p17",
+              "name": "Conference type",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

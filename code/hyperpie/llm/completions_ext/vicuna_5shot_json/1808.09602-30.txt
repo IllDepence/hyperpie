@@ -1,0 +1,61 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy24": {
+        "id": "a24",
+        "name": "span representations",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy18": {
+        "id": "a18",
+        "name": "bi-directional LSTMs",
+        "type": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter33": {
+              "id": "p18",
+              "name": "ELMo embeddings",
+              "has_values": false
+            }
+          },
+          {
+            "parameter24": {
+              "id": "p18",
+              "name": "word embeddings",
+              "has_values": false
+            }
+          },
+          {
+            "parameter25": {
+              "id": "p18",
+              "name": "character embeddings",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy33": {
+        "id": "a33",
+        "name": "ELMo",
+        "type": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter34": {
+              "id": "p33",
+              "name": "embeddings",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

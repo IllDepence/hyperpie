@@ -1,0 +1,13 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "transformer-based language model",
+        "type": "model",
+        "has_parameters": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy12": {
+        "id": "a12",
+        "name": "unified learning model for extracting scientific entities, relations, and coreference resolution",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy13": {
+        "id": "a13",
+        "name": "multi-task setup",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy14": {
+        "id": "a14",
+        "name": "span representations and coreference resolution",
+        "type": "model",
+        "has_parameters": false
+      }
+    }
+  ]
+}

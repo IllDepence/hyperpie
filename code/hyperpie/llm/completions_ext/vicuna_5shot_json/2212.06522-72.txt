@@ -1,0 +1,21 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy14": {
+        "id": "a14",
+        "name": "ATSEN",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy15": {
+        "id": "a15",
+        "name": "DS-NER",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    }
+  ]
+}

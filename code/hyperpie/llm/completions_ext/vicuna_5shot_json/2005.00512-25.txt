@@ -1,0 +1,55 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy21": {
+        "id": "a21",
+        "name": "SciERC-trained model",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy22": {
+        "id": "a22",
+        "name": "Jaccard similarity",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "threshold",
+              "has_values": false
+            }
+          },
+          {
+            "parameter7": {
+              "id": "p7",
+              "name": "\(\epsilon\)",
+              "has_values": true,
+              "values": [
+                {
+                  "value9": {
+                    "value_id": "v9",
+                    "value": "0.5",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy23": {
+        "id": "a23",
+        "name": "expert annotators",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

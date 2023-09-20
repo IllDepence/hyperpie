@@ -1,0 +1,165 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "NODEs",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "Lipschitz continuity",
+        "type": "regularization technique",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "Lipschitz constant",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy3": {
+        "id": "a3",
+        "name": "ReLU",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy4": {
+        "id": "a4",
+        "name": "Leaky ReLU",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy5": {
+        "id": "a5",
+        "name": "SoftPlus",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy6": {
+        "id": "a6",
+        "name": "Tanh",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy7": {
+        "id": "a7",
+        "name": "Sigmoid",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy8": {
+        "id": "a8",
+        "name": "ArcTan",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy9": {
+        "id": "a9",
+        "name": "Softsign",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "dropout",
+        "type": "regularization technique",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "keep probability",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy11": {
+        "id": "a11",
+        "name": "batch normalization",
+        "type": "regularization technique",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter7": {
+              "id": "p7",
+              "name": "beta",
+              "has_values": false
+            }
+          },
+          {
+            "parameter8": {
+              "id": "p8",
+              "name": "gamma",
+              "has_values": false
+            }
+          },
+          {
+            "parameter9": {
+              "id": "p9",
+              "name": "moving average decay",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy12": {
+        "id": "a12",
+        "name": "pooling methods",
+        "type": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter10": {
+              "id": "p10",
+              "name": "kernel size",
+              "has_values": false
+            }
+          },
+          {
+            "parameter11": {
+              "id": "p11",
+              "name": "stride",
+              "has_values": false
+            }
+          },
+          {
+            "parameter12": {
+              "id": "p12",
+              "name": "padding",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

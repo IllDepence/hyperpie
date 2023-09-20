@@ -1,0 +1,19 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy17": {
+        "id": "a17",
+        "name": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy32": {
+        "id": "a32",
+        "name": "model",
+        "has_parameters": false
+      }
+    }
+  ]
+}

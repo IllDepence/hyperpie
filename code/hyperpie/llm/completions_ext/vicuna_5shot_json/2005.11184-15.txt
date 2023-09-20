@@ -1,0 +1,13 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy32": {
+        "id": "a32",
+        "name": "Connectionist temporal classification (CTC) loss",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    }
+  ]
+}

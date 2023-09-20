@@ -1,0 +1,132 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "DML losses",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy23": {
+        "id": "a23",
+        "name": "Supervised Contrast Learning loss",
+        "type": "loss function",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter10": {
+              "id": "p10",
+              "name": "margin",
+              "has_values": false
+            }
+          },
+          {
+            "parameter11": {
+              "id": "p11",
+              "name": "temperature",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy24": {
+        "id": "a24",
+        "name": "Cross-Entropy loss",
+        "type": "loss function",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter12": {
+              "id": "p12",
+              "name": "logits",
+              "has_values": false
+            }
+          },
+          {
+            "parameter13": {
+              "id": "p13",
+              "name": "labels",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy25": {
+        "id": "a25",
+        "name": "RoBERTa-large fine-tuning",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy18": {
+        "id": "a18",
+        "name": "40-fold cross-validation",
+        "type": "evaluation method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "folds",
+              "value": 40,
+              "context": null,
+              "context_id": null
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy27": {
+        "id": "a27",
+        "name": "proxy-based DML losses",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy30": {
+        "id": "a30",
+        "name": "inference method",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter14": {
+              "id": "p14",
+              "name": "proxy-based DML losses",
+              "value": null,
+              "context": null,
+              "context_id": null
+            }
+          },
+          {
+            "parameter15": {
+              "id": "p15",
+              "name": "prediction process",
+              "value": null,
+              "context": null,
+              "context_id": null
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy28": {
+        "id": "a28",
+        "name": "Gunel and team",
+        "type": "researchers",
+        "has_parameters": false
+      }
+    }
+  ]
+}

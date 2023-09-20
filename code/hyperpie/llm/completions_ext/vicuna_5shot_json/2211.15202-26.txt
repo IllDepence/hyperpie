@@ -1,0 +1,42 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy9": {
+        "id": "a9",
+        "name": "proxy-based DML methods",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "logits",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "cosine distance",
+              "has_values": false
+            }
+          },
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "observation representation",
+              "has_values": false
+            }
+          },
+          {
+            "parameter3": {
+              "id": "p3",
+              "name": "proxy from the DML loss",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

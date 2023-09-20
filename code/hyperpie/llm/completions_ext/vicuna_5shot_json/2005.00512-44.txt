@@ -1,0 +1,37 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "Mention Identification",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy3": {
+        "id": "a3",
+        "name": "F1 score",
+        "type": "loss function",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "macro average",
+              "has_values": false
+            }
+          },
+          {
+            "parameter3": {
+              "id": "p3",
+              "name": "exact matches of all mention types",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

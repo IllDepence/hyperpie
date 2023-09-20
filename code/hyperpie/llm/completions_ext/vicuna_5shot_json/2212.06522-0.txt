@@ -1,0 +1,37 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy7": {
+        "id": "a7",
+        "name": "relation extraction",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy8": {
+        "id": "a8",
+        "name": "co-reference resolution",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy9": {
+        "id": "a9",
+        "name": "entity linking",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "event extraction",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

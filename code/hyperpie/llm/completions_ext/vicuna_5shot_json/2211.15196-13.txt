@@ -1,0 +1,21 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy7": {
+        "id": "a7",
+        "name": "Receiver operating characteristic curve",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy8": {
+        "id": "a8",
+        "name": "Area under curve",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    }
+  ]
+}

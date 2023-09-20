@@ -1,0 +1,78 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy19": {
+        "id": "a19",
+        "name": "\({p_{j,t1}}\)",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy20": {
+        "id": "a20",
+        "name": "cross-entropy loss",
+        "type": "loss function",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter19": {
+              "id": "p19",
+              "name": "\(\theta\)",
+              "has_values": false
+            }
+          },
+          {
+            "parameter20": {
+              "id": "p20",
+              "name": "M",
+              "has_values": true,
+              "values": [
+                {
+                  "value19": {
+                    "value_id": "v19",
+                    "value": "M",
+                    "context": "the number of samples in the training set",
+                    "context_id": "c19"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter21": {
+              "id": "p21",
+              "name": "N",
+              "has_values": true,
+              "values": [
+                {
+                  "value20": {
+                    "value_id": "v20",
+                    "value": "N",
+                    "context": "the number of tokens in each sample",
+                    "context_id": "c20"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter22": {
+              "id": "p22",
+              "name": "\(\overline{y}_j^i\)",
+              "has_values": false
+            }
+          },
+          {
+            "parameter23": {
+              "id": "p23",
+              "name": "log(p(y_j^i|X_i;\theta))",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

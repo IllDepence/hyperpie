@@ -1,0 +1,54 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "model",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy11": {
+        "id": "a11",
+        "name": "salient entity identification",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter10": {
+              "id": "p10",
+              "name": "mention frequency threshold",
+              "has_values": false
+            }
+          },
+          {
+            "parameter11": {
+              "id": "p11",
+              "name": "context aggregation model",
+              "has_values": true,
+              "values": [
+                {
+                  "value10": {
+                    "value_id": "v10",
+                    "value": "<trained model>",
+                    "context": "replacement for simple filtering step",
+                    "context_id": "c10"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy12": {
+        "id": "a12",
+        "name": "DropProb",
+        "has_parameters": false
+      }
+    }
+  ]
+}

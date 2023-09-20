@@ -1,0 +1,44 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy12": {
+        "id": "a12",
+        "name": "LM",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy34": {
+        "id": "a34",
+        "name": "\alpha",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter12": {
+              "id": "p12",
+              "name": "value",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy35": {
+        "id": "a35",
+        "name": "\beta",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter13": {
+              "id": "p13",
+              "name": "value",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

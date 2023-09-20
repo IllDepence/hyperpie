@@ -1,0 +1,13 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy17": {
+        "id": "a17",
+        "name": "Neural ordinary differential equations (NODEs)",
+        "type": "model",
+        "has_parameters": false
+      }
+    }
+  ]
+}

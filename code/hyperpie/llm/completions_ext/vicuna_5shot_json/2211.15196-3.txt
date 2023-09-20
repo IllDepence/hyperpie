@@ -1,0 +1,191 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy21": {
+        "id": "a21",
+        "name": "InceptionNet",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy34": {
+        "id": "a34",
+        "name": "Inception-V2",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy35": {
+        "id": "a35",
+        "name": "Inception-V3",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy27": {
+        "id": "a27",
+        "name": "2-dimensional global average pooling",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "hidden neuron ReLU activation layer",
+              "has_values": false
+            }
+          },
+          {
+            "parameter7": {
+              "id": "p7",
+              "name": "2 hidden neuron softmax activation output layer",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy28": {
+        "id": "a28",
+        "name": "ReLU",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "hidden neuron ReLU activation layer",
+              "has_values": false
+            }
+          },
+          {
+            "parameter7": {
+              "id": "p7",
+              "name": "2 hidden neuron softmax activation output layer",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy29": {
+        "id": "a29",
+        "name": "softmax",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "hidden neuron ReLU activation layer",
+              "has_values": false
+            }
+          },
+          {
+            "parameter7": {
+              "id": "p7",
+              "name": "2 hidden neuron softmax activation output layer",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy36": {
+        "id": "a36",
+        "name": "binary cross-entropy",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter8": {
+              "id": "p8",
+              "name": "loss function",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy37": {
+        "id": "a37",
+        "name": "Adam",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter8": {
+              "id": "p8",
+              "name": "loss optimizer",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy38": {
+        "id": "a38",
+        "name": "total parameters",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter9": {
+              "id": "p9",
+              "name": "23.90 million",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy39": {
+        "id": "a39",
+        "name": "trainable parameters",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter10": {
+              "id": "p10",
+              "name": "23.86 million",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy40": {
+        "id": "a40",
+        "name": "non-trainable parameters",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter11": {
+              "id": "p11",
+              "name": "34.432",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy41": {
+        "id": "a41",
+        "name": "Inception-V3 parameters",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter12": {
+              "id": "p12",
+              "name": "21.80 million",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

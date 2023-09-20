@@ -1,0 +1,140 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy21": {
+        "id": "a21",
+        "name": "RoBERTa",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy23": {
+        "id": "a23",
+        "name": "huggingface library",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy24": {
+        "id": "a24",
+        "name": "roberta-large",
+        "type": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "size",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy25": {
+        "id": "a25",
+        "name": "roberta-base",
+        "type": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "size",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy27": {
+        "id": "a27",
+        "name": "tokenization",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter8": {
+              "id": "p8",
+              "name": "special tokens",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy29": {
+        "id": "a29",
+        "name": "RoBERTa encoder",
+        "type": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter7": {
+              "id": "p7",
+              "name": "embedding array",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy30": {
+        "id": "a30",
+        "name": "dense layer",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter9": {
+              "id": "p9",
+              "name": "logits array",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy31": {
+        "id": "a31",
+        "name": "softmax function",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter10": {
+              "id": "p10",
+              "name": "output",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy32": {
+        "id": "a32",
+        "name": "categorical cross-entropy function",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter11": {
+              "id": "p11",
+              "name": "loss calculation",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

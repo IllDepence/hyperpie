@@ -1,0 +1,99 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy22": {
+        "id": "a22",
+        "name": "XceptionNet",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy35": {
+        "id": "a35",
+        "name": "Inception-V3",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy24": {
+        "id": "a24",
+        "name": "depth-wise separable convolutions",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy25": {
+        "id": "a25",
+        "name": "global average pooling",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy26": {
+        "id": "a26",
+        "name": "ReLU activation function",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy27": {
+        "id": "a27",
+        "name": "softmax activation function",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy28": {
+        "id": "a28",
+        "name": "binary cross-entropy",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy29": {
+        "id": "a29",
+        "name": "Adam",
+        "type": "optimizer",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "learning rate",
+              "has_values": false
+            }
+          },
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "beta 1",
+              "has_values": false
+            }
+          },
+          {
+            "parameter3": {
+              "id": "p3",
+              "name": "beta 2",
+              "has_values": false
+            }
+          },
+          {
+            "parameter4": {
+              "id": "p4",
+              "name": "epsilon",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

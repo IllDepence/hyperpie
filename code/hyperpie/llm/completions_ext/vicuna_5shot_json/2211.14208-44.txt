@@ -1,0 +1,191 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy21": {
+        "id": "a21",
+        "name": "node classification tasks",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy22": {
+        "id": "a22",
+        "name": "oversmoothing",
+        "type": "regularization technique",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "heterophily levels",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy23": {
+        "id": "a23",
+        "name": "synthetic graph",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy24": {
+        "id": "a24",
+        "name": "Ubuntu 18.04 LTS",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter7": {
+              "id": "p7",
+              "name": "version",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy25": {
+        "id": "a25",
+        "name": "Python 3.9.12",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter8": {
+              "id": "p8",
+              "name": "version",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy26": {
+        "id": "a26",
+        "name": "PyTorch 1.11.0",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter9": {
+              "id": "p9",
+              "name": "version",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy27": {
+        "id": "a27",
+        "name": "PyTorch Geometric 2.0.4",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter10": {
+              "id": "p10",
+              "name": "version",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy28": {
+        "id": "a28",
+        "name": "torchdiffeq 0.2.3",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter11": {
+              "id": "p11",
+              "name": "version",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy29": {
+        "id": "a29",
+        "name": "CUDA 11.3",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter12": {
+              "id": "p12",
+              "name": "version",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy30": {
+        "id": "a30",
+        "name": "NVIDIA Driver 465.19",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter13": {
+              "id": "p13",
+              "name": "version",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy31": {
+        "id": "a31",
+        "name": "i9 CPU",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter14": {
+              "id": "p14",
+              "name": "version",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy32": {
+        "id": "a32",
+        "name": "NVIDIA RTX 3090",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter15": {
+              "id": "p15",
+              "name": "version",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

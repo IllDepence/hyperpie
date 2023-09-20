@@ -1,0 +1,19 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a4",
+        "name": "automatic annotation stage",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy2": {
+        "id": "a5",
+        "name": "external knowledge bases",
+        "has_parameters": false
+      }
+    }
+  ]
+}

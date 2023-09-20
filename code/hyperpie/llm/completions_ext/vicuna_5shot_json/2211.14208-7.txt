@@ -1,0 +1,78 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy8": {
+        "id": "a8",
+        "name": "graph",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy9": {
+        "id": "a9",
+        "name": "feature matrix",
+        "type": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "number of nodes",
+              "has_values": false
+            }
+          },
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "number of input features",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "adjacency matrix",
+        "type": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter3": {
+              "id": "p3",
+              "name": "element",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy11": {
+        "id": "a11",
+        "name": "symmetric normalized Laplacian matrix",
+        "type": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter4": {
+              "id": "p4",
+              "name": "diagonal degree matrix",
+              "has_values": false
+            }
+          },
+          {
+            "parameter5": {
+              "id": "p5",
+              "name": "symmetric normalized adjacency matrix",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

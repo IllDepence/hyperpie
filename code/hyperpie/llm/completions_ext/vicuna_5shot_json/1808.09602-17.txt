@@ -1,0 +1,53 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy20": {
+        "id": "a20",
+        "name": "relation extraction",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy21": {
+        "id": "a21",
+        "name": "output structure R",
+        "type": "dataset",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "L_R",
+              "has_values": false
+            }
+          },
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "r_{ij}",
+              "has_values": true,
+              "values": [
+                {
+                  "value1": {
+                    "value_id": "v1",
+                    "value": "i,j = 1, ... , N",
+                    "context": "for i,j = 1, ... , N",
+                    "context_id": "c1"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter3": {
+              "id": "p3",
+              "name": "N",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

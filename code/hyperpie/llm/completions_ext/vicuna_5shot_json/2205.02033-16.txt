@@ -1,0 +1,12 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy16": {
+        "id": "a16",
+        "name": "JATS",
+        "has_parameters": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy30": {
+        "id": "a30",
+        "name": "softmax operation",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy31": {
+        "id": "a31",
+        "name": "cross-entropy loss",
+        "type": "loss function",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter20": {
+              "id": "p20",
+              "name": "temperature",
+              "has_values": false
+            }
+          },
+          {
+            "parameter21": {
+              "id": "p21",
+              "name": "number of classification types",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

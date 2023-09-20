@@ -1,0 +1,159 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy6": {
+        "id": "a6",
+        "name": "baseline",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p1",
+              "name": "batch size",
+              "has_values": true,
+              "values": [
+                {
+                  "value6": {
+                    "value_id": "v6",
+                    "value": "64",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "learning rates",
+              "has_values": true,
+              "values": [
+                {
+                  "value7": {
+                    "value_id": "v7",
+                    "value": "[1e-5, 2e-5, 3e-5]",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter3": {
+              "id": "p3",
+              "name": "epochs number",
+              "has_values": true,
+              "values": [
+                {
+                  "value8": {
+                    "value_id": "v8",
+                    "value": "[8,16,64,128]",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter4": {
+              "id": "p4",
+              "name": "linear warmup",
+              "has_values": true,
+              "values": [
+                {
+                  "value9": {
+                    "value_id": "v9",
+                    "value": "for the first 6% of steps",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter5": {
+              "id": "p5",
+              "name": "weight decay coefficient",
+              "has_values": true,
+              "values": [
+                {
+                  "value10": {
+                    "value_id": "v10",
+                    "value": "0.01",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy7": {
+        "id": "a7",
+        "name": "dataset",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter1": {
+              "id": "p6",
+              "name": "number of elements",
+              "has_values": true,
+              "values": [
+                {
+                  "value11": {
+                    "value_id": "v11",
+                    "value": "{1000, 100, 20}",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter2": {
+              "id": "p7",
+              "name": "epochs for best hyperparameters",
+              "has_values": true,
+              "values": [
+                {
+                  "value12": {
+                    "value_id": "v12",
+                    "value": "{8, 64, 128}",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter3": {
+              "id": "p8",
+              "name": "learning rate for best hyperparameters",
+              "has_values": true,
+              "values": [
+                {
+                  "value13": {
+                    "value_id": "v13",
+                    "value": "1e-5",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

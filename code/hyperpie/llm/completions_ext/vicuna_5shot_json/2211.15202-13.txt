@@ -1,0 +1,19 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy23": {
+        "id": "a23",
+        "name": "SupCon loss",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy14": {
+        "id": "a14",
+        "name": "RoBERTa-large language model",
+        "has_parameters": false
+      }
+    }
+  ]
+}

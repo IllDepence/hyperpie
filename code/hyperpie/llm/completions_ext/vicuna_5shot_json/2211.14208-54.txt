@@ -1,0 +1,55 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "GREAD-BS",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy9": {
+        "id": "a9",
+        "name": "RK4",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter10": {
+              "id": "p9",
+              "name": "step size",
+              "has_values": false
+            }
+          },
+          {
+            "parameter9": {
+              "id": "p8",
+              "name": "\(\tau\)",
+              "has_values": true,
+              "values": [
+                {
+                  "value10": {
+                    "value_id": "v9",
+                    "value": "REF",
+                    "context": "Fig.",
+                    "context_id": "c9"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy8": {
+        "id": "a8",
+        "name": "Chameleon",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    }
+  ]
+}

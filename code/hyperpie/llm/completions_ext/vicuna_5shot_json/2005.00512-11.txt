@@ -1,0 +1,21 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy1": {
+        "id": "a1",
+        "name": "TAC KBP competitions",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy2": {
+        "id": "a2",
+        "name": "TAC KBP “cold start” task",
+        "type": "model",
+        "has_parameters": false
+      }
+    }
+  ]
+}

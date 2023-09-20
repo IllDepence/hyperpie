@@ -1,0 +1,133 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy15": {
+        "id": "a15",
+        "name": "ChebNet",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy31": {
+        "id": "a31",
+        "name": "GCN",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy49": {
+        "id": "a49",
+        "name": "GAT",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy28": {
+        "id": "a28",
+        "name": "GraphSAGE",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy51": {
+        "id": "a51",
+        "name": "SGC",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy41": {
+        "id": "a41",
+        "name": "Geom-GCN",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy60": {
+        "id": "a60",
+        "name": "H2GCN",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy4": {
+        "id": "a4",
+        "name": "FA-GCN",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy11": {
+        "id": "a11",
+        "name": "GPR-GNN",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy57": {
+        "id": "a57",
+        "name": "PairNorm",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy54": {
+        "id": "a54",
+        "name": "JKNet",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy9": {
+        "id": "a9",
+        "name": "GCNII",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy42": {
+        "id": "a42",
+        "name": "GDE",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy52": {
+        "id": "a52",
+        "name": "CGNN",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy6": {
+        "id": "a6",
+        "name": "GRAND",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy5": {
+        "id": "a5",
+        "name": "BLEND",
+        "type": "model",
+        "has_parameters": false
+      }
+    }
+  ]
+}

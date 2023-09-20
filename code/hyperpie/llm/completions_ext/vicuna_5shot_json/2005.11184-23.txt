@@ -1,0 +1,21 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "[10]",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy28": {
+        "id": "a28",
+        "name": "[28]",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

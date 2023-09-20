@@ -1,0 +1,213 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy12": {
+        "id": "a12",
+        "name": "SemEval 2017",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy13": {
+        "id": "a13",
+        "name": "SemEval 2018",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy14": {
+        "id": "a14",
+        "name": "neural models",
+        "type": "model",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter6": {
+              "id": "p6",
+              "name": "relation types",
+              "has_values": true,
+              "values": [
+                {
+                  "value9": {
+                    "value_id": "v9",
+                    "value": "6",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy15": {
+        "id": "a15",
+        "name": "SciBERT",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy16": {
+        "id": "a16",
+        "name": "AdamW",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter2": {
+              "id": "p2",
+              "name": "learning rates",
+              "has_values": true,
+              "values": [
+                {
+                  "value1": {
+                    "value_id": "v1",
+                    "value": "[3\mathrm {e}{-5}, 5\mathrm {e}{-5}, 7\mathrm {e}{-5}]",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "parameter4": {
+              "id": "p4",
+              "name": "batch size",
+              "has_values": true,
+              "values": [
+                {
+                  "value7": {
+                    "value_id": "v7",
+                    "value": "4",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy17": {
+        "id": "a17",
+        "name": "linear warmup",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter3": {
+              "id": "p3",
+              "name": "epoch",
+              "has_values": true,
+              "values": [
+                {
+                  "value2": {
+                    "value_id": "v2",
+                    "value": "1",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy18": {
+        "id": "a18",
+        "name": "linear decay",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter3": {
+              "id": "p3",
+              "name": "epoch",
+              "has_values": true,
+              "values": [
+                {
+                  "value2": {
+                    "value_id": "v2",
+                    "value": "1",
+                    "context": null,
+                    "context_id": null
+                  }
+                },
+                {
+                  "value4": {
+                    "value_id": "v4",
+                    "value": "60",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy19": {
+        "id": "a19",
+        "name": "gradient clipping",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter5": {
+              "id": "p5",
+              "name": "max norm",
+              "has_values": true,
+              "values": [
+                {
+                  "value8": {
+                    "value_id": "v8",
+                    "value": "1",
+                    "context": null,
+                    "context_id": null
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy20": {
+        "id": "a20",
+        "name": "early stopping",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy9": {
+        "id": "a9",
+        "name": "mean-",
+        "type": "method",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "max-pooling",
+        "type": "method",
+        "has_parameters": false
+      }
+    }
+  ]
+}

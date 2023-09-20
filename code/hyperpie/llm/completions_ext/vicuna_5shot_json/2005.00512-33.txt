@@ -1,0 +1,55 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy7": {
+        "id": "a7",
+        "name": "sequence tagger",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy8": {
+        "id": "a8",
+        "name": "CRF tagger",
+        "type": "model",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy9": {
+        "id": "a9",
+        "name": "BERT-BiLSTM embeddings",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter10": {
+              "id": "p10",
+              "name": "embedding type",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "BIOUL",
+        "type": "method",
+        "has_parameters": true,
+        "parameters": [
+          {
+            "parameter11": {
+              "id": "p11",
+              "name": "tagging scheme",
+              "has_values": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

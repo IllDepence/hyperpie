@@ -1,0 +1,405 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "United States",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy11": {
+        "id": "a11",
+        "name": "United Kingdom",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy12": {
+        "id": "a12",
+        "name": "Germany",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy13": {
+        "id": "a13",
+        "name": "Canada",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy14": {
+        "id": "a14",
+        "name": "Netherlands",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy15": {
+        "id": "a15",
+        "name": "Sweden",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy16": {
+        "id": "a16",
+        "name": "India",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy17": {
+        "id": "a17",
+        "name": "Israel",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy18": {
+        "id": "a18",
+        "name": "Brazil",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy19": {
+        "id": "a19",
+        "name": "Denmark",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy20": {
+        "id": "a20",
+        "name": "Norway",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy21": {
+        "id": "a21",
+        "name": "South Korea",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy22": {
+        "id": "a22",
+        "name": "Russia",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy23": {
+        "id": "a23",
+        "name": "South Africa",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy24": {
+        "id": "a24",
+        "name": "Chile",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy25": {
+        "id": "a25",
+        "name": "Greece",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy26": {
+        "id": "a26",
+        "name": "Iran",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy27": {
+        "id": "a27",
+        "name": "Ethiopia",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy28": {
+        "id": "a28",
+        "name": "Kenya",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy29": {
+        "id": "a29",
+        "name": "Colombia",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy30": {
+        "id": "a30",
+        "name": "Croatia",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy31": {
+        "id": "a31",
+        "name": "Uganda",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy32": {
+        "id": "a32",
+        "name": "Iceland",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy33": {
+        "id": "a33",
+        "name": "Tanzania",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy34": {
+        "id": "a34",
+        "name": "China",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy35": {
+        "id": "a35",
+        "name": "Australia",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy36": {
+        "id": "a36",
+        "name": "Switzerland",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy37": {
+        "id": "a37",
+        "name": "Japan",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy38": {
+        "id": "a38",
+        "name": "Italy",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy39": {
+        "id": "a39",
+        "name": "Finland",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy40": {
+        "id": "a40",
+        "name": "Singapore",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy41": {
+        "id": "a41",
+        "name": "Austria",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy42": {
+        "id": "a42",
+        "name": "New Zealand",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy43": {
+        "id": "a43",
+        "name": "Portugal",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy44": {
+        "id": "a44",
+        "name": "Czechia",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy45": {
+        "id": "a45",
+        "name": "Mexico",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy46": {
+        "id": "a46",
+        "name": "Argentina",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy47": {
+        "id": "a47",
+        "name": "Hungary",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy48": {
+        "id": "a48",
+        "name": "Ireland",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy49": {
+        "id": "a49",
+        "name": "Taiwan",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy50": {
+        "id": "a50",
+        "name": "Saudi Arabia",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy51": {
+        "id": "a51",
+        "name": "Turkey",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy52": {
+        "id": "a52",
+        "name": "Thailand",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy53": {
+        "id": "a53",
+        "name": "Malaysia",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy54": {
+        "id": "a54",
+        "name": "Estonia",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy55": {
+        "id": "a55",
+        "name": "Bangladesh",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy56": {
+        "id": "a56",
+        "name": "Nigeria",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy57": {
+        "id": "a57",
+        "name": "Slovenia",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy58": {
+        "id": "a58",
+        "name": "Luxembourg",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    },
+    {
+      "entitiy59": {
+        "id": "a59",
+        "name": "Vietnam",
+        "type": "dataset",
+        "has_parameters": false
+      }
+    }
+  ]
+}

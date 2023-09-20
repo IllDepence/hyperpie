@@ -1,0 +1,13 @@
+{
+  "has_entities": true,
+  "entities": [
+    {
+      "entitiy10": {
+        "id": "a10",
+        "name": "SoftTriple loss",
+        "type": "loss function",
+        "has_parameters": false
+      }
+    }
+  ]
+}
