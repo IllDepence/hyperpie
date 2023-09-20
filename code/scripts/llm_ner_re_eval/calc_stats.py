@@ -21,6 +21,8 @@ def print_stats():
         'Vicuna': 'eval_lmsys_vicuna_13b_v1_3.json',
         'GPT3_json': 'eval_text_davinci_003_json.json',
         'GPT3': 'eval_text_davinci_003.json',
+        'Vicuna_few-shot': 'eval_lmsys_vicuna_13b_v1_5_16k.json',
+        'Vicuna_few-shot_json': 'eval_lmsys_vicuna_13b_v1_5_16k_json.json',
     }
 
     for model, fn in fns.items():

@@ -1,0 +1,41 @@
+{
+  "num_total": 444,
+  "preprocessor": {
+    "no_yaml_found": 0,
+    "empty_yaml": 0,
+    "garbage_around_yaml": 0
+  },
+  "parse_yaml_json": {
+    "parse_fail": 0,
+    "parsing_error_dict": {}
+  },
+  "coarse_structure": {
+    "coarse_structure_error": 71
+  },
+  "json_content": {
+    "num_ents_intext_notintext": [
+      1123,
+      142
+    ],
+    "num_ent_types_valid_invalid": [
+      1017,
+      248
+    ],
+    "num_aids_valid_invalid": [
+      1265,
+      0
+    ],
+    "num_pids_valid_invalid": [
+      0,
+      455
+    ],
+    "num_vids_valid_invalid": [
+      0,
+      188
+    ],
+    "num_cids_valid_invalid": [
+      0,
+      188
+    ]
+  }
+}

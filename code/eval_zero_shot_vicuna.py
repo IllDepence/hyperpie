@@ -23,9 +23,9 @@ from_idx = 0
 to_idx = len(paras_true)
 params_2048 = hp.settings.gpt_default_params.copy()
 params_2048['max_tokens'] = 2048
-# # FIXME: ↓ temporary for cache access w/o API endpoint ↓
-# params_2048['model'] = 'lmsys/vicuna-13b-v1.3'
-# # FIXME: ↑ temporary for cache access w/o API endpoint ↑
+# FIXME: ↓ temporary for cache access w/o API endpoint ↓
+params_2048['model'] = 'lmsys/vicuna-13b-v1.3'
+# FIXME: ↑ temporary for cache access w/o API endpoint ↑
 stats_dicts = []
 for i, para in enumerate(paras_true[from_idx:to_idx]):
     print(f'{i}/{len(paras_true)}')
