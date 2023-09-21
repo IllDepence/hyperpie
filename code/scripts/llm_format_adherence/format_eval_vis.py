@@ -14,16 +14,18 @@ import matplotlib.pyplot as plt
 # })
 
 eval_result_fns = {
+    'Vicuna 16k (Y)': 'data/format_eval_lmsys_vicuna_13b_v1_5_16k.json',
+    'Vicuna 16k (J)': 'data/format_eval_lmsys_vicuna_13b_v1_5_16k_json.json',
     'GPT-3.5 (Y)': 'data/format_eval_text_davinci_003.json',
     'GPT-3.5 (J)': 'data/format_eval_text_davinci_003_json.json',
-    'Vicuna (Y)': 'data/format_eval_lmsys_vicuna_13b_v1_3.json',
-    'Vicuna (J)': 'data/format_eval_lmsys_vicuna_13b_v1_3_json.json',
-    'WizardLM (Y)': 'data/format_eval_WizardLM_WizardLM_13B_V1_1.json',
-    'WizardLM (J)': 'data/format_eval_WizardLM_WizardLM_13B_V1_1_json.json',
     'GALACTICA (Y)': 'data/format_eval_facebook_galactica_120b.json',
     'GALACTICA (J)': 'data/format_eval_facebook_galactica_120b_json.json',
     'Falcon (Y)': 'data/format_eval_tiiuae_falcon_40b_instruct.json',
     'Falcon (J)': 'data/format_eval_tiiuae_falcon_40b_instruct_json.json',
+    'Vicuna 4k (Y)': 'data/format_eval_lmsys_vicuna_13b_v1_3.json',
+    'Vicuna 4k (J)': 'data/format_eval_lmsys_vicuna_13b_v1_3_json.json',
+    'WizardLM (Y)': 'data/format_eval_WizardLM_WizardLM_13B_V1_1.json',
+    'WizardLM (J)': 'data/format_eval_WizardLM_WizardLM_13B_V1_1_json.json',
 }
 
 
@@ -220,19 +222,20 @@ def plot_format_eval_mix(eval_results, save_path):
 
     # Prepare color map
     cmap = plt.get_cmap('tab20')
+    print(cmap)
 
     # - - - 1. Number of errors (1 by 4) - - -
 
     error_eval_types = {
-        'J/Y parse error':
+        '(a) J/Y parse error':
             lambda x: x['parse_yaml_json']['parse_fail'] if 'parse_yaml_json' in x else x['yaml2json']['parse_fail'],  # noqa (support confusing legacy dict key)
-        'Text around J/Y':
+        '(b) Text around J/Y':
             lambda x: x['preprocessor']['garbage_around_yaml'],
     }
     val_ent_eval_types = {
-        'Entity not in text':
+        '(c) Entity not in text':
             lambda x: x['json_content']['num_ents_intext_notintext'],
-        'Entity type out of scope':
+        '(d) Ent. type out of scope':
             lambda x: x['json_content']['num_ent_types_valid_invalid'],
     }
 
@@ -280,16 +283,38 @@ def plot_format_eval_mix(eval_results, save_path):
         axs[j].set_xlim(0, 100)
 
         # Calculate values
-        barvals = [
-            100*(
+        barvals = []
+        for i, model in enumerate(eval_results):
+            barval = 100*(
                 accsses_func(eval_results[model])[1] / (
                     accsses_func(eval_results[model])[0] +
                     accsses_func(eval_results[model])[1]
                 )
             )
-            for model in eval_results
-        ]
-        barcolors = [cmap(i) for i in range(len(eval_results))]
+            # For eval type "Entity type out of scope", don’t plot values
+            # for the Vicuna 16k model (set value to 100)
+            if (
+                eval_type_name == '(d) Ent. type out of scope' and
+                i in [0, 1]  # Vicuna 16k
+            ):
+                barval = 100
+            barvals.append(barval)
+
+        barcolors = []
+        for i in range(len(eval_results)):
+            barcolor = cmap(i)
+            # For eval type "Entity type out of scope", don’t plot values
+            # for the Vicuna 16k model (set color to white)
+            if (
+                eval_type_name == '(d) Ent. type out of scope' and
+                i in [0, 1]  # Vicuna 16k
+            ):
+                barcolor = 'white'
+            barcolors.append(barcolor)
+
+        # For eval type "Entity type out of scope", don’t plot values
+        # for the Vicuna 16k model
+            'vicuna_16k' in eval_results
 
         # Horizontal lot bars for each model where the x-axis shows the
         # percentage of invalid entities
@@ -315,6 +340,20 @@ def plot_format_eval_mix(eval_results, save_path):
         0.77, 0.035,
         'Percentage of predicted entities',
         ha='center'
+    )
+    # For Vicuna 16k model in eval type "Entity type out of scope"
+    # put a “n/a” label in the middle of the x-axis
+    fig.text(
+        0.886, 0.233,
+        'n/a',
+        ha='center',
+        color='grey'
+    )
+    fig.text(
+        0.886, 0.286,
+        'n/a',
+        ha='center',
+        color='grey'
     )
 
     # Save figure
