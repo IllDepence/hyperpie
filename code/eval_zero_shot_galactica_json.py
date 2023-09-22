@@ -34,16 +34,16 @@ for i, para in enumerate(paras_true[from_idx:to_idx]):
         text=para['text']
     )
 
-    print('TEXT')
-    print(para['text'][0:300], '...')
+    # print('TEXT')
+    # print(para['text'][0:300], '...')
 
     completion_dict, from_cache = hp.llm.predict.openai_api(
         para, prompt, params=params_512
     )
 
-    print('COMPLETION')
-    print(completion_dict['completion']['choices'][0]['text']) # [:300], '...') # noqa
-    print('\n\n')
+    # print('COMPLETION')
+    # print(completion_dict['completion']['choices'][0]['text']) # [:300], '...') # noqa
+    # print('\n\n')
 
     para_pred, stats_dict = hp.llm.convert.llm_output2eval_input(
         completion_dict,

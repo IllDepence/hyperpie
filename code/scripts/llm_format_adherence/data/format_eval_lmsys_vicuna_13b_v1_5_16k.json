@@ -15,14 +15,14 @@
   "json_content": {
     "num_ents_intext_notintext": [
       845,
-      82
+      81
     ],
     "num_ent_types_valid_invalid": [
       320,
-      607
+      606
     ],
     "num_aids_valid_invalid": [
-      927,
+      926,
       0
     ],
     "num_pids_valid_invalid": [

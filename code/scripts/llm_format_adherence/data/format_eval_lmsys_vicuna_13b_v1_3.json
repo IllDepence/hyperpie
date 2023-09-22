@@ -724,28 +724,28 @@
   },
   "json_content": {
     "num_ents_intext_notintext": [
-      2751,
-      1433
+      1597,
+      1124
     ],
     "num_ent_types_valid_invalid": [
-      2487,
-      1697
+      1683,
+      1038
     ],
     "num_aids_valid_invalid": [
-      4174,
+      2711,
       10
     ],
     "num_pids_valid_invalid": [
       0,
-      925
+      705
     ],
     "num_vids_valid_invalid": [
       0,
-      924
+      708
     ],
     "num_cids_valid_invalid": [
       0,
-      924
+      708
     ]
   }
 }

@@ -126,28 +126,28 @@
   },
   "json_content": {
     "num_ents_intext_notintext": [
-      136,
+      131,
       308
     ],
     "num_ent_types_valid_invalid": [
-      424,
-      20
+      420,
+      19
     ],
     "num_aids_valid_invalid": [
-      444,
+      439,
       0
     ],
     "num_pids_valid_invalid": [
       0,
-      12
+      11
     ],
     "num_vids_valid_invalid": [
       0,
-      12
+      11
     ],
     "num_cids_valid_invalid": [
       0,
-      12
+      11
     ]
   }
 }

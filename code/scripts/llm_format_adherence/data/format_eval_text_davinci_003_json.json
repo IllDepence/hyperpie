@@ -5,7 +5,7 @@
     "empty_yaml": 0,
     "garbage_around_yaml": 0
   },
-  "yaml2json": {
+  "parse_yaml_json": {
     "parse_fail": 1,
     "parsing_error_dict": {
       "general": {

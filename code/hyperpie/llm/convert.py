@@ -449,6 +449,7 @@ def _twostage_llm_parse_yaml(annotation_info, para_text):
         'num_vids_valid_invalid': [0, 0],
         'num_cids_valid_invalid': [0, 0],
     }
+    seen_artfs = set()  # used to filter out duplicates
     for artf_dict in annotation_info['entities']:
         if (
             artf_dict is None or
@@ -469,9 +470,16 @@ def _twostage_llm_parse_yaml(annotation_info, para_text):
             'name' not in artf.keys()
         ):
             continue
+        if artf['name'] in seen_artfs:
+            # filter out duplicates
+            continue
+        seen_artfs.add(artf['name'])
+        # NOTE: consider tracking number of duplicates
         if (
             'type' not in artf.keys()
         ):
+            # missing types appear in few-shot setting b/c in-context
+            # examples don’t provide a type. use name as type “stand-in”
             artf['type'] = artf['name']
         # set 'e' type entities to 'a' type (prompt uses 'e', eval 'a')
         artf['id'] = re.sub(

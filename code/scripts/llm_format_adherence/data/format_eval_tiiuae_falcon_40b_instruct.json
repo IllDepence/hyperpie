@@ -5,7 +5,7 @@
     "empty_yaml": 0,
     "garbage_around_yaml": 283
   },
-  "yaml2json": {
+  "parse_yaml_json": {
     "parse_fail": 269,
     "parsing_error_dict": {
       "general": {
@@ -580,28 +580,28 @@
   },
   "json_content": {
     "num_ents_intext_notintext": [
-      592,
-      813
+      411,
+      768
     ],
     "num_ent_types_valid_invalid": [
-      1105,
-      300
+      930,
+      249
     ],
     "num_aids_valid_invalid": [
-      1405,
+      1179,
       0
     ],
     "num_pids_valid_invalid": [
       0,
-      128
+      105
     ],
     "num_vids_valid_invalid": [
       0,
-      183
+      167
     ],
     "num_cids_valid_invalid": [
       0,
-      53
+      49
     ]
   }
 }
