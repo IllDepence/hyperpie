@@ -20,6 +20,11 @@ def error_analysis(root_dir, data_fn=None, filter_subdir=None):
     tp_rel_types = defaultdict(int)
     fp_rel_types = defaultdict(int)
     fn_rel_types = defaultdict(int)
+    per_fold_tps = []
+    per_fold_fps = []
+    per_fold_fns = []
+    per_fold_ps = []
+    per_fold_rs = []
     per_fold_f1s = []
 
     for subdir in os.listdir(root_dir):
@@ -143,10 +148,15 @@ def error_analysis(root_dir, data_fn=None, filter_subdir=None):
                         # print(f'{tokens_from} -- {label} -> {tokens_to}')
                         # input()
                 para_delta += len(sent)
-        fold_f1s = evaluate_re(
+        fld_tps, fld_fps, fld_fns, fld_ps, fld_rs, fld_f1s = evaluate_re(
             tp_rel_types, fp_rel_types, fn_rel_types,
         )
-        per_fold_f1s.append(fold_f1s)
+        per_fold_tps.append(fld_tps)
+        per_fold_fps.append(fld_fps)
+        per_fold_fns.append(fld_fns)
+        per_fold_ps.append(fld_ps)
+        per_fold_rs.append(fld_rs)
+        per_fold_f1s.append(fld_f1s)
 
     rel_type_keys = [
         'p->a', 'v->p', 'c->v'
@@ -154,19 +164,21 @@ def error_analysis(root_dir, data_fn=None, filter_subdir=None):
     # for each type of relation
     for rel_type in rel_type_keys:
         # go through folds and gather results
-        rtype_f1s = []
-        for fld in per_fold_f1s:
-            rtype_f1s.append(fld[rel_type])
+        rtype_tps = [fld[rel_type] for fld in per_fold_tps]
+        rtype_fps = [fld[rel_type] for fld in per_fold_fps]
+        rtype_fns = [fld[rel_type] for fld in per_fold_fns]
+        rtype_ps = [fld[rel_type] for fld in per_fold_ps]
+        rtype_rs = [fld[rel_type] for fld in per_fold_rs]
+        rtype_f1s = [fld[rel_type] for fld in per_fold_f1s]
         print(
-            f'{rel_type}: {np.mean(rtype_f1s):.3f}'
+            f'{rel_type}: '
+            f'TPs={np.sum(rtype_tps)} '
+            f'FPs={np.sum(rtype_fps)} '
+            f'FNs={np.sum(rtype_fns)} '
+            f'P={np.mean(rtype_ps):.3f} '
+            f'R={np.mean(rtype_rs):.3f} '
+            f'F1={np.mean(rtype_f1s):.3f}'
         )
-    return
-
-    evaluate_re(
-        tp_rel_types, fp_rel_types, fn_rel_types,
-        verbose=True
-    )
-    return
 
     # print confusion matrix
     print('NER confusion matrix:')
@@ -178,18 +190,41 @@ def error_analysis(root_dir, data_fn=None, filter_subdir=None):
     )
     print(cm)
     # plot confusion matrix with labels and legend, on a log scale
-    cm_norm = confusion_matrix(
+    cm_norm_true = confusion_matrix(
         ner_class_true,
         ner_class_pred,
         labels=cm_labels,
-        normalize='true'
+        normalize='true',
     )
-    disp = ConfusionMatrixDisplay(
-        confusion_matrix=cm_norm,
-        display_labels=cm_labels,
+    # print with two decimal places
+    print('NER confusion matrix (normed ground truth):')
+    print('   ' + '    '.join(cm_labels))
+    print(np.round(cm_norm_true, 2))
+    cm_norm_pred = confusion_matrix(
+        ner_class_true,
+        ner_class_pred,
+        labels=cm_labels,
+        normalize='pred'
     )
-    disp.plot()
-    plt.tight_layout()
+    print('NER confusion matrix (normed predictions):')
+    print('   ' + '    '.join(cm_labels))
+    print(np.round(cm_norm_pred, 2))
+    # print F1 score for each class
+    for i, class_name in enumerate(cm_labels):
+        tp = cm[i, i]
+        fp = np.sum(cm[:, i]) - tp
+        fn = np.sum(cm[i, :]) - tp
+        p = tp / (tp + fp) if tp + fp > 0 else 0
+        r = tp / (tp + fn) if tp + fn > 0 else 0
+        f1 = 2 * p * r / (p + r) if p + r > 0 else 0
+        print(f'{class_name}: F1={f1:.3f}')
+    # disp = ConfusionMatrixDisplay(
+    #     confusion_matrix=cm_norm,
+    #     display_labels=cm_labels,
+    # )
+    # disp.plot()
+    # plt.tight_layout()
+    # plt.show()
     # # save as PDF
     # plt.savefig('ner_confusion_matrix.pdf')
 
@@ -218,6 +253,11 @@ def evaluate_re(
     rel_type_keys = [
         'p->a', 'v->p', 'c->v'
     ]
+    tps = {}
+    fps = {}
+    fns = {}
+    ps = {}
+    rs = {}
     f1s = {}
     for rel_type_key in rel_type_keys:
         tp = tp_rel_types[rel_type_key]
@@ -226,11 +266,19 @@ def evaluate_re(
         p = tp / (tp + fp) if tp + fp > 0 else 0
         r = tp / (tp + fn) if tp + fn > 0 else 0
         f1 = 2 * (p * r) / (p + r) if p + r > 0 else 0
+        tps[rel_type_key] = tp
+        fps[rel_type_key] = fp
+        fns[rel_type_key] = fn
+        ps[rel_type_key] = p
+        rs[rel_type_key] = r
         f1s[rel_type_key] = f1
         if verbose:
             print(f'{rel_type_key}: P={p:.3f}, R={r:.3f}, F1={f1:.3f}')
 
-    return f1s
+    return (
+        tps, fps, fns, ps, rs, f1s
+    )
+
 
 
 def print_predictions(root_dir, data_fn=None):
@@ -593,9 +641,13 @@ if __name__ == '__main__':
         #     avg_type=None
         # )
         # print_predictions(root_dir)
-        # error_analysis(
-        #     root_dir,
-        # )
+        error_analysis(
+            root_dir,
+        )
+        error_analysis(
+            root_dir,
+            data_fn='merged_preds_ffnn_re.jsonl'
+        )
     elif len(sys.argv) == 3:
         pl_root_dir = sys.argv[1]
         ffnn_root_dir = sys.argv[2]
