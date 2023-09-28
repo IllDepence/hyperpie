@@ -6,7 +6,7 @@ import json
 import os
 
 
-def merge(root_dir, file_suffix='', ffnn_re_version=False):
+def merge(root_dir, out_fn_suffix=''):
     """ Merge RE prediction output into NER prediction output.
 
         ffnn_re_version used for distinction when processing data
@@ -16,29 +16,18 @@ def merge(root_dir, file_suffix='', ffnn_re_version=False):
     """
 
     # load data
-    smpl2offs_fn = f'sample_idx_to_entity_offset_pair{file_suffix}.json'
-    pred_fn = f'y_pred{file_suffix}.json'
-    if ffnn_re_version:
-        out_fn_suff = '_ffnn_re'
-        ner_pred_fp = os.path.join(
-            'ner',
-            f'ent_pred_test.json{file_suffix}'
-        )
-    else:
-        out_fn_suff = ''
-        ner_pred_fp = os.path.join(
-            'all',
-            f'ent_pred_test{file_suffix}.json'
-        )
+    smpl2offs_fn = f'sample_idx_to_entity_offset_pair.json'
+    pred_fn = f'y_pred.json'
+    ner_pred_fp = 'ent_pred_test.json'
 
-    merged_pred_fn = f'merged_preds{out_fn_suff}{file_suffix}.jsonl'
+    merged_pred_fn = f'merged_preds{out_fn_suffix}.jsonl'
     ner_pred = []
 
     with open(os.path.join(root_dir, smpl2offs_fn), 'r') as f:
         smpl2offs = json.load(f)
     with open(os.path.join(root_dir, pred_fn), 'r') as f:
         re_pred = json.load(f)
-    with open(os.path.join(root_dir, ner_pred_fp), 'r') as f:
+    with open(os.path.join(root_dir, 'ner', ner_pred_fp), 'r') as f:
         for line in f.readlines():
             ner_pred.append(json.loads(line))
 
@@ -142,12 +131,9 @@ def print_predictions(paras):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('root_dir', type=str)
-    parser.add_argument('file_suffix', type=str)
+    parser.add_argument('--out_fn_suffix', type=str, default='')
     args = parser.parse_args()
-
     paras = merge(
         args.root_dir,
-        args.file_suffix,
-        ffnn_re_version=False
+        out_fn_suffix=args.out_fn_suffix
     )
-    print_predictions(paras)  # uncomment for manual inspection

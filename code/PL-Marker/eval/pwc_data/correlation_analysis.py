@@ -10,8 +10,7 @@ from scipy.stats import pearsonr
 
 
 def load_pediction_data(prediction_data_fp):
-    """ Get arxiv ids of papers for which we extracted
-        hyperparameter info.
+    """ Returns a dict of predictions, keyed by arxiv_id.
     """
 
     pred_pprs = defaultdict(list)
