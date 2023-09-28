@@ -69,12 +69,14 @@ def analyse(ppr_preds, arxiv_md, ppr_pwc_gh_md):
     hyperparam_info_pos = []
     hyperparam_info_num = []
     hp_hists = defaultdict(list)
+    hp_info_per_ppr = defaultdict(list)
 
     for aid in ppr_preds.keys():
         ppr_pred = ppr_preds[aid]
         ppr_axmd = arxiv_md.get(aid)
         ppr_pgmd = ppr_pwc_gh_md.get(aid)
         num_paras = len(ppr_pred)
+        num_hp_trips = 0
         if ppr_axmd is None:
             continue
         category = ppr_axmd.get('categories').split(' ')[0]
@@ -91,16 +93,27 @@ def analyse(ppr_preds, arxiv_md, ppr_pwc_gh_md):
             hp_num = vpa
             hyperparam_info_pos.append(hp_pos)
             hyperparam_info_num.append(hp_num)
+            # take note of positions in paper
             for i in range(hp_num):
                 # as often as the number of triples
                 hp_hists[category].append(hp_pos)
+            # take note of absolute numbers
+            num_hp_trips += hp_num
+        hp_info_per_ppr[category].append(num_hp_trips)
 
     print(hp_hists.keys())
+    print('avg num triples per paper for each category:')
+    for cat, nums in hp_info_per_ppr.items():
+        print(f'{cat}: {np.mean(nums)} ({np.std(nums)})')
+    print('percentage of papers with at least one triple:')
+    for cat, nums in hp_info_per_ppr.items():
+        print(f'{cat}: {np.sum(np.array(nums) > 0) / len(nums)}')
 
-    # plot histogram of hyperparam_info_num (y-axis) vs
-    # hyperparam_info_pos (x-axis)
+    # plot distribution of hyperparam position across papers
 
-    num_bins = 20
+    cmap = plt.get_cmap('tab10')
+
+    num_bins = 10
     joint_bins = np.linspace(0, 1, num_bins+1)
     cats = ['cs.LG', 'cs.CV', 'cs.CL']  # , 'cs.DL'
 
@@ -144,7 +157,7 @@ def analyse(ppr_preds, arxiv_md, ppr_pwc_gh_md):
         cat_counts = [(c/num_bins)*100 for c in cat_counts]
         plt.stairs(
             cat_counts, cat_bins,
-            fill=True, orientation='horizontal', label=cat
+            fill=True, orientation='horizontal', label=cat, color=cmap(i)
         )
         # plt.fill_betweenx(
         #     bins[1:], counts, step='pre', alpha=0.5, label=cat
@@ -155,13 +168,14 @@ def analyse(ppr_preds, arxiv_md, ppr_pwc_gh_md):
     plt.yticks([0, 1], ['start', 'end'], rotation=90)
     plt.ylim(1, 0)
     # set axis labels
-    plt.xlabel('Probability of hyper-\nparameter information [%]')
+    plt.xlabel('Frequency [%]')
     plt.ylabel('Position in the paper')
     plt.legend()
     # set figure size
-    plt.gcf().set_size_inches(2, 3.5)
+    plt.gcf().set_size_inches(2.2, 3)
     plt.tight_layout()
-    plt.show()
+    # plt.show()
+    plt.savefig('hyperparam_pos.pdf')
 
 
 if __name__ == '__main__':
