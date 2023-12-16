@@ -1,0 +1,79 @@
+root ::= "\n"? "{\n" tab1 hasentities "}\n"  "```\n"
+
+hasentities ::= ["] "has_entities" ["] ": " ( "false\n" | "true,\n" tab1 entities)
+
+entities ::= ["] "entities" ["] ": [\n" (entity)+ tab1 "]\n"
+
+entity ::= tab2 "{\n" tab3 entitykey "{\n" tab4 idkey eid ",\n" tab4 namekey name ",\n" (tab4 typekey type ",\n")? tab4 hasparameters tab3 "}\n" tab2 "}" ","? "\n"
+
+typekey ::= ["] "type" ["] ": "
+
+type ::= ["] ("dataset" | "model" | "method" | "loss function" | "regularization technique") ["]
+
+hasparameters ::= ["] "has_parameters" ["] ": " ( "false\n" | "true,\n" tab4 parameters)
+
+parameters ::= ["] "parameters" ["] ": [\n" (parameter)+ tab4 "]\n"
+
+parameter ::= tab5 "{\n" tab6 parameterkey "{\n" tab7 idkey pid ",\n" tab7 namekey name ",\n" tab7 hasvalues tab6 "}\n" tab5 "}" ","? "\n"
+
+hasvalues ::= ["] "has_values" ["] ": " ( "false\n" | "true,\n" tab7 values)
+
+values ::= ["] "values" ["] ": [\n" (value)+ tab7 "]\n"
+
+value ::= tab8 "{\n" tab9 valuekey "{\n" tab10 vidkey vid ",\n" tab10 vnamekey name ",\n" tab10 cnamekey (name | "null") ",\n" tab10 cidkey (cid | "null") "\n" tab9 "}\n" tab8 "}\n"
+
+word ::= [^ \n\t"]+
+
+words ::= word (ws word)* 
+
+ws ::= [ ]+
+
+name ::= ["] words ["]
+
+entitykey ::= ["] "entitiy" n3 ["] ": "
+
+parameterkey ::= ["] "parameter" n3 ["] ": "
+
+valuekey ::= ["] "value" n3 ["] ": "
+
+idkey ::= ["] "id" ["] ": "
+
+vidkey ::= ["] "value_id" ["] ": "
+
+cidkey ::= ["] "context_id" ["] ": "
+
+namekey ::= ["] "name" ["] ": "
+
+vnamekey ::= ["] "value" ["] ": "
+
+cnamekey ::= ["] "context" ["] ": "
+
+tab1 ::= "  "
+
+tab2 ::= tab1 tab1
+
+tab3 ::= tab2 tab1
+
+tab4 ::= tab3 tab1
+
+tab5 ::= tab4 tab1
+
+tab6 ::= tab5 tab1
+
+tab7 ::= tab6 tab1
+
+tab8 ::= tab7 tab1
+
+tab9 ::= tab8 tab1
+
+tab10 ::= tab9 tab1
+
+eid ::= ["] "a" n3 ["]
+
+pid ::= ["] "p" n3 ["]
+
+vid ::= ["] "v" n3 ["]
+
+cid ::= ["] "c" n3 ["]
+
+n3 ::= [1-9][0-9]?[0-9]?
