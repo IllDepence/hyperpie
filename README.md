@@ -1,6 +1,6 @@
 # HyperPIE
 
-![](misc/schema_visual.png)
+![](doc/img/schema_visual.png)
 
 ### General
 
