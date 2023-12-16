@@ -280,7 +280,6 @@ def evaluate_re(
     )
 
 
-
 def print_predictions(root_dir, data_fn=None):
     """ Print merged NER+RE predictions for inspection.
     """

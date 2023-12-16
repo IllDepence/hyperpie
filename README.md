@@ -1,6 +1,10 @@
 # HyperPIE
 
+Hyperparameter Information Extraction from Scientific Publications
+
 ![](doc/img/schema_visual.png)
+
+This repository contains the ource code, data, and documentation for the ECIR paper “HyperPIE: Hyperparameter Information Extraction from Scientific Publications”.
 
 ## Contents
 
@@ -19,3 +23,14 @@
 * **Code**
     * [Fine-tuned models](code/PL-Marker/)
     * [LLMs](code/hyperpie/)
+
+## Cite as
+
+```
+@inproceedings{Saier2024HyperPIE,
+  title         = {{HyperPIE: Hyperparameter Information Extraction from Scientific Publications}},
+  author        = {Saier, Tarek and Ohta, Mayumi and Asakura, Takuto and F\"{a}rber, Michael},
+  year          = {2024},
+  booktitle     = {Proceedings of the 46th European Conference on Information Retrieval (ECIR ’24)},
+}
+```

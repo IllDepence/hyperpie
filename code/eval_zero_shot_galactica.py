@@ -30,9 +30,6 @@ stats_dicts = []
 for i, para in enumerate(paras_true[from_idx:to_idx]):
     print(f'{i}/{len(paras_true)}')
 
-    # - - - - - - - - - - - - - - - - - - - - -
-    # - - - - - - single step eval - - - - - -
-    # - - - - - - - - - - - - - - - - - - - - -
     prompt = hp.llm.prompt_templates.text_e2e_fillin_twostep_1_alpaca_style_nointro.format(  # noqa: E501
         text=para['text']
     )

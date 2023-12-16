@@ -8,16 +8,13 @@ import hyperpie as hp
 assert hp.settings.use_openai_api is True  # make sure we’re using GPT3
 
 # Use data filtered for “full info sets” (a<p<v[<c])
-# because GPT-3 only predicts those
 d = hp.data.load.load_annotated()
-# paras_true = d
 paras_true, filter_stats = hp.data.filter_annots.require_parent(
     d
 )
 paras_pred = []
 
 # get predictions
-# from_idx = 269, 279
 from_idx = 0
 to_idx = len(paras_true)
 stats_dicts = []

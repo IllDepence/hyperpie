@@ -59,9 +59,6 @@ for i, para in enumerate(paras_true[from_idx:to_idx]):
         hp.data.filter_annots.require_parent_single(para_pred)
     paras_pred.append(filtered_para)
 
-# import sys
-# sys.exit()
-
 aggregate_stats = hp.llm.convert.aggregate_format_stats(stats_dicts)
 
 mode_fn_save = re.sub(
