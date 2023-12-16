@@ -1,3 +1,5 @@
+<a name="README"></a>
+
 * **Manually annotated ground truth**
     * raw: tsa.json
     * **main**: tsa\_processed.json ([see format description](preprocessed_data_format.md))

@@ -15,7 +15,7 @@ This repository contains the source code, data, and documentation for the ECIR p
     * [Prompt example few-shot](doc/prompt_examples.md#Few-shot)
 * **Data**
     * Manually annotated data
-        * [data](data/tsa_processed.json)
+        * [data](data/#README)
         * [format](data/preprocessed_data_format.md)
     * LLM completions
         * `code/hyperpie/llm/completion_cache.json.xz`
