@@ -1,3 +1,38 @@
+# 5 fold eval w/ stratified sampling
+
+### with everything
+```
+RE precision: 30.7 ± 11.1
+RE recall: 65.0 ± 32.4
+RE f1: 38.8 ± 11.3
+
+```
+
+### no bert embeddings
+**+adjusted network size** ((300, 100, 25, 2) -> (25, 5, 2))  
+```
+RE precision: 15.5 ± 22.6
+RE recall: 8.8 ± 12.2
+RE f1: 11.1 ± 15.7
+```
+
+### no relative distance
+```
+RE precision: 26.5 ± 8.2
+RE recall: 65.0 ± 28.5
+RE f1: 35.5 ± 9.7
+```
+
+### no token class embeddings
+**adjust bert embedding weight to 0.5**  
+```
+RE precision: 16.6 ± 16.1
+RE recall: 29.8 ± 33.0
+RE f1: 19.6 ± 18.0
+```
+
+# 10 fold eval split by papers
+
 ### with everything
 ```
 Pr: ['0.18', '0.33', '0.00', '0.75', '0.67', '0.60', '0.60', '0.20', '0.07']
