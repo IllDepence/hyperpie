@@ -31,8 +31,15 @@ This repository contains the source code, data, and documentation for the ECIR p
 ```
 @inproceedings{Saier2024HyperPIE,
   title         = {{HyperPIE: Hyperparameter Information Extraction from Scientific Publications}},
-  author        = {Saier, Tarek and Ohta, Mayumi and Asakura, Takuto and F\"{a}rber, Michael},
+  author        = {Saier, Tarek and Ohta, Mayumi and Asakura, Takuto and F{\"a}rber, Michael},
+  booktitle     = {Advances in Information Retrieval},
+  series        = {Lecture Notes in Computer Science},
+  volume        = {14609},
+  pages         = {254--269},
   year          = {2024},
-  booktitle     = {Proceedings of the 46th European Conference on Information Retrieval (ECIR ’24)},
+  month         = mar,
+  doi           = {10.1007/978-3-031-56060-6_17},
+  publisher     = {Springer Nature Switzerland},
+  isbn          = {978-3-031-56060-6}
 }
 ```
