@@ -2,8 +2,8 @@
 
 import json
 import os
+import matplotlib
 import matplotlib.pyplot as plt
-# import matplotlib
 
 # matplotlib.use("pgf")
 # matplotlib.rcParams.update({
@@ -224,6 +224,15 @@ def plot_format_eval_mix(eval_results, save_path):
     cmap = plt.get_cmap('tab20')
     print(cmap)
 
+    # Prepare hatches
+    matplotlib.rcParams['hatch.linewidth'] = 0.1
+
+    hatches = [
+        '***', '***', '////', '////', '|||', '|||', 'ooo', 'ooo',
+        '\\\\\\', '\\\\\\', None, None
+    ]
+    # hatches = ['/', '\\', '|', '-', '+', 'x', 'o', 'O', '.', '*']
+
     # - - - 1. Number of errors (1 by 4) - - -
 
     error_eval_types = {
@@ -269,7 +278,10 @@ def plot_format_eval_mix(eval_results, save_path):
             list(eval_results.keys()),
             barvals,
             align='center',
-            color=barcolors
+            color=barcolors,
+            hatch=hatches,
+            edgecolor='k',
+            linewidth=0
         )
         axs[i].bar_label(bars, fmt=bar_lbl_fmt, color='grey')
 
@@ -278,6 +290,7 @@ def plot_format_eval_mix(eval_results, save_path):
         j = i + 2
         eval_type_name, accsses_func = eval_type, val_ent_eval_types[eval_type]
         axs[j].set_title(eval_type_name)
+
 
         # Set y limit
         axs[j].set_xlim(0, 100)
@@ -298,6 +311,8 @@ def plot_format_eval_mix(eval_results, save_path):
                 i in [0, 1]  # Vicuna 16k
             ):
                 barval = 100
+                hatches[0] = None
+                hatches[1] = None
             barvals.append(barval)
 
         barcolors = []
@@ -322,7 +337,10 @@ def plot_format_eval_mix(eval_results, save_path):
             list(eval_results.keys()),
             barvals,
             align='center',
-            color=barcolors
+            color=barcolors,
+            hatch=hatches,
+            edgecolor='k',
+            linewidth=0
         )
         axs[j].bar_label(bars, fmt=bar_lbl_fmt, color='grey')
 

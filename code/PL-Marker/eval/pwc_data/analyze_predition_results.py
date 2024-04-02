@@ -1,6 +1,12 @@
+""" $ python3 analyze_predition_results.py merged_preds_15k_sample.jsonl \
+        arxiv-metadata-oai-snapshot_230112_filtered.jsonl \
+        merged_data_nopred_15k_sample.json
+"""
+
 import argparse
 import json
 import numpy as np
+import matplotlib
 import matplotlib.pyplot as plt
 from collections import defaultdict
 
@@ -111,7 +117,10 @@ def analyse(ppr_preds, arxiv_md, ppr_pwc_gh_md):
 
     # plot distribution of hyperparam position across papers
 
+    matplotlib.rcParams['hatch.linewidth'] = 0.1
+
     cmap = plt.get_cmap('tab10')
+    hatches = [None, '\\\\\\', 'ooo']
 
     num_bins = 10
     joint_bins = np.linspace(0, 1, num_bins+1)
@@ -157,7 +166,8 @@ def analyse(ppr_preds, arxiv_md, ppr_pwc_gh_md):
         cat_counts = [(c/num_bins)*100 for c in cat_counts]
         plt.stairs(
             cat_counts, cat_bins,
-            fill=True, orientation='horizontal', label=cat, color=cmap(i)
+            fill=True, orientation='horizontal', label=cat,
+            color=cmap(i), hatch=hatches[i], edgecolor='k'
         )
         # plt.fill_betweenx(
         #     bins[1:], counts, step='pre', alpha=0.5, label=cat
