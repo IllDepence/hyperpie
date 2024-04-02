@@ -6,7 +6,8 @@ Hyperparameter Information Extraction from Scientific Publications
 
 This repository contains the source code, data, and documentation for the ECIR paper “HyperPIE: Hyperparameter Information Extraction from Scientific Publications”.
 
-▶ [paper](https://doi.org/10.1007/978-3-031-56060-6_17) ([author copy on arXiv](https://doi.org/10.48550/arXiv.2312.10638))
+▶ [paper](https://doi.org/10.1007/978-3-031-56060-6_17) ([author copy on arXiv](https://doi.org/10.48550/arXiv.2312.10638))  
+▶ [presentation slides](doc/presentation/ecir2024.pdf) (ECIR 2024)
 
 ## Contents
 
